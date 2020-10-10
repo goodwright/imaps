@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const HomePage = props => {
     return (
-        <Base>
+        <Base className="home-page">
             iMaps
         </Base>
     );

@@ -5,7 +5,7 @@ import Base from "./Base";
 
 const PrivacyPolicyPage = props => {
     return (
-        <Base>
+        <Base className="privacy-policy-page">
             Privacy Policy
         </Base>
     );
