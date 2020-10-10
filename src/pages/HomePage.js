@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Base from "./Base";
 import { Link } from "react-router-dom";
 
 const HomePage = props => {
     return (
-        <div>
-            <Link to="/privacy/">Privacy Policy</Link>
+        <Base>
             iMaps
-        </div>
+        </Base>
     );
 };
 
