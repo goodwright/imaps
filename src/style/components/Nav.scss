@@ -1,0 +1,10 @@
+nav {
+    display: flex;
+
+    .logo {
+        width: $sidebar-width;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
