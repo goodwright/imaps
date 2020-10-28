@@ -14,5 +14,12 @@
     main {
         grid-area: 2 / 2 / 3 / 3;
         background-color: white;
+        border-radius: $border-radius;
+        padding: $gap-2;
+        box-shadow: $box-shadow;
+    }
+
+    @media (max-width: 700px) {
+        grid-template-columns: $sidebar-small-width 1fr;
     }
 }

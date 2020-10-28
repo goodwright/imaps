@@ -1,0 +1,12 @@
+.sidebar {
+    padding: $gap-3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .goodwright {
+        text-align: center;
+        color: $purple-2;
+        font-weight: 700;
+    }
+}
