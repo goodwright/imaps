@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const Nav = props => {
   return (
-    <div>
+    <nav>
       <div className="logo">imaps</div>
       <div className="nav-main">
         <input />
@@ -12,7 +12,7 @@ const Nav = props => {
           <button>Sign Up</button>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -1,8 +1,9 @@
 body {
     font-family: $font;
     background-color: $background-color;
+    padding: 0 $gap-3 0 $gap-3;
 }
 
 main {
-    padding: $gap-5;
+    margin-bottom: $gap-3;
 }
