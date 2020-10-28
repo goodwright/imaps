@@ -31,7 +31,8 @@ $gap-16: 768px;
 $gray-1: #f4f5f7;
 $gray-2: #f3f3f3;
 $gray-3: #EDEDED;
-$gray-4: #B5B5B5;
+$gray-4: #dcdcdc;
+$gray-5: #B5B5B5;
 
 $purple-1: #9C99AC;
 $purple-2: #9590B5;
@@ -45,5 +46,7 @@ $sidebar-width: 200px;
 $border-radius-small: 3px;
 $border-radius: 5px;
 $border-radius-large: 10px;
+
+$inset: inset 0px 4px 2px rgba(0, 0, 0, 0.25), inset 0px -2px 0px rgba(0, 0, 0, 0.08);
 
 $font: Inter;

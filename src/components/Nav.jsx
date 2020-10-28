@@ -19,9 +19,9 @@ const Nav = props => {
             placeholder="Search"
           />
         </div>
-        <div className="auth-links">
-          <button>Log In</button>
-          <button>Sign Up</button>
+        <div className="auth-buttons">
+          <button className="login-button">Log In</button>
+          <button className="signup-button primary-button">Sign Up</button>
         </div>
       </div>
     </nav>

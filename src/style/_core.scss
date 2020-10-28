@@ -35,5 +35,27 @@ input {
 }
 
 input::placeholder {
-    color: $gray-4;
+    color: $gray-5;
+}
+
+input[type=submit], button {
+    cursor: pointer;
+    padding: $gap-2 $gap-5;
+    border-radius: $border-radius;
+    transition-property: background-color;
+    //transition-duration: 0.5s;
+}
+
+.primary-button {
+    background-color: $purple-3;
+    color: white;
+    
+}
+
+.primary-button:hover {
+    background-color: $purple-7;
+}
+
+.primary-button:active {
+    box-shadow: $inset;
 }

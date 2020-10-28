@@ -18,5 +18,20 @@ nav {
             height: calc(100% - #{2 * $gap-3});
             width: 400px;
         }
+
+        .auth-buttons {
+            button {
+                font-weight: 500;
+            }
+
+            .login-button {
+                color: $purple-4;
+                margin-right: $gap-3;
+            }
+
+            .login-button:hover {
+                background-color: $gray-3;
+            }
+        }
     }
 }
