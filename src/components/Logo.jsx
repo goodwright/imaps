@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Logo = () => {
   return (
-    <Link to="/">
+    <Link className="logo" to="/">
       <svg width="62" height="35" viewBox="9 9 62 35" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0)">
         <rect x="13.6719" y="24.2656" width="3.0314" height="16.8105" fill="#7A6ADB"/>

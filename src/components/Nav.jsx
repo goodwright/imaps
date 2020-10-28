@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Logo from "./Logo";
 import searchIcon from "../images/searchIcon.svg"
+import MiniLogo from "./MinoLogo";
 
 const Nav = props => {
 
@@ -8,7 +9,7 @@ const Nav = props => {
 
   return (
     <nav>
-      <div className="logo"><Logo /></div>
+      <div className="logo-container"><Logo /><MiniLogo /></div>
       <div className="nav-main">
         <div className="input-icon">
           <img src={searchIcon} className="icon" />
