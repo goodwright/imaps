@@ -1,7 +1,8 @@
 body {
     font-family: $font;
-    background-color: $background-color;
+    background-color: $gray-1;
     padding: 0 $gap-3 0 $gap-3;
+    font-size: $font-size-3;
 }
 
 main {
