@@ -7,4 +7,16 @@ nav {
         align-items: center;
         justify-content: center;
     }
+
+    .nav-main {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-grow: 5;
+
+        .search {
+            height: calc(100% - #{2 * $gap-3});
+            width: 400px;
+        }
+    }
 }

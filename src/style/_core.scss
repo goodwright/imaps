@@ -3,8 +3,37 @@ body {
     background-color: $gray-1;
     padding: 0 $gap-3 0 0;
     font-size: $font-size-3;
+    color: $purple-1;
 }
 
 main {
     margin-bottom: $gap-3;
+}
+
+input {
+    background-color: $gray-3;
+    border-radius: $border-radius;
+    padding: $gap-3 $gap-2;
+    color: $purple-2;
+}
+
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .icon {
+        position: absolute;
+        width: 16px;
+        left: $gap-3;
+        background: none;
+    }
+
+    input {
+        padding-left: 16px + $gap-3 * 2;
+    }
+}
+
+input::placeholder {
+    color: $gray-4;
 }
