@@ -16,4 +16,21 @@
             background-color: $gray-5;
         }
     }
+
+    @media (max-width: 700px) {
+        .user-info {
+            justify-content: center;
+            grid-template-columns: 1fr;
+            padding: $gap-3 0;
+
+            .user-photo {
+                width: 30px;
+                height: 30px;
+            }
+
+            .user-name {
+                display: none;
+            }
+        }
+    }
 }

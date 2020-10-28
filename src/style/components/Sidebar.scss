@@ -9,4 +9,10 @@
         color: $purple-2;
         font-weight: 700;
     }
+
+    @media (max-width: 700px) {
+        .goodwright {
+            display: none;
+        }
+    }
 }

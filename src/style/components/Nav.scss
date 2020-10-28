@@ -43,8 +43,11 @@ nav {
         }
     }
 
-    @media (max-width: 1000px) {
+    .mobile-menu {
+        display: none;
+    }
 
+    @media (max-width: 1000px) {
         .nav-main {
             .search {
                 width: 250px;
@@ -75,6 +78,59 @@ nav {
                 .login-button {
                     margin-right: $gap-1;
                 }
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        $menu-icon-height: 20px;
+
+        align-items: center;
+        justify-content: space-between;
+
+        .nav-main {
+            display: none;
+        }
+
+        .menu-icon {
+            display: block;
+            width: $menu-icon-height;
+            height: $menu-icon-height;
+            cursor: pointer;
+
+            .menu-icon-bar {
+                content: "";
+                width: $menu-icon-height;
+                height: $menu-icon-height / 10;
+                background-color: $purple-3;
+                margin-bottom: $menu-icon-height / 5;
+            }
+
+            .menu-icon-bar:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+nav.show-content {
+    @media (max-width: 500px) {
+        .nav-main {
+            display: block;
+            position: absolute;
+            width: 100%;
+            padding: 0 $gap-3;
+            top: $nav-height;
+            background-color: $gray-1;
+            box-shadow: $box-shadow;
+
+            .search {
+                width: 100%;
+            }
+
+            .auth-buttons {
+                margin: $gap-4 auto;
+                width: fit-content;
             }
         }
     }
