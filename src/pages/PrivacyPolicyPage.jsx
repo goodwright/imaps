@@ -9,7 +9,7 @@ const PrivacyPolicyPage = props => {
 
   useEffect(() => {
     fetch(privacy).then(res => res.text()).then(text => setMarkdown(text));
-  });
+  }, []);
 
   return (
     <Base className="privacy-policy-page" blank={true}>

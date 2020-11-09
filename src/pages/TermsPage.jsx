@@ -9,7 +9,7 @@ const TermsPage = () => {
 
   useEffect(() => {
     fetch(terms).then(res => res.text()).then(text => setMarkdown(text));
-  });
+  }, []);
 
   return (
     <Base className="terms-page" blank={true}>
