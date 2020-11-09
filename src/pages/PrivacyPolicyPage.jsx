@@ -1,14 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect }  from "react";
 import Base from "./Base";
+import Document from "../components/Document";
+import privacy from "../documents/privacy.md";
 
 const PrivacyPolicyPage = props => {
-    return (
-        <Base className="privacy-policy-page">
-            Privacy Policy
-        </Base>
-    );
+
+  const [markdown, setMarkdown] = useState(null);
+
+  useEffect(() => {
+    fetch(privacy).then(res => res.text()).then(text => setMarkdown(text));
+  });
+
+  return (
+    <Base className="privacy-policy-page" blank={true}>
+      <Document markdown={markdown} />
+    </Base>
+  );
 };
 
 PrivacyPolicyPage.propTypes = {

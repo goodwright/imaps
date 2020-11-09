@@ -11,7 +11,7 @@ const Sidebar = props => {
         <a href="https://goodwright.org"><img src={goodwright} alt="goodwright" /></a>
         <div className="links">
           <Link to="/privacy/">Privacy Policy</Link>
-          <Link to="/terms/">Terms</Link>
+          <Link to="/terms/">Terms of Use</Link>
         </div>
       </div>
     </div>
