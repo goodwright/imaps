@@ -4,6 +4,7 @@ import { BrowserRouter, Switch } from "react-router-dom";
 import { Route } from "react-router";
 import HomePage from "../pages/HomePage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
+import TermsPage from "../pages/TermsPage";
 
 const App = () => {
   return (
@@ -14,6 +15,9 @@ const App = () => {
         </Route>
         <Route path="/privacy/" exact>
           <PrivacyPolicyPage />
+        </Route>
+        <Route path="/terms/" exact>
+          <TermsPage />
         </Route>
       </Switch>
     </BrowserRouter>

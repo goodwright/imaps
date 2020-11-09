@@ -8,6 +8,21 @@
         text-align: center;
         color: $purple-2;
         font-weight: 700;
+        padding-bottom: $gap-2;
+
+        img {
+            width: 100px;
+        }
+
+        .links {
+            a {
+                color: $purple-2;
+                font-weight: 400;
+                font-size: $font-size-1;
+                text-decoration: none;
+                padding: 0 $gap-2;
+            }
+        }
     }
 
     @media (max-width: 700px) {
