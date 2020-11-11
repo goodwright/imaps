@@ -14,6 +14,10 @@
             width: 100px;
         }
 
+        .goodwright-icon {
+            display: none;
+        }
+
         .links {
             a {
                 color: $purple-2;
@@ -27,7 +31,29 @@
 
     @media (max-width: 700px) {
         .goodwright {
-            display: none;
+            .goodwright-logo {
+                display: none;
+            }
+
+            .goodwright-icon {
+                display: block;
+                width: 80%;
+                margin: 0 auto;
+                margin-bottom: $gap-3;
+            }
+
+            .links {
+                .full {
+                    display: none;
+                }
+
+                a {
+                    display: block;
+                    padding: $gap-1 0;
+                    font-size: $font-size-1 * 0.8;
+                }
+            }
+
         }
     }
 }
