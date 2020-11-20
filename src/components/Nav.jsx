@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
-import searchIcon from "../images/searchIcon.svg"
+import menuIcon from  "../images/menu-icon.svg";
+import searchIcon from "../images/searchIcon.svg";
+import { UserContext } from "../contexts";
 
 const Nav = () => {
 
   const [searchText, setSearchText] = useState("");
   const [showContent, setShowContent] = useState(false);
-
+  const user = useContext(UserContext);
   const className = classNames({"show-content": showContent});
 
   useEffect(() => {
@@ -36,16 +38,17 @@ const Nav = () => {
             placeholder="Search"
           />
         </div>
-        <div className="auth-buttons">
+        {!user && <div className="auth-buttons">
           <Link className="button login-button" to="/login/">Log In</Link>
           <Link className="button signup-button primary-button" to="/signup/">Sign Up</Link>
-        </div>
+        </div>}
       </div>
-      <div className="menu-icon" onClick={() => setShowContent(!showContent)}>
+      {!user && <div className="menu-icon" onClick={() => setShowContent(!showContent)}>
         <div className="menu-icon-bar"></div>
         <div className="menu-icon-bar"></div>
         <div className="menu-icon-bar"></div>
-      </div>
+      </div>}
+      {user && <img src={menuIcon} />}
     </nav>
   );
 };
