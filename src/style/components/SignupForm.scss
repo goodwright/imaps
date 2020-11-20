@@ -75,4 +75,24 @@
         font-weight: 500;
         font-size: $font-size-4;
     }
+
+    @media (max-width: 100px) {
+        .logo-container {
+            margin-bottom: $gap-7;
+    
+            .logo {
+                display: block;
+    
+                svg {
+                    width: 120px;
+                    height: 68px;
+                }
+            }
+    
+            img {
+                height: 16px;
+                width: 80px;
+            }
+        }
+    }
 }

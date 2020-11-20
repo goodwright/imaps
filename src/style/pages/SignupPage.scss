@@ -12,6 +12,11 @@
         max-width: 1000px;
         margin: 0 auto;
 
+        .signup-form {
+            max-width: 450px;
+            margin-left: auto;
+        }
+
         .welcome-text {
             color: $purple-2;
             font-size: $font-size-6;
@@ -43,6 +48,100 @@
 
             a:hover:after {
                 border-color: $purple-4;
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        padding: $gap-8;
+
+        .signup-grid {
+            gap: $gap-8;
+            grid-template-columns: 4fr 3fr;
+
+            .welcome-text {
+                font-size: $font-size-4;
+
+                a:after {
+                    top: 2px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 900px) {
+
+        .signup-grid {
+            gap: $gap-7;
+            grid-template-columns: 3fr 2fr;
+
+            .welcome-text {
+                font-size: $font-size-3;
+
+                a:after {
+                    top: 3px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 750px) {
+        background-color: $purple-3;
+        display: block;
+        padding: $gap-5 0;
+
+        .signup-grid {
+            display: block;
+
+            .signup-form {
+                margin: 0 auto;
+                margin-bottom: $gap-7;
+            }
+
+            .welcome-text {
+                color: white;
+                width: 100%;
+                padding: 0 $gap-9 $gap-7;
+                font-size: $font-size-5;
+
+                a:after {
+                    border-color: white;
+                    top: 2px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        padding: $gap-5 0;
+
+        .signup-grid {
+
+            .signup-form {
+                margin-bottom: $gap-6;
+                padding-left: $gap-4;
+                padding-right: $gap-4;
+            }
+
+            .welcome-text {
+                padding: 0 $gap-8 $gap-7;
+                font-size: $font-size-5;
+            }
+        }
+    }
+
+    @media (max-width: 450px) {
+        padding: $gap-4 0;
+
+        .signup-grid {
+
+            .signup-form {
+                margin-bottom: $gap-5;
+            }
+
+            .welcome-text {
+                padding: 0 $gap-7 $gap-7;
+                font-size: $font-size-4;
             }
         }
     }
