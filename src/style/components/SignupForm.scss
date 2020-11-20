@@ -3,6 +3,7 @@
     border-radius: 12px;
     color: white;
     padding: $gap-7 $gap-6;
+    position: relative;
 
     .logo-container {
         display: flex;
@@ -35,8 +36,8 @@
         grid-template-columns: 80px 1fr;
         gap: $gap-3;
         align-items: center;
-        margin: $gap-5 0;
-        width: 90%;
+        margin: $gap-6 0;
+        width: 94%;
 
         label {
             font-size: $font-size-3;
@@ -76,23 +77,12 @@
         font-size: $font-size-4;
     }
 
-    @media (max-width: 100px) {
-        .logo-container {
-            margin-bottom: $gap-7;
-    
-            .logo {
-                display: block;
-    
-                svg {
-                    width: 120px;
-                    height: 68px;
-                }
-            }
-    
-            img {
-                height: 16px;
-                width: 80px;
-            }
-        }
+    .auth-link {
+        color: white;
+        text-decoration: none;
+        position: absolute;
+        bottom: $gap-5;
+        right: $gap-5;
+        font-size: $font-size-4;
     }
 }

@@ -6,6 +6,7 @@ import HomePage from "../pages/HomePage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import TermsPage from "../pages/TermsPage";
 import SignupPage from "../pages/SignupPage";
+import LoginPage from "../pages/LoginPage";
 
 const App = () => {
   return (
@@ -22,6 +23,9 @@ const App = () => {
         </Route>
         <Route path="/signup/" exact>
           <SignupPage />
+        </Route>
+        <Route path="/login/" exact>
+          <LoginPage />
         </Route>
       </Switch>
     </BrowserRouter>

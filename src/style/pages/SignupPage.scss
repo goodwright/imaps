@@ -96,6 +96,10 @@
             .signup-form {
                 margin: 0 auto;
                 margin-bottom: $gap-7;
+
+                .auth-link {
+                    display: none;
+                }
             }
 
             .welcome-text {

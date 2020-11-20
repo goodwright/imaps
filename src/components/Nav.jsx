@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
 import searchIcon from "../images/searchIcon.svg"
 
-const Nav = props => {
+const Nav = () => {
 
   const [searchText, setSearchText] = useState("");
   const [showContent, setShowContent] = useState(false);
@@ -37,7 +37,7 @@ const Nav = props => {
           />
         </div>
         <div className="auth-buttons">
-          <button className="login-button">Log In</button>
+          <Link className="button login-button" to="/login/">Log In</Link>
           <Link className="button signup-button primary-button" to="/signup/">Sign Up</Link>
         </div>
       </div>

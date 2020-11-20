@@ -4,15 +4,13 @@ import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
 
-const SignupForm = props => {
+const LoginForm = props => {
 
   const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   return (
-    <form className="signup-form">
+    <form className="login-form signup-form">
       <div className="logo-container">
         <Logo inverted={true} />
         <img src={goodwright} alt="by goodwright" />
@@ -30,28 +28,6 @@ const SignupForm = props => {
       </div>
 
       <div className="input">
-        <label htmlFor="name">name</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          autoComplete="name"
-        />
-      </div>
-
-      <div className="input">
-        <label htmlFor="email">email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          autoComplete="email"
-        />
-      </div>
-
-      <div className="input">
         <label htmlFor="password">password</label>
         <input
           type="password"
@@ -61,15 +37,14 @@ const SignupForm = props => {
           autoComplete="new-password"
         />
       </div>
-      <Link className="terms-link" to="/terms/">Terms and Conditions</Link>
-      <input type="submit" value="Sign Up" className="primary-button" />
-      <Link className="auth-link" to="/login/">Log In</Link>
+      <input type="submit" value="Log In" className="primary-button" />
+      <Link className="auth-link" to="/signup/">Sign Up</Link>
     </form>
   );
 };
 
-SignupForm.propTypes = {
+LoginForm.propTypes = {
   
 };
 
-export default SignupForm;
+export default LoginForm;
