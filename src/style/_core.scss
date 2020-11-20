@@ -1,7 +1,6 @@
 body {
     font-family: $font;
     background-color: $gray-1;
-    padding: 0 $gap-3 0 0;
     font-size: $font-size-3;
     color: $purple-1;
 }
@@ -38,12 +37,12 @@ input::placeholder {
     color: $gray-6;
 }
 
-input[type=submit], button {
+input[type=submit], button, a.button {
     cursor: pointer;
     padding: $gap-2 $gap-5;
     border-radius: $border-radius;
     transition-property: background-color;
-    //transition-duration: 0.5s;
+    text-decoration: none;
 }
 
 .primary-button {

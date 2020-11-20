@@ -28,7 +28,7 @@ nav {
         }
 
         .auth-buttons {
-            button {
+            button, a {
                 font-weight: 500;
             }
 
@@ -71,7 +71,7 @@ nav {
         .nav-main {
             .auth-buttons {
 
-                button {
+                button, a {
                     font-size: $font-size-2;
                 }
     

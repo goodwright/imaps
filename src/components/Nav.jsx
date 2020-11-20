@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import classNames from "classnames";
 import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
@@ -37,7 +38,7 @@ const Nav = props => {
         </div>
         <div className="auth-buttons">
           <button className="login-button">Log In</button>
-          <button className="signup-button primary-button">Sign Up</button>
+          <Link className="button signup-button primary-button" to="/signup/">Sign Up</Link>
         </div>
       </div>
       <div className="menu-icon" onClick={() => setShowContent(!showContent)}>
