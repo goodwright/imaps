@@ -6,6 +6,8 @@ import MiniLogo from "./MinoLogo";
 import menuIcon from  "../images/menu-icon.svg";
 import searchIcon from "../images/searchIcon.svg";
 import { UserContext } from "../contexts";
+import { REFRESH } from "../mutations";
+import { useMutation } from "@apollo/client";
 
 const Nav = () => {
 
@@ -13,6 +15,11 @@ const Nav = () => {
   const [showContent, setShowContent] = useState(false);
   const user = useContext(UserContext);
   const className = classNames({"show-content": showContent});
+
+
+  const [refresh, refreshMutation] = useMutation(REFRESH, {
+    onError: () => {}
+  });
 
   useEffect(() => {
     const menuToggle = () => {
@@ -49,6 +56,7 @@ const Nav = () => {
         <div className="menu-icon-bar"></div>
       </div>}
       {user && <img src={menuIcon} />}
+      {/* <button onClick={refresh}>Refresh</button> */}
     </nav>
   );
 };
