@@ -47,6 +47,72 @@ nav {
         display: none;
     }
 
+    .nav-dropdown-container {
+        display: flex;
+
+        .user-icon {
+            cursor: pointer;
+            opacity: 0.9;
+        }
+    
+        .user-icon:hover {
+            opacity: 1;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: $nav-height;
+            right: $gap-3;
+            background-color: white;
+            padding: $gap-1 $gap-3;
+            box-shadow: 0px 4px 13px #E4E3EC;
+            border-radius: $border-radius;
+            height: 70px;
+            width: 150px;
+            flex-direction: column;
+            justify-content: space-evenly;
+    
+            .option {
+                justify-content: flex-end;
+                align-items: baseline;
+                cursor: pointer;
+                color: $purple-2;
+                display: flex;
+    
+                svg {
+                    margin-left: $gap-1;
+                    width: 20px;
+                    fill: $purple-2;
+                }
+            }
+    
+            .option:hover {
+                color: $purple-4;
+    
+                svg {
+                    fill: $purple-4;
+                }
+            }
+    
+            .option:first-child {
+                margin-right: 2px;
+            }
+        }
+    
+        .dropdown:before {
+            content: "";
+            width: 0; 
+            height: 0; 
+            border-left: $gap-2 solid transparent;
+            border-right: $gap-2 solid transparent;
+            border-bottom: $gap-2 solid white;
+            position: absolute;
+            top: -$gap-2;
+            right: $gap-3;
+        }
+    }
+
     @media (max-width: 1000px) {
         .nav-main {
             .search {
@@ -132,6 +198,28 @@ nav.show-content {
                 margin: $gap-4 auto;
                 width: fit-content;
             }
+        }
+    }
+}
+
+nav.show-dropdown {
+    .dropdown {
+        display: flex;
+    }
+}
+
+nav.logging-out {
+    .dropdown {
+
+        align-items: center;
+        justify-content: center;
+
+        div {
+            display: block;
+        }
+
+        .option {
+            display: none;
         }
     }
 }
