@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
+import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
 
-const SignupForm = props => {
+const SignupForm = () => {
 
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -62,7 +62,9 @@ const SignupForm = props => {
         />
       </div>
       <Link className="terms-link" to="/terms/">Terms and Conditions</Link>
-      <input type="submit" value="Sign Up" className="primary-button" />
+      <button type="submit" className="primary-button">
+        {false ? <ClipLoader color="white" size="20px" /> : "Sign Up"}
+      </button>
       <Link className="auth-link" to="/login/">Log In</Link>
     </form>
   );

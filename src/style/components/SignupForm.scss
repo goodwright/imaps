@@ -59,7 +59,7 @@
         }
     }
 
-    .terms-link, input[type=submit] {
+    .terms-link, button {
         margin-left: 80px + $gap-3;
     }
 
@@ -70,11 +70,13 @@
         margin-bottom: $gap-6;
     }
 
-    input[type=submit] {
+    button {
         background-color: $purple-4;
         box-shadow: 0px 2px 2px 0px $purple-4;
         font-weight: 500;
         font-size: $font-size-4;
+        height: 36px;
+        width: 100px;
     }
 
     .auth-link {

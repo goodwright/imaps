@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
 import { useMutation } from "@apollo/client";
@@ -60,7 +61,9 @@ const LoginForm = props => {
           required
         />
       </div>
-      <input type="submit" value="Log In" className="primary-button" />
+      <button type="submit" className="primary-button">
+        {loginMutation.loading ? <ClipLoader color="white" size="20px" /> : "Log In"}
+      </button>
       <Link className="auth-link" to="/signup/">Sign Up</Link>
     </form>
   );
