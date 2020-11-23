@@ -12,12 +12,12 @@ const LoginForm = props => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const setToken = useContext(TokenContext);
-  const [user, setUser] = useContext(UserContext);
+  const [,setUser] = useContext(UserContext);
   const history = useHistory();
 
   const [login, loginMutation] = useMutation(LOGIN, {
     onCompleted: data => {
-      setUser(null);
+      setUser(data.login.user);
       setToken(data.login.accessToken);
       history.push("/");
     }

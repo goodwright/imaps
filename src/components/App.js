@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
-import PropagateLoader from "react-spinners/PropagateLoader";
 import { Route } from "react-router";
+import { BrowserRouter, Switch } from "react-router-dom";
+import { ApolloProvider, useMutation } from "@apollo/client";
+import PropagateLoader from "react-spinners/PropagateLoader";
+import Div100vh from "react-div-100vh";
 import HomePage from "../pages/HomePage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import TermsPage from "../pages/TermsPage";
 import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
-import { ApolloProvider, useMutation, useQuery } from "@apollo/client";
-import { makeClient, getApiLocation } from "../api";
-import { TokenContext } from "../contexts";
-import { UserContext } from "../contexts";
-import { USER } from "../queries";
+import { makeClient } from "../api";
+import { TokenContext, UserContext } from "../contexts";
 import { REFRESH } from "../mutations";
-import Div100vh from "react-div-100vh";
 
 const App = () => {
 
-  // Store the access token as a root level state variable
+  // Store the access token as a root level state variable, and make a client
+  // with it.
   const [token, setToken] = useState(null);
-
-  // Store the user object as a record of whether logged in - an object if yes,
-  // false if no, null if unknown
-  const [user, setUser] = useState(null);
-
-  // Create a client from the current access token
   const client = makeClient(token);
 
+  // Create a root user object that will indicate whether there is anyone logged
+  // in. This will be false if not logged in, null if unknown.
+  const [user, setUser] = useState(null);
+
+  // Find out if logged in by trying to get an access token via refresh
   const [refresh,] = useMutation(REFRESH, {
     client,
     onCompleted: data => {
       if (data.refreshToken) {
-        setToken(data.refreshToken.accessToken);
         setUser(data.refreshToken.user);
+        setToken(data.refreshToken.accessToken);
       } else {
         setUser(false);
         setToken(null);
@@ -41,74 +39,54 @@ const App = () => {
     onError: () => {
       setUser(false);
       setToken(null);
-    }
+    },
   });
+  if (user === null) refresh();
 
-  // Keep access token up to date
+  // try to refresh the token at intervals
   useEffect(() => {
-    setInterval(refresh, 5000)
+    setInterval(() => {
+      console.log(user)
+      refresh()
+    }, 1000 * 60 * 5)
   }, []);
 
-  return (
-    <ApolloProvider client={client}>
-      <TokenContext.Provider value={setToken}>
-        <ApolloApp user={user} setUser={setUser} />
-      </TokenContext.Provider>
-    </ApolloProvider>
-  );
-};
-
-const ApolloApp = props => {
-
-  const { user, setUser } = props;
-
-  // Need to know if logged in. If this hasn't been established yet, request the
-  // user object.
-  const { loading } = useQuery(USER, {
-    skip: user !== null,
-    onCompleted: data => {
-      if (data && data.user) {
-        setUser(data.user);
-      } else {
-        setUser(false);
-      }
-    },
-    onError: () => setUser(false)
-  });
-
-  // Show loading while waiting
-  if (loading) {
+  // While waiting to find out of logged in, show a loading page
+  if (user === null) {
     return (
       <Div100vh className="loading-page">
         <PropagateLoader color="#7A6ADB" />
       </Div100vh>
     )
   }
-  
-  return (
-    <UserContext.Provider value={[user, setUser]}>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact>
-            <HomePage />
-          </Route>
-          <Route path="/privacy/" exact>
-            <PrivacyPolicyPage />
-          </Route>
-          <Route path="/terms/" exact>
-            <TermsPage />
-          </Route>
-          <Route path="/signup/" exact>
-            <SignupPage />
-          </Route>
-          <Route path="/login/" exact>
-            <LoginPage />
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    </UserContext.Provider>
-  )
 
+  return (
+    <ApolloProvider client={client}>
+      <TokenContext.Provider value={setToken}>
+        <UserContext.Provider value={[user, setUser]}>
+          <BrowserRouter>
+            <Switch>
+              <Route path="/" exact>
+                <HomePage />
+              </Route>
+              <Route path="/privacy/" exact>
+                <PrivacyPolicyPage />
+              </Route>
+              <Route path="/terms/" exact>
+                <TermsPage />
+              </Route>
+              <Route path="/signup/" exact>
+                <SignupPage />
+              </Route>
+              <Route path="/login/" exact>
+                <LoginPage />
+              </Route>
+            </Switch>
+          </BrowserRouter>
+        </UserContext.Provider>
+      </TokenContext.Provider>
+    </ApolloProvider>
+  );
 }
 
 App.propTypes = {

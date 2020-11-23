@@ -6,7 +6,7 @@ import MiniLogo from "./MinoLogo";
 import menuIcon from  "../images/menu-icon.svg";
 import searchIcon from "../images/searchIcon.svg";
 import { TokenContext, UserContext } from "../contexts";
-import { REFRESH, LOGOUT } from "../mutations";
+import { LOGOUT } from "../mutations";
 import { useMutation } from "@apollo/client";
 
 const Nav = () => {
@@ -16,11 +16,6 @@ const Nav = () => {
   const setToken = useContext(TokenContext);
   const [user,] = useContext(UserContext);
   const className = classNames({"show-content": showContent});
-
-
-  const [refresh, refreshMutation] = useMutation(REFRESH, {
-    onError: () => {}
-  });
 
   const [logout, logoutMutation] = useMutation(LOGOUT, {
     onCompleted: () => setToken(null)
@@ -60,8 +55,7 @@ const Nav = () => {
         <div className="menu-icon-bar"></div>
         <div className="menu-icon-bar"></div>
       </div>}
-      {user && <img src={menuIcon} onClick={logout} />}
-      {/* <button onClick={refresh}>Refresh</button> */}
+      {user && <img src={menuIcon} alt="menu" onClick={logout} />}
     </nav>
   );
 };
