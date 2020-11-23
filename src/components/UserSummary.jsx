@@ -1,7 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext } from "react";
+import { UserContext } from "../contexts";
 
-const UserSummary = props => {
+const UserSummary = () => {
+
+  const [user,] = useContext(UserContext);
+
   return (
     <div className="user-summary">
       <div className="user-info">
@@ -9,7 +12,7 @@ const UserSummary = props => {
 
         </div>
         <div className="user-name">
-          Guest
+          {user ? user.name : "Guest"}
         </div>
       </div>
     </div>
