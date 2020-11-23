@@ -31,6 +31,12 @@
         }
     }
 
+    .error {
+        text-align: center;
+        color: darken($error-red, 10);
+        margin-bottom: -$gap-4;
+    }
+
     .input {
         display: grid;
         grid-template-columns: 80px 1fr;
@@ -86,5 +92,14 @@
         bottom: $gap-5;
         right: $gap-5;
         font-size: $font-size-4;
+    }
+}
+
+.error-form.signup-form {
+    .input {
+        input {
+            background-color: lighten($error-red, 40);
+            color: $error-red;
+        }
     }
 }

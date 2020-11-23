@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import classNames from "classnames";
 import { ClipLoader } from "react-spinners";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
@@ -15,29 +16,36 @@ const LoginForm = props => {
   const setToken = useContext(TokenContext);
   const [,setUser] = useContext(UserContext);
   const history = useHistory();
+  const [error, setError] = useState(false);
+  const className = classNames({
+    "signup-form": true, "login-form": true, "error-form": error
+  })
 
   const [login, loginMutation] = useMutation(LOGIN, {
     onCompleted: data => {
       setUser(data.login.user);
       setToken(data.login.accessToken);
       history.push("/");
-    }
+    },
+    onError: () => setError(true)
   });
 
   const formSubmit = e => {
     e.preventDefault();
+    setError(false);
     login({
       variables: {username, password}
     });
   }
 
   return (
-    <form className="login-form signup-form" onSubmit={formSubmit}>
+    <form className={className} onSubmit={formSubmit}>
       <div className="logo-container">
         <Logo inverted={true} />
         <img src={goodwright} alt="by goodwright" />
       </div>
 
+      {error && <div className="error">Those credentials aren't valid.</div>}
       <div className="input">
         <label htmlFor="username">username</label>
         <input
