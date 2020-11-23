@@ -5,20 +5,25 @@ import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
 import menuIcon from  "../images/menu-icon.svg";
 import searchIcon from "../images/searchIcon.svg";
-import { UserContext } from "../contexts";
-import { REFRESH } from "../mutations";
+import { TokenContext, UserContext } from "../contexts";
+import { REFRESH, LOGOUT } from "../mutations";
 import { useMutation } from "@apollo/client";
 
 const Nav = () => {
 
   const [searchText, setSearchText] = useState("");
   const [showContent, setShowContent] = useState(false);
-  const user = useContext(UserContext);
+  const setToken = useContext(TokenContext);
+  const [user,] = useContext(UserContext);
   const className = classNames({"show-content": showContent});
 
 
   const [refresh, refreshMutation] = useMutation(REFRESH, {
     onError: () => {}
+  });
+
+  const [logout, logoutMutation] = useMutation(LOGOUT, {
+    onCompleted: () => setToken(null)
   });
 
   useEffect(() => {
@@ -55,7 +60,7 @@ const Nav = () => {
         <div className="menu-icon-bar"></div>
         <div className="menu-icon-bar"></div>
       </div>}
-      {user && <img src={menuIcon} />}
+      {user && <img src={menuIcon} onClick={logout} />}
       {/* <button onClick={refresh}>Refresh</button> */}
     </nav>
   );

@@ -5,17 +5,19 @@ import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
 import { useMutation } from "@apollo/client";
 import { LOGIN } from "../mutations";
-import { TokenContext } from "../contexts";
+import { TokenContext, UserContext } from "../contexts";
 
 const LoginForm = props => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const setToken = useContext(TokenContext);
+  const [user, setUser] = useContext(UserContext);
   const history = useHistory();
 
   const [login, loginMutation] = useMutation(LOGIN, {
     onCompleted: data => {
+      setUser(null);
       setToken(data.login.accessToken);
       history.push("/");
     }
