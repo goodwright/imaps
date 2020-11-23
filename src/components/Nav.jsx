@@ -25,7 +25,6 @@ const Nav = () => {
   }
 
   const clickOutside = e => {
-    console.log(dropdownElement.current)
     if (dropdownElement.current && !dropdownElement.current.contains(e.target)) {
       setShowDropdown(false);
     }
@@ -83,7 +82,7 @@ const Nav = () => {
           <img src={menuIcon} alt="menu" onClick={iconClicked} className="user-icon" />
           <div className="dropdown">
             {logoutMutation.loading && <ClipLoader size="40px" color="#6353C6" />}
-            <div className="option">
+            <Link className="option" to="/settings/">
               User Settings
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M11.949 9.050C11.187 8.287 10.279 7.723 9.289
@@ -99,7 +98,7 @@ const Nav = () => {
                 7 7 7Z" />
               </svg>
 
-            </div>
+            </Link>
             <div className="option" onClick={logout}>
               Log Out
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

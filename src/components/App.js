@@ -13,6 +13,7 @@ import LoginPage from "../pages/LoginPage";
 import { makeClient } from "../api";
 import { TokenContext, UserContext } from "../contexts";
 import { REFRESH } from "../mutations";
+import SettingsPage from "../pages/SettingsPage";
 
 const App = () => {
 
@@ -81,6 +82,9 @@ const App = () => {
               <Route path="/login/" exact>
                 <LoginPage />
               </Route>
+              {user && <Route path="/settings/" exact>
+                <SettingsPage />
+              </Route>}
               <Route path="/@:id/" exact>
                 <UserPage />
               </Route>
