@@ -6,7 +6,7 @@ const UserSummary = props => {
 
   const { user, link } = props;
 
-  const Element = link ? Link : "div";
+  const Element = link && user ? Link : "div";
 
   return (
     <Element className="user-summary" to={`/@${user.username}/`}>
