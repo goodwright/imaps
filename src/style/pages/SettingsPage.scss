@@ -1,5 +1,26 @@
-.settings-page {
+main.settings-page {
+    color: $purple-2;
+    padding: $gap-6;
+
     h1 {
         font-size: $font-size-8;
+        margin-bottom: $gap-8;
+        margin-left: 80px + $gap-3;
+    }
+
+    @media (max-width: 700px) {
+        padding: $gap-5;
+
+        h1 {
+            margin-left: 60px + $gap-3;
+            margin-bottom: $gap-7;
+        }
+    }
+
+    @media (max-width: 375px) {
+
+        h1 {
+            margin-left: 0;
+        }
     }
 }
