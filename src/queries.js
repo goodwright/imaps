@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
 
-export const USER = gql`{
-  user { username email name }
+export const USER = gql`query user($username: String) {
+  user(username: $username) { username email name }
 }`;

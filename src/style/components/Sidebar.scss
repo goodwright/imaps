@@ -4,6 +4,11 @@
     flex-direction: column;
     justify-content: space-between;
 
+    .user-summary {
+        border-bottom: 1px solid $gray-3;
+        padding: $gap-4 0;
+    }
+
     .goodwright {
         text-align: center;
         color: $purple-2;
@@ -30,6 +35,21 @@
     }
 
     @media (max-width: 700px) {
+        .user-summary {
+            justify-content: center;
+            grid-template-columns: 1fr;
+            padding: $gap-3 0;
+
+            .user-photo {
+                width: 30px;
+                height: 30px;
+            }
+
+            .user-info {
+                display: none;
+            }
+        }
+        
         .goodwright {
             .goodwright-logo {
                 display: none;

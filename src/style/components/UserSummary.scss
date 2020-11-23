@@ -1,12 +1,9 @@
 .user-summary {
-
-    border-bottom: 1px solid $gray-3;
     color: $purple-6;
     display: grid;
     grid-template-columns: 40px 1fr;
     align-items: center;
     gap: $gap-3;
-    padding: $gap-4 0;
 
     .user-photo {
         content: "";
@@ -17,7 +14,6 @@
     }
 
     .user-info {
-
         .username {
             font-size: $font-size-2;
             color: $purple-2;
@@ -29,20 +25,12 @@
             }
         }
     }
+}
 
+a.user-summary {
+    text-decoration: none;
+}
 
-    @media (max-width: 700px) {
-        justify-content: center;
-            grid-template-columns: 1fr;
-            padding: $gap-3 0;
-
-            .user-photo {
-                width: 30px;
-                height: 30px;
-            }
-
-            .user-info {
-                display: none;
-            }
-    }
+a.user-summary:hover {
+    text-decoration: underline;
 }

@@ -1,21 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useContext } from "react";
-import { UserContext } from "../contexts";
+import { Link } from "react-router-dom";
 
 const UserSummary = props => {
 
-  const { link } = props;
-  const [user,] = useContext(UserContext);
+  const { user, link } = props;
+
+  const Element = link ? Link : "div";
 
   return (
-    <div className="user-summary">
+    <Element className="user-summary" to={`/@${user.username}/`}>
       <div className="user-photo" />
       <div className="user-info">
         <div className="name">{user ? user.name : "Guest"}</div>
         {user && <div className="username"><span className="at">@</span>{user.username}</div>}
       </div>
-    </div>
+    </Element>
   );
 };
 

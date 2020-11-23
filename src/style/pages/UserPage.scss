@@ -1,0 +1,51 @@
+.user-page {
+    .user-summary {
+        grid-template-columns: 100px 1fr;
+        gap: $gap-4;
+
+        .user-photo {
+            width: 100px;
+            height: 100px;
+        }
+
+        .user-info {
+            font-size: $font-size-7;
+
+            .name {
+                margin-bottom: $gap-1;
+            }
+
+            .username {
+                font-size: $font-size-5;
+    
+                .at {
+                    font-size: $font-size-3;
+                    top: -2px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+        .user-summary {
+            grid-template-columns: 70px 1fr;
+    
+            .user-photo {
+                width: 70px;
+                height: 70px;
+            }
+    
+            .user-info {
+                font-size: $font-size-6;
+    
+                .username {
+                    font-size: $font-size-4;
+        
+                    .at {
+                        font-size: $font-size-2;
+                    }
+                }
+            }
+        }
+    }
+}

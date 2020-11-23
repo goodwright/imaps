@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 import UserSummary from "./UserSummary";
 import goodwright from "../images/goodwright.svg";
 import goodwrightIcon from "../images/goodwright-icon.svg";
+import { useContext } from "react";
+import { UserContext } from "../contexts";
 
 const Sidebar = props => {
+
+  const [user,] = useContext(UserContext);
+
   return (
     <div className="sidebar">
-      <UserSummary />
+      <UserSummary user={user} link={true} />
       <div className="goodwright">
         <a href="https://goodwright.org">
           <img src={goodwright} alt="goodwright" className="goodwright-logo"/>

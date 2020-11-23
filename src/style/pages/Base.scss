@@ -16,7 +16,7 @@
         grid-area: 2 / 2 / 3 / 3;
         background-color: white;
         border-radius: $border-radius;
-        padding: $gap-2;
+        padding: $gap-5;
         box-shadow: $box-shadow;
         height: calc(100% - #{$gap-3});
         overflow-y: scroll;
@@ -34,7 +34,17 @@
         height: 100%;
     }
 
+    main.loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     @media (max-width: 700px) {
         grid-template-columns: $sidebar-small-width 1fr;
+
+        main {
+            padding: $gap-4;
+        }
     }
 }

@@ -5,6 +5,7 @@ import { ApolloProvider, useMutation } from "@apollo/client";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import Div100vh from "react-div-100vh";
 import HomePage from "../pages/HomePage";
+import UserPage from "../pages/UserPage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import TermsPage from "../pages/TermsPage";
 import SignupPage from "../pages/SignupPage";
@@ -79,6 +80,9 @@ const App = () => {
               </Route>
               <Route path="/login/" exact>
                 <LoginPage />
+              </Route>
+              <Route path="/@:id/" exact>
+                <UserPage />
               </Route>
             </Switch>
           </BrowserRouter>
