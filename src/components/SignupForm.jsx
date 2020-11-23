@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router";
 import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { SIGNUP } from "../mutations";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
+import { TokenContext, UserContext } from "../contexts";
 
 const SignupForm = () => {
 
@@ -10,9 +14,27 @@ const SignupForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const setToken = useContext(TokenContext);
+  const [,setUser] = useContext(UserContext);
+  const history = useHistory();
+
+  const [signup, signupMutation] = useMutation(SIGNUP, {
+    onCompleted: data => {
+      setUser(data.signup.user);
+      setToken(data.signup.accessToken);
+      history.push("/");
+    },
+  });
+
+  const formSubmit = e => {
+    e.preventDefault();
+    signup({
+      variables: {username, password, name, email}
+    });
+  }
 
   return (
-    <form className="signup-form">
+    <form className="signup-form" onSubmit={formSubmit}>
       <div className="logo-container">
         <Logo inverted={true} />
         <img src={goodwright} alt="by goodwright" />
@@ -63,7 +85,7 @@ const SignupForm = () => {
       </div>
       <Link className="terms-link" to="/terms/">Terms and Conditions</Link>
       <button type="submit" className="primary-button">
-        {false ? <ClipLoader color="white" size="20px" /> : "Sign Up"}
+        {signupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Sign Up"}
       </button>
       <Link className="auth-link" to="/login/">Log In</Link>
     </form>

@@ -11,3 +11,10 @@ export const REFRESH = gql`mutation { refreshToken { accessToken user {
 } } }`;
 
 export const LOGOUT = gql`mutation { logout { success } }`;
+
+export const SIGNUP = gql`mutation login(
+  $username: String! $password: String! $name: String! $email: String!
+) { signup(
+  username: $username password: $password name: $name email: $email
+) { accessToken user { username email name } }
+}`;
