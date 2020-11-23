@@ -46,12 +46,11 @@ const App = () => {
   // try to refresh the token at intervals
   useEffect(() => {
     setInterval(() => {
-      console.log(user)
       refresh()
     }, 1000 * 60 * 5)
   }, []);
 
-  // While waiting to find out of logged in, show a loading page
+  // While waiting to find out if logged in, show a loading page
   if (user === null) {
     return (
       <Div100vh className="loading-page">

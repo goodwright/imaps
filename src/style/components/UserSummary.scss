@@ -1,25 +1,38 @@
 .user-summary {
-    .user-info {
-        border-bottom: 1px solid $gray-3;
-        color: $purple-6;
-        display: grid;
-        grid-template-columns: 40px 1fr;
-        align-items: center;
-        gap: $gap-4;
-        padding: $gap-4 0;
 
-        .user-photo {
-            content: "";
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: $gray-5;
+    border-bottom: 1px solid $gray-3;
+    color: $purple-6;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+    gap: $gap-3;
+    padding: $gap-4 0;
+
+    .user-photo {
+        content: "";
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: $gray-5;
+    }
+
+    .user-info {
+
+        .username {
+            font-size: $font-size-2;
+            color: $purple-2;
+
+            .at {
+                font-size: $font-size-1;
+                position: relative;
+                top: -1px;
+            }
         }
     }
 
+
     @media (max-width: 700px) {
-        .user-info {
-            justify-content: center;
+        justify-content: center;
             grid-template-columns: 1fr;
             padding: $gap-3 0;
 
@@ -28,9 +41,8 @@
                 height: 30px;
             }
 
-            .user-name {
+            .user-info {
                 display: none;
             }
-        }
     }
 }
