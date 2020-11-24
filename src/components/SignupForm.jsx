@@ -7,6 +7,7 @@ import { SIGNUP } from "../mutations";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
 import { TokenContext, UserContext } from "../contexts";
+import { createErrorObject } from "../forms";
 
 const SignupForm = () => {
 
@@ -14,9 +15,11 @@ const SignupForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
   const setToken = useContext(TokenContext);
   const [,setUser] = useContext(UserContext);
   const history = useHistory();
+  console.log(errors)
 
   const [signup, signupMutation] = useMutation(SIGNUP, {
     onCompleted: data => {
@@ -24,6 +27,9 @@ const SignupForm = () => {
       setToken(data.signup.accessToken);
       history.push("/");
     },
+    onError: ({graphQLErrors}) => {
+      setErrors(createErrorObject(errors, graphQLErrors))
+    }
   });
 
   const formSubmit = e => {
@@ -40,48 +46,61 @@ const SignupForm = () => {
         <img src={goodwright} alt="by goodwright" />
       </div>
 
-      <div className="input">
+      {errors.general && <div className="error">There was an error.</div>}
+      <div className={errors.username ? "input error-input" : "input"}>
         <label htmlFor="username">username</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          autoComplete="username"
-        />
+        <div className="error-container">
+          {errors.username && <div className="error">{errors.username}</div>}
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            autoComplete="username"
+          />
+        </div>
       </div>
 
-      <div className="input">
+      <div className={errors.name ? "input error-input" : "input"}>
         <label htmlFor="name">name</label>
-        <input
-          type="text"
-          id="name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          autoComplete="name"
-        />
+        <div className="error-container">
+          {errors.name && <div className="error">{errors.name}</div>}
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            autoComplete="name"
+          />
+        </div>
       </div>
 
-      <div className="input">
+      <div className={errors.email ? "input error-input" : "input"}>
         <label htmlFor="email">email</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          autoComplete="email"
-        />
+        <div className="error-container">
+          {errors.email && <div className="error">{errors.email}</div>}
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            autoComplete="email"
+          />
+        </div>
       </div>
 
-      <div className="input">
+      <div className={errors.password ? "input error-input" : "input"}>
         <label htmlFor="password">password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          autoComplete="new-password"
-        />
+        <div className="error-container">
+          {errors.password && <div className="error">{errors.password}</div>}
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            autoComplete="new-password"
+          />
+        </div>
       </div>
       <Link className="terms-link" to="/terms/">Terms and Conditions</Link>
       <button type="submit" className="primary-button">
