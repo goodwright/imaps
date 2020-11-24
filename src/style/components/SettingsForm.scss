@@ -26,12 +26,15 @@
             input {
                 font-size: $font-size-5;
                 padding: $gap-4 $gap-3;
+                width: 100%;
+                background-color: $gray-2;
             }
         }
 
         button {
             margin-left: 80px + $gap-3;
             height: 40px;
+            width: 150px;
         }
     }
 

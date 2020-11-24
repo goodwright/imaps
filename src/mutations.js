@@ -18,3 +18,15 @@ export const SIGNUP = gql`mutation login(
   username: $username password: $password name: $name email: $email
 ) { accessToken user { username email name } }
 }`;
+
+export const UPDATE_USER = gql`mutation updateUser(
+  $username: String! $email: String! $name: String!
+) { updateUser(username: $username email: $email name: $name) {
+  user { username name email }
+} }`;
+
+export const UPDATE_PASSWORD = gql`mutation updateUser(
+  $new: String! $current: String!
+) { updatePassword(new: $new current: $current) {
+  success
+} }`;
