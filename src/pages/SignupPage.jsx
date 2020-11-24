@@ -13,7 +13,7 @@ const SignupPage = () => {
         <div className="welcome-text">
           <p>Welcome to iMaps. iMaps is an analysis platform for studies of protein-RNA interactions and RNA modifications.</p>
           <p>iMaps can be used with all variants of CLIP to interrogate RNA-protein interactions, RNA methylation and other modifications.</p>
-          <p>iMaps is a resource of raw and processed public CLIP data. Start by exploring some of the data, or read about bioinformatic challenges of CLIP data.</p>
+          <p>iMaps is a resource of raw and processed public CLIP data. Start by exploring some of the data, or read about <a href="https://www.annualreviews.org/doi/full/10.1146/annurev-biodatasci-080917-013525">the bioinformatic challenges of CLIP data</a>.</p>
           <Link to="/" className="home-link">Explore as a guest</Link>
         </div>
 
