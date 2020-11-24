@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import classNames from "classnames";
 import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
@@ -18,6 +18,8 @@ const Nav = () => {
   const setToken = useContext(TokenContext);
   const [user, setUser] = useContext(UserContext);
   const dropdownElement = useRef(null);
+  const location = useLocation();
+  const history = useHistory();
 
   const iconClicked = e => {
     e.stopPropagation();
@@ -34,6 +36,9 @@ const Nav = () => {
     onCompleted: () => {
       setToken(null);
       setUser(false);
+      if (["/settings/"].includes(location.pathname)) {
+        history.push("/");
+      }
     }
   });
 

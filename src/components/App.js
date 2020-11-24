@@ -14,6 +14,7 @@ import { makeClient } from "../api";
 import { TokenContext, UserContext } from "../contexts";
 import { REFRESH } from "../mutations";
 import SettingsPage from "../pages/SettingsPage";
+import PageNotFound from "../pages/PageNotFound";
 
 const App = () => {
 
@@ -88,6 +89,7 @@ const App = () => {
               <Route path="/@:id/" exact>
                 <UserPage />
               </Route>
+              <Route><PageNotFound /></Route>
             </Switch>
           </BrowserRouter>
         </UserContext.Provider>

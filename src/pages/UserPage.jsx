@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { USER } from "../queries";
 import Base from "./Base";
 import UserSummary from "../components/UserSummary";
+import PageNotFound from "./PageNotFound";
 
 const UserPage = () => {
 
@@ -13,10 +14,16 @@ const UserPage = () => {
     variables: {username: userId}
   });
 
+  if (error && error.graphQLErrors && error.graphQLErrors.length) {
+    const message = JSON.parse(error.graphQLErrors[0].message);
+    console.log(message)
+    if (message && Object.values(message).some(m => m === "Does not exist")) {
+      return <PageNotFound />
+    }
+  }
+
   if (loading) {
-    return (
-      <Base className="user-page" loading={true} />
-    );
+    return <Base className="user-page" loading={true} />
   }
 
   const user = data.user;
