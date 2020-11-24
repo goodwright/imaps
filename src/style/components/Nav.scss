@@ -125,6 +125,7 @@ nav {
     @media (max-width: 700px) {
         .logo-container {
             width: $sidebar-small-width;
+            min-width: $sidebar-small-width;
 
             .logo {
                 display: none;
@@ -156,7 +157,17 @@ nav {
         justify-content: space-between;
 
         .nav-main {
-            display: none;
+            .input-icon {
+                width: 100%;
+                padding-right: $gap-3;
+            }
+            .search {
+                width: 100%;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
         }
 
         .menu-icon {
@@ -183,21 +194,22 @@ nav {
 nav.show-content {
     @media (max-width: 500px) {
         .nav-main {
-            display: block;
-            position: absolute;
-            width: 100%;
-            padding: 0 $gap-3;
-            top: $nav-height;
-            background-color: $gray-1;
-            box-shadow: $box-shadow;
-
-            .search {
-                width: 100%;
-            }
-
             .auth-buttons {
-                margin: $gap-4 auto;
-                width: fit-content;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                width: 100vw;
+                left: 0;
+                height: fit-content;
+                padding-bottom: $gap-2;
+                top: $nav-height;
+                background-color: $gray-1;
+                box-shadow: $box-shadow;
+
+                button {
+                    margin: $gap-1 0;
+                }
             }
         }
     }

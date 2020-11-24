@@ -62,6 +62,7 @@ const Nav = () => {
   return (
     <nav className={className}>
       <div className="logo-container"><Logo /><MiniLogo /></div>
+
       <div className="nav-main">
         <div className="input-icon">
           <img src={searchIcon} className="icon" />
@@ -77,11 +78,13 @@ const Nav = () => {
           <Link className="button signup-button primary-button" to="/signup/">Sign Up</Link>
         </div>}
       </div>
+
       {!user && <div className="menu-icon" onClick={() => setShowContent(!showContent)}>
         <div className="menu-icon-bar"></div>
         <div className="menu-icon-bar"></div>
         <div className="menu-icon-bar"></div>
       </div>}
+
       {user && (
         <div ref={dropdownElement} className="nav-dropdown-container">
           <img src={menuIcon} alt="menu" onClick={iconClicked} className="user-icon" />
@@ -102,7 +105,6 @@ const Nav = () => {
                 1.093 9.953 2.418 9.953 4.046C9.953 5.675 8.628
                 7 7 7Z" />
               </svg>
-
             </Link>
             <div className="option" onClick={logout}>
               Log Out
