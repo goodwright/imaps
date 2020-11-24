@@ -9,6 +9,11 @@ main.settings-page {
         line-height: 2;
     }
 
+    .account-deletion {
+        text-align: right;
+        margin-top: $gap-10;
+    }
+
     @media (max-width: 700px) {
         padding: $gap-5;
 

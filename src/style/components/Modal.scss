@@ -1,0 +1,25 @@
+.modal {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: #00000040;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: $gap-4;
+
+    .modal-box {
+        background-color: white;
+        width: fit-content;
+        height: fit-content;
+        padding: $gap-5;
+        border-radius: $border-radius;
+    }
+}
+
+.modal.visible {
+    display: flex;
+}

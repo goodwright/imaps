@@ -30,3 +30,5 @@ export const UPDATE_PASSWORD = gql`mutation updateUser(
 ) { updatePassword(new: $new current: $current) {
   success
 } }`;
+
+export const DELETE_USER = gql`mutation { deleteUser { success } }`;
