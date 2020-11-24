@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect } from "react";
 import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
 import { USER } from "../queries";
@@ -14,9 +14,12 @@ const UserPage = () => {
     variables: {username: userId}
   });
 
+  useEffect(() => {
+    document.title = `iMaps${data && data.user ? " - " + data.user.name : ""}`;
+  });
+
   if (error && error.graphQLErrors && error.graphQLErrors.length) {
     const message = JSON.parse(error.graphQLErrors[0].message);
-    console.log(message)
     if (message && Object.values(message).some(m => m === "Does not exist")) {
       return <PageNotFound />
     }

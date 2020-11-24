@@ -1,10 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, {useEffect } from "react";
 import { Link } from "react-router-dom";
 import SignupForm from "../components/SignupForm";
 import Div100vh from "react-div-100vh";
 
 const SignupPage = () => {
+
+  useEffect(() => {
+    document.title = "iMaps - Sign Up";
+  });
 
   return (
     <Div100vh className="signup-page">

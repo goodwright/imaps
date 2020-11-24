@@ -1,8 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect } from "react";
 import Base from "./Base";
 
-const HomePage = props => {
+const HomePage = () => {
+
+  useEffect(() => {
+    document.title = "iMaps";
+  });
+
   return (
     <Base className="home-page">
       iMaps

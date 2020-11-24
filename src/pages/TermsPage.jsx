@@ -8,6 +8,10 @@ const TermsPage = () => {
   const [markdown, setMarkdown] = useState(null);
 
   useEffect(() => {
+    document.title = "iMaps - Terms of Use";
+  });
+
+  useEffect(() => {
     fetch(terms).then(res => res.text()).then(text => setMarkdown(text));
   }, []);
 

@@ -3,9 +3,13 @@ import Base from "./Base";
 import Document from "../components/Document";
 import privacy from "../documents/privacy.md";
 
-const PrivacyPolicyPage = props => {
+const PrivacyPolicyPage = () => {
 
   const [markdown, setMarkdown] = useState(null);
+
+  useEffect(() => {
+    document.title = "iMaps - Privacy Policy";
+  });
 
   useEffect(() => {
     fetch(privacy).then(res => res.text()).then(text => setMarkdown(text));

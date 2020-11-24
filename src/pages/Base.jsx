@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import Div100vh from "react-div-100vh";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";

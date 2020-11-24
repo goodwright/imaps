@@ -1,13 +1,13 @@
-import React from "react";
-import { useRouteMatch } from "react-router";
-import { useQuery } from "@apollo/client";
-import { USER } from "../queries";
+import React, {useEffect } from "react";
 import Base from "./Base";
-import UserSummary from "../components/UserSummary";
 import SettingsForm from "../components/SettingsForm";
 import AccountDeletion from "../components/AccountDeletion";
 
 const SettingsPage = () => {
+
+  useEffect(() => {
+    document.title = "iMaps - Settings";
+  });
 
   return (
     <Base className="settings-page">
