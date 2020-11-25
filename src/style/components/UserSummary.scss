@@ -32,5 +32,9 @@ a.user-summary {
 }
 
 a.user-summary:hover {
-    text-decoration: underline;
+    color: $purple-4;
+
+    .username {
+        color: $purple-3;
+    }
 }
