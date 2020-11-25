@@ -5,7 +5,7 @@ import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
 import menuIcon from  "../images/menu-icon.svg";
 import searchIcon from "../images/searchIcon.svg";
-import { TokenContext, UserContext } from "../contexts";
+import { UserContext } from "../contexts";
 import { LOGOUT } from "../mutations";
 import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
@@ -15,7 +15,6 @@ const Nav = () => {
   const [searchText, setSearchText] = useState("");
   const [showContent, setShowContent] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const setToken = useContext(TokenContext);
   const [user, setUser] = useContext(UserContext);
   const dropdownElement = useRef(null);
   const location = useLocation();
@@ -34,7 +33,6 @@ const Nav = () => {
 
   const [logout, logoutMutation] = useMutation(LOGOUT, {
     onCompleted: () => {
-      setToken(null);
       setUser(false);
       if (["/settings/"].includes(location.pathname)) {
         history.push("/");

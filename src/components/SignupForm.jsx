@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { SIGNUP } from "../mutations";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
-import { TokenContext, UserContext } from "../contexts";
+import { UserContext } from "../contexts";
 import { createErrorObject } from "../forms";
 
 const SignupForm = () => {
@@ -16,15 +16,12 @@ const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const setToken = useContext(TokenContext);
   const [,setUser] = useContext(UserContext);
   const history = useHistory();
-  console.log(errors)
 
   const [signup, signupMutation] = useMutation(SIGNUP, {
     onCompleted: data => {
       setUser(data.signup.user);
-      setToken(data.signup.accessToken);
       history.push("/");
     },
     onError: ({graphQLErrors}) => {

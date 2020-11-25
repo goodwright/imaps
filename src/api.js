@@ -1,4 +1,6 @@
 import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from "@apollo/client";
+import { REFRESH } from "./mutations";
+import { TOKEN, USER } from "./queries";
 
 export const isDevelopment = () => {
   /**
@@ -34,16 +36,23 @@ export const getMediaLocation = () => {
 }
 
 
-export const makeClient = token => {
+export const makeClient = () => {
   /**
    * Creates an apollo client with automatic token insertion, and catchall
    * error handling.
    */
 
-
   const httpLink = new HttpLink({uri: getApiLocation(), credentials: "include"});
 
   const authLink = new ApolloLink((operation, forward) => {
+    const { cache } = operation.getContext();
+    let token;
+    try {
+      const cacheValue = cache.readQuery({query: TOKEN});
+      token = cacheValue.accessToken;
+    } catch {
+      token = null;
+    }
     operation.setContext(({ headers }) => ({ headers: {
       authorization: token, ...headers
     }}));

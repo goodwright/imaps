@@ -6,10 +6,6 @@ export const LOGIN = gql`mutation login($username: String! $password: String!) {
   } }
 }`;
 
-export const REFRESH = gql`mutation { refreshToken { accessToken user {
-  username email name
-} } }`;
-
 export const LOGOUT = gql`mutation { logout { success } }`;
 
 export const SIGNUP = gql`mutation login(

@@ -43,7 +43,7 @@ const SettingsForm = props => {
   const userFormSubmit = e => {
     e.preventDefault();
     updateUser({
-      variables: {username, name, email}
+      variables: {username, name, email},
     })
   }
 
