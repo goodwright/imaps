@@ -63,7 +63,7 @@ const Nav = () => {
 
       <div className="nav-main">
         <div className="input-icon">
-          <img src={searchIcon} className="icon" />
+          <img src={searchIcon} className="icon" alt="" />
           <input
             className="search"
             value={searchText}

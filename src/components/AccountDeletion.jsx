@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
@@ -7,7 +6,7 @@ import { DELETE_USER } from "../mutations";
 import { UserContext } from "../contexts";
 import { useHistory } from "react-router";
 
-const AccountDeletion = props => {
+const AccountDeletion = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [,setUser] = useContext(UserContext);

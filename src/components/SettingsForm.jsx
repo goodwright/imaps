@@ -1,12 +1,11 @@
 import React, { useState, useContext } from "react";
-import PropTypes from "prop-types";
 import { ClipLoader } from "react-spinners";
 import { UserContext } from "../contexts";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PASSWORD, UPDATE_USER } from "../mutations";
 import { createErrorObject } from "../forms";
 
-const SettingsForm = props => {
+const SettingsForm = () => {
 
   const [user, setUser] = useContext(UserContext);
 

@@ -4,6 +4,9 @@ import classNames from "classnames";
 import { useRef } from "react";
 
 const Modal = props => {
+  /**
+   * A white box that floats over the page.
+   */
 
   const { showModal, setShowModal } = props;
   const boxRef = useRef();
@@ -30,7 +33,9 @@ const Modal = props => {
 };
 
 Modal.propTypes = {
-  className: PropTypes.string.isRequired
+  className: PropTypes.string.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  setShowModal: PropTypes.func.isRequired
 };
 
 export default Modal;

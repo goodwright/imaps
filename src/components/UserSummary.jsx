@@ -20,7 +20,8 @@ const UserSummary = props => {
 };
 
 UserSummary.propTypes = {
-  
+  user: PropTypes.object.isRequired,
+  link: PropTypes.bool
 };
 
 export default UserSummary;

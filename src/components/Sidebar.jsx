@@ -6,7 +6,7 @@ import goodwrightIcon from "../images/goodwright-icon.svg";
 import { useContext } from "react";
 import { UserContext } from "../contexts";
 
-const Sidebar = props => {
+const Sidebar = () => {
 
   const [user,] = useContext(UserContext);
 

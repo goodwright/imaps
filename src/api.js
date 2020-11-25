@@ -1,6 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from "@apollo/client";
-import { REFRESH } from "./mutations";
-import { TOKEN, USER } from "./queries";
+import { TOKEN } from "./queries";
 
 export const isDevelopment = () => {
   /**
