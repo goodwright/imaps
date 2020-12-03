@@ -4,9 +4,32 @@
     flex-direction: column;
     justify-content: space-between;
 
-    .user-summary {
+    .user-summary, .groups-section {
         border-bottom: 1px solid $gray-3;
         padding: $gap-4 0;
+    }
+
+    .groups-section {
+        
+
+        .label {
+            font-weight: 600;
+            font-size: $font-size-2;
+            color: $purple-2;
+            margin-right: $gap-2;
+            margin-top: -1px;
+            margin-bottom: $gap-2;
+        }
+
+        .groups {
+            display: grid;
+            gap: $gap-1;
+            font-size: $font-size-2;
+
+            .group:hover {
+                text-decoration: underline;
+            }
+        }
     }
 
     .goodwright {
@@ -48,6 +71,10 @@
             .user-info {
                 display: none;
             }
+        }
+
+        .groups-section {
+            display: none;
         }
         
         .goodwright {

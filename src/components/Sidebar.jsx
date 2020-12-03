@@ -12,7 +12,18 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <UserSummary user={user} link={true} />
+      <div className="sidebar-top">
+        <UserSummary user={user} link={true} />
+        {user && user.groups.length && <div className="groups-section">
+          <div className="label">Your groups:</div>
+          <div className="groups">
+            {user.groups.map(group => (
+              <div jey={group.id} className="group">{group.name}</div>
+            ))}
+          </div>
+        </div>}
+      </div>
+
       <div className="goodwright">
         <a href="https://goodwright.org">
           <img src={goodwright} alt="goodwright" className="goodwright-logo"/>
