@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const GroupsList = props => {
 
@@ -10,12 +11,12 @@ const GroupsList = props => {
       <div className="title">Groups</div>
       <div className="groups">
         {user.groups.map(group => (
-          <div className="group" key={group.id}>
-            <div className="group-name">{group.name}</div>
+          <Link to={`/@${group.name}/`} className="group" key={group.id}>
+            <div className="group-name"><span className="at">@</span>{group.name}</div>
             <div className="user-count">
               <span className="number">{group.userCount}</span> member{group.userCount === 1 ? "" : "s"}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

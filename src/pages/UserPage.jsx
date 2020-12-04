@@ -9,7 +9,7 @@ import PageNotFound from "./PageNotFound";
 
 const UserPage = () => {
 
-  const userId = useRouteMatch("/@:id").params.id;
+  const userId = useRouteMatch("/users/:id").params.id;
   
   const { loading, data, error } = useQuery(USER, {
     variables: {username: userId}

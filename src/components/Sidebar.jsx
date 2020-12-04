@@ -18,7 +18,7 @@ const Sidebar = () => {
           <div className="label">Your groups:</div>
           <div className="groups">
             {user.groups.map(group => (
-              <div key={group.id} className="group">{group.name}</div>
+              <Link to={`/@${group.name}/`} key={group.id} className="group"><span className="at">@</span>{group.name}</Link>
             ))}
           </div>
         </div>}

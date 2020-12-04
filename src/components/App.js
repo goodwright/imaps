@@ -68,7 +68,7 @@ const App = () => {
             {user && <Route path="/settings/" exact>
               <SettingsPage />
             </Route>}
-            <Route path="/@:id/" exact>
+            <Route path="/users/:id/" exact>
               <UserPage />
             </Route>
             <Route><PageNotFound /></Route>

@@ -9,11 +9,11 @@ const UserSummary = props => {
   const Element = link && user ? Link : "div";
 
   return (
-    <Element className="user-summary" to={`/@${user.username}/`}>
+    <Element className="user-summary" to={`/users/${user.username}/`}>
       <div className="user-photo" />
       <div className="user-info">
         <div className="name">{user ? user.name : "Guest"}</div>
-        {user && <div className="username"><span className="at">@</span>{user.username}</div>}
+        {user && <div className="username">{user.username}</div>}
       </div>
     </Element>
   );

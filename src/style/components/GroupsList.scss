@@ -18,10 +18,18 @@
             display: flex;
             justify-content: space-between;
             border-radius: $border-radius-large;
+            text-decoration: none;
+            color: inherit;
 
             .group-name {
                 font-weight: 600;
                 margin-right: $gap-5;
+
+                .at {
+                    font-size: $font-size-2;
+                    position: relative;
+                    top: -1px;
+                }
             }
 
             .user-count {
@@ -29,6 +37,10 @@
                     color: $purple-4;
                 }
             }
+        }
+
+        .group:hover {
+            background-color: $gray-1;
         }
     }
 
@@ -40,13 +52,23 @@
         margin-left: 0;
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 400px) {
         .title {
             font-size: $font-size-5;
         }
     
         .groups {
             font-size: $font-size-2;
+
+            .group {
+                .group-name {
+                    margin-right: $gap-4;
+
+                    .at {
+                        font-size: $font-size-1;
+                    }
+                }
+            }
         }
     }
 }
