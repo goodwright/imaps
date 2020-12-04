@@ -9,6 +9,14 @@ main.settings-page {
         line-height: 2;
     }
 
+    .settings-form {
+        margin-bottom: $gap-8;
+    }
+
+    .groups-list {
+        margin-left: 80px + $gap-3;
+    }
+
     .account-deletion {
         text-align: right;
         margin-top: $gap-10;
@@ -17,14 +25,14 @@ main.settings-page {
     @media (max-width: 700px) {
         padding: $gap-5;
 
-        h1 {
+        h1, .groups-list {
             margin-left: 60px + $gap-3;
         }
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 400px) {
 
-        h1 {
+        h1, .groups-list {
             margin-left: 0;
         }
     }
