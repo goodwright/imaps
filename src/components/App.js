@@ -4,16 +4,17 @@ import { BrowserRouter, Switch } from "react-router-dom";
 import { ApolloProvider, useQuery } from "@apollo/client";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import Div100vh from "react-div-100vh";
+import { makeClient } from "../api";
+import { UserContext } from "../contexts";
 import HomePage from "../pages/HomePage";
 import UserPage from "../pages/UserPage";
 import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
 import TermsPage from "../pages/TermsPage";
 import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
-import { makeClient } from "../api";
-import { UserContext } from "../contexts";
 import SettingsPage from "../pages/SettingsPage";
 import PageNotFound from "../pages/PageNotFound";
+import GroupPage from "../pages/GroupPage";
 import { TOKEN, USER } from "../queries";
 
 const client = makeClient();
@@ -70,6 +71,9 @@ const App = () => {
             </Route>}
             <Route path="/users/:id/" exact>
               <UserPage />
+            </Route>
+            <Route path="/@:id/" exact>
+              <GroupPage />
             </Route>
             <Route><PageNotFound /></Route>
           </Switch>

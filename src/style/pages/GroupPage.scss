@@ -1,0 +1,26 @@
+.group-page {
+    .group-info {
+        display: flex;
+        font-size: $font-size-8;
+        
+        h1 {
+            color: $purple-2;
+        }
+
+        .user-count {
+            color: $purple-4;
+            font-size: $font-size-6;
+            margin-left: $gap-4;
+            position: relative;
+            top: -1px;
+
+            svg {
+                fill: $purple-4;
+                position: relative;
+                top: $gap-2;
+                width: 25px;
+                margin-left: $gap-1;
+            }
+        }
+    }
+}
