@@ -7,5 +7,5 @@ export const USER = gql`query user($username: String) {
 export const TOKEN = gql`{ accessToken }`;
 
 export const GROUP = gql`query group($name: String!) {
-  group(name: $name) { id name userCount }
+  group(name: $name) { id name description userCount users { id name username } admins { id username } }
 }`;

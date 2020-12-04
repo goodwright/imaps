@@ -2,6 +2,7 @@
     .group-info {
         display: flex;
         font-size: $font-size-8;
+        margin-bottom: $gap-6;
         
         h1 {
             color: $purple-2;
@@ -20,6 +21,38 @@
                 top: $gap-2;
                 width: 25px;
                 margin-left: $gap-1;
+            }
+        }
+    }
+
+    p.description {
+        color: $purple-2;
+        margin-bottom: $gap-8;
+        line-height: 1.6;
+    }
+
+    .users-grid {
+        .user-summary {
+            display: inline-grid;
+            width: 350px;
+            margin-bottom: $gap-6;
+            margin-right: $gap-5;
+            grid-template-columns: 60px 1fr;
+            margin-right: -$gap-5;
+
+            .user-photo {
+                width: 60px;
+                height: 60px;
+            }
+
+            .name {
+                font-size: $font-size-5;
+                font-weight: 300;
+            }
+
+            .admin {
+                font-size: $font-size-2;
+                font-weight: 300;
             }
         }
     }

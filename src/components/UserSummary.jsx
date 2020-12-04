@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const UserSummary = props => {
 
-  const { user, link } = props;
+  const { user, link, useAdmin } = props;
 
   const Element = link && user ? Link : "div";
 
@@ -13,7 +13,8 @@ const UserSummary = props => {
       <div className="user-photo" />
       <div className="user-info">
         <div className="name">{user ? user.name : "Guest"}</div>
-        {user && <div className="username">{user.username}</div>}
+        {user && !useAdmin && <div className="username">{user.username}</div>}
+        {user && useAdmin && <div className="admin">{user.admin ? "admin" : ""}</div>}
       </div>
     </Element>
   );
