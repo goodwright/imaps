@@ -4,6 +4,7 @@ import { useQuery } from "@apollo/client";
 import { USER } from "../queries";
 import Base from "./Base";
 import UserSummary from "../components/UserSummary";
+import GroupsList from "../components/GroupsList";
 import PageNotFound from "./PageNotFound";
 
 const UserPage = () => {
@@ -34,6 +35,10 @@ const UserPage = () => {
   return (
     <Base className="user-page">
       <UserSummary user={user} />
+      <GroupsList user={user} />
+
+      
+
     </Base>
   );
 };

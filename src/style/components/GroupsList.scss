@@ -1,0 +1,52 @@
+.groups-list {
+    margin-left: 100px + $gap-4;
+    color: $purple-2;
+
+    .title {
+        font-size: $font-size-6;
+        margin-bottom: $gap-4;
+    }
+
+    .groups {
+        display: grid;
+        gap: $gap-4;
+        width: fit-content;
+
+        .group {
+            background-color: $gray-0;
+            padding: $gap-4 $gap-4;
+            display: flex;
+            justify-content: space-between;
+            border-radius: $border-radius-large;
+
+            .group-name {
+                font-weight: 600;
+                margin-right: $gap-5;
+            }
+
+            .user-count {
+                .number {
+                    color: $purple-4;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+        margin-left: 70px + $gap-4;
+    }
+
+    @media (max-width: 500px) {
+        margin-left: 0;
+    }
+
+    @media (max-width: 500px) {
+        .title {
+            font-size: $font-size-5;
+        }
+    
+        .groups {
+            font-size: $font-size-2;
+        }
+    }
+}

@@ -18,7 +18,7 @@ const Sidebar = () => {
           <div className="label">Your groups:</div>
           <div className="groups">
             {user.groups.map(group => (
-              <div jey={group.id} className="group">{group.name}</div>
+              <div key={group.id} className="group">{group.name}</div>
             ))}
           </div>
         </div>}

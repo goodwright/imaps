@@ -2,6 +2,7 @@
     .user-summary {
         grid-template-columns: 100px 1fr;
         gap: $gap-4;
+        margin-bottom: $gap-7;
 
         .user-photo {
             width: 100px;
