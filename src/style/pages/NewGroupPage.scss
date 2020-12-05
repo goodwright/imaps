@@ -54,6 +54,22 @@
                 border-bottom-left-radius: 0;
             }
         }
+
+        .input:nth-child(2).error-input {
+            .error-container {
+                .url {
+                    height: calc(100% - 19px);
+                    border: 1px solid $error-red;
+                    border-right: none;
+                }
+
+                input {
+                    border-left: none;
+                }
+            }
+        }
+
+
     }
 
     @media (max-width: 1000px) {

@@ -28,3 +28,11 @@ export const UPDATE_PASSWORD = gql`mutation updateUser(
 } }`;
 
 export const DELETE_USER = gql`mutation { deleteUser { success } }`;
+
+
+export const CREATE_GROUP = gql`mutation createGroup(
+  $name: String! $slug: String! $description: String!
+) { createGroup(name: $name slug: $slug description: $description) {
+  group { id name slug description }
+  user { username name email groups { id slug name userCount } } 
+} }`

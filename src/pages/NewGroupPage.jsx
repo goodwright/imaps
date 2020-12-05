@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router";
+import { ClipLoader } from "react-spinners";
 import Base from "./Base";
+import { useMutation } from "@apollo/client";
+import { CREATE_GROUP } from "../mutations";
+import { USER } from "../queries";
+import { useContext } from "react";
+import { UserContext } from "../contexts";
+import { createErrorObject } from "../forms";
 
 const NewGroupPage = props => {
 
@@ -8,12 +16,27 @@ const NewGroupPage = props => {
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
+  const history = useHistory();
+  const [user, setUser] = useContext(UserContext);
+  console.log(user)
+
+  const [createGroup, createGroupMutation] = useMutation(CREATE_GROUP, {
+    refetchQueries: [{query: USER}],
+    onCompleted: data => {
+      setUser(data.createGroup.user);
+      history.push(`/@${data.createGroup.group.slug}/`);
+    },
+    onError: ({graphQLErrors}) => {
+      setErrors(createErrorObject(errors, graphQLErrors))
+    }
+  });
 
   const formSubmit = e => {
     e.preventDefault();
+    createGroup({
+      variables: {name, slug, description}
+    })
   }
-
-
 
   return (
     <Base className="new-group-page">
@@ -34,7 +57,7 @@ const NewGroupPage = props => {
             </div>
           </div>
 
-          <div className={errors.name ? "input error-input" : "input"}>
+          <div className={errors.slug ? "input error-input" : "input"}>
             <label htmlFor="slug">group URL</label>
             <div className="error-container">
               {errors.slug && <div className="error">{errors.slug}</div>}
@@ -63,7 +86,9 @@ const NewGroupPage = props => {
             </div>
           </div>
 
-          <button type="submit" className="primary-button">Create Group</button>
+          <button type="submit" className="primary-button">
+            {createGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Create Group"}
+          </button>
         </form>
       </div>
     </Base>
