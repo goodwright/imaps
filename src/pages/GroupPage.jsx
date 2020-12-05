@@ -41,7 +41,7 @@ const GroupPage = props => {
     onError: () => {}
   })
 
-  const updateClick = e => {
+  const updateClick = () => {
     updateGroup({
       variables: {
         id: group.id, name: nameEl.current.innerHTML,
