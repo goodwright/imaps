@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const GroupsList = props => {
 
-  const { user } = props;
+  const { user, editable } = props;
 
   return (
     <div className="groups-list">
@@ -18,6 +18,7 @@ const GroupsList = props => {
             </div>
           </Link>
         ))}
+        {editable && <Link to="/groups/new/" className="new-group">+</Link>  }
       </div>
     </div>
   );

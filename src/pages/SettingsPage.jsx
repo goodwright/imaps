@@ -17,7 +17,7 @@ const SettingsPage = () => {
     <Base className="settings-page">
       <h1>Settings</h1>
       <SettingsForm />
-      <GroupsList user={user} />
+      <GroupsList user={user} editable={true} />
       <AccountDeletion />
     </Base>
   );

@@ -15,6 +15,7 @@ import LoginPage from "../pages/LoginPage";
 import SettingsPage from "../pages/SettingsPage";
 import PageNotFound from "../pages/PageNotFound";
 import GroupPage from "../pages/GroupPage";
+import NewGroupPage from "../pages/NewGroupPage";
 import { TOKEN, USER } from "../queries";
 
 const client = makeClient();
@@ -68,6 +69,9 @@ const App = () => {
             </Route>
             {user && <Route path="/settings/" exact>
               <SettingsPage />
+            </Route>}
+            {user && <Route path="/groups/new/" exact>
+              <NewGroupPage />
             </Route>}
             <Route path="/users/:id/" exact>
               <UserPage />
