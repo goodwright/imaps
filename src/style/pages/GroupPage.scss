@@ -1,16 +1,25 @@
 .group-page {
+    .editable {
+        background-color: $gray-4;
+        width: fit-content;
+        border-radius: $border-radius-small;
+    }
+
     .group-info {
         display: flex;
         font-size: $font-size-8;
         margin-bottom: $gap-6;
+        margin-left: -$gap-2;
         
         h1 {
             color: $purple-2;
+            padding: $gap-2 $gap-2;
         }
 
         .user-count {
             color: $purple-4;
             font-size: $font-size-6;
+            padding: $gap-2 0;
             margin-left: $gap-4;
             margin-right: $gap-6;
             position: relative;
@@ -29,17 +38,27 @@
         .edit-button {
             color: $purple-2;
             font-size: $font-size-3;
+            margin: $gap-2 0;
             display: flex;
             align-items: flex-end;
-            margin-bottom: $gap-1;
             text-decoration: none;
+            height: 100%;
         }
+    }
+
+    .slug {
+        padding: $gap-2 $gap-2;;
+        margin-top: -$gap-6 + $gap-1;
+        margin-bottom: $gap-4;
+        margin-left: -$gap-2;
     }
 
     p.description {
         color: $purple-2;
         margin-bottom: $gap-8;
         line-height: 1.6;
+        padding: $gap-2 $gap-2;
+        margin-left: -$gap-2;
     }
 
     .users-grid {

@@ -1,19 +1,27 @@
 import React, {useEffect } from "react";
-import { useRouteMatch } from "react-router";
+import { useHistory, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { ClipLoader } from "react-spinners";
 import { GROUP } from "../queries";
+import { UPDATE_GROUP } from "../mutations";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import UserSummary from "../components/UserSummary";
 import GroupDeletion from "../components/GroupDeletion";
 import { useContext } from "react";
 import { UserContext } from "../contexts";
+import { useRef } from "react";
 
 const GroupPage = props => {
 
   const { edit } = props;
   const [user] = useContext(UserContext);
+  const nameEl = useRef(null);
+  const slugEl = useRef(null);
+  const descriptionEl = useRef(null);
+  const history = useHistory();
+  const [,setUser] = useContext(UserContext);
 
   const groupId = useRouteMatch("/@:id").params.id;
   
@@ -24,6 +32,23 @@ const GroupPage = props => {
   useEffect(() => {
     document.title = `iMaps${data && data.group ? " - " + data.group.name : ""}`;
   });
+
+  const [updateGroup, updateGroupMutation] = useMutation(UPDATE_GROUP, {
+    onCompleted: data => {
+      setUser(data.updateGroup.user);
+      history.push(`/@${slugEl.current.innerHTML}/`);
+    },
+    onError: () => {}
+  })
+
+  const updateClick = e => {
+    updateGroup({
+      variables: {
+        id: group.id, name: nameEl.current.innerHTML,
+        slug: slugEl.current.innerHTML, description: descriptionEl.current.innerHTML
+      }
+    })
+  }
 
   if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
     const message = JSON.parse(error.graphQLErrors[0].message);
@@ -49,7 +74,10 @@ const GroupPage = props => {
   return (
     <Base className="group-page">
       <div className="group-info">
-        <h1>{group.name}</h1>
+        <h1
+          contentEditable={edit} suppressContentEditableWarning={edit}
+          className={edit ? "editable" : ""} ref={nameEl}
+        >{group.name}</h1>
         <div className="user-count">
           <span className="number">{group.userCount}</span>
           <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,14 +88,27 @@ const GroupPage = props => {
           </svg>
         </div>
         {user && adminUsernames.includes(user.username) && !edit && (
-          <Link to="edit/" className="edit-button">edit group settings</Link>
+          <Link to={`/@${group.slug}/edit/`} className="edit-button button tertiary-button">edit group settings</Link>
         )}
         {edit && (
-          <Link to={`/@${group.slug}/`} className="edit-button">save changes</Link>
+          <button onClick={updateClick} className="edit-button button tertiary-button">
+            {updateGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "save changes"}
+          </button>
         )}
       </div>
 
-      <p className="description">{group.description}</p>
+      {edit && <div className="slug editable">
+        <span className="at">@</span>
+        <span ref={slugEl} className="slug-text" contentEditable={true} suppressContentEditableWarning={true}>
+          {group.slug}
+        </span>
+      </div> }
+      <p
+        contentEditable={edit} suppressContentEditableWarning={edit}
+        className={edit ? "description editable" : "description"} ref={descriptionEl}
+      >
+        {group.description}
+      </p>
     
       <div className="users-grid">
         {users.map(user => <UserSummary user={user} key={user.id} link={true} useAdmin={true}/>)}

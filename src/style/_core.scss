@@ -165,3 +165,11 @@ form {
     border-color: $purple-4;
     color: white;
 }
+
+.tertiary-button:hover {
+    background-color: $gray-4;
+}
+
+.tertiary-button:active {
+    background-color: transparentize($purple-2, 0.7);
+}
