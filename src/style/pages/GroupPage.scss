@@ -12,8 +12,10 @@
             color: $purple-4;
             font-size: $font-size-6;
             margin-left: $gap-4;
+            margin-right: $gap-6;
             position: relative;
             top: -1px;
+            
 
             svg {
                 fill: $purple-4;
@@ -22,6 +24,15 @@
                 width: 25px;
                 margin-left: $gap-1;
             }
+        }
+
+        .edit-button {
+            color: $purple-2;
+            font-size: $font-size-3;
+            display: flex;
+            align-items: flex-end;
+            margin-bottom: $gap-1;
+            text-decoration: none;
         }
     }
 
@@ -55,5 +66,15 @@
                 font-weight: 300;
             }
         }
+    }
+
+    .group-deletion {
+
+        button {
+            display: block;
+            margin-left: auto;
+        }
+
+
     }
 }

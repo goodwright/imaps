@@ -18,10 +18,9 @@ const NewGroupPage = props => {
   const [errors, setErrors] = useState({});
   const history = useHistory();
   const [user, setUser] = useContext(UserContext);
-  console.log(user)
 
   const [createGroup, createGroupMutation] = useMutation(CREATE_GROUP, {
-    refetchQueries: [{query: USER}],
+    refetchQueries: [{query: USER}, {query: USER, variables: {username: user.username}}],
     onCompleted: data => {
       setUser(data.createGroup.user);
       history.push(`/@${data.createGroup.group.slug}/`);

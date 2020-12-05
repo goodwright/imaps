@@ -79,6 +79,9 @@ const App = () => {
             <Route path="/@:id/" exact>
               <GroupPage />
             </Route>
+            {user && <Route path="/@:id/edit/" exact>
+              <GroupPage edit={true} />
+            </Route>}
             <Route><PageNotFound /></Route>
           </Switch>
         </BrowserRouter>

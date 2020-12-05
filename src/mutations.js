@@ -35,4 +35,8 @@ export const CREATE_GROUP = gql`mutation createGroup(
 ) { createGroup(name: $name slug: $slug description: $description) {
   group { id name slug description }
   user { username name email groups { id slug name userCount } } 
-} }`
+} }`;
+
+export const DELETE_GROUP = gql`mutation deleteGroup($id: ID!) { deleteGroup(id: $id) {
+  success user { username name email groups { id slug name userCount } }
+} }`;

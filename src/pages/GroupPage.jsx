@@ -1,12 +1,19 @@
 import React, {useEffect } from "react";
 import { useRouteMatch } from "react-router";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GROUP } from "../queries";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import UserSummary from "../components/UserSummary";
+import GroupDeletion from "../components/GroupDeletion";
+import { useContext } from "react";
+import { UserContext } from "../contexts";
 
-const GroupPage = () => {
+const GroupPage = props => {
+
+  const { edit } = props;
+  const [user] = useContext(UserContext);
 
   const groupId = useRouteMatch("/@:id").params.id;
   
@@ -18,7 +25,7 @@ const GroupPage = () => {
     document.title = `iMaps${data && data.group ? " - " + data.group.name : ""}`;
   });
 
-  if (error && error.graphQLErrors && error.graphQLErrors.length) {
+  if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
     const message = JSON.parse(error.graphQLErrors[0].message);
     if (message && Object.values(message).some(m => m === "Does not exist")) {
       return <PageNotFound />
@@ -35,6 +42,10 @@ const GroupPage = () => {
     {...user, admin: adminUsernames.includes(user.username)}
   )).sort((u1, u2) => u2.admin - u1.admin);
 
+  if (user && edit && !(adminUsernames.includes(user.username))) {
+    return <PageNotFound />
+  }
+
   return (
     <Base className="group-page">
       <div className="group-info">
@@ -48,6 +59,12 @@ const GroupPage = () => {
             <path d="M19.4531 12.1875C20.3802 12.1875 21.2865 11.9126 22.0573 11.3975C22.8282 10.8824 23.429 10.1503 23.7838 9.2938C24.1386 8.43727 24.2314 7.49477 24.0505 6.58549C23.8697 5.6762 23.4232 4.84097 22.7677 4.18541C22.1121 3.52985 21.2769 3.08341 20.3676 2.90254C19.4583 2.72167 18.5158 2.8145 17.6593 3.16929C16.8028 3.52407 16.0707 4.12488 15.5556 4.89574C15.0405 5.66659 14.7656 6.57287 14.7656 7.49997C14.7671 8.74272 15.2614 9.93416 16.1402 10.8129C17.0189 11.6917 18.2104 12.186 19.4531 12.1875ZM19.4531 4.68747C20.0094 4.68747 20.5531 4.85242 21.0157 5.16146C21.4782 5.4705 21.8387 5.90976 22.0515 6.42367C22.2644 6.93759 22.3201 7.50309 22.2116 8.04866C22.1031 8.59423 21.8352 9.09537 21.4419 9.48871C21.0485 9.88205 20.5474 10.1499 20.0018 10.2584C19.4562 10.367 18.8907 10.3113 18.3768 10.0984C17.8629 9.88551 17.4237 9.52503 17.1146 9.06251C16.8056 8.6 16.6406 8.05623 16.6406 7.49997C16.6414 6.7543 16.938 6.03941 17.4653 5.51214C17.9926 4.98487 18.7074 4.68829 19.4531 4.68747Z"/>
           </svg>
         </div>
+        {user && adminUsernames.includes(user.username) && !edit && (
+          <Link to="edit/" className="edit-button">edit group settings</Link>
+        )}
+        {edit && (
+          <Link to={`/@${group.slug}/`} className="edit-button">save changes</Link>
+        )}
       </div>
 
       <p className="description">{group.description}</p>
@@ -55,6 +72,10 @@ const GroupPage = () => {
       <div className="users-grid">
         {users.map(user => <UserSummary user={user} key={user.id} link={true} useAdmin={true}/>)}
       </div>
+
+      {edit && <GroupDeletion group={group} />}
+
+
     </Base>
   );
 };
