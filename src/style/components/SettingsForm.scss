@@ -10,32 +10,6 @@
             margin-bottom: $gap-6;
             margin-left: 80px + $gap-3;
         }
-
-        .input {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 80px 1fr;
-            align-items: center;
-            margin-bottom: $gap-6;
-            gap: $gap-3;
-
-            label {
-                text-align: right;
-            }
-
-            input {
-                font-size: $font-size-5;
-                padding: $gap-4 $gap-3;
-                width: 100%;
-                background-color: $gray-2;
-            }
-        }
-
-        button {
-            margin-left: 80px + $gap-3;
-            height: 40px;
-            width: 150px;
-        }
     }
 
     @media (max-width: 1200px) {
@@ -55,24 +29,6 @@
                 margin-bottom: $gap-5;
                 margin-left: 60px + $gap-3;
             }
-    
-            .input {
-                margin-bottom: $gap-5;
-                grid-template-columns: 60px 1fr;
-
-                label {
-                    font-size: $font-size-2;
-                }
-    
-                input {
-                    font-size: $font-size-4;
-                    padding: $gap-3 $gap-2;
-                }
-            }
-
-            button {
-                margin-left: 60px + $gap-3;
-            }
         }
     }
 
@@ -83,20 +39,7 @@
                 margin-left: 0;
                 margin-bottom: $gap-4;
             }
-    
-            .input {
-                grid-template-columns: 1fr;
-                gap: $gap-1;
-                margin-bottom: $gap-4;
 
-                label {
-                    text-align: left;
-                }
-            }
-
-            button {
-                margin-left: 0;
-            }
         }
     }
 }
