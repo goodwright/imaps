@@ -11,7 +11,7 @@ const GroupPage = () => {
   const groupId = useRouteMatch("/@:id").params.id;
   
   const { loading, data, error } = useQuery(GROUP, {
-    variables: {name: groupId}
+    variables: {slug: groupId}
   });
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const GroupPage = () => {
   return (
     <Base className="group-page">
       <div className="group-info">
-        <h1><span className="at">@</span>{group.name}</h1>
+        <h1>{group.name}</h1>
         <div className="user-count">
           <span className="number">{group.userCount}</span>
           <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">

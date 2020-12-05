@@ -11,8 +11,8 @@ const GroupsList = props => {
       <div className="title">Groups</div>
       <div className="groups">
         {user.groups.map(group => (
-          <Link to={`/@${group.name}/`} className="group" key={group.id}>
-            <div className="group-name"><span className="at">@</span>{group.name}</div>
+          <Link to={`/@${group.slug}/`} className="group" key={group.id}>
+            <div className="group-name"><span className="at">@</span>{group.slug}</div>
             <div className="user-count">
               <span className="number">{group.userCount}</span> member{group.userCount === 1 ? "" : "s"}
             </div>
