@@ -1,4 +1,4 @@
-import React, {useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
@@ -11,7 +11,7 @@ import UserSummary from "../components/UserSummary";
 import GroupDeletion from "../components/GroupDeletion";
 import { useContext } from "react";
 import { UserContext } from "../contexts";
-import { useRef } from "react";
+import UserInviter from "../components/UserInviter";
 
 const GroupPage = props => {
 
@@ -22,7 +22,6 @@ const GroupPage = props => {
   const descriptionEl = useRef(null);
   const history = useHistory();
   const [,setUser] = useContext(UserContext);
-
   const groupId = useRouteMatch("/@:id").params.id;
   
   const { loading, data, error } = useQuery(GROUP, {
@@ -66,6 +65,7 @@ const GroupPage = props => {
   const users = [...group.users].map(user => (
     {...user, admin: adminUsernames.includes(user.username)}
   )).sort((u1, u2) => u2.admin - u1.admin);
+  const allUsers = data.users;
 
   if (user && edit && !(adminUsernames.includes(user.username))) {
     return <PageNotFound />
@@ -113,6 +113,8 @@ const GroupPage = props => {
       <div className="users-grid">
         {users.map(user => <UserSummary user={user} key={user.id} link={true} useAdmin={true}/>)}
       </div>
+
+      {edit && <UserInviter group={group} allUsers={allUsers} /> }
 
       {edit && <GroupDeletion group={group} />}
 

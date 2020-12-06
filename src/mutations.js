@@ -47,3 +47,9 @@ export const UPDATE_GROUP = gql`mutation updateGroup(
 export const DELETE_GROUP = gql`mutation deleteGroup($id: ID!) { deleteGroup(id: $id) {
   success user { username name email groups { id slug name userCount } }
 } }`;
+
+export const INVITE_TO_GROUP = gql`mutation inviteToGroup($group: ID! $user: ID!) {
+  inviteUserToGroup(user: $user group: $group) {
+    invitation { id }
+  }
+}`;
