@@ -22,6 +22,17 @@
         overflow-y: scroll;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        position: relative;
+
+        .invitation {
+            position: absolute;
+            width: fit-content;
+            right: $gap-3;
+            top: $gap-5;
+            z-index: 10;
+            width: 360px;
+        }
+
     }
 
     main::-webkit-scrollbar {

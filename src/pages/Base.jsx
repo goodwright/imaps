@@ -3,6 +3,9 @@ import Div100vh from "react-div-100vh";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import { MoonLoader } from "react-spinners";
+import { useContext } from "react";
+import { UserContext } from "../contexts";
+import Invitation from "../components/Invitation";
 
 const Base = props => {
   /**
@@ -10,6 +13,8 @@ const Base = props => {
    */
 
   const { className, blank, loading } = props;
+
+  const [user,] = useContext(UserContext);
 
   let fullClassName = className;
   if (blank) fullClassName += " blank";
@@ -20,6 +25,14 @@ const Base = props => {
       <Nav />
       <Sidebar />
       <main className={fullClassName}>
+        {user && user.groupInvitations.map((invitation, index) => (
+          <Invitation
+            invitation={invitation} key={invitation.id} style={{
+              top: (index + 1) * 7 + 8,
+              right: (user.groupInvitations.length - index) * 7 + 8
+            }}
+          />
+        ))}
         {loading ? <MoonLoader size="70px" color="#6353C6" /> : props.children}
       </main>
     </Div100vh>
