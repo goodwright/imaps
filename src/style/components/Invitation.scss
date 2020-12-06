@@ -14,6 +14,14 @@
     .buttons {
         margin-top: $gap-4;
         font-size: $font-size-2;
+        display: flex;
+        align-items: flex-start;
+
+        button {
+            height: 35px;
+            width: 100px;
+            padding: $gap-2;
+        }
 
         .primary-button {
             margin-right: $gap-3;

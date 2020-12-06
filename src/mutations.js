@@ -75,3 +75,25 @@ export const INVITE_TO_GROUP = gql`mutation inviteToGroup($group: ID! $user: ID!
     invitation { id }
   }
 }`;
+
+export const DECLINE_INVITATION = gql`mutation declineInvitation($id: ID!) {
+  deleteGroupInvitation(id: $id) {
+    success
+    user { 
+      username email name
+      groups { id slug userCount }
+      groupInvitations { id group { id name slug } }
+    }
+  }
+}`;
+
+export const ACCEPT_INVITATION = gql`mutation acceptInvitation($id: ID!) {
+  acceptGroupInvitation(id: $id) {
+    group { id slug name }
+    user { 
+      username email name
+      groups { id slug userCount }
+      groupInvitations { id group { id name slug } }
+    }
+  }
+}`;
