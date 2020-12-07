@@ -35,7 +35,7 @@ const UserSummary = props => {
 
 
   return (
-    <Element className="user-summary" to={`/users/${user.username}/`}>
+    <Element className="user-summary" to={`/users/${user && user.username}/`}>
       <div className="user-photo" />
       <div className="user-info">
         <div className="name">{user ? user.name : "Guest"}</div>
@@ -65,7 +65,7 @@ const UserSummary = props => {
 };
 
 UserSummary.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   link: PropTypes.bool
 };
 

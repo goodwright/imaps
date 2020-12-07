@@ -13,7 +13,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-top">
-        <UserSummary user={user} link={true} />
+        <UserSummary user={user || null} link={true} />
         {user && user.groups.length > 0 && <div className="groups-section">
           <div className="label">Your groups:</div>
           <div className="groups">
