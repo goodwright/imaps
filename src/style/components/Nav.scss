@@ -28,6 +28,8 @@ nav {
         }
 
         .auth-buttons {
+            z-index: 40;
+            
             button, a {
                 font-weight: 500;
             }
