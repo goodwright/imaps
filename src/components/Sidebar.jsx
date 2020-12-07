@@ -14,7 +14,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar-top">
         <UserSummary user={user} link={true} />
-        {user && user.groups.length && <div className="groups-section">
+        {user && user.groups.length > 0 && <div className="groups-section">
           <div className="label">Your groups:</div>
           <div className="groups">
             {user.groups.map(group => (
