@@ -91,4 +91,14 @@
         right: $gap-5;
         font-size: $font-size-4;
     }
+
+    @media (max-width: 700px) {
+        .input {
+            grid-template-columns: 80px 1fr;
+        }
+
+        .terms-link, button[type=submit] {
+            margin-left: 80px + $gap-3; 
+        }
+    }
 }
