@@ -111,7 +111,7 @@ const GroupPage = props => {
       </p>
     
       <div className="users-grid">
-        {users.map(user => <UserSummary user={user} key={user.id} link={true} useAdmin={true}/>)}
+        {users.map(user => <UserSummary user={user} key={user.id} link={!edit} group={group} edit={edit} />)}
       </div>
 
       {edit && <UserInviter group={group} allUsers={allUsers} /> }

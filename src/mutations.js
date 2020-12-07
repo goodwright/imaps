@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const LOGIN = gql`mutation login($username: String! $password: String!) {
   login(username: $username password: $password) { accessToken user {
-    username email name
+    id username email name
     groups { id slug userCount }
     groupInvitations { id group { id name slug } }
   } }
@@ -15,7 +15,7 @@ export const SIGNUP = gql`mutation login(
 ) { signup(
   username: $username password: $password name: $name email: $email
 ) { accessToken user { 
-  username email name
+  id username email name
   groups { id slug userCount }
   groupInvitations { id group { id name slug } }
  } }
@@ -25,7 +25,7 @@ export const UPDATE_USER = gql`mutation updateUser(
   $username: String! $email: String! $name: String!
 ) { updateUser(username: $username email: $email name: $name) {
   user { 
-    username email name
+    id username email name
     groups { id slug userCount }
     groupInvitations { id group { id name slug } }
    }
@@ -45,7 +45,7 @@ export const CREATE_GROUP = gql`mutation createGroup(
 ) { createGroup(name: $name slug: $slug description: $description) {
   group { id name slug description }
   user { 
-    username email name
+    id username email name
     groups { id slug userCount }
     groupInvitations { id group { id name slug } }
    } 
@@ -56,7 +56,7 @@ export const UPDATE_GROUP = gql`mutation updateGroup(
 ) { updateGroup(id: $id name: $name slug: $slug description: $description) {
   group { id name slug description }
   user { 
-    username email name
+    id username email name
     groups { id slug userCount }
     groupInvitations { id group { id name slug } }
    } 
@@ -64,7 +64,7 @@ export const UPDATE_GROUP = gql`mutation updateGroup(
 
 export const DELETE_GROUP = gql`mutation deleteGroup($id: ID!) { deleteGroup(id: $id) {
   success user { 
-    username email name
+    id username email name
     groups { id slug userCount }
     groupInvitations { id group { id name slug } }
    }
@@ -80,7 +80,7 @@ export const DECLINE_INVITATION = gql`mutation declineInvitation($id: ID!) {
   deleteGroupInvitation(id: $id) {
     success
     user { 
-      username email name
+      id username email name
       groups { id slug userCount }
       groupInvitations { id group { id name slug } }
     }
@@ -91,9 +91,21 @@ export const ACCEPT_INVITATION = gql`mutation acceptInvitation($id: ID!) {
   acceptGroupInvitation(id: $id) {
     group { id slug name }
     user { 
-      username email name
+      id username email name
       groups { id slug userCount }
       groupInvitations { id group { id name slug } }
     }
+  }
+}`;
+
+export const MAKE_ADMIN = gql`mutation makeAdmin($group: ID! $user: ID!) {
+  makeGroupAdmin(group: $group user: $user) {
+    group { id }
+  }
+}`;
+
+export const REVOKE_ADMIN = gql`mutation makeAdmin($group: ID! $user: ID!) {
+  revokeGroupAdmin(group: $group user: $user) {
+    user { id }
   }
 }`;

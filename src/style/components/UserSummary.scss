@@ -28,10 +28,27 @@
             }
         }
 
-        .admin {
+        .group-status {
             position: absolute;
             color: $purple-3;
             font-size: $font-size-1;
+
+            .resign, .demote, .promote {
+                cursor: pointer;
+                opacity: 0.8;
+            }
+
+            .resign:hover, .demote:hover, .promote:hover {
+                opacity: 1;
+            }
+
+            .resign, .demote {
+                color: $down-red;
+            }
+
+            .promote {
+                color: $up-green;
+            }
         }
     }
 }
