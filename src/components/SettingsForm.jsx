@@ -70,6 +70,7 @@ const SettingsForm = () => {
                 type="text"
                 value={username}
                 onChange={e => setUsername(e.target.value)}
+                autocapitalize="none"
                 required
               />
             </div>

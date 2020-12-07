@@ -53,6 +53,7 @@ const SignupForm = () => {
             id="username"
             value={username}
             onChange={e => setUsername(e.target.value)}
+            autocapitalize="none"
             autoComplete="username"
           />
         </div>
