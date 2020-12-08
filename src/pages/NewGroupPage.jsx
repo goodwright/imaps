@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import { ClipLoader } from "react-spinners";
@@ -10,7 +10,11 @@ import { useContext } from "react";
 import { UserContext } from "../contexts";
 import { createErrorObject } from "../forms";
 
-const NewGroupPage = props => {
+const NewGroupPage = () => {
+
+  useEffect(() => {
+    document.title = "iMaps - New Group";
+  });
 
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
