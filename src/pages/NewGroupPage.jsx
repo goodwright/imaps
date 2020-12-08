@@ -42,6 +42,12 @@ const NewGroupPage = props => {
       <div className="page-content">     
         <h1>Create a group</h1>
 
+        <p>
+          Groups are how you organise the members of your lab or organisation.
+          You can make data available to just members of your group if you like,
+          as well as make it your public profile for showing your previous research.
+        </p>
+
         <form onSubmit={formSubmit}>
           <div className={errors.name ? "input error-input" : "input"}>
             <label htmlFor="name">group name</label>
