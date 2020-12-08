@@ -23,7 +23,7 @@ const GroupSummary = props => {
 
   return (
     <div className="group-container">
-      <Link to={`/@${group.slug}/`} className="group" key={group.id}>
+      <Link to={`/@${group.slug}/`} className="group">
         <div className="group-name"><span className="at">@</span>{group.slug}</div>
         <div className="user-count">
           <span className="number">{group.userCount}</span> member{group.userCount === 1 ? "" : "s"}

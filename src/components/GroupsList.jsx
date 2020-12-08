@@ -12,7 +12,7 @@ const GroupsList = props => {
       <div className="title">Groups</div>
       <div className="groups">
         {user.groups.map(group => (
-          <GroupSummary group={group} editable={editable} user={user} />
+          <GroupSummary key={group.id} group={group} editable={editable} user={user} />
         ))}
         {editable && <Link to="/groups/new/" className="new-group">+</Link>  }
       </div>
