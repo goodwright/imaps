@@ -5,16 +5,16 @@ main.settings-page {
     h1 {
         font-size: $font-size-8;
         margin-bottom: $gap-7;
-        margin-left: 80px + $gap-3;
+        margin-left: 68px + $gap-3;
         line-height: 2;
     }
 
     .settings-form {
-        margin-bottom: $gap-8;
+        margin-bottom: $gap-9;
     }
 
     .groups-list {
-        margin-left: 80px + $gap-3;
+        margin-left: 68px + $gap-3;
     }
 
     .account-deletion {
@@ -25,15 +25,44 @@ main.settings-page {
     @media (max-width: 700px) {
         padding: $gap-5;
 
-        h1, .groups-list {
-            margin-left: 60px + $gap-3;
+        h1 {
+            margin-bottom: $gap-6;
+        }
+
+        .groups-list {
+            margin-left: 0;
         }
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 375px) {
 
         h1, .groups-list {
             margin-left: 0;
+        }
+
+        .groups-list {
+            .groups {
+                width: 100%;
+
+                .group-container {
+                    .group {
+                        font-size: $font-size-1;
+
+                        .at {
+                            font-size: $font-size-1 * 0.8;
+                        }
+                    }
+
+                    .leave {
+                        display: none;
+                    }
+                }
+
+                .new-group {
+                    margin-right: 0;
+                    font-size: $font-size-7;
+                }
+            }
         }
     }
 }
