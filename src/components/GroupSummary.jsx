@@ -6,11 +6,12 @@ import Modal from "./Modal";
 import { useMutation } from "@apollo/client";
 import { LEAVE_GROUP } from "../mutations";
 import { UserContext } from "../contexts";
+import { createErrorObject } from "../forms";
 
 const GroupSummary = props => {
 
   const [showModal, setShowModal] = useState(false);
-
+  const [error, setError] = useState({});
   const { group, editable } = props;
   const [,setUser] = useContext(UserContext);
 
@@ -18,6 +19,9 @@ const GroupSummary = props => {
     onCompleted: data => {
       setShowModal(false);
       setUser(data.leaveGroup.user);
+    },
+    onError: ({graphQLErrors}) => {
+      setError(createErrorObject(error, graphQLErrors))
     }
   });
 
@@ -35,6 +39,7 @@ const GroupSummary = props => {
           <h2>Leave {group.name}?</h2>
           <p>You will lose access to its private data and will have to be invited
             to rejoin.</p>
+            {error.group && <div className="error">{error.group}</div> }
           <div className="buttons">
             <button type="submit" className="primary-button" onClick={() => leaveGroup({variables: {id: group.id}})}>
               {leaveGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, leave group"}
