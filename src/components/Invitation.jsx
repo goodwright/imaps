@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
@@ -9,16 +9,20 @@ import { UserContext } from "../contexts";
 const Invitation = props => {
 
   const { invitation, style } = props;
-
+  const [banished, setBanished] = useState(false);
   const [,setUser] = useContext(UserContext);
 
   const [accept, acceptMutation] = useMutation(ACCEPT_INVITATION, {
-    onCompleted: data => setUser(data.acceptGroupInvitation.user)
+    onCompleted: data => setUser(data.acceptGroupInvitation.user),
+    onError: () => setBanished(true)
   });
 
   const [decline, declineMutation] = useMutation(DECLINE_INVITATION, {
-    onCompleted: data => setUser(data.deleteGroupInvitation.user)
+    onCompleted: data => setUser(data.deleteGroupInvitation.user),
+    onError: () => setBanished(true)
   });
+
+  if (banished) return <div />
 
   return (
     <div className="invitation" style={style}>
