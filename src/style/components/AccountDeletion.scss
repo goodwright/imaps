@@ -5,46 +5,4 @@
         line-height: 1.6;
         margin-top: $gap-4;
     }
-
-    .delete-account-modal {
-        text-align: left;
-
-        h2 {
-            color: $purple-4;
-            font-size: $font-size-7;
-            margin-bottom: $gap-4;
-        }
-
-        p {
-            font-weight: 300;
-            margin-bottom: $gap-5;
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: space-between;
-
-            button {
-                height: 37px;
-                margin-left: 0;
-            }
-
-            button.primary-button {
-                width: 202px;
-            }
-        }
-    }
-
-    @media (max-width: 500px) {
-        .delete-account-modal {
-            .buttons {
-                flex-direction: column;
-
-                button {
-                    display: block;
-                    margin-bottom: $gap-4;
-                }
-            }
-        }
-    }
 }

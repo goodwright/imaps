@@ -17,6 +17,49 @@
         height: fit-content;
         padding: $gap-5;
         border-radius: $border-radius;
+        text-align: left;
+
+        h2 {
+            color: $purple-4;
+            font-size: $font-size-7;
+            margin-bottom: $gap-4;
+        }
+
+        p {
+            font-weight: 300;
+            margin-bottom: $gap-5;
+            max-width: 380px;
+            line-height: 1.6;
+            margin-top: $gap-4;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+
+            button {
+                height: 37px;
+                margin-left: 0;
+            }
+
+            button.primary-button {
+                width: 202px;
+            }
+        }
+    }
+
+    @media (max-width: 500px) {
+        .modal-box {
+            .buttons {
+                flex-direction: column;
+
+                button, button.primary-button {
+                    display: block;
+                    margin-bottom: $gap-4;
+                    width: 100%;
+                }
+            }
+        }
     }
 }
 
