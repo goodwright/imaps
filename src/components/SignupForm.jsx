@@ -2,7 +2,8 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
+import { TOKEN } from "../queries";
 import { SIGNUP } from "../mutations";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
@@ -18,12 +19,17 @@ const SignupForm = () => {
   const [errors, setErrors] = useState({});
   const [,setUser] = useContext(UserContext);
   const history = useHistory();
+  const client = useApolloClient();
 
   const [signup, signupMutation] = useMutation(SIGNUP, {
     onCompleted: data => {
       setUser(data.signup.user);
+      client.cache.writeQuery({
+        query: TOKEN, data: {accessToken: data.login.accessToken}
+      });
       history.push("/");
     },
+    
     onError: ({graphQLErrors}) => {
       setErrors(createErrorObject(errors, graphQLErrors))
     }

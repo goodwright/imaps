@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
+import { useApolloClient, useMutation } from "@apollo/client";
 import classNames from "classnames";
 import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
 import menuIcon from  "../images/menu-icon.svg";
 import searchIcon from "../images/searchIcon.svg";
 import { UserContext } from "../contexts";
+import { TOKEN } from "../queries";
 import { LOGOUT } from "../mutations";
-import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
 
 const Nav = () => {
@@ -19,6 +20,7 @@ const Nav = () => {
   const dropdownElement = useRef(null);
   const location = useLocation();
   const history = useHistory();
+  const client = useApolloClient();
 
   const iconClicked = e => {
     e.stopPropagation();
@@ -34,6 +36,7 @@ const Nav = () => {
   const [logout, logoutMutation] = useMutation(LOGOUT, {
     onCompleted: () => {
       setUser(false);
+      client.cache.writeQuery({query: TOKEN, data: {accessToken: null}})
       if (["/settings/"].includes(location.pathname)) {
         history.push("/");
       }

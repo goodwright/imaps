@@ -5,9 +5,10 @@ import classNames from "classnames";
 import { ClipLoader } from "react-spinners";
 import Logo from "./Logo";
 import goodwright from "../images/by-goodwright.svg"
-import { useMutation } from "@apollo/client";
+import { useApolloClient, useMutation } from "@apollo/client";
 import { LOGIN } from "../mutations";
 import { UserContext } from "../contexts";
+import { TOKEN } from "../queries";
 
 const LoginForm = () => {
 
@@ -16,6 +17,7 @@ const LoginForm = () => {
   const [,setUser] = useContext(UserContext);
   const history = useHistory();
   const [error, setError] = useState(false);
+  const client = useApolloClient();
   const className = classNames({
     "signup-form": true, "login-form": true, "error-form": error
   })
@@ -23,6 +25,9 @@ const LoginForm = () => {
   const [login, loginMutation] = useMutation(LOGIN, {
     onCompleted: data => {
       setUser(data.login.user);
+      client.cache.writeQuery({
+        query: TOKEN, data: {accessToken: data.login.accessToken}
+      });
       history.push("/");
     },
     onError: () => setError(true)
