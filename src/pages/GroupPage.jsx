@@ -103,12 +103,12 @@ const GroupPage = props => {
           {group.slug}
         </span>
       </div> }
-      <p
+      {(edit || group.description) && <p
         contentEditable={edit} suppressContentEditableWarning={edit}
         className={edit ? "description editable" : "description"} ref={descriptionEl}
       >
         {group.description}
-      </p>
+      </p>}
     
       <div className="users-grid">
         {users.map(user => <UserSummary user={user} key={user.id} link={!edit} group={group} edit={edit} />)}
