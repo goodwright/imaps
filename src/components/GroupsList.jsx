@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import GroupSummary from "./GroupSummary";
 
 const GroupsList = props => {
 
@@ -11,12 +12,7 @@ const GroupsList = props => {
       <div className="title">Groups</div>
       <div className="groups">
         {user.groups.map(group => (
-          <Link to={`/@${group.slug}/`} className="group" key={group.id}>
-            <div className="group-name"><span className="at">@</span>{group.slug}</div>
-            <div className="user-count">
-              <span className="number">{group.userCount}</span> member{group.userCount === 1 ? "" : "s"}
-            </div>
-          </Link>
+          <GroupSummary group={group} editable={editable} user={user} />
         ))}
         {editable && <Link to="/groups/new/" className="new-group">+</Link>  }
       </div>

@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const LOGIN = gql`mutation login($username: String! $password: String!) {
   login(username: $username password: $password) { accessToken user {
     id username email name
-    groups { id slug userCount }
+    groups { id name slug userCount }
     groupInvitations { id group { id name slug } }
   } }
 }`;
@@ -16,7 +16,7 @@ export const SIGNUP = gql`mutation login(
   username: $username password: $password name: $name email: $email
 ) { accessToken user { 
   id username email name
-  groups { id slug userCount }
+  groups { id name slug userCount }
   groupInvitations { id group { id name slug } }
  } }
 }`;
@@ -26,7 +26,7 @@ export const UPDATE_USER = gql`mutation updateUser(
 ) { updateUser(username: $username email: $email name: $name) {
   user { 
     id username email name
-    groups { id slug userCount }
+    groups { id name slug userCount }
     groupInvitations { id group { id name slug } }
    }
 } }`;
@@ -46,7 +46,7 @@ export const CREATE_GROUP = gql`mutation createGroup(
   group { id name slug description }
   user { 
     id username email name
-    groups { id slug userCount }
+    groups { id name slug userCount }
     groupInvitations { id group { id name slug } }
    } 
 } }`;
@@ -57,7 +57,7 @@ export const UPDATE_GROUP = gql`mutation updateGroup(
   group { id name slug description }
   user { 
     id username email name
-    groups { id slug userCount }
+    groups { id name slug userCount }
     groupInvitations { id group { id name slug } }
    } 
 } }`;
@@ -65,7 +65,7 @@ export const UPDATE_GROUP = gql`mutation updateGroup(
 export const DELETE_GROUP = gql`mutation deleteGroup($id: ID!) { deleteGroup(id: $id) {
   success user { 
     id username email name
-    groups { id slug userCount }
+    groups { id name slug userCount }
     groupInvitations { id group { id name slug } }
    }
 } }`;
@@ -81,7 +81,7 @@ export const DECLINE_INVITATION = gql`mutation declineInvitation($id: ID!) {
     success
     user { 
       id username email name
-      groups { id slug userCount }
+      groups { id name slug userCount }
       groupInvitations { id group { id name slug } }
     }
   }
@@ -92,7 +92,7 @@ export const ACCEPT_INVITATION = gql`mutation acceptInvitation($id: ID!) {
     group { id slug name }
     user { 
       id username email name
-      groups { id slug userCount }
+      groups { id name slug userCount }
       groupInvitations { id group { id name slug } }
     }
   }
@@ -108,4 +108,12 @@ export const REVOKE_ADMIN = gql`mutation makeAdmin($group: ID! $user: ID!) {
   revokeGroupAdmin(group: $group user: $user) {
     user { id }
   }
+}`;
+
+export const LEAVE_GROUP = gql`mutation leaveGroup($id: ID!) {
+  leaveGroup(id: $id) { user {
+    id username email name
+    groups { id name slug userCount }
+    groupInvitations { id group { id name slug } }
+  } }
 }`;

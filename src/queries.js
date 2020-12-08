@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const USER = gql`query user($username: String) {
   user(username: $username) { 
     id username email name
-    groups { id slug userCount }
+    groups { id slug name userCount }
     groupInvitations { id group { id name slug } }
   }
 }`;
