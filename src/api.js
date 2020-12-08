@@ -60,5 +60,16 @@ export const makeClient = () => {
 
   const link = ApolloLink.from([authLink, httpLink]);
 
-  return new ApolloClient({link: link, cache: new InMemoryCache(), credentials: "include"});
+  const cache = new InMemoryCache({
+    typePolicies: {
+      GroupType: {
+        fields: {admins: {merge(existing, incoming) { return incoming }}}
+      },
+      UserType: {
+        fields: {groupInvitations: {merge(existing, incoming) { return incoming }}}
+      }
+    }
+  })
+
+  return new ApolloClient({link: link, cache, credentials: "include"});
 }
