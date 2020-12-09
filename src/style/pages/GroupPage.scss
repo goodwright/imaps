@@ -66,14 +66,12 @@
         border-top: 1px solid $gray-3;
         padding-top: $gap-5;
         margin-top: $gap-7;
+        display: grid;
+        grid-template-columns: repeat(10, 350px);
         
         .user-summary {
-            display: inline-grid;
-            width: 350px;
             margin-bottom: $gap-6;
-            margin-right: $gap-5;
             grid-template-columns: 60px 1fr;
-            margin-right: -$gap-5;
 
             .user-photo {
                 width: 60px;
@@ -103,6 +101,60 @@
         button {
             display: block;
             margin-left: auto;
+        }
+    }
+
+    @media (max-width: (350px * 9) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(9, calc(100% / 9));
+        }
+    }
+
+    @media (max-width: (350px * 8) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(8, calc(100% / 8));
+        }
+    }
+
+    @media (max-width: (350px * 7) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(7, calc(100% / 7));
+        }
+    }
+
+    @media (max-width: (350px * 6) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(6, calc(100% / 6));
+        }
+    }
+
+    @media (max-width: (350px * 5) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(5, calc(100% / 5));
+        }
+    }
+
+    @media (max-width: (350px * 4) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(4, calc(100% / 4));
+        }
+    }
+
+    @media (max-width: (350px * 3) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(3, calc(100% / 3));
+        }
+    }
+
+    @media (max-width: (350px * 2) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(2, calc(100% / 2));
+        }
+    }
+
+    @media (max-width: (350px * 1) + $sidebar-width + (2 * $sidebar-width)) {
+        .users-grid {
+            grid-template-columns: repeat(1, calc(100% / 1));
         }
     }
 
