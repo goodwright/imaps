@@ -8,6 +8,7 @@ import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
 import { DECLINE_INVITATION, MAKE_ADMIN, REMOVE_USER, REVOKE_ADMIN } from "../mutations";
 import { GROUP } from "../queries";
+import { createErrorObject } from "../forms";
 
 const UserSummary = props => {
 
@@ -18,6 +19,7 @@ const UserSummary = props => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [loggedInUser,] = useContext(UserContext);
   const history = useHistory();
+  const [errors, setErrors] = useState({});
 
   const groupAdmins = group ? group.admins.map(user => user.username) : [];
 
@@ -28,7 +30,10 @@ const UserSummary = props => {
   const [makeAdmin, makeAdminMutation] = useMutation(MAKE_ADMIN, {
     refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}],
     awaitRefetchQueries: true,
-    onCompleted: () => setShowPromoteModal(false)
+    onCompleted: () => setShowPromoteModal(false),
+    onError: ({graphQLErrors}) => {
+      setErrors(createErrorObject(errors, graphQLErrors))
+    }
   });
 
   const [revokeAdmin, revokeAdminMutation] = useMutation(REVOKE_ADMIN, {
@@ -40,16 +45,25 @@ const UserSummary = props => {
       if (data.revokeGroupAdmin.user.id === loggedInUser.id) {
         history.push(`/@${group.slug}/`);
       }
+    },
+    onError: ({graphQLErrors}) => {
+      setErrors(createErrorObject(errors, graphQLErrors))
     }
   });
 
   const [removeUser, removeUserMutation] = useMutation(REMOVE_USER, {
     refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}],
     awaitRefetchQueries: true,
+    onError: ({graphQLErrors}) => {
+      setErrors(createErrorObject(errors, graphQLErrors))
+    }
   });
 
   const [cancelInvitation,] = useMutation(DECLINE_INVITATION, {
-    refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}]
+    refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}],
+    onError: ({graphQLErrors}) => {
+      setErrors(createErrorObject(errors, graphQLErrors))
+    }
   })
 
   return (
@@ -76,6 +90,7 @@ const UserSummary = props => {
                   <p>
                     You will no longer have the ability to edit information for this group.
                   </p>
+                  {errors.user && <div className="error">{errors.user}</div> }
                   <div className="buttons">
                     <button type="submit" className="primary-button" onClick={() => revokeAdmin({variables: {group: group.id, user: user.id}})}>
                       {revokeAdminMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, resign as admin"}
@@ -93,6 +108,7 @@ const UserSummary = props => {
                   <p>
                     They will be able to edit the group, and make other users an admin.
                   </p>
+                  {errors.user && <div className="error">{errors.user}</div> }
                   <div className="buttons">
                     <button type="submit" className="primary-button" onClick={() => makeAdmin({variables: {group: group.id, user: user.id}})}>
                       {makeAdminMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, promote this user"}
@@ -110,9 +126,10 @@ const UserSummary = props => {
                   <p>
                     This user will no longer have the ability to edit information for this group.
                   </p>
+                  {errors.user && <div className="error">{errors.user}</div> }
                   <div className="buttons">
                     <button type="submit" className="primary-button" onClick={() => revokeAdmin({variables: {group: group.id, user: user.id}})}>
-                      {revokeAdminMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, revoke admin status"}
+                      {revokeAdminMutation.loading ? <ClipLoader color="white" size="20px" /> : "Revoke admin status"}
                     </button>
                     <button className="secondary-button" onClick={() => setShowDemoteModal(false)}>No, take me back</button>
                   </div>
@@ -127,6 +144,7 @@ const UserSummary = props => {
                   <p>
                     This user will no longer be a member of this group, and any admin status will be removed.
                   </p>
+                  {errors.user && <div className="error">{errors.user}</div> }
                   <div className="buttons">
                     <button type="submit" className="primary-button" onClick={() => removeUser({variables: {group: group.id, user: user.id}})}>
                       {removeUserMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, remove the user"}
