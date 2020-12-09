@@ -25,7 +25,7 @@ const SignupForm = () => {
     onCompleted: data => {
       setUser(data.signup.user);
       client.cache.writeQuery({
-        query: TOKEN, data: {accessToken: data.login.accessToken}
+        query: TOKEN, data: {accessToken: data.signup.accessToken}
       });
       history.push("/");
     },

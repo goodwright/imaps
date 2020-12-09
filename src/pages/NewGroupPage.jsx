@@ -69,7 +69,7 @@ const NewGroupPage = () => {
           <div className={errors.slug ? "input error-input" : "input"}>
             <label htmlFor="slug">group URL</label>
             <div className="error-container">
-              {errors.slug && <div className="error">{errors.slug}</div>}
+              {errors.slug && <div className="error">{errors.slug.replace("Slug", "ID")}</div>}
               <div className="url-container">
                 <div className="url">{window.location.origin}/<span className="at">@</span></div>
                 <input
