@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Select from "react-select";
+import { ClipLoader } from "react-spinners";
 import { useMutation } from "@apollo/client";
 import { INVITE_TO_GROUP } from "../mutations";
+import { GROUP } from "../queries";
 
 const UserInviter = props => {
 
@@ -13,16 +15,19 @@ const UserInviter = props => {
   const [users, setUsers] = useState([]);
 
   const usernamesInGroup = group.users.map(user => user.username);
+  const inviteesInGroup = group.groupInvitations.map(invitation => invitation.user);
+  const inviteeUsernamesInGroup = inviteesInGroup.map(user => user.username);
 
   const options = allUsers.map(user => ({
     value: user.username,
-    label: `${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}`,
-    isDisabled: usernamesInGroup.includes(user.username),
+    label: `${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}${inviteeUsernamesInGroup.includes(user.username) ? " (Already invited)" : ""}`,
+    isDisabled: usernamesInGroup.includes(user.username) || inviteeUsernamesInGroup.includes(user.username),
     id: user.id
   }));
 
   const [invite, inviteMutation] = useMutation(INVITE_TO_GROUP, {
-
+    onCompleted: () => setUsers([]),
+    refetchQueries: [{query: GROUP, variables: {slug: group.slug}}]
   });
 
   const formSubmit = async e => {
@@ -49,7 +54,7 @@ const UserInviter = props => {
         classNamePrefix="react-select"
       />
       <button className="button primary-button">
-        Invite
+        {inviteMutation.loading ? <ClipLoader color="white" size="20px" /> : "Invite"}
       </button>
     </form>
   );

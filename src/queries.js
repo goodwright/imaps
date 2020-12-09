@@ -20,6 +20,7 @@ export const GROUP = gql`query group($slug: String!) {
   group(slug: $slug) {
     id slug name description userCount
     users { id name username } admins { id username }
+    groupInvitations { id user { id username name } }
   }
   users { id username name }
 }`;

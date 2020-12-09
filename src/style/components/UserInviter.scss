@@ -65,7 +65,25 @@
     }
 
     button {
-        height: fit-content;
+        height: 41px;
         margin: auto 0;
+        width: 84px;
+    }
+
+    @media (max-width: 500px) {
+        display: block;
+
+        .react-select {
+            margin-bottom: $gap-3;
+            margin-right: 0;
+
+            .react-select__value-container {
+                min-height: 50px;
+            }
+        }
+
+        button {
+            width: 100%;
+        }
     }
 }

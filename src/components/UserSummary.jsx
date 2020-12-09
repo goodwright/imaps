@@ -1,16 +1,17 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
+import classNames from "classnames";
 import { UserContext } from "../contexts";
 import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
-import { MAKE_ADMIN, REVOKE_ADMIN } from "../mutations";
+import { DECLINE_INVITATION, MAKE_ADMIN, REVOKE_ADMIN } from "../mutations";
 import { GROUP } from "../queries";
 
 const UserSummary = props => {
 
-  const { user, link, group, edit } = props;
+  const { user, link, group, invitation, edit } = props;
   const [showResignModal, setShowResignModal] = useState(false);
   const [showDemoteModal, setShowDemoteModal] = useState(false);
   const [showPromoteModal, setShowPromoteModal] = useState(false);
@@ -18,6 +19,8 @@ const UserSummary = props => {
   const history = useHistory();
 
   const groupAdmins = group ? group.admins.map(user => user.username) : [];
+
+  const className = classNames({"user-summary": true, faded: invitation})
 
   const Element = link && user ? Link : "div";
 
@@ -39,19 +42,27 @@ const UserSummary = props => {
     }
   });
 
+  const [cancelInvitation, cancelInvitationMutation] = useMutation(DECLINE_INVITATION, {
+    refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}]
+  })
+
   return (
-    <Element className="user-summary" to={`/users/${user && user.username}/`}>
+    <Element className={className} to={`/users/${user && user.username}/`}>
       <div className="user-photo" />
       <div className="user-info">
-        <div className="name">{user ? user.name : "Guest"}</div>
-        {user && !group && <div className="username">{user.username}</div>}
+        <div className="name">{user ? user.name : "Guest"}{invitation ? " (invited)" : ""}</div>
+        {user && !group && !invitation && <div className="username">{user.username}</div>}
 
         {group && (
           <div className="group-status">
             {user && !edit && groupAdmins.includes(user.username) && "admin"}
+
+            {edit && invitation && (
+              <div className="demote" onClick={() => cancelInvitation({variables: {id: invitation ? invitation.id : null}})}>cancel</div>
+            )}
             
             {/* Resign or promote or demote */}
-            {edit && loggedInUser.username === user.username && groupAdmins.includes(user.username) && (
+            {edit && !invitation && loggedInUser.username === user.username && groupAdmins.includes(user.username) && (
               <>
                 <div className="resign" onClick={() => setShowResignModal(true)}>resign as admin</div>
                 <Modal showModal={showResignModal} setShowModal={setShowResignModal} className="resign-modal">
@@ -68,7 +79,7 @@ const UserSummary = props => {
                 </Modal>
               </>
             )}
-            {edit && loggedInUser.username !== user.username && !groupAdmins.includes(user.username) && (
+            {edit && !invitation && loggedInUser.username !== user.username && !groupAdmins.includes(user.username) && (
               <>
                 <div className="promote" onClick={() => setShowPromoteModal(true)}>make admin</div>
                 <Modal showModal={showPromoteModal} setShowModal={setShowPromoteModal} className="promote-modal">
@@ -85,7 +96,7 @@ const UserSummary = props => {
                 </Modal>
               </>
             )}
-            {edit && loggedInUser.username !== user.username && groupAdmins.includes(user.username) && (
+            {edit && !invitation && loggedInUser.username !== user.username && groupAdmins.includes(user.username) && (
               <>
                 <div className="demote" onClick={() => setShowDemoteModal(true)}>revoke admin status</div>
                 <Modal showModal={showDemoteModal} setShowModal={setShowDemoteModal} className="demote-modal">
