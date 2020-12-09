@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 import { useHistory, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
@@ -134,7 +135,7 @@ const GroupPage = props => {
 };
 
 GroupPage.propTypes = {
-  
+  edit: PropTypes.bool
 };
 
 export default GroupPage;

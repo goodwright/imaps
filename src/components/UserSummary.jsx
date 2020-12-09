@@ -40,11 +40,12 @@ const UserSummary = props => {
     refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}],
     awaitRefetchQueries: true,
     onCompleted: data => {
-      setShowDemoteModal(false);
-      setShowResignModal(false);
       if (data.revokeGroupAdmin.user.id === loggedInUser.id) {
         history.push(`/@${group.slug}/`);
+        return
       }
+      setShowDemoteModal(false);
+      setShowResignModal(false);
     },
     onError: ({graphQLErrors}) => {
       setErrors(createErrorObject(errors, graphQLErrors))
@@ -163,7 +164,10 @@ const UserSummary = props => {
 
 UserSummary.propTypes = {
   user: PropTypes.object,
-  link: PropTypes.bool
+  link: PropTypes.bool,
+  editable: PropTypes.bool,
+  group: PropTypes.object,
+  invitation: PropTypes.object,
 };
 
 export default UserSummary;

@@ -61,7 +61,8 @@ const UserInviter = props => {
 };
 
 UserInviter.propTypes = {
-  
+  group: PropTypes.object,
+  allUsers: PropTypes.array.isRequired
 };
 
 export default UserInviter;

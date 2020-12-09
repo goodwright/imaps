@@ -62,12 +62,15 @@ export const makeClient = () => {
 
   const cache = new InMemoryCache({
     typePolicies: {
-      GroupType: {
-        fields: {admins: {merge(existing, incoming) { return incoming }}}
-      },
-      UserType: {
-        fields: {groupInvitations: {merge(existing, incoming) { return incoming }}}
-      }
+      GroupType: {fields: {
+        users: {merge(existing, incoming) { return incoming } },
+        admins: {merge(existing, incoming) { return incoming } },
+        groupInvitations: {merge(existing, incoming) { return incoming } }
+      }},
+      UserType: {fields: {
+        groupInvitations: {merge(existing, incoming) { return incoming } },
+        groups: {merge(existing, incoming) { return incoming } }
+      }}
     }
   })
 

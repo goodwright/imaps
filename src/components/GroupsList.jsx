@@ -6,7 +6,6 @@ import GroupSummary from "./GroupSummary";
 const GroupsList = props => {
 
   const { user, editable } = props;
-  console.log(user.groups.length === 0)
 
   return (
     <div className="groups-list">
@@ -25,7 +24,8 @@ const GroupsList = props => {
 };
 
 GroupsList.propTypes = {
-  
+  user: PropTypes.object.isRequired,
+  editable: PropTypes.bool
 };
 
 export default GroupsList;

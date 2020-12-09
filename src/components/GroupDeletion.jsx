@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
@@ -41,7 +42,7 @@ const GroupDeletion = props => {
 };
 
 GroupDeletion.propTypes = {
-  
+  group: PropTypes.object.isRequired
 };
 
 export default GroupDeletion;

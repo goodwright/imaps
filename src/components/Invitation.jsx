@@ -40,7 +40,8 @@ const Invitation = props => {
 };
 
 Invitation.propTypes = {
-  
+  invitation: PropTypes.object.isRequired,
+  style: PropTypes.object.isRequired
 };
 
 export default Invitation;

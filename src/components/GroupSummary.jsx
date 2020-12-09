@@ -53,7 +53,8 @@ const GroupSummary = props => {
 };
 
 GroupSummary.propTypes = {
-  
+  group: PropTypes.object.isRequired,
+  editable: PropTypes.bool
 };
 
 export default GroupSummary;
