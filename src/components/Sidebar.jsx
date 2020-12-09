@@ -9,13 +9,6 @@ import { UserContext } from "../contexts";
 const Sidebar = () => {
 
   const [user,] = useContext(UserContext);
-  let sortedGroups = [];
-  if (user) {
-    const adminGroupIds = user.adminGroups.map(g => g.id);
-    sortedGroups = [...user.groups].sort((g1, g2) => (
-      adminGroupIds.includes(g2.id) - adminGroupIds.includes(g1.id)
-    ));
-  }
 
   return (
     <div className="sidebar">
@@ -24,7 +17,7 @@ const Sidebar = () => {
         {user && user.groups.length > 0 && <div className="groups-section">
           <div className="label">Your groups:</div>
           <div className="groups">
-            {sortedGroups.map(group => (
+            {user.groups.map(group => (
               <Link to={`/@${group.slug}/`} key={group.id} className="group">
                 <span className="at">@</span>{group.slug}
               </Link>
