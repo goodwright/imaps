@@ -100,3 +100,9 @@ export const LEAVE_GROUP = gql`mutation leaveGroup($id: ID!) {
     ...UserFields
   } }
 } ${USER_FIELDS}`;
+
+export const REMOVE_USER = gql`mutation removeUser($group: ID! $user: ID!) {
+  removeUserFromGroup(group: $group user: $user) {
+    group { id }
+  }
+}`;

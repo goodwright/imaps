@@ -32,22 +32,27 @@
             position: absolute;
             color: $purple-3;
             font-size: $font-size-1;
+            display: flex;
 
-            .resign, .demote, .promote {
+            .resign, .demote, .promote, .remove {
                 cursor: pointer;
                 opacity: 0.8;
             }
 
-            .resign:hover, .demote:hover, .promote:hover {
+            .resign:hover, .demote:hover, .promote:hover, .remove:hover {
                 opacity: 1;
             }
 
-            .resign, .demote {
+            .resign, .demote, .remove {
                 color: $down-red;
             }
 
             .promote {
                 color: $up-green;
+            }
+
+            .remove {
+                margin-left: $gap-1;
             }
         }
     }

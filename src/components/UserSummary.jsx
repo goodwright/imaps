@@ -6,7 +6,7 @@ import { UserContext } from "../contexts";
 import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
-import { DECLINE_INVITATION, MAKE_ADMIN, REVOKE_ADMIN } from "../mutations";
+import { DECLINE_INVITATION, MAKE_ADMIN, REMOVE_USER, REVOKE_ADMIN } from "../mutations";
 import { GROUP } from "../queries";
 
 const UserSummary = props => {
@@ -15,6 +15,7 @@ const UserSummary = props => {
   const [showResignModal, setShowResignModal] = useState(false);
   const [showDemoteModal, setShowDemoteModal] = useState(false);
   const [showPromoteModal, setShowPromoteModal] = useState(false);
+  const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [loggedInUser,] = useContext(UserContext);
   const history = useHistory();
 
@@ -42,7 +43,12 @@ const UserSummary = props => {
     }
   });
 
-  const [cancelInvitation, cancelInvitationMutation] = useMutation(DECLINE_INVITATION, {
+  const [removeUser, removeUserMutation] = useMutation(REMOVE_USER, {
+    refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}],
+    awaitRefetchQueries: true,
+  });
+
+  const [cancelInvitation,] = useMutation(DECLINE_INVITATION, {
     refetchQueries: [{query: GROUP, variables: {slug: group ? group.slug : null}}]
   })
 
@@ -109,6 +115,23 @@ const UserSummary = props => {
                       {revokeAdminMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, revoke admin status"}
                     </button>
                     <button className="secondary-button" onClick={() => setShowDemoteModal(false)}>No, take me back</button>
+                  </div>
+                </Modal>
+              </>
+            )}
+            {edit && !invitation && loggedInUser.username !== user.username && (
+              <>
+                <div className="remove" onClick={() => setShowRemoveModal(true)}> | remove</div>
+                <Modal showModal={showRemoveModal} setShowModal={setShowRemoveModal} className="remove-modal">
+                  <h2>Remove user?</h2>
+                  <p>
+                    This user will no longer be a member of this group, and any admin status will be removed.
+                  </p>
+                  <div className="buttons">
+                    <button type="submit" className="primary-button" onClick={() => removeUser({variables: {group: group.id, user: user.id}})}>
+                      {removeUserMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, remove the user"}
+                    </button>
+                    <button className="secondary-button" onClick={() => setShowRemoveModal(false)}>No, take me back</button>
                   </div>
                 </Modal>
               </>
