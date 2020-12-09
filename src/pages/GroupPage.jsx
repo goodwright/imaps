@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
@@ -12,6 +12,7 @@ import GroupDeletion from "../components/GroupDeletion";
 import { useContext } from "react";
 import { UserContext } from "../contexts";
 import UserInviter from "../components/UserInviter";
+import { createErrorObject } from "../forms";
 
 const GroupPage = props => {
 
@@ -23,6 +24,7 @@ const GroupPage = props => {
   const history = useHistory();
   const [,setUser] = useContext(UserContext);
   const groupId = useRouteMatch("/@:id").params.id;
+  const [errors, setErrors] = useState({});
   
   const { loading, data, error } = useQuery(GROUP, {
     variables: {slug: groupId}
@@ -37,7 +39,9 @@ const GroupPage = props => {
       setUser(data.updateGroup.user);
       history.push(`/@${slugEl.current.innerHTML}/`);
     },
-    onError: () => {}
+    onError: ({graphQLErrors}) => {
+      setErrors(createErrorObject(errors, graphQLErrors))
+    }
   })
 
   const updateClick = () => {
@@ -109,6 +113,9 @@ const GroupPage = props => {
       >
         {group.description}
       </p>}
+      {errors.name && <div className="error">{errors.name}</div>}
+      {errors.slug && <div className="error">{errors.slug.replace("Slug", "ID")}</div>}
+      {errors.description && <div className="error">{errors.description}</div>}
     
       <div className="users-grid">
         {users.map(user => <UserSummary user={user} key={user.id} link={!edit} group={group} edit={edit} />)}
