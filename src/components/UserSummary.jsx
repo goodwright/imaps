@@ -25,7 +25,9 @@ const UserSummary = props => {
 
   const groupAdmins = group ? group.admins.map(user => user.username) : [];
 
-  const className = classNames({"user-summary": true, faded: invitation, anonymous: !Boolean(user.image)})
+  const className = classNames({
+    "user-summary": true, faded: invitation, anonymous: !user || !Boolean(user.image)
+  })
 
   const Element = link && user ? Link : "div";
 
