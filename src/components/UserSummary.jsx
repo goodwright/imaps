@@ -72,7 +72,7 @@ const UserSummary = props => {
   return (
     <Element className={className} to={`/users/${user && user.username}/`}>
       <div className="user-photo">
-        <img src={user && user.image ? `${getMediaLocation()}${user.image}` : anonymousUser} alt="user" />
+        <img src={user && user.image ? `${getMediaLocation()}${user.image}#${Date.now()}` : anonymousUser} alt="user" />
        
       </div>
       <div className="user-info">

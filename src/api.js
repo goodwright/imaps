@@ -1,4 +1,5 @@
-import { ApolloClient, InMemoryCache, ApolloLink, HttpLink } from "@apollo/client";
+import { ApolloClient, InMemoryCache, ApolloLink } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 import { TOKEN } from "./queries";
 
 export const isDevelopment = () => {
@@ -41,7 +42,9 @@ export const makeClient = () => {
    * error handling.
    */
 
-  const httpLink = new HttpLink({uri: getApiLocation(), credentials: "include"});
+  const terminalLink = createUploadLink({
+    uri: getApiLocation(), headers: {"keep-alive": "true"}, credentials: "include"
+  });
 
   const authLink = new ApolloLink((operation, forward) => {
     const { cache } = operation.getContext();
@@ -58,7 +61,7 @@ export const makeClient = () => {
     return forward(operation);
   });
 
-  const link = ApolloLink.from([authLink, httpLink]);
+  const link = ApolloLink.from([authLink, terminalLink]);
 
   const cache = new InMemoryCache({
     typePolicies: {

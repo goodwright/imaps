@@ -13,6 +13,13 @@ main.settings-page {
         margin-bottom: $gap-9;
     }
 
+    .settings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-width: 1200px;
+        gap: $gap-5;
+    }
+
     .groups-list {
         margin-left: 68px + $gap-3;
     }
@@ -20,6 +27,20 @@ main.settings-page {
     .account-deletion {
         text-align: right;
         margin-top: $gap-10;
+    }
+
+    @media (max-width: 1000px) {
+        .settings-grid {
+            display: flex;
+            flex-direction: column-reverse;
+
+            .user-image-editor {
+                margin-left: 68px + $gap-3;
+                position: relative;
+                top: -$gap-7;
+                margin-left: auto;
+            }
+        }
     }
 
     @media (max-width: 700px) {
@@ -40,6 +61,13 @@ main.settings-page {
             margin-left: 0;
         }
 
+        .settings-grid {
+            .user-image-editor {
+                grid-template-columns: 1fr;
+                margin: 0;
+            }
+        }
+        
         .groups-list {
             .groups {
                 width: 100%;
