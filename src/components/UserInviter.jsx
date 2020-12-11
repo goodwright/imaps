@@ -5,6 +5,8 @@ import { ClipLoader } from "react-spinners";
 import { useMutation } from "@apollo/client";
 import { INVITE_TO_GROUP } from "../mutations";
 import { GROUP } from "../queries";
+import { getMediaLocation } from "../api";
+import anonymousUser from "../images/anonymous-user.svg";
 
 const UserInviter = props => {
 
@@ -20,7 +22,7 @@ const UserInviter = props => {
 
   const options = allUsers.map(user => ({
     value: user.username,
-    label: `${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}${inviteeUsernamesInGroup.includes(user.username) ? " (Already invited)" : ""}`,
+    label: <div><img src={user && user.image ? `${getMediaLocation()}${user.image}` : anonymousUser} height="30px" width="30px"/>{`${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}${inviteeUsernamesInGroup.includes(user.username) ? " (Already invited)" : ""}`}</div>,
     isDisabled: usernamesInGroup.includes(user.username) || inviteeUsernamesInGroup.includes(user.username),
     id: user.id
   }));

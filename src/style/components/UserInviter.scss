@@ -26,6 +26,17 @@
 
         .react-select__option {
             cursor: pointer;
+
+            div {
+                display: flex;
+                align-items: center;
+            }
+
+            img {
+                border-radius: 50%;
+                object-fit: cover;
+                margin-right: $gap-2;
+            }
         }
 
         .react-select__option--is-disabled {
@@ -39,6 +50,10 @@
         .react-select__multi-value__label {
             color: $purple-2;
             background-color: $gray-3;
+
+            img {
+                display: none;
+            }
         }
 
         .react-select__multi-value__remove {

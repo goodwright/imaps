@@ -22,5 +22,5 @@ export const GROUP = gql`query group($slug: String!) {
     users { id name username image } admins { id username }
     groupInvitations { id user { id username name } }
   }
-  users { id username name }
+  users { id username name image }
 }`;
