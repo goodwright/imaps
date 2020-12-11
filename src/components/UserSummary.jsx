@@ -9,6 +9,8 @@ import Modal from "./Modal";
 import { DECLINE_INVITATION, MAKE_ADMIN, REMOVE_USER, REVOKE_ADMIN } from "../mutations";
 import { GROUP } from "../queries";
 import { createErrorObject } from "../forms";
+import { getMediaLocation } from "../api";
+import anonymousUser from "../images/anonymous-user.svg";
 
 const UserSummary = props => {
 
@@ -23,7 +25,7 @@ const UserSummary = props => {
 
   const groupAdmins = group ? group.admins.map(user => user.username) : [];
 
-  const className = classNames({"user-summary": true, faded: invitation})
+  const className = classNames({"user-summary": true, faded: invitation, anonymous: !Boolean(user.image)})
 
   const Element = link && user ? Link : "div";
 
@@ -69,7 +71,10 @@ const UserSummary = props => {
 
   return (
     <Element className={className} to={`/users/${user && user.username}/`}>
-      <div className="user-photo" />
+      <div className="user-photo">
+        <img src={user && user.image ? `${getMediaLocation()}${user.image}` : anonymousUser} alt="user" />
+       
+      </div>
       <div className="user-info">
         <div className="name">{user ? user.name : "Guest"}{invitation ? " (invited)" : ""}</div>
         {user && !group && !invitation && <div className="username">{user.username}</div>}
