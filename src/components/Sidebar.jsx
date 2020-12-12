@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext }  from "react";
 import { Link } from "react-router-dom";
 import UserSummary from "./UserSummary";
+import { UserContext } from "../contexts";
 import goodwright from "../images/goodwright.svg";
 import goodwrightIcon from "../images/goodwright-icon.svg";
-import { useContext } from "react";
-import { UserContext } from "../contexts";
+import githubIcon from "../images/github.svg"
 
 const Sidebar = () => {
 
@@ -34,6 +34,10 @@ const Sidebar = () => {
         <div className="links">
           <Link to="/privacy/">Privacy<span className="full"> Policy</span></Link>
           <Link to="/terms/">Terms<span className="full"> of Use</span></Link>
+        </div>
+        <div className="links gh-links">
+          <a href="https://github.com/goodwright/imaps-api"><img src={githubIcon} alt="github" /> Backend code</a>
+          <a href="https://github.com/goodwright/imaps"><img src={githubIcon} alt="github" /> Frontend code</a>
         </div>
       </div>
     </div>
