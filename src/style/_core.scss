@@ -16,6 +16,10 @@ input {
     color: $purple-2;
 }
 
+input:required {
+    box-shadow: none;
+}
+
 .error {
     font-size: $font-size-2;
     color: $error-red;
