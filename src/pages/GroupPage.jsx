@@ -38,6 +38,7 @@ const GroupPage = props => {
   const [updateGroup, updateGroupMutation] = useMutation(UPDATE_GROUP, {
     onCompleted: data => {
       setUser(data.updateGroup.user);
+      setErrors({});
       history.push(`/@${slugEl.current.innerHTML}/`);
     },
     onError: ({graphQLErrors}) => {
