@@ -106,7 +106,7 @@ const SignupForm = () => {
           />
         </div>
       </div>
-      <Link className="terms-link" to="/terms/">Terms and Conditions</Link>
+      <a className="terms-link" target="_blank" href="/terms/">Terms and Conditions</a>
       <button type="submit" className="primary-button">
         {signupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Sign Up"}
       </button>
