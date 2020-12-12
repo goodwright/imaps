@@ -36,9 +36,12 @@ const Nav = () => {
   const [logout, logoutMutation] = useMutation(LOGOUT, {
     onCompleted: () => {
       setUser(false);
-      client.cache.writeQuery({query: TOKEN, data: {accessToken: null}})
-      if (["/settings/"].includes(location.pathname)) {
-        history.push("/");
+      client.cache.writeQuery({query: TOKEN, data: {accessToken: null}});
+      for (let path of [/\/settings\//, /\/@(.+?)\/edit\//]) {
+        if (path.test(location.pathname)) {
+          history.push("/");
+          break;
+        }
       }
     }
   });
