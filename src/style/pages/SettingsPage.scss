@@ -10,14 +10,14 @@ main.settings-page {
     }
 
     .settings-form {
-        margin-bottom: $gap-9;
+        margin-bottom: $gap-10;
     }
 
     .settings-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         max-width: 1200px;
-        gap: $gap-5;
+        gap: $gap-8;
     }
 
     .groups-list {
@@ -33,12 +33,12 @@ main.settings-page {
         .settings-grid {
             display: flex;
             flex-direction: column-reverse;
+            gap: $gap-6;
 
             .user-image-editor {
                 margin-left: 68px + $gap-3;
                 position: relative;
                 top: -$gap-7;
-                margin-left: auto;
             }
         }
     }
@@ -48,6 +48,13 @@ main.settings-page {
 
         h1 {
             margin-bottom: $gap-6;
+        }
+
+        .settings-grid {
+            .user-image-editor {
+                grid-template-columns: 1fr;
+                margin-left: 0;
+            }
         }
 
         .groups-list {
@@ -63,8 +70,10 @@ main.settings-page {
 
         .settings-grid {
             .user-image-editor {
-                grid-template-columns: 1fr;
-                margin: 0;
+                form {
+                    grid-template-columns: 1fr;
+                    gap: $gap-3;
+                }
             }
         }
         
