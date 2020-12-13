@@ -153,6 +153,7 @@ form {
 
 button.primary-button:disabled {
     background-color: $gray-3;
+    cursor: auto;
 }
 
 .primary-button:hover {
