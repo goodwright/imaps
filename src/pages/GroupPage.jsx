@@ -49,8 +49,9 @@ const GroupPage = props => {
   const updateClick = () => {
     updateGroup({
       variables: {
-        id: group.id, name: nameEl.current.innerHTML,
-        slug: slugEl.current.innerHTML, description: descriptionEl.current.innerHTML
+        id: group.id, name: nameEl.current.innerText,
+        slug: slugEl.current.innerText,
+        description: descriptionEl.current.innerText
       }
     })
   }
