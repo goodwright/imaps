@@ -36,9 +36,13 @@ const UserImageEditor = props => {
   const formSubmit = e => {
     e.preventDefault();
     if (fileRef.current.files.length) {
-      updateImage({
-        variables: {image: fileRef.current.files[0]}
-      });
+      if (fileRef.current.files[0].size > 1048576) {
+        setErrors({"image": "Image must be less than 1MB"})
+      } else {
+        updateImage({
+          variables: {image: fileRef.current.files[0]}
+        });
+      }
     }
   }
 
@@ -59,10 +63,13 @@ const UserImageEditor = props => {
           </svg>
         )}
       </div>
-
-      <button type="submit" className="button primary-button">
-        {updateImageMutation.loading ? <ClipLoader color="white" size="20px" /> : "Upload New Photo"}
-      </button>
+      
+      <div className="error-container">
+        {errors.image && <div className="error">{errors.image}</div> }
+        <button type="submit" className="button primary-button">
+          {updateImageMutation.loading ? <ClipLoader color="white" size="20px" /> : "Upload New Photo"}
+        </button>
+      </div>
     </form>
   );
 };
