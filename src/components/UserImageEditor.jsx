@@ -12,7 +12,7 @@ const UserImageEditor = props => {
   const { user } = props;
 
   const fileRef = useRef(null);
-  const [, setFileName] = useState("");
+  const [fileName, setFileName] = useState("");
   const [errors, setErrors] = useState({});
   const [,setUser] = useContext(UserContext);
 
@@ -64,11 +64,13 @@ const UserImageEditor = props => {
               <path d="M13.1885 6.90917L0.78176 6.90918" strokeWidth="1.5"/>
             </svg>
           )}
+
+          {/* <div className="test">Edit</div> */}
         </div>
         
         <div className="error-container">
           {errors.image && <div className="error">{errors.image}</div> }
-          <button type="submit" className="button primary-button">
+          <button type="submit" className="button primary-button" disabled={!fileName}>
             {updateImageMutation.loading ? <ClipLoader color="white" size="20px" /> : "Upload New Photo"}
           </button>
         </div>

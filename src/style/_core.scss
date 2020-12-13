@@ -151,6 +151,10 @@ form {
     padding-bottom: $gap-2 + 2px;
 }
 
+button.primary-button:disabled {
+    background-color: $gray-3;
+}
+
 .primary-button:hover {
     background-color: $purple-7;
 }

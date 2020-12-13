@@ -5,7 +5,7 @@
         font-size: $font-size-6;
         margin-bottom: $gap-4;
     }
-    
+
     form {
         display: grid;
         grid-template-columns: 100px 1fr;
@@ -33,12 +33,27 @@
                 background-color: #ffffff00;
                 z-index: 10;
             }
+
+
+            .test {
+                font-size: $font-size-2;
+                position: absolute;
+                background: #ffffffB0;
+                height: 40%;
+                font-weight: 600;
+                top: 60%;
+                width: 100%;
+                justify-content: center;
+                display: flex;
+                align-items: center;
+            }
     
             img {
                 width: 100%;
                 height: 100%;
                 display: block;
                 object-fit: cover;
+                opacity: 0.9;
             }
     
             svg {
@@ -52,6 +67,12 @@
     
             input {
                 display: none;
+            }
+        }
+
+        .file-upload:hover {
+            img {
+                opacity: 1;
             }
         }
     
