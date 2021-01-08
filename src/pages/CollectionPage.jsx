@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { COLLECTION } from "../queries";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
+import paperIcon from "../images/paper.svg";
 
 const CollectionPage = () => {
   
@@ -48,9 +49,17 @@ const CollectionPage = () => {
               Modified {moment(collection.lastModified * 1000).format("D MMMM, YYYY")}
             </div>
           </div>
-          <div className="papers">
+          {collection.papers.length > 0 && <div className="papers">
             <h2>Associated Papers</h2>
-          </div>
+            <div className="papers-grid">
+              {collection.papers.map(paper => (
+                <a href={paper.url} className="paper" key={paper.id}>
+                  <img src={paperIcon} alt="paper"/>
+                  <div className="title">({paper.year}) {paper.title}</div>
+                </a>
+              ))}
+            </div>
+          </div>}
         </div>
       </div>
     </Base>
