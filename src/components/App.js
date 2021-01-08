@@ -16,6 +16,7 @@ import SettingsPage from "../pages/SettingsPage";
 import PageNotFound from "../pages/PageNotFound";
 import GroupPage from "../pages/GroupPage";
 import NewGroupPage from "../pages/NewGroupPage";
+import CollectionPage from "../pages/CollectionPage";
 import { TOKEN, USER } from "../queries";
 
 const client = makeClient();
@@ -82,6 +83,9 @@ const App = () => {
             {user && <Route path="/@:id/edit/" exact>
               <GroupPage edit={true} />
             </Route>}
+            <Route path="/collections/:id/" exact>
+              <CollectionPage />
+            </Route>
             <Route><PageNotFound /></Route>
           </Switch>
         </BrowserRouter>

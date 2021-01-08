@@ -1,0 +1,48 @@
+.collection-page {
+    .collection-info {
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: $gap-9;
+
+        .collection-text {
+            padding-bottom: $gap-4;
+            border-bottom: 1px solid $gray-4;
+
+            h1 {
+                color: $purple-4;
+                font-weight: 600;
+                font-size: $font-size-8;
+                margin-bottom: $gap-3;
+            }
+        
+            .description {
+                font-size: $font-size-4;
+                font-weight: 300;
+                color: $purple-2;
+                line-height: 1.6;
+            }
+        }
+
+        .collection-meta {
+            .dates {
+                color: $purple-2;
+                text-align: right;
+                font-size: $font-size-4;
+                display: grid;
+                gap: $gap-2;
+                margin-bottom: $gap-7;
+            }
+
+            .papers {
+                h2 {
+                    font-weight: 500;
+                    font-size: $font-size-7;
+                    margin-bottom: $gap-3;
+                }
+            }
+        }
+
+    }
+
+    
+}

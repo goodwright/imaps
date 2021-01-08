@@ -24,3 +24,9 @@ export const GROUP = gql`query group($slug: String!) {
   }
   users { id username name image }
 }`;
+
+export const COLLECTION = gql`query collection($id: ID!) {
+  collection(id: $id) {
+    id name description creationTime lastModified
+  }
+}`;
