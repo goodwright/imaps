@@ -39,6 +39,41 @@
         }
     }
 
+    .nav-links {
+        font-size: $font-size-3;
+        display: grid;
+        gap: $gap-1;
+        padding: $gap-7 0;
+        text-align: right;
+        width: fit-content;
+        margin: 0 auto;
+
+        .full {
+            display: inline;
+        }
+
+        .mini {
+            display: none;
+        }
+
+        a {
+            display: block;
+            color: $purple-1;
+            text-decoration: none;
+            padding: $gap-2 $gap-3;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            color: $purple-4;
+        }
+
+        a.selected {
+            color: $purple-4;
+            background-color: $gray-7;
+        }
+    }
+
     .goodwright {
         text-align: center;
         color: $purple-2;
@@ -103,6 +138,32 @@
 
         .groups-section {
             display: none;
+        }
+
+        .nav-links {
+            gap: $gap-2;
+
+            .full {
+                display: none;
+            }
+
+            .mini {
+                display: block;
+                width: 20px;
+                opacity: 0.8;
+            }
+
+            a {
+                padding: $gap-2 $gap-1;
+            }
+
+            a.selected {
+                background: none;
+
+                .mini {
+                    opacity: 1;
+                }
+            }
         }
         
         .goodwright {

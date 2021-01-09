@@ -1,7 +1,9 @@
 import React, { useContext }  from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import UserSummary from "./UserSummary";
 import { UserContext } from "../contexts";
+import yourCollectionsIcon from "../images/your-collections.svg"
+import collectionsIcon from "../images/collections.svg"
 import goodwright from "../images/goodwright.svg";
 import goodwrightIcon from "../images/goodwright-icon.svg";
 import githubIcon from "../images/github.svg"
@@ -9,6 +11,10 @@ import githubIcon from "../images/github.svg"
 const Sidebar = () => {
 
   const [user,] = useContext(UserContext);
+
+  const onCollectionsPage = useLocation().pathname === "/collections/";
+  const onUserCollectionsPage = useLocation().pathname === "/user-collections/";
+
 
   return (
     <div className="sidebar">
@@ -24,6 +30,28 @@ const Sidebar = () => {
             ))}
           </div>
         </div>}
+
+        {user ? (
+          <div className="nav-links">
+            <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
+              <span className="full">Public Collections</span>
+              <img src={collectionsIcon} className="mini" />
+            </Link>
+            <Link className={onUserCollectionsPage ? "selected" : ""} to="/user-collections/">
+              <span className="full">Your Collections</span>
+              <img src={yourCollectionsIcon} className="mini" />
+            </Link>
+          </div>
+        ) : (
+          <div className="nav-links">
+            <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
+              <span className="full">Collections</span>
+              <img src={collectionsIcon} className="mini" />
+            </Link>
+          </div>
+        )}
+
+        
       </div>
 
       <div className="goodwright">
