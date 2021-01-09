@@ -32,6 +32,9 @@ export const COLLECTION = gql`query collection($id: ID!) {
   }
 }`;
 
-export const COLLECTIONS = gql`{collections { edges { node {
-  id name creationTime owner { id name } groups { id slug }
-} } } }`;
+export const COLLECTIONS = gql`query collections($offset: Int, $first: Int) {
+  collections(offset: $offset first: $first) { edges { node {
+    id name creationTime owner { id name } groups { id slug }
+  } } }
+  collectionCount
+}`;

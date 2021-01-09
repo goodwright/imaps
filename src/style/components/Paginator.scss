@@ -1,0 +1,26 @@
+.paginator {
+    display: flex;
+
+    a {
+        color: $purple-2;
+        text-decoration: none;
+        font-size: $font-size-5;
+        margin: 0 $gap-3 / 2;
+        display: block;
+        line-height: 1;
+    }
+
+    img {
+        width: 12px;
+    }
+
+    a.current {
+        color: $purple-4;
+        font-weight: 600;
+        pointer-events: none;
+    }
+
+    a.disabled {
+        opacity: 0.5;
+    }
+}
