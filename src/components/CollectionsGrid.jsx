@@ -6,9 +6,18 @@ const CollectionsGrid = props => {
 
   const { collections } = props;
 
+  if (!collections.length) {
+    return (
+      <div className="no-data">
+        Currently no collections.
+      </div>
+    )  
+}
+
+
   return (
     <div className="collections-grid">
-      {collections.reverse().map(collection => (
+      {collections.map(collection => (
         <CollectionCard collection={collection} key={collection.id}/>
       ))}
     </div>

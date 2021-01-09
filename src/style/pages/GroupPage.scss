@@ -64,6 +64,7 @@
 
     .users-grid {
         border-top: 1px solid $gray-3;
+        border-bottom: 1px solid $gray-3;
         padding-top: $gap-5;
         margin-top: $gap-7;
         display: grid;
@@ -101,6 +102,21 @@
         button {
             display: block;
             margin-left: auto;
+        }
+    }
+
+    .collections {
+
+        margin-top: $gap-7;
+        
+        h2 {
+            color: $purple-2;
+            font-size: $font-size-8;
+            margin-bottom: $gap-5;
+        }
+
+        .collections-grid {
+            margin: 0;
         }
     }
 

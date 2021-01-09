@@ -20,6 +20,10 @@
             margin-right: $gap-3;
         }
 
+        .name.can-break {
+            word-break: break-all;
+        }
+
         .created {
             color: $purple-2;
             white-space: nowrap;

@@ -7,10 +7,12 @@ const CollectionCard = props => {
 
   const { collection } = props;
 
+  const canBreak = !collection.name.includes(" ");
+
   return (
     <Link className="collection-card" to={`/collections/${collection.id}/`}>
       <div className="top-row">
-        <div className="name">{collection.name}</div>
+        <div className={canBreak ? "name can-break" : "name"}>{collection.name}</div>
         <div className="created">{moment(collection.creationTime * 1000).format("D MMM, YYYY")} </div>
       </div>
       <div className="bottom-row">

@@ -21,8 +21,10 @@ export const GROUP = gql`query group($slug: String!) {
     id slug name description userCount
     users { id name username image } admins { id username }
     groupInvitations { id user { id username name } }
+    collections { id name creationTime owner { name } groups { id slug } }
   }
   users { id username name image }
+  
 }`;
 
 export const COLLECTION = gql`query collection($id: ID!) {

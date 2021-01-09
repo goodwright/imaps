@@ -13,6 +13,7 @@ import GroupDeletion from "../components/GroupDeletion";
 import { UserContext } from "../contexts";
 import UserInviter from "../components/UserInviter";
 import { createErrorObject } from "../forms";
+import CollectionsGrid from "../components/CollectionsGrid";
 
 const GroupPage = props => {
 
@@ -127,6 +128,11 @@ const GroupPage = props => {
       </div>
 
       {edit && <UserInviter group={group} allUsers={allUsers} /> }
+
+      <div className="collections">
+        <h2>Public Collections</h2>
+        <CollectionsGrid collections={group.collections} />
+      </div>
 
       {edit && <GroupDeletion group={group} />}
 
