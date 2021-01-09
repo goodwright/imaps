@@ -1,7 +1,4 @@
 .collections-page {
-
-    $card-width: 490px - 2 * $gap-5;
-
     h1 {
         color: $purple-2;
         font-weight: 500;
@@ -14,92 +11,9 @@
         margin: $gap-6 auto;
     }
 
-    .collections-grid {
-        display: grid;
-        grid-template-columns: repeat(12, $card-width);
-        gap: $gap-6;
-        width: fit-content;
-        margin: 0 auto;
-    }
-
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (12 * $card-width) + (11 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(11, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (11 * $card-width) + (10 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(10, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (10 * $card-width) + (9 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(9, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (9 * $card-width) + (8 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(8, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (8 * $card-width) + (7 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(7, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (7 * $card-width) + (6 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(6, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (6 * $card-width) + (5 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(5, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (5 * $card-width) + (4 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(4, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (4 * $card-width) + (3 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(3, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (3 * $card-width) + (2 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(2, $card-width);
-        }
-    }
-    @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (2 * $card-width) + (1 * $gap-6)) {
-        .collections-grid {
-            grid-template-columns: repeat(1, $card-width);
-        }
-    }
-
     @media (max-width: 700px) {
-
         h1 {
             margin-bottom: $gap-5;
-        }
-
-        .collections-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 500px) {
-        .collections-grid {
-            .collection-card {
-                font-size: $font-size-2;
-
-                .top-row {
-                    .name {
-                        font-size: $font-size-3;
-                    }
-                }
-            }
         }
     }
 }

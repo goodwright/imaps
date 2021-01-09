@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { COLLECTIONS } from "../queries";
 import Base from "./Base";
-import CollectionCard from "../components/CollectionCard";
 import { useLocation } from "react-router";
-
 import Paginator from "../components/Paginator";
+import CollectionsGrid from "../components/CollectionsGrid";
 
 const CollectionsPage = () => {
 
@@ -26,8 +25,6 @@ const CollectionsPage = () => {
 
   const collections = data.collections.edges.map(edge => edge.node);
 
-  
-
   return (
     <Base className="collections-page">
       <h1>Collections</h1>
@@ -37,11 +34,7 @@ const CollectionsPage = () => {
           currentPage={parseInt(page)} pathBase="/collections"
         />
       )}
-      <div className="collections-grid">
-        {collections.reverse().map(collection => (
-          <CollectionCard collection={collection} key={collection.id}/>
-        ))}
-      </div>
+      <CollectionsGrid collections={collections} />
       {data.collectionCount > itemsPerPage && (
         <Paginator
           count={data.collectionCount} itemsPerPage={itemsPerPage}
