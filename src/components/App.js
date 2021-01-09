@@ -17,6 +17,7 @@ import PageNotFound from "../pages/PageNotFound";
 import GroupPage from "../pages/GroupPage";
 import NewGroupPage from "../pages/NewGroupPage";
 import CollectionPage from "../pages/CollectionPage";
+import CollectionsPage from "../pages/CollectionsPage";
 import { TOKEN, USER } from "../queries";
 
 const client = makeClient();
@@ -85,6 +86,9 @@ const App = () => {
             </Route>}
             <Route path="/collections/:id/" exact>
               <CollectionPage />
+            </Route>
+            <Route path="/collections/" exact>
+              <CollectionsPage />
             </Route>
             <Route><PageNotFound /></Route>
           </Switch>

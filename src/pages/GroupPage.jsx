@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { useHistory, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
@@ -10,7 +10,6 @@ import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import UserSummary from "../components/UserSummary";
 import GroupDeletion from "../components/GroupDeletion";
-import { useContext } from "react";
 import { UserContext } from "../contexts";
 import UserInviter from "../components/UserInviter";
 import { createErrorObject } from "../forms";

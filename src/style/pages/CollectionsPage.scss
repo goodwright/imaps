@@ -1,0 +1,39 @@
+.collections-page {
+    h1 {
+        color: $purple-2;
+        font-weight: 500;
+        font-size: $font-size-9;
+        margin-bottom: $gap-7;
+    }
+
+    .collections-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, #{490px - 2 * $gap-5});
+        gap: $gap-6;
+    }
+
+    @media (max-width: 700px) {
+
+        h1 {
+            margin-bottom: $gap-5;
+        }
+        
+        .collections-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .collections-grid {
+            .collection-card {
+                font-size: $font-size-2;
+
+                .top-row {
+                    .name {
+                        font-size: $font-size-3;
+                    }
+                }
+            }
+        }
+    }
+}

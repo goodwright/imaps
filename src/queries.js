@@ -31,3 +31,7 @@ export const COLLECTION = gql`query collection($id: ID!) {
     papers { id year title url } owner { id username name }
   }
 }`;
+
+export const COLLECTIONS = gql`{collections { edges { node {
+  id name creationTime owner { id name } groups { id slug }
+} } } }`;

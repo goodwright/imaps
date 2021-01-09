@@ -10,8 +10,9 @@
 @import "pages/UserPage";
 @import "pages/GroupPage";
 @import "pages/SettingsPage";
-@import "pages/CollectionPage";
 @import "pages/NewGroupPage";
+@import "pages/CollectionPage";
+@import "pages/CollectionsPage";
 @import "pages/PageNotFound";
 
 @import "components/Nav";
@@ -24,5 +25,6 @@
 @import "components/AccountDeletion";
 @import "components/Modal";
 @import "components/UserInviter";
+@import "components/CollectionCard";
 @import "components/Invitation";
 @import "components/UserImageEditor";
