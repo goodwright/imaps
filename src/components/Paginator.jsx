@@ -23,7 +23,13 @@ const Paginator = props => {
       )}
       {pageNumbers.map(n => {
         const className = n + 1 === currentPage ? "current" : null;
-        return (
+        if ( Math.abs((n + 1) - currentPage) > 1 && n > 1 && n < pageCount - 2) {
+          if (n === currentPage - 3 || n === currentPage + 1) {
+            return <div key={n}>...</div>
+          }
+          return <div key={n} />
+        }
+        return ( 
           <Link key={n} to={`${pathBase}?page=${n + 1}`} className={className}>
             {n + 1}
           </Link>
