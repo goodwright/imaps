@@ -11,8 +11,8 @@
             h1 {
                 color: $purple-4;
                 font-weight: 600;
-                font-size: $font-size-8;
-                margin-bottom: $gap-3;
+                font-size: $font-size-9;
+                margin-bottom: $gap-4;
             }
         
             .description {
@@ -65,8 +65,111 @@
                 }
             }
         }
-
     }
+
+    .owner {
+        width: fit-content;
+        margin-left: auto;
+        margin-top: $gap-7;
+        color: $purple-2;
+        font-weight: 300;
+        font-size: $font-size-5;
+
+        a {
+            color: $purple-4;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+
+    @media (max-width: 1300px) {
+        .collection-info {
+            gap: $gap-8;
+            grid-template-columns: 1fr 275px;
+    
+            .collection-text {
+    
+                h1 {
+                    font-size: $font-size-8;
+                    margin-bottom: $gap-3;
+                }
+            
+                .description {
+                    font-size: $font-size-3;
+                    line-height: 1.5;
+                }
+            }
+
+            .collection-meta {
+                .dates {
+                    font-size: $font-size-3;
+                    display: grid;
+                }
+        
+                .papers {
+                    h2 {
+                        font-size: $font-size-6;
+                        margin-bottom: $gap-3;
+                    }
+        
+                    .papers-grid {
+                        gap: $gap-3;
+                        
+                        .paper {
+                            grid-template-columns: 40px 1fr;
+                            gap: $gap-2;
+
+                            img {
+                                width: 100%;
+                            }
+        
+                            .title {
+                                font-size: $font-size-1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .owner {
+            margin-top: $gap-6;
+            font-size: $font-size-4;
+        }
+       
+    }
+
+    @media (max-width: 1100px) {
+        .collection-info {
+            grid-template-columns: 1fr 0;
+            gap: 0;
+
+            .collection-meta {
+                display: none;
+            }
+        }
+    }
+
+    @media (max-width: 700px) {
+        .collection-info {
+
+            .collection-text {
+                h1 {
+                    font-size: $font-size-7;
+                }
+
+                .description {
+                    line-height: 1.4;
+                }
+            }
+        }
+    }
+
+    
 
     
 }

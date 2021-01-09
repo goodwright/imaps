@@ -28,6 +28,6 @@ export const GROUP = gql`query group($slug: String!) {
 export const COLLECTION = gql`query collection($id: ID!) {
   collection(id: $id) {
     id name description creationTime lastModified
-    papers { id year title url }
+    papers { id year title url } owner { id username name }
   }
 }`;

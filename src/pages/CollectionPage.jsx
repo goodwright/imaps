@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useHistory, useRouteMatch } from "react-router";
-import moment from "moment";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import moment from "moment";
 import { COLLECTION } from "../queries";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
@@ -61,6 +62,9 @@ const CollectionPage = () => {
             </div>
           </div>}
         </div>
+      </div>
+      <div className="owner">
+        Contributed by <Link to={`/users/${collection.owner.username}/`}>{collection.owner.name}</Link>
       </div>
     </Base>
   );
