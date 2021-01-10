@@ -47,8 +47,8 @@ export const USER_COLLECTIONS = gql`{ user {
   collections { id name creationTime private owner { name } groups { id name slug } users { id } } 
 } }`;
 
-export const GROUP_COLLECTIONS = gql`query groupCollections($slug: String!) {
-  group(slug: $slug) { id name allCollections {
-    id name creationTime private owner { name } groups { id slug }
+export const GROUP_COLLECTIONS = gql`query groupCollections($slug: String! $offset: Int $first: Int) {
+  group(slug: $slug) { id name allCollectionsCount allCollections(first: $first offset: $offset) {
+    edges { node { id name creationTime private owner { name } groups { id slug } } }
   } }
 }`;

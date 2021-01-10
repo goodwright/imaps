@@ -6,9 +6,7 @@ import { Link } from "react-router-dom";
 
 const Paginator = props => {
 
-  const { count, itemsPerPage, currentPage, pathBase } = props;
-
-
+  const { count, itemsPerPage, currentPage, pathBase, onClick } = props;
   const pageCount = Math.ceil(count / itemsPerPage);
   const pageNumbers = [...Array(pageCount).keys()];
   const hasPrevious = currentPage !== 1;
@@ -16,8 +14,10 @@ const Paginator = props => {
 
   return (
     <div className="paginator">
-      {hasPrevious ? (
-        <Link to={`${pathBase}?page=${currentPage - 1}`}><img src={previous} alt="next" /></Link>
+      {hasPrevious ? pathBase ? (
+        <Link to={`${pathBase}?page=${currentPage - 1}`}><img src={previous} alt="previous" /></Link>
+      ) : (
+        <a onClick={() => onClick(currentPage - 1)}><img src={previous} alt="previous" /></a>
       ) : (
         <a className="disabled"><img src={previous} alt="next" /></a>
       )}
@@ -29,14 +29,22 @@ const Paginator = props => {
           }
           return <div key={n} />
         }
-        return ( 
-          <Link key={n} to={`${pathBase}?page=${n + 1}`} className={className}>
-            {n + 1}
-          </Link>
-        )
+        if (pathBase) {
+          return ( 
+            <Link key={n} to={`${pathBase}?page=${n + 1}`} className={className}>
+              {n + 1}
+            </Link>
+          )
+        } else {
+          return (
+            <a className={className} key={n} onClick={() => onClick(n + 1)}>{n + 1}</a>
+          )
+        }
       })}
-      {hasNext ? (
+      {hasNext ? pathBase ? (
         <Link to={`${pathBase}?page=${currentPage + 1}`}><img src={next} alt="next" /></Link>
+      ) : (
+        <a onClick={() => onClick(currentPage + 1)}><img src={next} alt="next" /></a>
       ) : (
         <a className="disabled"><img src={next} alt="next" /></a>
       )}

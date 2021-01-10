@@ -46,7 +46,7 @@ const UserCollectionsPage = () => {
       <CollectionsGrid collections={sharedCollections} />
 
       {user.groups.map(group => (
-        <GroupCollections group={group} />
+        <GroupCollections group={group} key={group.id} />
       ))}
 
     </Base>
