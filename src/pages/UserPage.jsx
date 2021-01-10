@@ -5,6 +5,7 @@ import { USER } from "../queries";
 import Base from "./Base";
 import UserSummary from "../components/UserSummary";
 import GroupsList from "../components/GroupsList";
+import CollectionsGrid from "../components/CollectionsGrid";
 import PageNotFound from "./PageNotFound";
 
 const UserPage = () => {
@@ -35,7 +36,14 @@ const UserPage = () => {
   return (
     <Base className="user-page">
       <UserSummary user={user} />
-      <GroupsList user={user} />
+
+      <div className="user-grid">
+        <GroupsList user={user} />
+        <div className="collections">
+          <h2>Public Collections</h2>
+          <CollectionsGrid collections={user.ownedCollections} />
+        </div>
+      </div>
 
       
 

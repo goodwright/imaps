@@ -11,6 +11,7 @@ export const USER_FIELDS = gql`
 export const USER = gql`query user($username: String) {
   user(username: $username) { 
     ...UserFields
+    ownedCollections { id name creationTime owner { name } groups { id slug } }
   }
 } ${USER_FIELDS}`;
 
