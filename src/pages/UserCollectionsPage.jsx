@@ -4,6 +4,7 @@ import { USER_COLLECTIONS } from "../queries";
 import Base from "./Base";
 import CollectionsGrid from "../components/CollectionsGrid";
 import { UserContext } from "../contexts";
+import GroupCollections from "../components/GroupCollections";
 
 const UserCollectionsPage = () => {
 
@@ -22,6 +23,19 @@ const UserCollectionsPage = () => {
   const sharedCollections = data.user.collections.filter(
     c => c.users.map(c => c.id).includes(user.id)
   );
+  const groupObjects = new Set();
+  for (let collection of sharedCollections) {
+    for (let group of collection.groups) {
+      if (user.groups.map(group => group.slug).includes(group.slug)) {
+        groupObjects.add(group)
+      }
+    }
+  }
+  const groups = [...groupObjects].map(group => (
+    {group, collections: sharedCollections.filter(
+      collection => collection.groups.map(group => group.slug).includes(group.slug)
+    )}
+  )).sort((a, b) => a.length - b.length)
 
   return (
     <Base className="user-collections-page">
@@ -30,6 +44,10 @@ const UserCollectionsPage = () => {
 
       <h2>Collections Shared with You</h2>
       <CollectionsGrid collections={sharedCollections} />
+
+      {user.groups.map(group => (
+        <GroupCollections group={group} />
+      ))}
 
     </Base>
   );

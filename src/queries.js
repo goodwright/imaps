@@ -44,5 +44,11 @@ export const COLLECTIONS = gql`query collections($offset: Int, $first: Int) {
 
 export const USER_COLLECTIONS = gql`{ user {
   ownedCollections { id name creationTime private owner { name } groups { id slug } }
-  collections { id name creationTime private owner { name } groups { id slug } users { id } } 
+  collections { id name creationTime private owner { name } groups { id name slug } users { id } } 
 } }`;
+
+export const GROUP_COLLECTIONS = gql`query groupCollections($slug: String!) {
+  group(slug: $slug) { id name allCollections {
+    id name creationTime private owner { name } groups { id slug }
+  } }
+}`;
