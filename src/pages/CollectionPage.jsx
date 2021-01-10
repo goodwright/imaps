@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
-import PropTypes from "prop-types";
-import { useHistory, useRouteMatch } from "react-router";
+import React, { useEffect } from "react";
+import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import moment from "moment";

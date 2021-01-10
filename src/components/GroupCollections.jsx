@@ -34,7 +34,7 @@ const GroupCollections = props => {
 };
 
 GroupCollections.propTypes = {
-  
+  group: PropTypes.object.isRequired
 };
 
 export default GroupCollections;

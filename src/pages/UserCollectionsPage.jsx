@@ -23,20 +23,7 @@ const UserCollectionsPage = () => {
   const sharedCollections = data.user.collections.filter(
     c => c.users.map(c => c.id).includes(user.id)
   );
-  const groupObjects = new Set();
-  for (let collection of sharedCollections) {
-    for (let group of collection.groups) {
-      if (user.groups.map(group => group.slug).includes(group.slug)) {
-        groupObjects.add(group)
-      }
-    }
-  }
-  const groups = [...groupObjects].map(group => (
-    {group, collections: sharedCollections.filter(
-      collection => collection.groups.map(group => group.slug).includes(group.slug)
-    )}
-  )).sort((a, b) => a.length - b.length)
-
+  
   return (
     <Base className="user-collections-page">
       <h2>Collections you Own</h2>

@@ -42,7 +42,7 @@ const CollectionCard = props => {
 };
 
 CollectionCard.propTypes = {
-  
-};
+  collection: PropTypes.object.isRequired
+}
 
 export default CollectionCard;

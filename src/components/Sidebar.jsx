@@ -15,7 +15,6 @@ const Sidebar = () => {
   const onCollectionsPage = useLocation().pathname === "/collections/";
   const onUserCollectionsPage = useLocation().pathname === "/user-collections/";
 
-
   return (
     <div className="sidebar">
       <div className="sidebar-top">
@@ -35,23 +34,21 @@ const Sidebar = () => {
           <div className="nav-links">
             <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
               <span className="full">Public Collections</span>
-              <img src={collectionsIcon} className="mini" />
+              <img src={collectionsIcon} alt="public-collections" className="mini" />
             </Link>
             <Link className={onUserCollectionsPage ? "selected" : ""} to="/user-collections/">
               <span className="full">Your Collections</span>
-              <img src={yourCollectionsIcon} className="mini" />
+              <img src={yourCollectionsIcon} alt="your-collections" className="mini" />
             </Link>
           </div>
         ) : (
           <div className="nav-links">
             <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
               <span className="full">Collections</span>
-              <img src={collectionsIcon} className="mini" />
+              <img src={collectionsIcon} alt="collections" className="mini" />
             </Link>
           </div>
         )}
-
-        
       </div>
 
       <div className="goodwright">

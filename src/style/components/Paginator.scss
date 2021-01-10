@@ -1,7 +1,8 @@
 .paginator {
     display: flex;
 
-    a {
+    a, button {
+        padding: 0;
         color: $purple-2;
         text-decoration: none;
         font-size: $font-size-5;
@@ -14,18 +15,18 @@
         width: 12px;
     }
 
-    a.current {
+    .current {
         color: $purple-4;
         font-weight: 600;
         pointer-events: none;
     }
 
-    a.disabled {
+    button.disabled {
         opacity: 0.5;
     }
 
     @media (max-width: 600px) {
-        a {
+        a, button {
             font-size: $font-size-3;
         }
 
@@ -35,7 +36,7 @@
     }
 
     @media (max-width: 400px) {
-        a {
+        a, button {
             font-size: $font-size-2;
         }
 

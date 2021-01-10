@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import previous from "../images/left-arrow.svg"
 import next from "../images/right-arrow.svg"
-import { Link } from "react-router-dom";
 
 const Paginator = props => {
 
@@ -17,9 +17,9 @@ const Paginator = props => {
       {hasPrevious ? pathBase ? (
         <Link to={`${pathBase}?page=${currentPage - 1}`}><img src={previous} alt="previous" /></Link>
       ) : (
-        <a onClick={() => onClick(currentPage - 1)}><img src={previous} alt="previous" /></a>
+        <button onClick={() => onClick(currentPage - 1)}><img src={previous} alt="previous" /></button>
       ) : (
-        <a className="disabled"><img src={previous} alt="next" /></a>
+        <button className="disabled"><img src={previous} alt="next" /></button>
       )}
       {pageNumbers.map(n => {
         const className = n + 1 === currentPage ? "current" : null;
@@ -37,23 +37,27 @@ const Paginator = props => {
           )
         } else {
           return (
-            <a className={className} key={n} onClick={() => onClick(n + 1)}>{n + 1}</a>
+            <button className={className} key={n} onClick={() => onClick(n + 1)}>{n + 1}</button>
           )
         }
       })}
       {hasNext ? pathBase ? (
         <Link to={`${pathBase}?page=${currentPage + 1}`}><img src={next} alt="next" /></Link>
       ) : (
-        <a onClick={() => onClick(currentPage + 1)}><img src={next} alt="next" /></a>
+        <button onClick={() => onClick(currentPage + 1)}><img src={next} alt="next" /></button>
       ) : (
-        <a className="disabled"><img src={next} alt="next" /></a>
+        <button className="disabled"><img src={next} alt="next" /></button>
       )}
     </div>
   );
 };
 
 Paginator.propTypes = {
-  
+  count: PropTypes.number.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  pathBase: PropTypes.string,
+  onClick: PropTypes.func
 };
 
 export default Paginator;
