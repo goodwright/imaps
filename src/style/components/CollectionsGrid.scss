@@ -64,6 +64,19 @@
                     font-size: $font-size-3;
                 }
             }
+
+            .bottom-row {
+                .owner {
+                    .privacy {
+                        width: 16px;
+                        height: 16px;
+                        overflow: hidden;
+                        margin-left: $gap-3;
+                        top: 5px;
+                    }
+                }
+            }
+
         }
     }
 }

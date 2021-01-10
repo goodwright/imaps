@@ -41,3 +41,8 @@ export const COLLECTIONS = gql`query collections($offset: Int, $first: Int) {
   } } }
   collectionCount
 }`;
+
+export const USER_COLLECTIONS = gql`{ user {
+  ownedCollections { id name creationTime private owner { name } groups { id slug } }
+  collections { id name creationTime private owner { name } groups { id slug } users { id } } 
+} }`;
