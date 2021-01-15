@@ -9,11 +9,13 @@ import { useApolloClient, useMutation } from "@apollo/client";
 import { LOGIN } from "../mutations";
 import { UserContext } from "../contexts";
 import { TOKEN } from "../queries";
+import PasswordResetRequest from "./PasswordResetRequest";
 
 const LoginForm = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const [,setUser] = useContext(UserContext);
   const history = useHistory();
   const [error, setError] = useState(false);
@@ -42,42 +44,46 @@ const LoginForm = () => {
   }
 
   return (
-    <form className={className} onSubmit={formSubmit}>
-      <div className="logo-container">
-        <Logo inverted={true} />
-        <img src={goodwright} alt="by goodwright" />
-      </div>
+    <>
+      <form className={className} onSubmit={formSubmit}>
+        <div className="logo-container">
+          <Logo inverted={true} />
+          <img src={goodwright} alt="by goodwright" />
+        </div>
 
-      {error && <div className="error">Those credentials aren't valid.</div>}
-      <div className="input">
-        <label htmlFor="username">username</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-          autoComplete="username"
-          autoCapitalize="none"
-          required
-        />
-      </div>
+        {error && <div className="error">Those credentials aren't valid.</div>}
+        <div className="input">
+          <label htmlFor="username">username</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            autoComplete="username"
+            autoCapitalize="none"
+            required
+          />
+        </div>
 
-      <div className="input">
-        <label htmlFor="password">password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-          autoComplete="new-password"
-          required
-        />
-      </div>
-      <button type="submit" className="primary-button">
-        {loginMutation.loading ? <ClipLoader color="white" size="20px" /> : "Log In"}
-      </button>
-      <Link className="auth-link" to="/signup/">Sign Up</Link>
-    </form>
+        <div className="input">
+          <label htmlFor="password">password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            autoComplete="new-password"
+            required
+          />
+        </div>
+        <div className="forgot" onClick={() => setShowModal(true)}>Forgot your password?</div>
+        <button type="submit" className="primary-button">
+          {loginMutation.loading ? <ClipLoader color="white" size="20px" /> : "Log In"}
+        </button>
+        <Link className="auth-link" to="/signup/">Sign Up</Link>
+      </form>
+      <PasswordResetRequest showModal={showModal} setShowModal={setShowModal} />
+    </>
   );
 };
 

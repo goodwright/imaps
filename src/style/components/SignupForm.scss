@@ -63,7 +63,7 @@
         }
     }
 
-    .terms-link, button {
+    .terms-link, button, .forgot {
         margin-left: 80px + $gap-3;
     }
 
@@ -72,6 +72,15 @@
         text-decoration: none;
         display: block;
         margin-bottom: $gap-6;
+    }
+
+    .forgot {
+        cursor: pointer;
+        margin-bottom: $gap-5;
+    }
+
+    .forgot:hover {
+        text-decoration: underline;
     }
 
     button {
