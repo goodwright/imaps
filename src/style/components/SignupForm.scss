@@ -63,7 +63,7 @@
         }
     }
 
-    .terms-link, button, .forgot {
+    .terms-link, button, .forgot, h1, .info {
         margin-left: 80px + $gap-3;
     }
 
@@ -106,7 +106,7 @@
             grid-template-columns: 80px 1fr;
         }
 
-        .terms-link, button[type=submit] {
+        .terms-link, button[type=submit], .forgot, h1, .info {
             margin-left: 80px + $gap-3; 
         }
     }

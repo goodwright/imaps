@@ -19,7 +19,6 @@ const PasswordResetRequest = props => {
   })
 
   const onSubmit = e => {
-    console.log(e)
     e.preventDefault();
     requestReset({variables: {email}})
   }

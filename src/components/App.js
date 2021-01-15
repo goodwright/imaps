@@ -20,6 +20,7 @@ import CollectionPage from "../pages/CollectionPage";
 import CollectionsPage from "../pages/CollectionsPage";
 import { TOKEN, USER } from "../queries";
 import UserCollectionsPage from "../pages/UserCollectionsPage";
+import PasswordResetPage from "../pages/PasswordResetPage";
 
 const client = makeClient();
 
@@ -69,6 +70,9 @@ const App = () => {
             </Route>
             <Route path="/login/" exact>
               <LoginPage />
+            </Route>
+            <Route path="/password-reset/" exact>
+              <PasswordResetPage />
             </Route>
             {user && <Route path="/settings/" exact>
               <SettingsPage />

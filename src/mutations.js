@@ -34,7 +34,11 @@ export const UPDATE_PASSWORD = gql`mutation updateUser(
 
 export const REQUEST_PASSWORD_RESET = gql`mutation requestReset(
   $email: String!
-) { requestPasswordReset(email: $email) { success } }`
+) { requestPasswordReset(email: $email) { success } }`;
+
+export const RESET_PASSWORD = gql`mutation resetPassword(
+  $token: String! $password: String!
+) { resetPassword(token: $token password: $password) { success } }`;
 
 export const UPDATE_USER_IMAGE = gql`mutation updateImage($image: Upload!) {
   updateUserImage(image: $image) { user { ...UserFields } }
