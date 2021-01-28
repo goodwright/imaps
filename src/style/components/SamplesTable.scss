@@ -1,0 +1,61 @@
+.samples-table {
+    table {
+        color: $purple-2;
+        border-collapse: collapse;
+        font-size: $font-size-2;
+        margin-top: $gap-3;
+
+        tr {
+            cursor: pointer;
+        }
+
+        tr:hover {
+            background-color: $gray-1;
+        }
+
+        td {
+            padding: $gap-2 $gap-2
+        }
+
+        td:first-child {
+            padding-left: 0;
+        }
+
+        td:last-child {
+            padding-right: 0;
+        }
+
+        td.centered {
+            text-align: center;
+        }
+
+        td.name {
+            font-size: $font-size-3;
+        }
+
+        td.organism {
+            font-style: italic;
+        }
+
+        .quality-status {
+            color: white;
+            padding: 2px $gap-1;
+            border-radius: 2px;
+            display: flex;
+
+            img {
+                width: 12px;
+                display: block;
+                margin-left: $gap-2;
+            }
+        }
+
+        .quality-status.pass {
+            background-color: $up-green;
+        }
+
+        .quality-status.fail {
+            background-color: $down-red;
+        }
+    }
+}

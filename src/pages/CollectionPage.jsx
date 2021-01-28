@@ -7,6 +7,7 @@ import { COLLECTION } from "../queries";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import paperIcon from "../images/paper.svg";
+import SamplesTable from "../components/SamplesTable";
 
 const CollectionPage = () => {
   
@@ -32,6 +33,7 @@ const CollectionPage = () => {
   }
 
   const collection = data.collection;
+  const samples = collection.samples.edges.map(edge => edge.node);
 
   return (
     <Base className="collection-page">
@@ -62,6 +64,7 @@ const CollectionPage = () => {
           </div>}
         </div>
       </div>
+      <SamplesTable samples={samples} />
       <div className="owner">
         Contributed by <Link to={`/users/${collection.owner.username}/`}>{collection.owner.name}</Link>
       </div>
