@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import moment from "moment";
+import ReactTooltip from "react-tooltip"
 import Paginator from "./Paginator";
 import tick from "../images/tick.svg";
 import cross from "../images/cross.svg";
@@ -30,13 +31,23 @@ const SamplesTable = props => {
               <td>{moment(sample.creationTime * 1000).format("MMM DD, YYYY")}</td>
               <td>
                 {sample.qcPass === null ? "N/A" : sample.qcPass === true ? (
-                  <div className="quality-status pass">
-                    QC <img src={tick} alt="pass" />
-                  </div>
+                  <>
+                    <div className="quality-status pass" data-tip data-for={sample.id}>
+                      QC <img src={tick} alt="pass" />
+                    </div>
+                    <ReactTooltip id={sample.id}>
+                      <span>{sample.qcMessage}</span>
+                    </ReactTooltip>
+                  </>
                 ) : (
-                  <div className="quality-status fail">
-                    QC <img src={cross} alt="fail" />
-                  </div>
+                  <>
+                    <div className="quality-status fail" data-tip data-for={sample.id}>
+                      QC <img src={cross} alt="fail" />
+                    </div>
+                    <ReactTooltip id={sample.id}>
+                      <span>{sample.qcMessage}</span>
+                    </ReactTooltip>
+                  </>
                 )}
               </td>
             </tr>
