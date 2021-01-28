@@ -66,6 +66,13 @@ const CollectionPage = () => {
           </div>}
         </div>
       </div>
+      
+      <h2>Samples</h2>
+      <p className="samples-explainer">
+        These are the individual samples for this collection - each one is the
+        result of a single experiment, and together they comprise the data for
+        this collection.
+      </p>
       <SamplesTable 
         samples={samples} itemsPerPage={itemsPerPage} currentPage={pageNumber}
         sampleCount={collection.sampleCount}

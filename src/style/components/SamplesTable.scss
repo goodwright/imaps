@@ -1,8 +1,9 @@
 .samples-table {
     padding-top: $gap-5;
+    overflow-x: scroll;
 
     .paginator {
-        margin-bottom: $gap-2;
+        margin-bottom: $gap-3;
 
         button:first-child {
             margin-left: 0;
@@ -23,6 +24,7 @@
         color: $purple-2;
         border-collapse: collapse;
         font-size: $font-size-2;
+        border-top: 1px solid $gray-4;
 
         tr {
             cursor: pointer;
