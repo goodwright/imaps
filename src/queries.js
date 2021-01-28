@@ -56,3 +56,11 @@ export const GROUP_COLLECTIONS = gql`query groupCollections($slug: String! $offs
     edges { node { id name creationTime private owner { name } groups { id slug } } }
   } }
 }`;
+
+export const SAMPLE = gql`query sample($id: ID!) {
+  sample(id: $id) {
+    id name organism source piName annotatorName qcPass qcMessage
+    creationTime lastModified
+    collection { id name }
+  }
+}`;

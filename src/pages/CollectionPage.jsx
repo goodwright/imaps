@@ -20,7 +20,7 @@ const CollectionPage = () => {
   });
 
   useEffect(() => {
-    document.title = `iMaps${data && data.group ? " - " + data.collection.name : ""}`;
+    document.title = `iMaps${data && data.collection ? " - " + data.collection.name : ""}`;
   });
 
   if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
@@ -36,12 +36,13 @@ const CollectionPage = () => {
 
   const collection = data.collection;
   const samples = collection.samples.edges.map(edge => edge.node);
+  const canBreak = !collection.name.includes(" ");
 
   return (
     <Base className="collection-page">
       <div className="collection-info">
         <div className="collection-text">
-          <h1>{collection.name}</h1>
+          <h1 className={canBreak ? "can-break" : ""}>{collection.name}</h1>
           <p className="description">{collection.description}</p>
         </div>
         <div className="collection-meta">

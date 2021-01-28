@@ -1,0 +1,98 @@
+.sample-info {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    position: relative;
+
+    h1 {
+        color: $purple-4;
+        font-weight: 600;
+        font-size: $font-size-7;
+        margin-bottom: $gap-4;
+    }
+
+    .collection {
+        color: $purple-2;
+        text-decoration: none;
+        font-size: $font-size-4;
+        font-weight: 500;
+        display: block;
+        margin-bottom: $gap-6;
+    }
+    
+    .collection:hover {
+        text-decoration: underline;
+    }
+
+    table {
+        border-collapse: collapse;
+        color: $purple-4;
+
+        th, td {
+            padding: $gap-2 0;
+        }
+
+        th {
+            font-weight: 600;
+            text-align: right;
+            padding-right: $gap-1;
+        }
+
+        th:nth-child(3) {
+            padding-left: $gap-7;
+        }
+
+        tr:nth-child(2) {
+            th, td {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .right-column {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        color: transparentize($purple-2, 0.5);
+
+        .quality-status {
+            color: white;
+            position: absolute;
+            width: 70px;
+            padding: $gap-1 $gap-2;
+            font-size: $font-size-4;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 4px;
+            top: -$gap-3;
+            right: -$gap-3;
+
+            img {
+                width: 18px;
+            }
+        }
+
+        .pass {
+            background-color: $up-green;
+        }
+
+        .fail {
+            background-color: $down-red;
+        }
+
+        .qc-message {
+            font-size: $font-size-2;
+            display: grid;
+            gap: $gap-2;
+            text-align: right;
+            margin-top: $gap-5;
+        }
+
+        .dates {
+            font-size: $font-size-2;
+            margin-top: auto;
+            display: grid;
+            gap: $gap-2;
+            text-align: right;
+        }
+    }
+}
