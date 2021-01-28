@@ -1,9 +1,28 @@
 .samples-table {
+    padding-top: $gap-5;
+
+    .paginator {
+        margin-bottom: $gap-2;
+
+        button:first-child {
+            margin-left: 0;
+        }
+
+        a, button {
+            font-size: $font-size-3;
+        }
+
+        img {
+            width: 8px;
+            position: relative;
+            top: 1px;
+        }
+    }
+
     table {
         color: $purple-2;
         border-collapse: collapse;
         font-size: $font-size-2;
-        margin-top: $gap-3;
 
         tr {
             cursor: pointer;
@@ -14,7 +33,8 @@
         }
 
         td {
-            padding: $gap-2 $gap-2
+            padding: $gap-2 $gap-2;
+            white-space: nowrap;
         }
 
         td:first-child {

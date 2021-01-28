@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -12,9 +12,11 @@ import SamplesTable from "../components/SamplesTable";
 const CollectionPage = () => {
   
   const collectionId = useRouteMatch("/collections/:id").params.id;
-  
+  const [pageNumber, setPageNumber] = useState(1);
+  const itemsPerPage = 20;
+
   const { loading, data, error } = useQuery(COLLECTION, {
-    variables: {id: collectionId}
+    variables: {id: collectionId, first: itemsPerPage, offset: (pageNumber - 1) * itemsPerPage}
   });
 
   useEffect(() => {
@@ -64,7 +66,11 @@ const CollectionPage = () => {
           </div>}
         </div>
       </div>
-      <SamplesTable samples={samples} />
+      <SamplesTable 
+        samples={samples} itemsPerPage={itemsPerPage} currentPage={pageNumber}
+        sampleCount={collection.sampleCount}
+        setPageNumber={setPageNumber}
+      />
       <div className="owner">
         Contributed by <Link to={`/users/${collection.owner.username}/`}>{collection.owner.name}</Link>
       </div>

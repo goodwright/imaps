@@ -28,11 +28,11 @@ export const GROUP = gql`query group($slug: String!) {
   
 }`;
 
-export const COLLECTION = gql`query collection($id: ID!) {
+export const COLLECTION = gql`query collection($id: ID!, $first: Int, $offset: Int) {
   collection(id: $id) {
     id name description creationTime lastModified
     papers { id year title url } owner { id username name }
-    samples { edges { node {
+    sampleCount samples(first: $first offset: $offset) { edges { node {
       id name organism source piName annotatorName qcPass qcMessage
       creationTime
     } } }

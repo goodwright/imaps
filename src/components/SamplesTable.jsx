@@ -2,15 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import moment from "moment";
+import Paginator from "./Paginator";
 import tick from "../images/tick.svg";
 import cross from "../images/cross.svg";
 
 const SamplesTable = props => {
-  const { samples } = props;
+  const { samples, sampleCount, itemsPerPage, currentPage, setPageNumber } = props;
   const history = useHistory();
 
   return (
     <div className="samples-table">
+      {sampleCount > itemsPerPage && (
+        <Paginator
+          count={sampleCount} itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onClick={setPageNumber}
+        />
+      )}
       <table>
         <tbody>
           {samples.map(sample => (
