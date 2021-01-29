@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
 import Logo from "./Logo";
@@ -8,7 +7,7 @@ import { RESET_PASSWORD } from "../mutations";
 import { useHistory, useLocation } from "react-router";
 import { createErrorObject } from "../forms";
 
-const PasswordResetForm = props => {
+const PasswordResetForm = () => {
 
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

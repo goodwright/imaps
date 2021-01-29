@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { ClipLoader } from "react-spinners";
 import classNames from "classnames";
@@ -52,7 +52,8 @@ const PasswordResetRequest = props => {
 };
 
 PasswordResetRequest.propTypes = {
-  
+  showModal: PropTypes.bool.isRequired,
+  setShowModal: PropTypes.func.isRequired,
 };
 
 export default PasswordResetRequest;

@@ -71,6 +71,7 @@ export const makeClient = () => {
         groupInvitations: {merge(existing, incoming) { return incoming } }
       }},
       UserType: {fields: {
+        ownedCollections: {merge(existing, incoming) { return incoming } },
         groupInvitations: {merge(existing, incoming) { return incoming } },
         groups: {merge(existing, incoming) { return incoming } }
       }}

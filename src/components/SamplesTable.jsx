@@ -59,7 +59,11 @@ const SamplesTable = props => {
 };
 
 SamplesTable.propTypes = {
-  
+  samples: PropTypes.array.isRequired,
+  sampleCount: PropTypes.number.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  setPageNumber: PropTypes.func.isRequired
 };
 
 export default SamplesTable;

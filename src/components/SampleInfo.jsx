@@ -75,7 +75,7 @@ const SampleInfo = props => {
 };
 
 SampleInfo.propTypes = {
-  
+  sample: PropTypes.object.isRequired
 };
 
 export default SampleInfo;
