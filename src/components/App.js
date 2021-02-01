@@ -22,6 +22,7 @@ import { TOKEN, USER } from "../queries";
 import UserCollectionsPage from "../pages/UserCollectionsPage";
 import PasswordResetPage from "../pages/PasswordResetPage";
 import SamplePage from "../pages/SamplePage";
+import PekaPage from "../pages/PekaPage";
 
 const client = makeClient();
 
@@ -101,6 +102,9 @@ const App = () => {
             </Route>}
             <Route path="/samples/:id/" exact>
               <SamplePage />
+            </Route>
+            <Route path="/apps/peka/" exact>
+              <PekaPage />
             </Route>
             <Route><PageNotFound /></Route>
           </Switch>
