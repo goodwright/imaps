@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import ReactTooltip from "react-tooltip";
 import { getApiLocation } from "../api";
 import Base from "./Base";
 
@@ -7,6 +8,8 @@ const PekaPage = () => {
   useEffect(() => {
     document.title = "iMaps - PEKA";
   });
+
+  const [hoveredCell, setHoveredCell] = useState(null);
 
   const canvasRef = useRef(null);
   const cellSize = 5;
@@ -30,6 +33,15 @@ const PekaPage = () => {
           context.fill();
         }
       }
+      const rect = canvas.getBoundingClientRect();
+      canvas.addEventListener("mousemove", e => {
+        
+        const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+        const rowNum = Math.max(Math.floor((y - 1) / cellSize), 0);
+        const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
+        const cell = `${data.proteins[rowNum]} - ${data.sequences[colNum]}\n${data.matrix[rowNum][colNum].value}`
+        setHoveredCell(cell);
+      })
     })
   }, [])
 
@@ -37,7 +49,10 @@ const PekaPage = () => {
   return (
     <Base className="peka-page">
       <h1>PEKA</h1>
-      <canvas ref={canvasRef} />
+      <canvas ref={canvasRef}  data-tip data-for="canvasTooltip" />
+      <ReactTooltip id="canvasTooltip">
+        {hoveredCell ? hoveredCell.split("\n").map(t => <div>{t}</div>) : ""}
+      </ReactTooltip>
     </Base>
   );
 };
