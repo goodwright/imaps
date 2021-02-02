@@ -1,8 +1,21 @@
 .peka-page {
+    position: relative;
+
     h1 {
         color: $purple-4;
         font-weight: 600;
         font-size: $font-size-9;
         margin-bottom: $gap-4;
+    }
+
+    img {
+        width: 20px;
+        position: absolute;
+        z-index: 1;
+    }
+
+    svg {
+        z-index: 2;
+        position: relative;
     }
 }
