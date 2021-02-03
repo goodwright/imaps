@@ -14,7 +14,7 @@ const PekaPage = () => {
   const [hoveredCell, setHoveredCell] = useState(null);
   const canvasRef = useRef(null);
   const proteinsRef = useRef(null);
-  const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20];
+  const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
 
   const drawCanvas = (json, size) => {
     const canvas = canvasRef.current;
@@ -77,12 +77,15 @@ const PekaPage = () => {
   return (
     <Base className="peka-page">
       <h1>PEKA</h1>
-      <div className="peka-panel">
+      {data && <div className="peka-panel">
+        <div className="color-map" style={{
+            background: `linear-gradient(90deg, ${data.colors[0]}, ${data.colors[data.colors.length - 1]})`
+        }}><div className="start">{data.min}</div><div className="end">{data.max}</div></div>
         <div className="zoom">
-          <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
           <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
+          <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
         </div>
-      </div>
+      </div>}
 
       <div className="canvas" style={{gridTemplateColumns: `${sequencesWidth}px 1fr`}}>
         <div className="sequences" style={{
