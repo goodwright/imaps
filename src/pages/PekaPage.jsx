@@ -10,7 +10,7 @@ const PekaPage = () => {
   });
 
   const [data, setData] = useState(null);
-  const [cellSize, setCellSize] = useState(10);
+  const [cellSize, setCellSize] = useState(8);
   const [hoveredCell, setHoveredCell] = useState(null);
   const canvasRef = useRef(null);
   const proteinsRef = useRef(null);
@@ -47,7 +47,18 @@ const PekaPage = () => {
     canvas.style.width = `${data.matrix[0].length * newSize}px`;
     canvas.style.height = `${data.matrix.length * newSize}px`;
     setCellSize(newSize);
-    //setTimeout(() => drawCanvas(data, newSize), 200);
+  }
+
+  const mouseMove = (e) => {
+    if (data) {
+      const canvas = canvasRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+      const rowNum = Math.max(Math.floor((y - 1) / (cellSize)), 0);
+      const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
+      const cell = `${data.proteins[colNum]} - ${data.sequences[rowNum]}\n${data.matrix[rowNum][colNum].value}`
+      setHoveredCell(cell);
+    }
   }
   
   useEffect(() => {
@@ -56,15 +67,6 @@ const PekaPage = () => {
     ).then(resp => resp.json()).then(json => {
       setData(json);
       drawCanvas(json, cellSize);
-      const canvas = canvasRef.current;
-      const rect = canvas.getBoundingClientRect();
-      canvas.addEventListener("mousemove", e => {
-        const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-        const rowNum = Math.max(Math.floor((y - 1) / (cellSize)), 0);
-        const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-        const cell = `${json.proteins[rowNum]} - ${json.sequences[colNum]}\n${json.matrix[rowNum][colNum].value}`
-        setHoveredCell(cell);
-      })
     })
   }, [])
 
@@ -82,14 +84,12 @@ const PekaPage = () => {
         </div>
       </div>
 
-
-
       <div className="canvas" style={{gridTemplateColumns: `${sequencesWidth}px 1fr`}}>
         <div className="sequences" style={{
           paddingTop: proteinsHeight, width: sequencesWidth
         }}>
           {data && data.sequences.map(sequence => (
-            <div className="sequence" style={{
+            <div className="sequence" key={sequence} style={{
               height: cellSize, fontSize: cellSize * 0.75, opacity: cellSize >= 8 ? 1 : 0
             }}>{sequence}</div> 
           ))}
@@ -100,18 +100,18 @@ const PekaPage = () => {
             height: proteinsHeight
           }}>
             {cellSize >= 8 && data && data.proteins.map(protein => (
-              <div className="protein" style={{
+              <div className="protein" key={protein} style={{
                 height: cellSize, width: proteinsHeight,
                 left: (proteinsHeight - cellSize) / -2, fontSize: cellSize * 0.75,
                 top: (proteinsHeight - cellSize) / 2
               }}>{protein}</div>
             ))}
-            <canvas ref={canvasRef}  data-tip data-for="canvasTooltip" style={{top: proteinsHeight - cellSize}}/>
+            <canvas onMouseMove={mouseMove} ref={canvasRef}  data-tip data-for="canvasTooltip" style={{top: proteinsHeight - cellSize}}/>
           </div>
         </div>
         
         <ReactTooltip id="canvasTooltip">
-          {hoveredCell ? hoveredCell.split("\n").map(t => <div>{t}</div>) : "PEKA"}
+          {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : "PEKA"}
         </ReactTooltip>
       </div>
     </Base>

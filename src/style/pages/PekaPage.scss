@@ -77,8 +77,19 @@
         }
 
         canvas {
-            //transition-duration: 0.2s;
             position: relative;
+        }
+
+        #canvasTooltip {
+            div:first-child {
+                font-weight: 700;
+                margin-bottom: $gap-1;
+            }
+
+            div:last-child {
+                font-weight: 300;
+                font-size: $font-size-7;
+            }
         }
     }
 }
