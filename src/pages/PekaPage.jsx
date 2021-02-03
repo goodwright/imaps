@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { BarLoader } from "react-spinners";
 import ReactTooltip from "react-tooltip";
 import { getApiLocation } from "../api";
 import Base from "./Base";
@@ -77,46 +78,50 @@ const PekaPage = () => {
   return (
     <Base className="peka-page">
       <h1>PEKA</h1>
-      {data && <div className="peka-panel">
-        <div className="color-map" style={{
-            background: `linear-gradient(90deg, ${data.colors[0]}, ${data.colors[data.colors.length - 1]})`
-        }}><div className="start">{data.min}</div><div className="end">{data.max}</div></div>
-        <div className="zoom">
-          <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
-          <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
-        </div>
-      </div>}
 
-      <div className="canvas" style={{gridTemplateColumns: `${sequencesWidth}px 1fr`}}>
-        <div className="sequences" style={{
-          paddingTop: proteinsHeight, width: sequencesWidth
-        }}>
-          {data && data.sequences.map(sequence => (
-            <div className="sequence" key={sequence} style={{
-              height: cellSize, fontSize: cellSize * 0.75, opacity: cellSize >= 8 ? 1 : 0
-            }}>{sequence}</div> 
-          ))}
-        </div>
-        <div className="right-column">
-          <div ref={proteinsRef} className="proteins" style={{
-            gridTemplateColumns: data ? `repeat(${data.proteins.length}, ${cellSize}px)` : "",
-            height: proteinsHeight
-          }}>
-            {cellSize >= 8 && data && data.proteins.map(protein => (
-              <div className="protein" key={protein} style={{
-                height: cellSize, width: proteinsHeight,
-                left: (proteinsHeight - cellSize) / -2, fontSize: cellSize * 0.75,
-                top: (proteinsHeight - cellSize) / 2
-              }}>{protein}</div>
-            ))}
-            <canvas onMouseMove={mouseMove} ref={canvasRef}  data-tip data-for="canvasTooltip" style={{top: proteinsHeight - cellSize}}/>
+      {!data ? <BarLoader color="#6353C6" /> : (
+        <>
+          <div className="peka-panel">
+            <div className="color-map" style={{
+                background: `linear-gradient(90deg, ${data.colors.join(", ")})`
+            }}><div className="start">{data.min}</div><div className="end">{data.max}</div></div>
+            <div className="zoom">
+              <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
+              <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
+            </div>
           </div>
-        </div>
-        
-        <ReactTooltip id="canvasTooltip">
-          {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : "PEKA"}
-        </ReactTooltip>
-      </div>
+          <div className="canvas" style={{gridTemplateColumns: `${sequencesWidth}px 1fr`}}>
+            <div className="sequences" style={{
+              paddingTop: proteinsHeight, width: sequencesWidth
+            }}>
+              {data && data.sequences.map(sequence => (
+                <div className="sequence" key={sequence} style={{
+                  height: cellSize, fontSize: cellSize * 0.75, opacity: cellSize >= 8 ? 1 : 0
+                }}>{sequence}</div> 
+              ))}
+            </div>
+            <div className="right-column">
+              <div ref={proteinsRef} className="proteins" style={{
+                gridTemplateColumns: data ? `repeat(${data.proteins.length}, ${cellSize}px)` : "",
+                height: proteinsHeight
+              }}>
+                {cellSize >= 8 && data && data.proteins.map(protein => (
+                  <div className="protein" key={protein} style={{
+                    height: cellSize, width: proteinsHeight,
+                    left: (proteinsHeight - cellSize) / -2, fontSize: cellSize * 0.75,
+                    top: (proteinsHeight - cellSize) / 2
+                  }}>{protein}</div>
+                ))}
+                <canvas onMouseMove={mouseMove} ref={canvasRef}  data-tip data-for="canvasTooltip" style={{top: proteinsHeight - cellSize}}/>
+              </div>
+            </div>
+            
+            <ReactTooltip id="canvasTooltip">
+              {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : "PEKA"}
+            </ReactTooltip>
+          </div>
+        </>
+      )}
     </Base>
   );
 };
