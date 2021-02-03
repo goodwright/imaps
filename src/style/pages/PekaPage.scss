@@ -9,6 +9,7 @@
 
     .peka-panel {
         margin-bottom: $gap-3;
+
         .zoom {
             border-radius: 4px;
             overflow: hidden;
@@ -40,9 +41,28 @@
     }
 
     .canvas {
-        width: 100%;
         overflow: scroll;
         position: relative;
+
+        .proteins {
+            display: grid;
+            align-items: flex-end;
+
+            .protein {
+                transform: rotate(-90deg);
+                text-align: left;
+                padding-left: $gap-1;
+                color: white;
+                font-size: 6px;
+                white-space: nowrap;
+                font-family: monospace;
+                display: flex;
+                align-self: center;
+                position: relative;
+                color: $purple-4;
+                transition-duration: 0.2s;
+            }
+        }
 
         canvas {
             transition-duration: 0.2s;

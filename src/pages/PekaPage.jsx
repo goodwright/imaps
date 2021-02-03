@@ -10,15 +10,18 @@ const PekaPage = () => {
   });
 
   const [data, setData] = useState(null);
-  const [cellSize, setCellSize] = useState(4);
+  const [cellSize, setCellSize] = useState(10);
   const [hoveredCell, setHoveredCell] = useState(null);
   const canvasRef = useRef(null);
+  const proteinsRef = useRef(null);
   const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20];
 
   const drawCanvas = (json, size) => {
     const canvas = canvasRef.current;
+    const proteins = proteinsRef.current;
     canvas.width = json.matrix[0].length * size;
     canvas.style.width = `${canvas.width}px`;
+    proteins.style.width = `${canvas.width}px`;
     canvas.height = json.matrix.length * size;
     canvas.style.height = `${canvas.height}px`;
     const context = canvas.getContext("2d");
@@ -65,6 +68,8 @@ const PekaPage = () => {
     })
   }, [])
 
+  const proteinsHeight = 140;
+
 
   return (
     <Base className="peka-page">
@@ -76,6 +81,17 @@ const PekaPage = () => {
         </div>
       </div>
       <div className="canvas">
+        <div ref={proteinsRef} className="proteins" style={{
+          gridTemplateColumns: data ? `repeat(${data.proteins.length}, ${cellSize}px)` : "",
+          height: proteinsHeight
+        }}>
+          {cellSize >= 10 && data && data.proteins.map(protein => (
+            <div className="protein" style={{
+              height: cellSize, width: proteinsHeight,
+              left: (proteinsHeight - cellSize) / -2, fontSize: cellSize / 2
+          }}>{protein}</div>
+          ))}
+        </div>
         <canvas ref={canvasRef}  data-tip data-for="canvasTooltip" />
         
         <ReactTooltip id="canvasTooltip">
