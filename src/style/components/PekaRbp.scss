@@ -2,6 +2,11 @@ $col-1-width: 34px;
 $cell-size: 20px;
 
 .peka-rbp {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    width: fit-content;
+    gap: $gap-5;
+
     .table {
         font-size: $font-size-1;
 
@@ -49,5 +54,28 @@ $cell-size: 20px;
             padding-bottom: 2px;
         }
 
+    }
+
+    .map {
+        width: $cell-size;
+        height: 400px;
+        background: linear-gradient(black, white);
+        margin-top: $cell-size;
+        position: relative;
+
+        .start, .end {
+            position: absolute;
+            width: 10px;
+            top: 0;
+            right: -10px;
+            text-align: right;
+            height: fit-content;
+            font-size: $font-size-2;
+        }
+
+        .end {
+            bottom: 0;
+            top: auto
+        }
     }
 }

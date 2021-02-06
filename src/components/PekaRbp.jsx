@@ -25,29 +25,27 @@ const PekaRbp = props => {
 
   if (!data) return <BarLoader color="#6353C6" />
 
-  const offsets = Object.keys(data[Object.keys(data)[0]]).map(s => parseInt(s)).sort((a, b) => a - b);
-
   return (
     <div className="peka-rbp">
       <div className="table">
-
-          <div className="row">{offsets.map(offset => <div className="offset cell" key={offset}>{offset}</div>)}</div>
-          {Object.entries(data).map(([motif, row]) => (
-            <div className="row">
-              <div className="motif cell">{motif}</div>
-              {offsets.map(offset => (
+          <div className="row">{data.offsets.map(offset => <div className="offset cell" key={offset}>{offset}</div>)}</div>
+          {data.matrix.map((row, i) => (
+            <div className="row" key={i}>
+              <div className="motif cell">{data.motifs[i]}</div>
+              {row.map((cell, c) => (
                 <div
-                  style={{backgroundColor: row[offset].color}}
-                  className={offset === 0 ? "center cell" : "cell"}
-                  data-value={row[offset].value}
+                  style={{backgroundColor: cell.color}}
+                  className={data.offsets[c] === 0 ? "center cell" : "cell"}
+                  data-value={cell.value}
                   onMouseMove={tableHover}
                   data-tip data-for="tableTooltip"
+                  key={c}
                 />
               ))}
             </div>
           ))}
-
       </div>
+      <div className="map"><div className="start">{0}</div><div className="end">{5}</div></div>
       <ReactTooltip id="tableTooltip">
         {tooltip}
       </ReactTooltip>
