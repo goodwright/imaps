@@ -74,6 +74,10 @@ const PekaHeatmap = () => {
 
   return (
     <div className="peka-heatmap">
+      <h2>Heatmap</h2>
+      <div className="peka-sub-text">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam sed, odit dolore magnam quaerat aliquid explicabo incidunt omnis inventore iste ipsam.
+      </div>
       <div className="peka-panel">
         <div className="color-map" style={{
             background: `linear-gradient(90deg, ${data.colors.join(", ")})`

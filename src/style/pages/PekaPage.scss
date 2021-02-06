@@ -6,4 +6,29 @@
         font-size: $font-size-9;
         margin-bottom: $gap-4;
     }
+
+    .peka-text {
+        color: $purple-2;
+        font-size: $font-size-4;
+        line-height: 1.6;
+        max-width: 800px;
+        border-bottom: 1px solid $gray-3;
+        padding-bottom: $gap-4;
+        margin-bottom: $gap-5;
+    }
+
+    h2 {
+        color: $purple-2;
+        font-weight: 600;
+        font-size: $font-size-8;
+        margin-bottom: $gap-4;
+    }
+
+    .peka-sub-text {
+        color: $purple-2;
+        font-size: $font-size-3;
+        line-height: 1.5;
+        max-width: 800px;
+        margin-bottom: $gap-6;
+    }
 }

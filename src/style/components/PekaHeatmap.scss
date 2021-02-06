@@ -63,6 +63,7 @@
         overflow: scroll;
         position: relative;
         display: grid;
+        scrollbar-width: none;
 
         .motifs {
             color: $purple-4;
@@ -115,5 +116,9 @@
                 font-size: $font-size-7;
             }
         }
+    }
+
+    .canvas::-webkit-scrollbar {
+        display: none;
     }
 }

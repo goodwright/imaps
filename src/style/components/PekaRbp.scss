@@ -2,10 +2,12 @@ $col-1-width: 34px;
 $cell-size: 20px;
 
 .peka-rbp {
-    display: grid;
-    grid-template-columns: 1fr 30px;
-    width: fit-content;
-    gap: $gap-5;
+    .graphic {
+        display: grid;
+        grid-template-columns: 1fr 30px;
+        width: fit-content;
+        gap: $gap-5;
+    }
 
     .table {
         font-size: $font-size-1;
@@ -76,6 +78,18 @@ $cell-size: 20px;
         .end {
             bottom: 0;
             top: auto
+        }
+    }
+
+    #tableTooltip {
+        div:first-child {
+            font-weight: 700;
+            margin-bottom: $gap-1;
+        }
+
+        div:last-child {
+            font-weight: 300;
+            font-size: $font-size-7;
         }
     }
 }
