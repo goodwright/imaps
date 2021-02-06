@@ -1,3 +1,53 @@
+$col-1-width: 34px;
+$cell-size: 20px;
+
 .peka-rbp {
-    
+    .table {
+        font-size: $font-size-1;
+
+        .row {
+            display: block;
+            white-space: nowrap;
+            height: $cell-size;
+        }
+
+        .row:first-child {
+            padding-left: $col-1-width;
+        }
+
+        .cell {
+            width: $cell-size;
+            display: inline-block;
+            height: $cell-size;
+        }
+
+        .cell.center, .cell.center + .cell {
+            background-image: linear-gradient(white 50%, #ffffff00 0%);
+            background-position: left;
+            background-size: 1px 10px;
+            background-repeat: repeat-y;
+        }
+
+        .motif, .offset {
+            color: $purple-2;
+        }
+
+        .motif {
+            width: $col-1-width;
+            display: inline-flex;
+            align-items: center;
+            height: $cell-size;
+            font-family: monospace;
+            position: relative;
+            top: -6px;
+        }
+
+        .offset {
+            display: inline-flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 2px;
+        }
+
+    }
 }

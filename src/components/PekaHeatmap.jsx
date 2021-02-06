@@ -53,7 +53,7 @@ const PekaHeatmap = () => {
       const x = e.clientX - rect.left; const y = e.clientY - rect.top;
       const rowNum = Math.max(Math.floor((y - 1) / (cellSize)), 0);
       const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-      const cell = `${data.proteins[colNum]} - ${data.sequences[rowNum]}\n${data.matrix[rowNum][colNum].value}`
+      const cell = `${data.proteins[colNum]} - ${data.motifs[rowNum]}\n${data.matrix[rowNum][colNum].value}`
       setHoveredCell(cell);
     }
   }
@@ -68,7 +68,7 @@ const PekaHeatmap = () => {
   }, [])
 
   const proteinsHeight = cellSize >= 8 ? cellSize * 8 : 0;
-  const sequencesWidth = cellSize >= 8 ? cellSize * 3 : 0;
+  const motifsWidth = cellSize >= 8 ? cellSize * 3 : 0;
 
   if (!data) return <BarLoader color="#6353C6" />
 
@@ -83,14 +83,14 @@ const PekaHeatmap = () => {
           <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
         </div>
       </div>
-      <div className="canvas" style={{gridTemplateColumns: `${sequencesWidth}px 1fr`}}>
-        <div className="sequences" style={{
-          paddingTop: proteinsHeight, width: sequencesWidth
+      <div className="canvas" style={{gridTemplateColumns: `${motifsWidth}px 1fr`}}>
+        <div className="motifs" style={{
+          paddingTop: proteinsHeight, width: motifsWidth
         }}>
-          {data && data.sequences.map(sequence => (
-            <div className="sequence" key={sequence} style={{
+          {data && data.motifs.map(motif => (
+            <div className="motif" key={motif} style={{
               height: cellSize, fontSize: cellSize * 0.75, opacity: cellSize >= 8 ? 1 : 0
-            }}>{sequence}</div> 
+            }}>{motif}</div> 
           ))}
         </div>
         <div className="right-column">

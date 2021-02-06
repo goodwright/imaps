@@ -64,10 +64,10 @@
         position: relative;
         display: grid;
 
-        .sequences {
+        .motifs {
             color: $purple-4;
 
-            .sequence {
+            .motif {
                 padding-right: $gap-1;
                 font-family: monospace;
                 display: flex;
