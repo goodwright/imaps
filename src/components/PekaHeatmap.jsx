@@ -2,11 +2,56 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BarLoader from "react-spinners/BarLoader";
 import ReactTooltip from "react-tooltip";
+import PekaDendrogram from "./PekaDendrogram";
 import { getApiLocation } from "../api";
 
 const PekaHeatmap = () => {
 
   const [data, setData] = useState(null);
+  const [cellSize, setCellSize] = useState(6);
+  const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
+  const canvasRef = useRef(null);
+
+  // Get data
+  useEffect(() => {
+    fetch(
+      getApiLocation().replace("graphql", "peka/")
+    ).then(resp => resp.json()).then(json => {
+      setData(json);
+      //drawCanvas(json, cellSize);
+    })
+  }, [])
+
+
+  const zoom = zoomIn => {
+    const index = zooms.indexOf(cellSize);
+    let newSize = cellSize;
+    if (!zoomIn && index !== 0) newSize = zooms[index - 1];
+    if (zoomIn && index !== zooms.length - 1) newSize = zooms[index + 1];
+    const canvas = canvasRef.current;
+    /* canvas.style.width = `${data.matrix[0].length * newSize}px`;
+    canvas.style.height = `${data.matrix.length * newSize}px`; */
+    setCellSize(newSize);
+  }
+
+  return (
+    <div className="peka-heatmap">
+      <h2>Heatmap</h2>
+      <div className="peka-sub-text">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam sed, odit dolore magnam quaerat aliquid explicabo incidunt omnis inventore iste ipsam.
+      </div>
+
+      <div className="zoom">
+        <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
+        <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
+      </div>
+      {data && <PekaDendrogram data={data.dendrogram} cellSize={cellSize} />}
+
+    </div>
+  )
+}
+
+  /* const [data, setData] = useState(null);
   const [cellSize, setCellSize] = useState(8);
   const [hoveredCell, setHoveredCell] = useState(null);
   const canvasRef = useRef(null);
@@ -119,7 +164,7 @@ const PekaHeatmap = () => {
       </div>
     </div>
   );
-};
+}; */
 
 PekaHeatmap.propTypes = {
   

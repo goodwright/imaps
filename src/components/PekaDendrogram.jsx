@@ -7,8 +7,7 @@ const PekaDendrogram = props => {
 
   const colCount = data.labels.length;
   const canvasRef = useRef(null);
-  const lineHeight = 12;
-  const lineWidth = Math.min(1, cellSize / 2);
+  const lineHeight = cellSize;
 
   
   
@@ -87,13 +86,17 @@ const PekaDendrogram = props => {
       width: cellSize * colCount
     }}>
       <canvas ref={canvasRef} />
-      <div className="proteins">
-        {data.labels.map(label => (
-          <div key={label} className="protein" style={{
-            height: cellSize
-          }}>{label}</div>
-        ))}
-      </div>
+      {cellSize >= 6 && (
+        <div className="proteins" style={{
+          fontSize: cellSize * 0.75, width: cellSize * 6.5, top: cellSize * 6.5
+        }}>
+          {data.labels.map(label => (
+            <div key={label} className="protein" style={{
+              height: cellSize
+            }}>{label}</div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
