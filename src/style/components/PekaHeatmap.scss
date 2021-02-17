@@ -38,6 +38,9 @@
 
     .motifs {
         color: $purple-4;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
 
         .motif {
             padding-right: $gap-1;

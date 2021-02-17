@@ -11,6 +11,7 @@ const PekaHeatmap = () => {
   const [cellSize, setCellSize] = useState(6);
   const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
   const canvasRef = useRef(null);
+  console.log(cellSize)
 
   // Get data
   useEffect(() => {
@@ -72,14 +73,16 @@ const PekaHeatmap = () => {
     if (zoomIn && index !== zooms.length - 1) newSize = zooms[index + 1];
     const canvas = canvasRef.current;
     canvas.style.width = `${data.matrix[0].length * newSize}px`;
-    canvas.style.height = `${data.matrix.length * newSize}px`;
+    canvas.style.height = `${(data.matrix.length * newSize) + (6 * (secondaryHeight + secondaryGap)) + (2 * secondaryHeight)}px`;
     setCellSize(newSize);
+    drawCanvas(data, newSize);
   }
 
   const proteinsHeight = cellSize >= 6 ? cellSize * 7 : 0;
   const motifsWidth = cellSize >= 6 ? cellSize * 3 : 0;
   const secondaryHeight = 30;
   const secondaryGap = 15;
+  console.log(data && data.rows.length)
 
   return (
     <div className="peka-heatmap">
@@ -100,11 +103,12 @@ const PekaHeatmap = () => {
         />
         <div className="main-row">
           <div className="motifs" style={{
-            width: motifsWidth
+            width: motifsWidth,
           }}>
             {data && data.rows.map(motif => (
               <div className="motif" key={motif} style={{
-                height: cellSize, fontSize: cellSize * 0.75, opacity: cellSize >= 6 ? 1 : 0
+                fontSize: cellSize * 0.75, opacity: cellSize >= 6 ? 1 : 0,
+                height: cellSize, width: motifsWidth,
               }}>{motif}</div> 
             ))}
           </div>
