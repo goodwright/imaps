@@ -31,6 +31,23 @@
             border-left: 1px solid $gray-5;
         }
     }
+
+    .main-row {
+        display: flex;
+    }
+
+    .motifs {
+        color: $purple-4;
+
+        .motif {
+            padding-right: $gap-1;
+            font-family: monospace;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    }
+
     .peka-panel {
         margin-top: $gap-5;
         margin-bottom: $gap-3;
@@ -66,17 +83,7 @@
         display: grid;
         scrollbar-width: none;
 
-        .motifs {
-            color: $purple-4;
-
-            .motif {
-                padding-right: $gap-1;
-                font-family: monospace;
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-            }
-        }
+        
 
         .proteins {
             display: grid;

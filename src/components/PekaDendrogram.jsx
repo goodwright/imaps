@@ -3,14 +3,12 @@ import PropTypes from "prop-types";
 
 const PekaDendrogram = props => {
 
-  const { data, cellSize } = props;
+  const { data, cellSize, labelHeight, offset } = props;
 
   const colCount = data.labels.length;
   const canvasRef = useRef(null);
   const lineHeight = cellSize;
 
-  
-  
   useEffect(() => {
     const nodes = [];
     for (let link of data.linkage_matrix) {
@@ -48,7 +46,6 @@ const PekaDendrogram = props => {
     for (let c = 0; c < clusters.length; c++) {
       clusters[c].color = data.link_color_palette[c % 6];
     }
-    
     const height = Math.max(...nodes.map(node => node.level)) * lineHeight;
     const canvas = canvasRef.current;
     canvas.width = cellSize * colCount;
@@ -73,22 +70,20 @@ const PekaDendrogram = props => {
       context.stroke();
       context.closePath();
     }
+    canvasRef.current.parentNode.style.height = labelHeight + height + "px";
+    canvasRef.current.parentNode.style.width = `${window.innerWidth - canvas.getBoundingClientRect().left}px`;
 
-
-
-
-    return;
   }, [cellSize, data])
 
 
   return (
     <div className="peka-dendrogram" style={{
-      width: cellSize * colCount
+      width: cellSize * colCount, marginLeft: offset
     }}>
       <canvas ref={canvasRef} />
       {cellSize >= 6 && (
         <div className="proteins" style={{
-          fontSize: cellSize * 0.75, width: cellSize * 6.5, top: cellSize * 6.5
+          fontSize: cellSize * 0.75, width: labelHeight - 4, top: labelHeight - 4
         }}>
           {data.labels.map(label => (
             <div key={label} className="protein" style={{
