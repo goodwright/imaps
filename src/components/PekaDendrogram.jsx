@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const PekaDendrogram = props => {
 
@@ -86,9 +87,9 @@ const PekaDendrogram = props => {
           fontSize: cellSize * 0.75, width: labelHeight - 4, top: labelHeight - 4
         }}>
           {data.labels.map(label => (
-            <div key={label} className="protein" style={{
+            <Link key={label} className="protein" to={`/apps/peka?rbp=${label}`} style={{
               height: cellSize
-            }}>{label}</div>
+            }}>{label}</Link>
           ))}
         </div>
       )}

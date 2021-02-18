@@ -51,7 +51,18 @@
         }
     }
 
-    .peka-panel {
+    .heatmaps {
+        canvas {
+            margin-bottom: $gap-4;
+            border: 1px solid $gray-4;
+        }
+
+        canvas:first-child {
+            border: none;
+        }
+    }
+
+    /* .peka-panel {
         margin-top: $gap-5;
         margin-bottom: $gap-3;
         display: grid;
@@ -131,5 +142,5 @@
 
     .canvas::-webkit-scrollbar {
         display: none;
-    }
+    } */
 }

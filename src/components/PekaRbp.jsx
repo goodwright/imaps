@@ -67,6 +67,7 @@ const PekaRbp = props => {
               data-motif={data.PEKA_score_heatmap.rows[i]}
               data-value={cell[0].value}
               onMouseMove={scoreHover}
+              key={i}
             />
           ))}
         </div>
