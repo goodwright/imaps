@@ -11,6 +11,7 @@ const PekaRbp = props => {
 
   const [data, setData] = useState(null);
   const [tooltip, setTooltip] = useState("");
+  const [score, setScore] = useState("");
 
   useEffect(() => {
     fetch(
@@ -24,6 +25,10 @@ const PekaRbp = props => {
     setTooltip(`${e.target.dataset.motif}: ${e.target.dataset.offset}\n${e.target.dataset.value}`)
   }
 
+  const scoreHover = e => {
+    setScore (`${e.target.dataset.motif}\n${e.target.dataset.value}`)
+  }
+
   if (!data) return <BarLoader color="#6353C6" />
 
   return (
@@ -34,17 +39,17 @@ const PekaRbp = props => {
       </p>
       <div className="graphic">
         <div className="table">
-            <div className="row">{data.offsets.map(offset => <div className="offset cell" key={offset}>{offset}</div>)}</div>
-            {data.matrix.map((row, i) => (
+            <div className="row">{data.rbp_heatmap.columns.map(offset => <div className="offset cell" key={offset}>{offset}</div>)}</div>
+            {data.rbp_heatmap.matrix.map((row, i) => (
               <div className="row" key={i}>
-                <div className="motif cell">{data.motifs[i]}</div>
+                <div className="motif cell">{data.rbp_heatmap.rows[i]}</div>
                 {row.map((cell, c) => (
                   <div
                     style={{backgroundColor: cell.color}}
-                    className={data.offsets[c] === 0 ? "center cell" : "cell"}
+                    className={data.rbp_heatmap.columns[c] === 0 ? "center cell" : "cell"}
                     data-value={cell.value}
-                    data-motif={data.motifs[i]}
-                    data-offset={data.offsets[c]}
+                    data-motif={data.rbp_heatmap.rows[i]}
+                    data-offset={data.rbp_heatmap.columns[c]}
                     onMouseMove={tableHover}
                     data-tip data-for="tableTooltip"
                     key={c}
@@ -53,9 +58,24 @@ const PekaRbp = props => {
               </div>
             ))}
         </div>
+        
+        <div className="scores">
+          {data.PEKA_score_heatmap.matrix.map((cell, i) => (
+            <div
+              className="score" style={{backgroundColor: cell[0].color}}
+              data-tip data-for="scoreTooltip"
+              data-motif={data.PEKA_score_heatmap.rows[i]}
+              data-value={cell[0].value}
+              onMouseMove={scoreHover}
+            />
+          ))}
+        </div>
         <div className="map"><div className="start">{0}</div><div className="end">{5}</div></div>
         <ReactTooltip id="tableTooltip">
           {tooltip.split("\n").map((t, i) => <div key={i}>{t}</div>)}
+        </ReactTooltip>
+        <ReactTooltip id="scoreTooltip">
+          {score.split("\n").map((t, i) => <div key={i}>{t}</div>)}
         </ReactTooltip>
 
       </div>

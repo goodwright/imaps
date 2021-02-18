@@ -1,9 +1,9 @@
-$col-1-width: 34px;
-$cell-size: 20px;
+$col-1-width: 72px;
+$cell-size: 18px;
 
 .peka-rbp {
     .graphic {
-        display: grid;
+        display: flex;
         grid-template-columns: 1fr 30px;
         width: fit-content;
         gap: $gap-5;
@@ -20,6 +20,7 @@ $cell-size: 20px;
 
         .row:first-child {
             padding-left: $col-1-width;
+            text-align: right;
         }
 
         .cell {
@@ -45,6 +46,8 @@ $cell-size: 20px;
             align-items: center;
             height: $cell-size;
             font-family: monospace;
+            justify-content: flex-end;
+            padding-right: $gap-1;
             position: relative;
             top: -6px;
         }
@@ -56,6 +59,16 @@ $cell-size: 20px;
             padding-bottom: 2px;
         }
 
+    }
+
+    .scores {
+        margin-top: $cell-size;
+        border: 1px solid $gray-5;
+
+        .score {
+            width: $cell-size * 2;
+            height: $cell-size;
+        }
     }
 
     .map {
@@ -81,7 +94,7 @@ $cell-size: 20px;
         }
     }
 
-    #tableTooltip {
+    #tableTooltip, #scoreTooltip {
         div:first-child {
             font-weight: 700;
             margin-bottom: $gap-1;
@@ -89,7 +102,7 @@ $cell-size: 20px;
 
         div:last-child {
             font-weight: 300;
-            font-size: $font-size-7;
+            font-size: $font-size-6;
         }
     }
 }
