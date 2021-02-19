@@ -71,12 +71,20 @@ $cell-size: 18px;
         }
     }
 
-    .map {
+    .maps {
+        height: $cell-size * 40;
         width: $cell-size;
-        height: 400px;
-        background: linear-gradient(black, white);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         margin-top: $cell-size;
+    }
+
+    .map {
+        background: linear-gradient(black, white);
         position: relative;
+        height: 45%;
+        width: 100%;
 
         .start, .end {
             position: absolute;

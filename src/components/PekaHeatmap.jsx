@@ -10,7 +10,7 @@ const PekaHeatmap = () => {
 
   const [data, setData] = useState(null);
   const [cellSize, setCellSize] = useState(6);
-  const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
+  const zooms = [0.5, 1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
   const [hoveredCell, setHoveredCell] = useState("");
 
   const canvasRef = useRef(null);
@@ -194,11 +194,94 @@ const PekaHeatmap = () => {
 
             <div className="heatmaps">
               <canvas ref={canvasRef} onMouseMove={mouseMove} data-tip data-for="canvasTooltip" />
+              <div className="map-info">
+                <div className="horizontal-colors" style={{
+                  background: `linear-gradient(90deg, black, white)`
+                }}>
+                  <div className="values" style={{paddingRight: "20%"}}>
+                    <div className="value">0</div>
+                    <div className="value">0.2</div>
+                    <div className="value">0.4</div>
+                  </div>
+                </div>
+                <div className="map-name">Simialrity</div>
+              </div>
               <canvas ref={similarityRef} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
+              <div className="map-info">
+                <div className="horizontal-colors" style={{
+                  background: `linear-gradient(90deg, white, black)`
+                }}>
+                  <div className="values" style={{justifyContent: "space-around", padding: "0 10px"}}>
+                    <div className="value">10<sup>6</sup></div>
+                    <div className="value">10<sup>7</sup></div>
+                    <div className="value">10<sup>8</sup></div>
+                    <div className="value">10<sup>9</sup></div>
+                  </div>
+                </div>
+                <div className="map-name">iBAQ</div>
+              </div>
               <canvas ref={ibaqRef} onMouseMove={ibaqMouseMove} data-tip data-for="ibaqTooltip" />
+              <div className="map-info">
+                <div className="horizontal-colors" style={{
+                  background: `linear-gradient(90deg, white, black)`
+                }}>
+                  <div className="values">
+                    <div className="value">0</div>
+                    <div className="value">0.2</div>
+                    <div className="value">0.4</div>
+                    <div className="value">0.6</div>
+                    <div className="value">0.8</div>
+                    <div className="value">1.0</div>
+                  </div>
+                </div>
+                <div className="map-name">Recall</div>
+              </div>
               <canvas ref={recallRef} onMouseMove={recallMouseMove} data-tip data-for="recallTooltip" />
+              <div className="map-info">
+                <div className="horizontal-colors" style={{
+                  background: `linear-gradient(90deg, white, black)`
+                }}>
+                  <div className="values">
+                    <div className="value">0</div>
+                    <div className="value">20</div>
+                    <div className="value">40</div>
+                    <div className="value">60</div>
+                    <div className="value">80</div>
+                    <div className="value">100</div>
+                  </div>
+                </div>
+                <div className="map-name">3'UTR % (top), intron % (middle), 5'UTR + CDS % (bottom)</div>
+              </div>
               <canvas ref={intronsRef} onMouseMove={intronsMouseMove} data-tip data-for="intronsTooltip" />
+              <div className="map-info">
+                <div className="horizontal-colors" style={{
+                  background: `linear-gradient(90deg, white, black)`
+                }}>
+                  <div className="values">
+                    <div className="value">0</div>
+                    <div className="value">20</div>
+                    <div className="value">40</div>
+                    <div className="value">60</div>
+                    <div className="value">80</div>
+                    <div className="value">100</div>
+                  </div>
+                </div>
+                <div className="map-name">% noncoding IDR peaks</div>
+              </div>
               <canvas ref={noncodingIdrRef} onMouseMove={noncodingIdrMouseMove} data-tip data-for="noncodingIdrTooltip" />
+              <div className="map-info">
+                <div className="horizontal-colors" style={{
+                  background: `linear-gradient(90deg, white, black)`
+                }}>
+                  <div className="values" style={{paddingRight: "15%"}}>
+                    <div className="value">10<sup>1</sup></div>
+                    <div className="value">10<sup>2</sup></div>
+                    <div className="value">10<sup>3</sup></div>
+                    <div className="value">10<sup>4</sup></div>
+                  </div>
+                </div>
+                <div className="map-name">total IDR peaks</div>
+              </div>
               <canvas ref={totalIdrRef} onMouseMove={totalIdrMouseMove} data-tip data-for="totalIdrTooltip" />
               <ReactTooltip id="canvasTooltip">
                 {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
@@ -222,6 +305,10 @@ const PekaHeatmap = () => {
                 {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
               </ReactTooltip>
             </div>
+
+            <div className="colors" style={{
+              background: `linear-gradient(${data.colors.join(", ")})`
+            }}> <div className="low">0</div><div className="high">1024</div></div>
 
           </div>
         </div>

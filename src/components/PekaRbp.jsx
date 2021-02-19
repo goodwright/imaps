@@ -4,6 +4,7 @@ import BarLoader from "react-spinners/BarLoader";
 import ReactTooltip from "react-tooltip";
 import { getApiLocation } from "../api";
 import { Link } from "react-router-dom";
+import roundTo from "round-to";
 
 const PekaRbp = props => {
 
@@ -47,7 +48,7 @@ const PekaRbp = props => {
                   <div
                     style={{backgroundColor: cell.color}}
                     className={data.rbp_heatmap.columns[c] === 0 ? "center cell" : "cell"}
-                    data-value={cell.value}
+                    data-value={roundTo(cell.value, 2)}
                     data-motif={data.rbp_heatmap.rows[i]}
                     data-offset={data.rbp_heatmap.columns[c]}
                     onMouseMove={tableHover}
@@ -65,13 +66,16 @@ const PekaRbp = props => {
               className="score" style={{backgroundColor: cell[0].color}}
               data-tip data-for="scoreTooltip"
               data-motif={data.PEKA_score_heatmap.rows[i]}
-              data-value={cell[0].value}
+              data-value={roundTo(cell[0].value, 2)}
               onMouseMove={scoreHover}
               key={i}
             />
           ))}
         </div>
-        <div className="map"><div className="start">{0}</div><div className="end">{5}</div></div>
+        <div className="maps">
+          <div className="map"><div className="start">{0}</div><div className="end">{5}</div></div>
+          <div className="map"><div className="start">{0}</div><div className="end">{5}</div></div>
+        </div>
         <ReactTooltip id="tableTooltip">
           {tooltip.split("\n").map((t, i) => <div key={i}>{t}</div>)}
         </ReactTooltip>

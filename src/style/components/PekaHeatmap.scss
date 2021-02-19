@@ -53,12 +53,69 @@
 
     .heatmaps {
         canvas {
-            margin-bottom: $gap-4;
+            margin-bottom: $gap-7;
             border: 1px solid $gray-4;
+            display: block;
         }
 
         canvas:first-child {
             border: none;
+        }
+    }
+
+    .colors {
+        width: 30px;
+        height: 400px;
+        margin-left: $gap-4;
+        position: relative;
+
+        .low, .high {
+            position: absolute;
+            left: 30px + $gap-1;
+            text-align: left;
+            font-size: $font-size-1;
+            color: $purple-4;
+        }
+
+        .high {
+            bottom: 0;
+        }
+    }
+
+    .map-info {
+        display: flex;
+        margin-bottom: $gap-2;
+        color: $purple-2;
+        align-items: flex-start;
+
+        .map-name {
+            font-weight: 500;
+            min-width: 60px;
+            font-size: $font-size-2;
+        }
+
+        .horizontal-colors {
+            width: 200px;
+            height: 20px;
+            margin-right: $gap-3;
+            position: relative;
+            border: 1px solid $gray-4;
+
+            .values {
+                position: absolute;
+                display: flex;
+                justify-content: space-between;
+                width: 200px;
+                bottom: 20px;
+                font-size: $font-size-1;
+                font-weight: 300;
+                color: $purple-2;
+
+                sup {
+                    position: relative;
+                    top: -$gap-1;
+                }
+            }
         }
     }
 
