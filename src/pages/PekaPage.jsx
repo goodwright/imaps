@@ -5,13 +5,14 @@ import PekaHeatmap from "../components/PekaHeatmap";
 import PekaRbp from "../components/PekaRbp";
 import Base from "./Base";
 import { getApiLocation } from "../api";
+import PekaMotif from "../components/PekaMotif";
 
 const PekaPage = () => {
 
   // What arguments are there?
   const params = new URLSearchParams(useLocation().search);
   const rbp = params.get("rbp");
-  const sequence = params.get("sequence");
+  const motif = params.get("motif");
   const [data, setData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
@@ -48,7 +49,7 @@ const PekaPage = () => {
         onChange={searchSelected}
       />
       <p className="peka-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque modi natus laborum quisquam, quam exercitationem vel voluptates reiciendis tempora amet, illum autem molestias? Fuga qui eligendi voluptatem nisi, incidunt dicta!</p>
-      {rbp ? <PekaRbp rbp={rbp} /> : <PekaHeatmap /> }
+      {rbp ? <PekaRbp rbp={rbp} /> : motif ? <PekaMotif motif={motif}/> : <PekaHeatmap /> }
     </Base>
   )
 };

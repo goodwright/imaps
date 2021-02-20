@@ -1,0 +1,83 @@
+$chart-height: 350px;
+
+.peka-motif {
+    .graphics {
+        .scatter-plots {
+            display: flex;
+
+            .plots {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: $chart-height $chart-height;
+                gap: $gap-7;
+                width: ($chart-height * 3.5) + ($gap-7 * 2);
+
+                .highcharts-title, .highcharts-axis-labels, .highcharts-axis-title, text {
+                    font-family: $font;
+                }
+
+                .highcharts-title {
+                    fill: $purple-4 !important;
+                    stroke: $purple-4;
+                }
+
+                .highcharts-axis-line  {
+                    stroke: $gray-5;
+                }
+
+                .highcharts-plot-line {
+                    stroke: $gray-6;
+                }
+            }
+
+            .colors {
+                height: $chart-height + $chart-height + $gap-7;
+                width: 30px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                margin-left: $gap-4;
+                margin-right: $gap-4;
+                position: relative;
+
+                .value {
+                    position: relative;
+                    left: 30px + $gap-1;
+                    font-size: $font-size-1;
+                }
+            }
+        }
+    }
+
+    @media (max-width: ($chart-height * 3.5) + ($gap-7 * 2) + 30px + (4 * $gap-4) + $sidebar-width) {
+        .graphics {
+            .scatter-plots {
+                .plots {
+                    grid-template-columns: 1fr 1fr;
+                    grid-template-rows: $chart-height $chart-height $chart-height;
+                    width: ($chart-height * 2.5) + ($gap-7 * 2);
+                }
+
+                .colors {
+                    height: (3 * $chart-height) + (2 * $gap-7);
+                }
+            }
+        }
+    }
+
+    @media (max-width: ($chart-height * 2.5) + $gap-7 + 30px + (4 * $gap-4) + $sidebar-width) {
+        .graphics {
+            .scatter-plots {
+                .plots {
+                    grid-template-columns: 1fr;
+                    grid-template-rows: repeat(6, $chart-height);
+                    width: ($chart-height * 1.5) + ($gap-7 * 1);
+                }
+
+                .colors {
+                    height: (2 * $chart-height);
+                }
+            }
+        }
+    }
+}

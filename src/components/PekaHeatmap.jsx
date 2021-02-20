@@ -185,10 +185,10 @@ const PekaHeatmap = () => {
               width: motifsWidth,
             }}>
               {data.rows.map(motif => (
-                <div className="motif" key={motif} style={{
+                <Link className="motif" key={motif} style={{
                   fontSize: cellSize * 0.75, opacity: cellSize >= 6 ? 1 : 0,
                   height: cellSize, width: motifsWidth,
-                }}>{motif}</div>
+                }} to={`/apps/peka?motif=${motif}`}>{motif}</Link>
               ))}
             </div>
 

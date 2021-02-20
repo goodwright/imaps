@@ -48,6 +48,12 @@
             display: flex;
             align-items: center;
             justify-content: flex-end;
+            text-decoration: none;
+            color: $purple-4;
+        }
+
+        a:hover {
+            text-decoration: underline;
         }
     }
 
@@ -118,86 +124,4 @@
             }
         }
     }
-
-    /* .peka-panel {
-        margin-top: $gap-5;
-        margin-bottom: $gap-3;
-        display: grid;
-        grid-template-columns: 1fr 60px;
-        height: 30px;
-        gap: $gap-3;
-
-        .color-map {
-            display: flex;
-            height: 100%;
-            border-radius: 4px;
-            position: relative;
-
-            .start, .end {
-                position: absolute;
-                top: -16px;
-                color: $purple-2;
-                font-size: $font-size-2;
-            }
-
-            .end {
-               right: 0; 
-            }
-        }
-
-        
-    }
-
-    .canvas {
-        overflow: scroll;
-        position: relative;
-        display: grid;
-        scrollbar-width: none;
-
-        
-
-        .proteins {
-            display: grid;
-            align-items: flex-end;
-
-            .protein {
-                transform: rotate(-90deg);
-                text-align: left;
-                padding-left: $gap-1;
-                color: white;
-                font-size: 6px;
-                white-space: nowrap;
-                font-family: monospace;
-                display: flex;
-                align-items: center;
-                position: relative;
-                color: $purple-4;
-                text-decoration: none;
-            }
-
-            a:hover {
-                text-decoration: underline;
-            }
-        }
-
-        canvas {
-            position: relative;
-        }
-
-        #canvasTooltip {
-            div:first-child {
-                font-weight: 700;
-                margin-bottom: $gap-1;
-            }
-
-            div:last-child {
-                font-weight: 300;
-                font-size: $font-size-7;
-            }
-        }
-    }
-
-    .canvas::-webkit-scrollbar {
-        display: none;
-    } */
 }
