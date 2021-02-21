@@ -2,6 +2,9 @@ $chart-height: 350px;
 
 .peka-motif {
     .graphics {
+        display: grid;
+        gap: $gap-10;
+
         .scatter-plots {
             display: flex;
 
@@ -45,6 +48,146 @@ $chart-height: 350px;
                     left: 30px + $gap-1;
                     font-size: $font-size-1;
                 }
+            }
+        }
+
+        .heatmaps {
+            display: grid;
+            gap: $gap-9;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1800px;
+
+            .heatmap {
+                display: flex;
+
+                .rbps {
+
+                    .rbp {
+                        font-size: $font-size-1;
+                        padding-right: $gap-1;
+                        justify-content: flex-end;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+
+                .matrix {
+
+                    .title {
+                        justify-content: center;
+                        font-size: $font-size-3;
+                        color: $purple-4;
+                        font-weight: 500;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .offsets {
+                        position: relative;
+                        left: -24px;
+                        width: fit-content;
+                        font-size: $font-size-1;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        transform: rotate(-90deg);
+                        transform-origin: top right;
+                        padding: $gap-2 0;
+                        
+                        .offset {
+                            text-align: right;
+                            padding-right: $gap-1;
+                        }
+                    }
+
+                    .colors {
+                        height: 24px;
+                        margin-top: $gap-4;
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0 10% 0 5%;
+
+                        .value {
+                            position: relative;
+                            top: 24px;
+                            font-size: $font-size-2;
+                        }
+                    }
+                }
+
+                .introns, .recall, .ibaq {
+                    margin-left: $gap-4;
+
+                    .labels {
+                        transform: rotate(-90deg);
+                        transform-origin: bottom left;
+                        height: 24px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+                        font-size: $font-size-1;
+                        position: relative;
+                        right: -24px;
+                        top: -24px;
+                        padding-left: $gap-1;
+                        margin-bottom: -24px;
+                    }
+
+                    canvas {
+                        border: 1px solid $gray-5;
+                    }
+
+                    .colors {
+                        font-size: 0.8 * $font-size-1;
+                        display: flex;
+                        flex-direction: column;
+                        margin-top: $gap-4;
+                        justify-content: space-between;
+                        border: 1px solid $gray-5;
+
+                        .value {
+                            position: relative;
+                            left: 24px + $gap-1 * 0.5;
+
+                            sup {
+                                position: relative;
+                                top: -$gap-1;
+                                font-size: 0.8 * $font-size-1;
+                            }
+                        }
+                    }
+                }
+
+                .introns {
+                    .labels {
+                        height: 72px;
+                        right: -72px;
+                        top: -72px;
+                        margin-bottom: -72px;
+                    }
+                }
+            }
+        }
+
+        
+    }
+
+    #canvasTooltip {
+        div:first-child {
+            font-weight: 700;
+            margin-bottom: $gap-1;
+        }
+
+        div:last-child {
+            font-weight: 300;
+            font-size: $font-size-6;
+        }
+    }
+
+    @media (max-width: 2050px) {
+        .graphics {
+            .heatmaps {
+                grid-template-columns: 1fr;
             }
         }
     }
