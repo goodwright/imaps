@@ -1,4 +1,4 @@
-host="imaps.goodwright.org"
+host="beta.imaps.goodwright.org"
 
 # Build app
 npm run build

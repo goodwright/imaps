@@ -1,10 +1,54 @@
 .peka-page {
 
+    .top-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: $gap-4;
+        max-width: 800px;
+        justify-content: space-between;
+    }
+
     h1 {
         color: $purple-4;
         font-weight: 600;
         font-size: $font-size-9;
-        margin-bottom: $gap-4;
+        margin-right: $gap-4;
+    }
+
+    .search-select {
+        width: 400px;
+
+        .search__value-container {
+            cursor: text;
+        }
+    
+        .search__control {
+            box-shadow: none;
+            overflow: hidden;
+            border-color: $gray-5 !important;
+        }
+    
+        .search__menu {
+            overflow: hidden;
+            cursor: pointer;
+        }
+    
+        .search__option {
+            cursor: pointer;
+    
+            div {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .search__indicators {
+            display: none;
+        }
+    
+        input {
+            height: inherit;
+        }
     }
 
     .peka-text {

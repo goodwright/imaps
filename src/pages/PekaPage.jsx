@@ -14,6 +14,7 @@ const PekaPage = () => {
   const rbp = params.get("rbp");
   const motif = params.get("motif");
   const [data, setData] = useState(null);
+  const [searchAvtive, setSearchActive] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const history = useHistory();
 
@@ -41,13 +42,21 @@ const PekaPage = () => {
 
   return (
     <Base className="peka-page">
-      <h1>PEKA</h1>
-      <Select
-        options={searchData}
-        menuIsOpen={searchTerm.length >= 2}
-        onInputChange={value => setSearchTerm(value)}
-        onChange={searchSelected}
-      />
+      <div className="top-row">
+        <h1>PEKA</h1>
+        <Select
+          options={searchData}
+          onFocus={() => setSearchActive(true)}
+          onBlur={() => setSearchActive(false)}
+          menuIsOpen={searchTerm.length >= 2}
+          onInputChange={value => setSearchTerm(value)}
+          onChange={searchSelected}
+          placeholder={searchAvtive ? "" : "Search..."}
+          backspaceRemovesValue={true}
+          className="search-select"
+          classNamePrefix="search"
+        />
+      </div>
       <p className="peka-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque modi natus laborum quisquam, quam exercitationem vel voluptates reiciendis tempora amet, illum autem molestias? Fuga qui eligendi voluptatem nisi, incidunt dicta!</p>
       {rbp ? <PekaRbp rbp={rbp} /> : motif ? <PekaMotif motif={motif}/> : <PekaHeatmap /> }
     </Base>
