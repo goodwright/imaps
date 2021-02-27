@@ -46,7 +46,10 @@ const PekaRbp = props => {
                 <div className="motif cell">{data.rbp_heatmap.rows[i]}</div>
                 {row.map((cell, c) => (
                   <div
-                    style={{backgroundColor: cell.color}}
+                    style={{
+                      backgroundColor: cell.color,
+                      borderTop: data.rbp_heatmap.hlines.line_positions.includes(i) && c >= data.rbp_heatmap.hlines.line_start_end[0] && c <= data.rbp_heatmap.hlines.line_start_end[1] ? `1px solid ${data.rbp_heatmap.hlines.colors}` : "none"
+                    }}
                     className={data.rbp_heatmap.columns[c] === 0 ? "center cell" : "cell"}
                     data-value={roundTo(cell.value, 2)}
                     data-motif={data.rbp_heatmap.rows[i]}
