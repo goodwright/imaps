@@ -32,8 +32,6 @@ const PekaRbp = props => {
 
   if (!data) return <BarLoader color="#6353C6" />
 
-  console.log((data.rbp_heatmap.colorbar_ticks[0] - data.rbp_heatmap.colorbar_vmin_vmax.vmin) / (data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100)
-
   return (
     <div className="peka-rbp">
       <h2>{rbp}</h2>
@@ -42,27 +40,29 @@ const PekaRbp = props => {
       </p>
       <div className="graphic">
         <div className="table">
-            <div className="row">{data.rbp_heatmap.columns.map(offset => <div className="offset cell" key={offset}>{offset}</div>)}</div>
-            {data.rbp_heatmap.matrix.map((row, i) => (
-              <div className="row" key={i}>
-                <div className="motif cell">{data.rbp_heatmap.rows[i]}</div>
-                {row.map((cell, c) => (
-                  <div
-                    style={{
-                      backgroundColor: cell.color,
-                      borderTop: data.rbp_heatmap.hlines.line_positions.includes(i) && c >= data.rbp_heatmap.hlines.line_start_end[0] && c <= data.rbp_heatmap.hlines.line_start_end[1] ? `1px solid ${data.rbp_heatmap.hlines.colors}` : "none"
-                    }}
-                    className={data.rbp_heatmap.columns[c] === 0 ? "center cell" : "cell"}
-                    data-value={roundTo(cell.value, 2)}
-                    data-motif={data.rbp_heatmap.rows[i]}
-                    data-offset={data.rbp_heatmap.columns[c]}
-                    onMouseMove={tableHover}
-                    data-tip data-for="tableTooltip"
-                    key={c}
-                  />
-                ))}
-              </div>
-            ))}
+          <div className="title">{rbp} - Relative occurence around tXn for top 40 motifs</div>
+          {data.rbp_heatmap.matrix.map((row, i) => (
+            <div className="row" key={i}>
+              <div className="motif cell">{data.rbp_heatmap.rows[i]}</div>
+              {row.map((cell, c) => (
+                <div
+                  style={{
+                    backgroundColor: cell.color,
+                    borderTop: data.rbp_heatmap.hlines.line_positions.includes(i) && c >= data.rbp_heatmap.hlines.line_start_end[0] && c <= data.rbp_heatmap.hlines.line_start_end[1] ? `1px solid ${data.rbp_heatmap.hlines.colors}` : "none"
+                  }}
+                  className={data.rbp_heatmap.columns[c] === 0 ? "center cell" : "cell"}
+                  data-value={roundTo(cell.value, 2)}
+                  data-motif={data.rbp_heatmap.rows[i]}
+                  data-offset={data.rbp_heatmap.columns[c]}
+                  onMouseMove={tableHover}
+                  data-tip data-for="tableTooltip"
+                  key={c}
+                />
+              ))}
+            </div>
+          ))}
+          <div className="row">{data.rbp_heatmap.columns.map(offset => <div className="offset cell" key={offset}>{offset}</div>)}</div>
+          <div className="label">nt position relative to tXn</div>
         </div>
         
         <div className="scores">

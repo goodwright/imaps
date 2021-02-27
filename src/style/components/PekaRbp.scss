@@ -12,13 +12,28 @@ $cell-size: 18px;
     .table {
         font-size: $font-size-1;
 
+        .title, .label {
+            height: $cell-size;
+            text-align: center;
+            font-weight: 500;
+            color: $purple-4;
+            font-size: $font-size-3;
+            margin-left: $col-1-width;
+            width: $cell-size * 51;
+        }
+
+        .label {
+            font-weight: 400;
+            color: $purple-2;
+        }
+
         .row {
             display: block;
             white-space: nowrap;
             height: $cell-size;
         }
 
-        .row:first-child {
+        .row:nth-last-child(2) {
             padding-left: $col-1-width;
             text-align: right;
         }
@@ -63,6 +78,7 @@ $cell-size: 18px;
 
     .scores {
         margin-top: $cell-size;
+        margin-bottom: $cell-size * 2;
         border: 1px solid $gray-5;
 
         .score {
