@@ -37,7 +37,9 @@ const PekaPage = () => {
   }))) : [];
 
   const searchSelected = e => {
-    history.push(`/apps/peka?${e.label.length === 5 ? "motif" : "rbp"}=${e.label}`)
+    history.push(`/apps/peka?${e.label.length === 5 ? "motif" : "rbp"}=${e.label}`);
+    setSearchTerm("");
+    setSearchActive(false);
   }
 
   return (
@@ -45,14 +47,16 @@ const PekaPage = () => {
       <div className="top-row">
         <h1>PEKA</h1>
         <Select
+          key={rbp || motif}
           options={searchData}
           onFocus={() => setSearchActive(true)}
           onBlur={() => setSearchActive(false)}
+          value={null}
           menuIsOpen={searchTerm.length >= 2}
           onInputChange={value => setSearchTerm(value)}
           onChange={searchSelected}
+          onClick={console.log}
           placeholder={searchAvtive ? "" : "Search..."}
-          backspaceRemovesValue={true}
           className="search-select"
           classNamePrefix="search"
         />
