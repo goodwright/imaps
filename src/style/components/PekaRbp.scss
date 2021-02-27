@@ -83,22 +83,16 @@ $cell-size: 18px;
     .map {
         background: linear-gradient(black, white);
         position: relative;
-        height: 45%;
+        height: 300px;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
 
-        .start, .end {
-            position: absolute;
-            width: 10px;
-            top: 0;
-            right: -10px;
-            text-align: right;
-            height: fit-content;
+        .tick {
+            position: relative;
+            left: $cell-size + $gap-1;
             font-size: $font-size-2;
-        }
-
-        .end {
-            bottom: 0;
-            top: auto
         }
     }
 

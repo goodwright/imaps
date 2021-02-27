@@ -32,6 +32,8 @@ const PekaRbp = props => {
 
   if (!data) return <BarLoader color="#6353C6" />
 
+  console.log((data.rbp_heatmap.colorbar_ticks[0] - data.rbp_heatmap.colorbar_vmin_vmax.vmin) / (data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100)
+
   return (
     <div className="peka-rbp">
       <h2>{rbp}</h2>
@@ -76,8 +78,18 @@ const PekaRbp = props => {
           ))}
         </div>
         <div className="maps">
-          <div className="map"><div className="start">{0}</div><div className="end">{5}</div></div>
-          <div className="map"><div className="start">{0}</div><div className="end">{5}</div></div>
+          <div className="map" style={{
+            background: `linear-gradient(${data.rbp_heatmap.colors.slice().reverse().join(",")})`,
+            paddingBottom: `${(data.rbp_heatmap.colorbar_ticks[0] - data.rbp_heatmap.colorbar_vmin_vmax.vmin) / (data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
+            paddingTop: `${(data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_ticks[data.rbp_heatmap.colorbar_ticks.length - 1]) / (data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
+          }}>{data.rbp_heatmap.colorbar_ticks.slice().reverse().map(tick => <div className="tick" key={tick}>{tick}</div> )}</div>
+          
+          <div className="map" style={{
+            background: `linear-gradient(${data.PEKA_score_heatmap.cmap.slice().reverse().join(",")})`,
+            paddingBottom: `${(data.PEKA_score_heatmap.colorbar_ticks[0] - data.PEKA_score_heatmap.colorbar_vmin_vmax.vmin) / (data.PEKA_score_heatmap.colorbar_vmin_vmax.vmax - data.PEKA_score_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
+            paddingTop: `${(data.PEKA_score_heatmap.colorbar_vmin_vmax.vmax - data.PEKA_score_heatmap.colorbar_ticks[data.PEKA_score_heatmap.colorbar_ticks.length - 1]) / (data.PEKA_score_heatmap.colorbar_vmin_vmax.vmax - data.PEKA_score_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
+          }}>{data.PEKA_score_heatmap.colorbar_ticks.slice().reverse().map(tick => <div className="tick" key={tick}>{tick}</div> )}</div>
+          
         </div>
         <ReactTooltip id="tableTooltip">
           {tooltip.split("\n").map((t, i) => <div key={i}>{t}</div>)}
