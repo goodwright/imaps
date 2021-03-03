@@ -19,6 +19,7 @@ const PekaMotif = props => {
   const barWidth = 24;
 
   useEffect(() => {
+    setData(null);
     fetch(
       getApiLocation().replace("graphql", `peka/motif?sequence=${motif}`)
     ).then(resp => resp.json()).then(json => {
@@ -104,7 +105,8 @@ const PekaMotif = props => {
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (cellHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / (e.target.dataset.canvas === "rbp_heatmap" ? cellWidth : barWidth)), 0);
-    let value = canvas.matrix[rowNum][colNum];
+    let value = canvas.matrix[rowNum]
+    if (value) value = value[colNum];
     if (value) value = value.value;
     const col = canvas.columns[colNum];
     const row = canvas.rows[rowNum].label || canvas.rows[rowNum];
@@ -225,7 +227,7 @@ const PekaMotif = props => {
                 </div>
               </div>
            
-              <div className="introns"  style={{marginTop: cellHeight * 2.5}}>
+              <div className="introns"  style={{marginTop: cellHeight * 2}}>
                 <div className="labels">
                   {heatmap["regional_%"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
@@ -243,7 +245,7 @@ const PekaMotif = props => {
                 </div>
               </div>
 
-              <div className="recall"  style={{marginTop: cellHeight * 2.5}}>
+              <div className="recall"  style={{marginTop: cellHeight * 2}}>
                 <div className="labels">
                   {heatmap["recall"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
@@ -261,7 +263,7 @@ const PekaMotif = props => {
                 </div>
               </div>
 
-              <div className="ibaq"  style={{marginTop: cellHeight * 2.5}}>
+              <div className="ibaq"  style={{marginTop: cellHeight * 2}}>
                 <div className="labels">
                   {heatmap["iBAQ"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
