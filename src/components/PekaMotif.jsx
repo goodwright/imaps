@@ -97,16 +97,31 @@ const PekaMotif = props => {
     }
   }
 
-  const canvasHover = e => {
+  const canvasHover = (e, usePower) => {
     const heatmap = data.heatmaps[e.target.dataset.heatmap];
     const canvas = heatmap[e.target.dataset.canvas];
     const rect = e.target.getBoundingClientRect();
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (cellHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / (e.target.dataset.canvas === "rbp_heatmap" ? cellWidth : barWidth)), 0);
+    let value = canvas.matrix[rowNum][colNum];
+    if (value) value = value.value;
+    const col = canvas.columns[colNum];
+    const row = canvas.rows[rowNum].label || canvas.rows[rowNum];
     if (rowNum < canvas.matrix.length && colNum < canvas.matrix[rowNum].length) {
-      const cell = `${canvas.columns[colNum]} - ${canvas.rows[rowNum].label || canvas.rows[rowNum]}\n${roundTo(canvas.matrix[rowNum][colNum].value, 2)}`
+      const cell = `${col} - ${row}\n${ value === null ? "N/A" : usePower ? power(value, true) : roundTo(value, 2)}`
       setHoveredCell(cell);
+    }
+  }
+
+  const power = (n, isString) => {
+    const sup = Math.floor(Math.log10(n));
+    const num = roundTo(n / (10 ** sup), 3);
+    if (isString) return `${num} × 10**${sup}`
+    if (Math.log10(n) === sup) {
+      return <div>10<sup>{sup}</sup></div>
+    } else {
+      return <div>{num} × 10<sup>{sup}</sup></div>
     }
   }
 
@@ -200,17 +215,17 @@ const PekaMotif = props => {
                 </div>
                 <div className="colors" style={{
                   background: `linear-gradient(90deg,${heatmap.rbp_heatmap.colors.join(",")})`,
-                  width: heatmap.rbp_heatmap.columns.length * cellWidth
+                  width: heatmap.rbp_heatmap.columns.length * cellWidth,
+                  paddingLeft: `${(heatmap.rbp_heatmap.colorbar_ticks[0] - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) / (heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100}%`,
+                  paddingRight: `${(heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_ticks[heatmap.rbp_heatmap.colorbar_ticks.length - 1]) / (heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100}%`,
                 }}>
-                  <div className="value">0.2</div>
-                  <div className="value">0.4</div>
-                  <div className="value">0.6</div>
-                  <div className="value">0.8</div>
-                  <div className="value">1.0</div>
+                  {heatmap.rbp_heatmap.colorbar_ticks.map(value => (
+                    <div className="value" key={value}>{value}</div>
+                  ))}
                 </div>
               </div>
            
-              <div className="introns"  style={{marginTop: cellHeight * 2}}>
+              <div className="introns"  style={{marginTop: cellHeight * 2.5}}>
                 <div className="labels">
                   {heatmap["regional_%"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
@@ -219,16 +234,16 @@ const PekaMotif = props => {
                 <canvas className="intron-canvas" data-heatmap={n} data-canvas="regional_%" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
 
                 <div className="colors" style={{
-                  background: `linear-gradient(${heatmap["regional_%"].cmap.join(",")})`,
-                  width: barWidth, height: barWidth * 2
+                  background: `linear-gradient(${heatmap["regional_%"].cmap.slice().reverse().join(",")})`,
+                  width: barWidth, height: barWidth * 2.5
                 }}>
-                  <div className="value">100</div>
-                  <div className="value">50</div>
-                  <div className="value">0</div>
+                  {heatmap["regional_%"].colorbar_ticks.slice().reverse().map(value => (
+                    <div className="value" key={value}>{value}</div>
+                  ))}
                 </div>
               </div>
 
-              <div className="recall"  style={{marginTop: cellHeight * 2}}>
+              <div className="recall"  style={{marginTop: cellHeight * 2.5}}>
                 <div className="labels">
                   {heatmap["recall"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
@@ -237,31 +252,32 @@ const PekaMotif = props => {
                 <canvas className="recall-canvas" data-heatmap={n} data-canvas="recall" onMouseMove={canvasHover} data-tip data-for="canvasTooltip"/>
 
                 <div className="colors" style={{
-                  background: `linear-gradient(${heatmap["recall"].cmap.join(",")})`,
-                  width: barWidth, height: barWidth * 2
+                  background: `linear-gradient(${heatmap["recall"].cmap.slice().reverse().join(",")})`,
+                  width: barWidth, height: barWidth * 2.5
                 }}>
-                  <div className="value">1.0</div>
-                  <div className="value">0.5</div>
-                  <div className="value">0.0</div>
+                  {heatmap["recall"].colorbar_ticks.slice().reverse().map(value => (
+                    <div className="value" key={value}>{value}</div>
+                  ))}
                 </div>
               </div>
 
-              <div className="ibaq"  style={{marginTop: cellHeight * 2}}>
+              <div className="ibaq"  style={{marginTop: cellHeight * 2.5}}>
                 <div className="labels">
                   {heatmap["iBAQ"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
                   </div> )}
                 </div>
-                <canvas className="ibaq-canvas" data-heatmap={n} data-canvas="iBAQ" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
+                <canvas className="ibaq-canvas" data-heatmap={n} data-canvas="iBAQ" onMouseMove={e => canvasHover(e, true)} data-tip data-for="canvasTooltip" />
 
                 <div className="colors" style={{
-                  background: `linear-gradient(${heatmap["iBAQ"].cmap.join(",")})`,
-                  width: barWidth, height: barWidth * 2,
-                  paddingTop: "30%"
+                  background: `linear-gradient(${heatmap["iBAQ"].cmap.slice().reverse().join(",")})`,
+                  width: barWidth, height: barWidth * 2.5,
+                  paddingTop: `${(Math.log10(heatmap["iBAQ"].colorbar_ticks[0]) - Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmin)) / (Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmax) - Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmin)) * 100}%`,
+                  paddingBottom: `${(Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmax) - Math.log10(heatmap["iBAQ"].colorbar_ticks[heatmap["iBAQ"].colorbar_ticks.length - 1])) / (Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmax) - Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmin)) * 100}%`,
                 }}>
-                  <div className="value">10<sup>9</sup></div>
-                  <div className="value">10<sup>8</sup></div>
-                  <div className="value">10<sup>7</sup></div>
+                  {heatmap["iBAQ"].colorbar_ticks.slice().reverse().map(value => (
+                    <div className="value" key={value}>{power(value)}</div>
+                  ))}
                 </div>
               </div>
 
@@ -272,7 +288,9 @@ const PekaMotif = props => {
     
     
       <ReactTooltip id="canvasTooltip">
-        {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+        {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
+          {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
+        </div>) : ""}
       </ReactTooltip>
     </div>
   );
