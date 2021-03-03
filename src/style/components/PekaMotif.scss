@@ -36,18 +36,32 @@ $chart-height: 350px;
             .colors {
                 height: $chart-height + $chart-height + $gap-7;
                 width: 30px;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
                 margin-left: $gap-4;
                 margin-right: $gap-4;
                 position: relative;
 
-                .value {
+                .values {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
                     position: relative;
-                    left: 30px + $gap-1;
-                    font-size: $font-size-1;
+
+                    .value {
+                        position: relative;
+                        left: 30px + $gap-1;
+                        font-size: $font-size-1;
+                    }
                 }
+
+            }
+
+            .colors:before {
+                content: "max peak position";
+                position: absolute;
+                top: -$gap-4 - $gap-2;
+                left: -46px;
+                color: $purple-4;
+                white-space: nowrap;
             }
         }
 

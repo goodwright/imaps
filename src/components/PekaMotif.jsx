@@ -157,15 +157,17 @@ const PekaMotif = props => {
             })}
           </div>
           <div className="colors" style={{
-            background: `linear-gradient(${data.scatterplot_colors.join(",")})`
+            background: `linear-gradient(${data.scatterplot_colors.slice().reverse().join(",")})`,
+            
           }}>
-            <div className="value">150</div>
-            <div className="value">100</div>
-            <div className="value">50</div>
-            <div className="value">0</div>
-            <div className="value">-50</div>
-            <div className="value">-100</div>
-            <div className="value">-150</div>
+            <div className="values" style={{
+              top: `${(data.scatterplot_colorbar_ticks[0] - data.scatterplot_colorbar_vmin_vmax.vmin) / (data.scatterplot_colorbar_vmin_vmax.vmax - data.scatterplot_colorbar_vmin_vmax.vmin) * 100}%`,
+              height: `${(data.scatterplot_colorbar_ticks[data.scatterplot_colorbar_ticks.length - 1] - data.scatterplot_colorbar_ticks[0]) / (data.scatterplot_colorbar_vmin_vmax.vmax - data.scatterplot_colorbar_vmin_vmax.vmin) * 100}%`,
+            }}>
+              {data.scatterplot_colorbar_ticks.slice().reverse().map((value, i) => (
+                <div key={i} className="value">{value}</div>
+              ))}
+            </div>
           </div>
         </div>
 
