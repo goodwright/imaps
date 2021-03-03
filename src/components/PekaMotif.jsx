@@ -25,7 +25,7 @@ const PekaMotif = props => {
       setData(json);
       drawCanvases(json);
     })
-  }, [])
+  }, [motif])
 
   const drawCanvases = json => {
     for (let h = 0; h < json.heatmaps.length; h++) {
