@@ -204,7 +204,7 @@ const PekaHeatmap = () => {
                     <div className="value">0.4</div>
                   </div>
                 </div>
-                <div className="map-name">Simialrity</div>
+                <div className="map-name">Similarity</div>
               </div>
               <canvas ref={similarityRef} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
               <div className="map-info">
