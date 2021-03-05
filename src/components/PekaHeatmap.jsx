@@ -192,9 +192,9 @@ const PekaHeatmap = () => {
               ))}
             </div>
 
-            <div className="heatmaps">
+            <div className={cellSize < 4 ? "small-maps heatmaps" : "heatmaps"}>
               <canvas ref={canvasRef} onMouseMove={mouseMove} data-tip data-for="canvasTooltip" />
-              <div className="map-info">
+              <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
                 <div className="horizontal-colors" style={{
                   background: `linear-gradient(90deg, black, white)`
                 }}>
@@ -207,7 +207,7 @@ const PekaHeatmap = () => {
                 <div className="map-name">Similarity</div>
               </div>
               <canvas ref={similarityRef} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
-              <div className="map-info">
+              <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
                 <div className="horizontal-colors" style={{
                   background: `linear-gradient(90deg, white, black)`
                 }}>
@@ -221,7 +221,7 @@ const PekaHeatmap = () => {
                 <div className="map-name">iBAQ</div>
               </div>
               <canvas ref={ibaqRef} onMouseMove={ibaqMouseMove} data-tip data-for="ibaqTooltip" />
-              <div className="map-info">
+              <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
                 <div className="horizontal-colors" style={{
                   background: `linear-gradient(90deg, white, black)`
                 }}>
@@ -237,7 +237,7 @@ const PekaHeatmap = () => {
                 <div className="map-name">Recall</div>
               </div>
               <canvas ref={recallRef} onMouseMove={recallMouseMove} data-tip data-for="recallTooltip" />
-              <div className="map-info">
+              <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
                 <div className="horizontal-colors" style={{
                   background: `linear-gradient(90deg, white, black)`
                 }}>
@@ -250,10 +250,10 @@ const PekaHeatmap = () => {
                     <div className="value">100</div>
                   </div>
                 </div>
-                <div className="map-name">3'UTR % (top), intron % (middle), 5'UTR + CDS % (bottom)</div>
+                <div className="map-name">Percentage of thresholded crosslinks per region: {cellSize < 4 && <br />}3'UTR (top), intron (middle), 5'UTR + CDS (bottom)</div>
               </div>
               <canvas ref={intronsRef} onMouseMove={intronsMouseMove} data-tip data-for="intronsTooltip" />
-              <div className="map-info">
+              <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
                 <div className="horizontal-colors" style={{
                   background: `linear-gradient(90deg, white, black)`
                 }}>
@@ -269,7 +269,7 @@ const PekaHeatmap = () => {
                 <div className="map-name">% noncoding IDR peaks</div>
               </div>
               <canvas ref={noncodingIdrRef} onMouseMove={noncodingIdrMouseMove} data-tip data-for="noncodingIdrTooltip" />
-              <div className="map-info">
+              <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
                 <div className="horizontal-colors" style={{
                   background: `linear-gradient(90deg, white, black)`
                 }}>
