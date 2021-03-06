@@ -107,7 +107,8 @@ const PekaHeatmap = () => {
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (secondaryHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-    const cell = `${data.similarity.columns[colNum]} - ${data.similarity.rows[rowNum]}\n${roundTo(data.similarity.matrix[rowNum][colNum].value, 2)}`
+    const value = data.similarity.matrix[rowNum][colNum].value === null ? "N/A" : roundTo(data.similarity.matrix[rowNum][colNum].value, 2)
+    const cell = `${data.similarity.columns[colNum]} - ${data.similarity.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
   }
   const ibaqMouseMove = e => {
@@ -116,7 +117,8 @@ const PekaHeatmap = () => {
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (secondaryHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-    const cell = `${data.iBAQ.columns[colNum]} - ${data.iBAQ.rows[rowNum]}\n${roundTo(data.iBAQ.matrix[rowNum][colNum].value, 2)}`
+    const value = data.iBAQ.matrix[rowNum][colNum].value === null ? "N/A" : power(roundTo(data.iBAQ.matrix[rowNum][colNum].value, 2), true)
+    const cell = `${data.iBAQ.columns[colNum]} - ${data.iBAQ.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
   }
   const recallMouseMove = e => {
@@ -125,7 +127,8 @@ const PekaHeatmap = () => {
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (secondaryHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-    const cell = `${data.recall.columns[colNum]} - ${data.recall.rows[rowNum]}\n${roundTo(data.recall.matrix[rowNum][colNum].value, 2)}`
+    const value = data.recall.matrix[rowNum][colNum].value === null ? "N/A" : roundTo(data.recall.matrix[rowNum][colNum].value, 2)
+    const cell = `${data.recall.columns[colNum]} - ${data.recall.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
   }
   const intronsMouseMove = e => {
@@ -134,7 +137,8 @@ const PekaHeatmap = () => {
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (secondaryHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-    const cell = `${data.introns.columns[colNum]} - ${data.introns.rows[rowNum]}\n${roundTo(data.introns.matrix[rowNum][colNum].value, 2)}`
+    const value = data.introns.matrix[rowNum][colNum].value === null ? "N/A" : roundTo(data.introns.matrix[rowNum][colNum].value, 2)
+    const cell = `${data.introns.columns[colNum]} - ${data.introns.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
   }
   const noncodingIdrMouseMove = e => {
@@ -143,7 +147,8 @@ const PekaHeatmap = () => {
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (secondaryHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-    const cell = `${data.noncoding_IDR.columns[colNum]} - ${data.noncoding_IDR.rows[rowNum]}\n${roundTo(data.noncoding_IDR.matrix[rowNum][colNum].value, 2)}`
+    const value = data.noncoding_IDR.matrix[rowNum][colNum].value === null ? "N/A" : roundTo(data.noncoding_IDR.matrix[rowNum][colNum].value, 2)
+    const cell = `${data.noncoding_IDR.columns[colNum]} - ${data.noncoding_IDR.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
   }
   const totalIdrMouseMove = e => {
@@ -152,8 +157,20 @@ const PekaHeatmap = () => {
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (secondaryHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-    const cell = `${data.total_IDR.columns[colNum]} - ${data.total_IDR.rows[rowNum]}\n${roundTo(data.total_IDR.matrix[rowNum][colNum].value, 2)}`
+    const value = data.total_IDR.matrix[rowNum][colNum].value === null ? "N/A" : data.total_IDR.matrix[rowNum][colNum].value.toLocaleString()
+    const cell = `${data.total_IDR.columns[colNum]} - ${data.total_IDR.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
+  }
+
+  const power = (n, isString) => {
+    const sup = Math.floor(Math.log10(n));
+    const num = roundTo(n / (10 ** sup), 3);
+    if (isString) return `${num} × 10**${sup}`
+    if (Math.log10(n) === sup) {
+      return <div>10<sup>{sup}</sup></div>
+    } else {
+      return <div>{num} × 10<sup>{sup}</sup></div>
+    }
   }
 
   const proteinsHeight = cellSize >= 6 ? cellSize * 7 : 0;
@@ -290,7 +307,11 @@ const PekaHeatmap = () => {
                 {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
               </ReactTooltip>
               <ReactTooltip id="ibaqTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                
+
+                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
+                  {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
+                </div>) : ""}
               </ReactTooltip>
               <ReactTooltip id="recallTooltip">
                 {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
@@ -308,7 +329,11 @@ const PekaHeatmap = () => {
 
             <div className="colors" style={{
               background: `linear-gradient(${data.colors.join(", ")})`
-            }}> <div className="low">0</div><div className="high">1024</div></div>
+            }}>
+              {[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].map(val => (
+                <div className="value" key={val}>{val}</div>
+              ))}    
+            </div>
 
           </div>
         </div>

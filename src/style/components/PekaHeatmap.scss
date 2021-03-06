@@ -80,17 +80,18 @@
         height: 400px;
         margin-left: $gap-4;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 9px;
+        padding-top: 38px;
 
-        .low, .high {
-            position: absolute;
+        .value {
+            position: relative;
             left: 30px + $gap-1;
             text-align: left;
             font-size: $font-size-1;
             color: $purple-4;
-        }
-
-        .high {
-            bottom: 0;
         }
     }
 
@@ -128,6 +129,24 @@
                     top: -$gap-1;
                 }
             }
+        }
+    }
+
+    #canvasTooltip, .__react_component_tooltip {
+        div:first-child {
+            font-weight: 700;
+            margin-bottom: $gap-1;
+        }
+
+        div:last-child {
+            font-weight: 300;
+            font-size: $font-size-6;
+        }
+
+        sup {
+            position: relative;
+            top: -$gap-2;
+            font-size: $font-size-2;
         }
     }
 }
