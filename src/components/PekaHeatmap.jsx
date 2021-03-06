@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BarLoader from "react-spinners/BarLoader";
 import ReactTooltip from "react-tooltip";
+import ReactToggle from "react-toggle";
 import PekaDendrogram from "./PekaDendrogram";
 import roundTo from "round-to";
 import { getApiLocation } from "../api";
@@ -10,8 +11,9 @@ const PekaHeatmap = () => {
 
   const [data, setData] = useState(null);
   const [cellSize, setCellSize] = useState(6);
-  const zooms = [0.5, 1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
-  const [hoveredCell, setHoveredCell] = useState("");
+  const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
+  const [hoveredCell, setHoveredCell] = useState(" ");
+  const [truncated, setTruncated] = useState(true);
 
   const canvasRef = useRef(null);
   const similarityRef = useRef(null);
@@ -27,16 +29,18 @@ const PekaHeatmap = () => {
       getApiLocation().replace("graphql", "peka/")
       ).then(resp => resp.json()).then(json => {
         setData(json);
-      drawCanvas(json, cellSize);
+      drawCanvas(json, cellSize, truncated);
     })
   }, [])
 
-  const drawCanvas = (json, size) => {
+  const drawCanvas = (json, size, trunc) => {
     let canvas = canvasRef.current;
     canvas.width = json.matrix[0].length * size;
     canvas.style.width = `${canvas.width}px`;
-    canvas.height = json.matrix.length * size;
+    console.log(trunc)
+    canvas.height = trunc ? 400 : json.matrix.length * size;
     canvas.style.height = `${canvas.height}px`;
+    canvas.parentNode.parentNode.style.gridTemplateColumns = `${size >= 6 ? size * 6 : 0}px ${canvas.width}px 100px`
     const context = canvas.getContext("2d");
     context.lineWidth = "0";
     for (let rowNum = 0; rowNum < json.matrix.length; rowNum++) {
@@ -84,7 +88,7 @@ const PekaHeatmap = () => {
     canvas.style.width = `${data.matrix[0].length * newSize}px`;
     canvas.style.height = `${(data.matrix.length * newSize) + (6 * (secondaryHeight + secondaryGap)) + (2 * secondaryHeight)}px`;
     setCellSize(newSize);
-    drawCanvas(data, newSize);
+    drawCanvas(data, newSize, truncated);
   }
 
   const mouseMove = (e) => {
@@ -174,9 +178,15 @@ const PekaHeatmap = () => {
   }
 
   const proteinsHeight = cellSize >= 6 ? cellSize * 7 : 0;
-  const motifsWidth = cellSize >= 6 ? cellSize * 3 : 0;
+  const motifsWidth = cellSize >= 6 ? cellSize * 6 : 0;
   const secondaryHeight = 30;
   const secondaryGap = 15;
+
+  const truncateToggle = e => {
+    e.persist();
+    setTruncated(!e.target.checked);
+    drawCanvas(data, cellSize, !e.target.checked);
+  }
 
   return (
     <div className="peka-heatmap">
@@ -187,9 +197,23 @@ const PekaHeatmap = () => {
 
       {!data ? <BarLoader color="#6353C6" /> : (
         <div className="graphic">
-          <div className="zoom">
-            <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
-            <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
+
+          <div className="options">
+            <div className="zoom">
+              <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
+              <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
+            </div>
+
+            <div className="toggle">
+              <ReactToggle
+                id="truncated"
+                icons={false}
+                checked={!truncated}
+                onChange={truncateToggle}
+              />
+              <label htmlFor="truncated">Full Heatmap</label>
+            </div>
+
           </div>
 
           <PekaDendrogram 
@@ -199,12 +223,12 @@ const PekaHeatmap = () => {
 
           <div className="main-row">
             <div className="motifs" style={{
-              width: motifsWidth,
+              width: motifsWidth, height: truncated ? 400 : "auto"
             }}>
               {data.rows.map(motif => (
                 <Link className="motif" key={motif} style={{
                   fontSize: cellSize * 0.75, opacity: cellSize >= 6 ? 1 : 0,
-                  height: cellSize, width: motifsWidth,
+                  height: cellSize, lineHeight: cellSize, width: motifsWidth,
                 }} to={`/apps/peka?motif=${motif}`}>{motif}</Link>
               ))}
             </div>
@@ -307,8 +331,6 @@ const PekaHeatmap = () => {
                 {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
               </ReactTooltip>
               <ReactTooltip id="ibaqTooltip">
-                
-
                 {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
                   {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
                 </div>) : ""}
