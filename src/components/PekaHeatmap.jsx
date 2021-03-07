@@ -231,25 +231,6 @@ const PekaHeatmap = () => {
               </div>
               <div className="toggle">
                 <ReactToggle
-                  id="recall"
-                  icons={false}
-                  checked={showRecall}
-                  onChange={e => setShowRecall(e.target.checked)}
-                />
-                <label htmlFor="recall">Show Recall</label>
-              </div>
-              <div className="toggle">
-                <ReactToggle
-                  id="noncoding"
-                  icons={false}
-                  checked={showNoncodingIDR}
-                  onChange={e => setShowNoncodingIDR(e.target.checked)}
-                />
-                <label htmlFor="noncoding">Show Non-Coding IDR</label>
-              </div>
-              <div />
-              <div className="toggle">
-                <ReactToggle
                   id="iBAQ"
                   icons={false}
                   checked={showIBAQ}
@@ -259,12 +240,30 @@ const PekaHeatmap = () => {
               </div>
               <div className="toggle">
                 <ReactToggle
+                  id="recall"
+                  icons={false}
+                  checked={showRecall}
+                  onChange={e => setShowRecall(e.target.checked)}
+                />
+                <label htmlFor="recall">Show Recall</label>
+              </div>
+              <div className="toggle">
+                <ReactToggle
                   id="introns"
                   icons={false}
                   checked={showIntrons}
                   onChange={e => setShowIntrons(e.target.checked)}
                 />
                 <label htmlFor="introns">Show Introns</label>
+              </div>
+              <div className="toggle">
+                <ReactToggle
+                  id="noncoding"
+                  icons={false}
+                  checked={showNoncodingIDR}
+                  onChange={e => setShowNoncodingIDR(e.target.checked)}
+                />
+                <label htmlFor="noncoding">Show Non-Coding IDR</label>
               </div>
               <div className="toggle">
                 <ReactToggle
@@ -278,168 +277,172 @@ const PekaHeatmap = () => {
             </div>
           </div>
 
-          <PekaDendrogram 
-            data={data.dendrogram} cellSize={cellSize} 
-            labelHeight={proteinsHeight} offset={motifsWidth}
-          />
+          <div className="scrollable-graphic">
+            <PekaDendrogram 
+              data={data.dendrogram} cellSize={cellSize} 
+              labelHeight={proteinsHeight} offset={motifsWidth}
+            />
 
-          <div className="main-row">
-            <div className="motifs" style={{
-              width: motifsWidth, height: truncated ? 400 : "auto"
-            }}>
-              {data.rows.map(motif => (
-                <Link className="motif" key={motif} style={{
-                  fontSize: cellSize * 0.75, opacity: cellSize >= 6 ? 1 : 0,
-                  height: cellSize, lineHeight: cellSize, width: motifsWidth,
-                }} to={`/apps/peka?motif=${motif}`}>{motif}</Link>
-              ))}
+            <div className="main-row">
+              <div className="motifs" style={{
+                width: motifsWidth, height: truncated ? 400 : "auto"
+              }}>
+                {data.rows.map(motif => (
+                  <Link className="motif" key={motif} style={{
+                    fontSize: cellSize * 0.75, opacity: cellSize >= 6 ? 1 : 0,
+                    height: cellSize, lineHeight: cellSize, width: motifsWidth,
+                  }} to={`/apps/peka?motif=${motif}`}>{motif}</Link>
+                ))}
+              </div>
+
+              <div className={cellSize < 4 ? "small-maps heatmaps" : "heatmaps"}>
+                <div className="canvas-container" style={truncated ? {height: 400, overflow: "hidden"} : null}>
+                  <canvas ref={canvasRef} onMouseMove={mouseMove} data-tip data-for="canvasTooltip" />
+                </div>
+
+                <div className="supplementary" style={{display: showSimilarity ? "block" : "none"}}>
+                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className="horizontal-colors" style={{
+                      background: `linear-gradient(90deg, black, white)`
+                    }}>
+                      <div className="values" style={{paddingRight: "20%"}}>
+                        <div className="value">0</div>
+                        <div className="value">0.2</div>
+                        <div className="value">0.4</div>
+                      </div>
+                    </div>
+                    <div className="map-name">Similarity</div>
+                  </div>
+                  <canvas ref={similarityRef} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
+                </div>
+                
+                <div className="supplementary" style={{display: showIBAQ ? "block" : "none"}}>
+                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className="horizontal-colors" style={{
+                      background: `linear-gradient(90deg, white, black)`
+                    }}>
+                      <div className="values" style={{justifyContent: "space-around", padding: "0 10px"}}>
+                        <div className="value">10<sup>6</sup></div>
+                        <div className="value">10<sup>7</sup></div>
+                        <div className="value">10<sup>8</sup></div>
+                        <div className="value">10<sup>9</sup></div>
+                      </div>
+                    </div>
+                    <div className="map-name">iBAQ</div>
+                  </div>
+                  <canvas ref={ibaqRef} onMouseMove={ibaqMouseMove} data-tip data-for="ibaqTooltip" />
+                </div>
+                
+                <div className="supplementary" style={{display: showRecall ? "block" : "none"}}>
+                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className="horizontal-colors" style={{
+                      background: `linear-gradient(90deg, white, black)`
+                    }}>
+                      <div className="values">
+                        <div className="value">0</div>
+                        <div className="value">0.2</div>
+                        <div className="value">0.4</div>
+                        <div className="value">0.6</div>
+                        <div className="value">0.8</div>
+                        <div className="value">1.0</div>
+                      </div>
+                    </div>
+                    <div className="map-name">Recall</div>
+                  </div>
+                  <canvas ref={recallRef} onMouseMove={recallMouseMove} data-tip data-for="recallTooltip" />
+                </div>
+                
+                <div className="supplementary" style={{display: showIntrons ? "block" : "none"}}>
+                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className="horizontal-colors" style={{
+                      background: `linear-gradient(90deg, white, black)`
+                    }}>
+                      <div className="values">
+                        <div className="value">0</div>
+                        <div className="value">20</div>
+                        <div className="value">40</div>
+                        <div className="value">60</div>
+                        <div className="value">80</div>
+                        <div className="value">100</div>
+                      </div>
+                    </div>
+                    <div className="map-name">Percentage of thresholded crosslinks per region: {cellSize < 4 && <br />}3'UTR (top), intron (middle), 5'UTR + CDS (bottom)</div>
+                  </div>
+                  <canvas ref={intronsRef} onMouseMove={intronsMouseMove} data-tip data-for="intronsTooltip" />
+                </div>
+                
+                <div className="supplementary" style={{display: showNoncodingIDR ? "block" : "none"}}>
+                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className="horizontal-colors" style={{
+                      background: `linear-gradient(90deg, white, black)`
+                    }}>
+                      <div className="values">
+                        <div className="value">0</div>
+                        <div className="value">20</div>
+                        <div className="value">40</div>
+                        <div className="value">60</div>
+                        <div className="value">80</div>
+                        <div className="value">100</div>
+                      </div>
+                    </div>
+                    <div className="map-name">% noncoding IDR peaks</div>
+                  </div>
+                  <canvas ref={noncodingIdrRef} onMouseMove={noncodingIdrMouseMove} data-tip data-for="noncodingIdrTooltip" />
+                </div>
+                
+                <div className="supplementary" style={{display: showTotalIDR ? "block" : "none"}}>
+                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className="horizontal-colors" style={{
+                      background: `linear-gradient(90deg, white, black)`
+                    }}>
+                      <div className="values" style={{paddingRight: "15%"}}>
+                        <div className="value">10<sup>1</sup></div>
+                        <div className="value">10<sup>2</sup></div>
+                        <div className="value">10<sup>3</sup></div>
+                        <div className="value">10<sup>4</sup></div>
+                      </div>
+                    </div>
+                    <div className="map-name">total IDR peaks</div>
+                  </div>
+                  <canvas ref={totalIdrRef} onMouseMove={totalIdrMouseMove} data-tip data-for="totalIdrTooltip" />
+                </div>
+                
+                <ReactTooltip id="canvasTooltip">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                </ReactTooltip>
+                <ReactTooltip id="similarityTooltip">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                </ReactTooltip>
+                <ReactTooltip id="ibaqTooltip">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
+                    {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
+                  </div>) : ""}
+                </ReactTooltip>
+                <ReactTooltip id="recallTooltip">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                </ReactTooltip>
+                <ReactTooltip id="intronsTooltip">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                </ReactTooltip>
+                <ReactTooltip id="noncodingIdrTooltip">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                </ReactTooltip>
+                <ReactTooltip id="totalIdrTooltip">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                </ReactTooltip>
+              </div>
+
+              <div className="colors" style={{
+                background: `linear-gradient(${data.colors.join(", ")})`
+              }}>
+                {[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].map(val => (
+                  <div className="value" key={val}>{val}</div>
+                ))}    
+              </div>
+
             </div>
-
-            <div className={cellSize < 4 ? "small-maps heatmaps" : "heatmaps"}>
-              <div className="canvas-container" style={truncated ? {height: 400, overflow: "hidden"} : null}>
-                <canvas ref={canvasRef} onMouseMove={mouseMove} data-tip data-for="canvasTooltip" />
-              </div>
-
-              <div className="supplementary" style={{display: showSimilarity ? "block" : "none"}}>
-                <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                  <div className="horizontal-colors" style={{
-                    background: `linear-gradient(90deg, black, white)`
-                  }}>
-                    <div className="values" style={{paddingRight: "20%"}}>
-                      <div className="value">0</div>
-                      <div className="value">0.2</div>
-                      <div className="value">0.4</div>
-                    </div>
-                  </div>
-                  <div className="map-name">Similarity</div>
-                </div>
-                <canvas ref={similarityRef} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
-              </div>
-              
-              <div className="supplementary" style={{display: showIBAQ ? "block" : "none"}}>
-                <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                  <div className="horizontal-colors" style={{
-                    background: `linear-gradient(90deg, white, black)`
-                  }}>
-                    <div className="values" style={{justifyContent: "space-around", padding: "0 10px"}}>
-                      <div className="value">10<sup>6</sup></div>
-                      <div className="value">10<sup>7</sup></div>
-                      <div className="value">10<sup>8</sup></div>
-                      <div className="value">10<sup>9</sup></div>
-                    </div>
-                  </div>
-                  <div className="map-name">iBAQ</div>
-                </div>
-                <canvas ref={ibaqRef} onMouseMove={ibaqMouseMove} data-tip data-for="ibaqTooltip" />
-              </div>
-              
-              <div className="supplementary" style={{display: showRecall ? "block" : "none"}}>
-                <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                  <div className="horizontal-colors" style={{
-                    background: `linear-gradient(90deg, white, black)`
-                  }}>
-                    <div className="values">
-                      <div className="value">0</div>
-                      <div className="value">0.2</div>
-                      <div className="value">0.4</div>
-                      <div className="value">0.6</div>
-                      <div className="value">0.8</div>
-                      <div className="value">1.0</div>
-                    </div>
-                  </div>
-                  <div className="map-name">Recall</div>
-                </div>
-                <canvas ref={recallRef} onMouseMove={recallMouseMove} data-tip data-for="recallTooltip" />
-              </div>
-              
-              <div className="supplementary" style={{display: showIntrons ? "block" : "none"}}>
-                <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                  <div className="horizontal-colors" style={{
-                    background: `linear-gradient(90deg, white, black)`
-                  }}>
-                    <div className="values">
-                      <div className="value">0</div>
-                      <div className="value">20</div>
-                      <div className="value">40</div>
-                      <div className="value">60</div>
-                      <div className="value">80</div>
-                      <div className="value">100</div>
-                    </div>
-                  </div>
-                  <div className="map-name">Percentage of thresholded crosslinks per region: {cellSize < 4 && <br />}3'UTR (top), intron (middle), 5'UTR + CDS (bottom)</div>
-                </div>
-                <canvas ref={intronsRef} onMouseMove={intronsMouseMove} data-tip data-for="intronsTooltip" />
-              </div>
-              
-              <div className="supplementary" style={{display: showNoncodingIDR ? "block" : "none"}}>
-                <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                  <div className="horizontal-colors" style={{
-                    background: `linear-gradient(90deg, white, black)`
-                  }}>
-                    <div className="values">
-                      <div className="value">0</div>
-                      <div className="value">20</div>
-                      <div className="value">40</div>
-                      <div className="value">60</div>
-                      <div className="value">80</div>
-                      <div className="value">100</div>
-                    </div>
-                  </div>
-                  <div className="map-name">% noncoding IDR peaks</div>
-                </div>
-                <canvas ref={noncodingIdrRef} onMouseMove={noncodingIdrMouseMove} data-tip data-for="noncodingIdrTooltip" />
-              </div>
-              
-              <div className="supplementary" style={{display: showTotalIDR ? "block" : "none"}}>
-                <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                  <div className="horizontal-colors" style={{
-                    background: `linear-gradient(90deg, white, black)`
-                  }}>
-                    <div className="values" style={{paddingRight: "15%"}}>
-                      <div className="value">10<sup>1</sup></div>
-                      <div className="value">10<sup>2</sup></div>
-                      <div className="value">10<sup>3</sup></div>
-                      <div className="value">10<sup>4</sup></div>
-                    </div>
-                  </div>
-                  <div className="map-name">total IDR peaks</div>
-                </div>
-                <canvas ref={totalIdrRef} onMouseMove={totalIdrMouseMove} data-tip data-for="totalIdrTooltip" />
-              </div>
-              
-              <ReactTooltip id="canvasTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
-              </ReactTooltip>
-              <ReactTooltip id="similarityTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
-              </ReactTooltip>
-              <ReactTooltip id="ibaqTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
-                  {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
-                </div>) : ""}
-              </ReactTooltip>
-              <ReactTooltip id="recallTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
-              </ReactTooltip>
-              <ReactTooltip id="intronsTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
-              </ReactTooltip>
-              <ReactTooltip id="noncodingIdrTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
-              </ReactTooltip>
-              <ReactTooltip id="totalIdrTooltip">
-                {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
-              </ReactTooltip>
-            </div>
-
-            <div className="colors" style={{
-              background: `linear-gradient(${data.colors.join(", ")})`
-            }}>
-              {[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].map(val => (
-                <div className="value" key={val}>{val}</div>
-              ))}    
-            </div>
-
+          
+          
           </div>
         </div>
       )}
