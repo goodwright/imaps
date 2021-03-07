@@ -55,7 +55,7 @@
     }
 
     .scrollable-graphic {
-        width: calc(100% + $gap-5 + $gap-5);
+        width: calc(100% + #{$gap-5 + $gap-5});
         overflow-x: scroll;
         margin-right: -$gap-5;
     }
@@ -220,10 +220,18 @@
             display: block;
 
             .toggles {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(7, 1fr);
                 margin-left: 0;
                 margin-top: $gap-5;
+            }
+        }
+    }
+
+    @media (max-width: 450px) {
+        .options {
+
+            .toggles {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(7, 1fr);
 
                 .toggle:first-child {
                     grid-area: 1 / 1 / 2 / 3;
