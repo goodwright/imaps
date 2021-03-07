@@ -73,6 +73,17 @@
     }
 
     .heatmaps {
+
+        canvas, .canvas-container {
+            margin-bottom: $gap-7;
+        }
+
+        .canvas-container {
+            canvas {
+                margin-bottom: 0;
+            }
+        }
+
         canvas {
             margin-bottom: $gap-7;
             border: 1px solid $gray-4;

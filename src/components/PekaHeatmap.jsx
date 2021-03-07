@@ -35,18 +35,17 @@ const PekaHeatmap = () => {
       getApiLocation().replace("graphql", "peka/")
       ).then(resp => resp.json()).then(json => {
         setData(json);
-      drawCanvas(json, cellSize, truncated);
+      drawCanvas(json, cellSize);
     })
   }, [])
 
-  const drawCanvas = (json, size, trunc) => {
+  const drawCanvas = (json, size) => {
     let canvas = canvasRef.current;
     canvas.width = json.matrix[0].length * size;
     canvas.style.width = `${canvas.width}px`;
-    console.log(trunc)
-    canvas.height = trunc ? 400 : json.matrix.length * size;
+    canvas.height = json.matrix.length * size;
     canvas.style.height = `${canvas.height}px`;
-    canvas.parentNode.parentNode.style.gridTemplateColumns = `${size >= 6 ? size * 6 : 0}px ${canvas.width}px 100px`
+    canvas.parentNode.parentNode.parentNode.style.gridTemplateColumns = `${size >= 6 ? size * 6 : 0}px ${canvas.width}px 100px`
     const context = canvas.getContext("2d");
     context.lineWidth = "0";
     for (let rowNum = 0; rowNum < json.matrix.length; rowNum++) {
@@ -94,7 +93,7 @@ const PekaHeatmap = () => {
     canvas.style.width = `${data.matrix[0].length * newSize}px`;
     canvas.style.height = `${(data.matrix.length * newSize) + (6 * (secondaryHeight + secondaryGap)) + (2 * secondaryHeight)}px`;
     setCellSize(newSize);
-    drawCanvas(data, newSize, truncated);
+    drawCanvas(data, newSize);
   }
 
   const mouseMove = (e) => {
@@ -191,7 +190,7 @@ const PekaHeatmap = () => {
   const truncateToggle = e => {
     e.persist();
     setTruncated(!e.target.checked);
-    drawCanvas(data, cellSize, !e.target.checked);
+    //drawCanvas(data, cellSize, !e.target.checked);
   }
 
   return (
@@ -228,7 +227,7 @@ const PekaHeatmap = () => {
                   checked={showSimilarity}
                   onChange={e => setShowSimilarity(e.target.checked)}
                 />
-                <label htmlFor="truncated">Show Similarity</label>
+                <label htmlFor="similarity">Show Similarity</label>
               </div>
               <div className="toggle">
                 <ReactToggle
@@ -274,7 +273,7 @@ const PekaHeatmap = () => {
                   checked={showTotalIDR}
                   onChange={e => setShowTotalIDR(e.target.checked)}
                 />
-                <label htmlFor="truncated">Show Total IDR</label>
+                <label htmlFor="total">Show Total IDR</label>
               </div>
             </div>
           </div>
@@ -297,7 +296,9 @@ const PekaHeatmap = () => {
             </div>
 
             <div className={cellSize < 4 ? "small-maps heatmaps" : "heatmaps"}>
-              <canvas ref={canvasRef} onMouseMove={mouseMove} data-tip data-for="canvasTooltip" />
+              <div className="canvas-container" style={truncated ? {height: 400, overflow: "hidden"} : null}>
+                <canvas ref={canvasRef} onMouseMove={mouseMove} data-tip data-for="canvasTooltip" />
+              </div>
 
               <div className="supplementary" style={{display: showSimilarity ? "block" : "none"}}>
                 <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
