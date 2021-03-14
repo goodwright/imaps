@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import BarLoader from "react-spinners/BarLoader";
 import ReactTooltip from "react-tooltip";
 import ReactToggle from "react-toggle";
+import ScrollContainer from 'react-indiana-drag-scroll'
 import PekaDendrogram from "./PekaDendrogram";
 import roundTo from "round-to";
 import { getApiLocation } from "../api";
@@ -20,7 +21,7 @@ const PekaHeatmap = () => {
   const [showIntrons, setShowIntrons] = useState(true);
   const [showNoncodingIDR, setShowNoncodingIDR] = useState(true);
   const [showTotalIDR, setShowTotalIDR] = useState(true);
-
+  const [scrolling, setScrolling] = useState(false);
   const canvasRef = useRef(null);
   const similarityRef = useRef(null);
   const ibaqRef = useRef(null);
@@ -80,6 +81,13 @@ const PekaHeatmap = () => {
           context.fill();
         }
       }
+    }
+  }
+
+  const scroll = e => {
+    if (scrolling) {
+      e.persist();
+      console.log(e)
     }
   }
 
@@ -277,7 +285,8 @@ const PekaHeatmap = () => {
             </div>
           </div>
 
-          <div className="scrollable-graphic">
+          <ScrollContainer className="scrollable-graphic">
+
             <PekaDendrogram 
               data={data.dendrogram} cellSize={cellSize} 
               labelHeight={proteinsHeight} offset={motifsWidth}
@@ -443,7 +452,7 @@ const PekaHeatmap = () => {
             </div>
           
           
-          </div>
+          </ScrollContainer>
         </div>
       )}
     </div>
