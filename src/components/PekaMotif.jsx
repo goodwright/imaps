@@ -46,6 +46,15 @@ const PekaMotif = props => {
           context.rect(c * cellWidth, r * cellHeight, cellWidth, cellHeight);
           context.fill();
         }
+        if (heatmap.rbp_heatmap.hlines.line_positions.includes(r)) {
+          context.beginPath();
+          context.lineWidth = 1;
+          context.strokeStyle = "white";
+          context.moveTo(0, r * cellHeight + 0.5);
+          context.lineTo(heatmap.rbp_heatmap.columns.length * cellWidth, r * cellHeight + 0.5);
+          context.stroke();
+        }
+        
       }
 
       canvas = heatmapsRef.current.querySelectorAll(".heatmap")[h].querySelector(".intron-canvas");
