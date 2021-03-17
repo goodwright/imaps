@@ -30,7 +30,7 @@ const PekaRbp = props => {
     setScore (`${e.target.dataset.motif}\n${e.target.dataset.value}`)
   }
 
-  if (!data) return <BarLoader color="#6353C6" />
+  if (!data) return <BarLoader color="#6353C6" css="margin: 64px 355px" />
 
   return (
     <div className="peka-rbp">
@@ -97,7 +97,6 @@ const PekaRbp = props => {
         <ReactTooltip id="scoreTooltip">
           {score.split("\n").map((t, i) => <div key={i}>{t}</div>)}
         </ReactTooltip>
-
       </div>
     </div>
   );
