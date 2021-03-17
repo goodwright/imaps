@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Select from "react-select";
-import PekaHeatmap from "../components/PekaHeatmap";
-import PekaRbp from "../components/PekaRbp";
-import Base from "./Base";
+import PekaHeatmap from "./PekaHeatmap";
+import PekaRbp from "./PekaRbp";
+import Base from "../pages/Base";
+import PekaMotif from "./PekaMotif";
 import { getApiLocation } from "../api";
-import PekaMotif from "../components/PekaMotif";
 
 const PekaPage = () => {
 

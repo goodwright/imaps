@@ -22,7 +22,7 @@ import { TOKEN, USER } from "../queries";
 import UserCollectionsPage from "../pages/UserCollectionsPage";
 import PasswordResetPage from "../pages/PasswordResetPage";
 import SamplePage from "../pages/SamplePage";
-import PekaPage from "../pages/PekaPage";
+import PekaPage from "../peka/PekaPage";
 
 const client = makeClient();
 

@@ -15,7 +15,6 @@
 @import "pages/CollectionPage";
 @import "pages/CollectionsPage";
 @import "pages/UserCollectionsPage";
-@import "pages/PekaPage";
 @import "pages/PageNotFound";
 
 @import "components/Nav";
@@ -34,10 +33,12 @@
 @import "components/Invitation";
 @import "components/UserImageEditor";
 @import "components/SamplesTable";
-@import "components/PekaHeatmap";
-@import "components/PekaMotif";
-@import "components/PekaRbp";
-@import "components/PekaDendrogram";
 @import "components/SampleInfo";
 @import "components/Paginator";
 @import "components/PasswordResetRequest";
+
+@import "../peka/PekaPage.scss";
+@import "../peka/PekaHeatmap.scss";
+@import "../peka/PekaMotif.scss";
+@import "../peka/PekaRbp.scss";
+@import "../peka/PekaDendrogram.scss";
