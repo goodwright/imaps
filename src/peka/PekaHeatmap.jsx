@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BarLoader from "react-spinners/BarLoader";
 import ReactTooltip from "react-tooltip";
-import ReactToggle from "react-toggle";
-import ScrollContainer from 'react-indiana-drag-scroll'
+import ScrollContainer from "react-indiana-drag-scroll";
 import PekaDendrogram from "./PekaDendrogram";
+import PekaControls from "./PekaControls";
 import roundTo from "round-to";
 import { getApiLocation } from "../api";
 
@@ -208,82 +208,19 @@ const PekaHeatmap = () => {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam sed, odit dolore magnam quaerat aliquid explicabo incidunt omnis inventore iste ipsam.
       </div>
 
-      {!data ? <BarLoader color="#6353C6" /> : (
+      {!data ? <BarLoader color="#6353C6" css="margin: 64px auto" /> : (
         <div className="graphic">
 
-          <div className="options">
-            <div className="zoom">
-              <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
-              <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
-            </div>
-            <div className="toggles">
-
-            
-              <div className="toggle">
-                <ReactToggle
-                  id="truncated"
-                  icons={false}
-                  checked={!truncated}
-                  onChange={truncateToggle}
-                />
-                <label htmlFor="truncated">Full Heatmap</label>
-              </div>
-              <div className="toggle">
-                <ReactToggle
-                  id="similarity"
-                  icons={false}
-                  checked={showSimilarity}
-                  onChange={e => setShowSimilarity(e.target.checked)}
-                />
-                <label htmlFor="similarity">Show Similarity</label>
-              </div>
-              <div className="toggle">
-                <ReactToggle
-                  id="iBAQ"
-                  icons={false}
-                  checked={showIBAQ}
-                  onChange={e => setShowIBAQ(e.target.checked)}
-                />
-                <label htmlFor="iBAQ">Show iBAQ</label>
-              </div>
-              <div className="toggle">
-                <ReactToggle
-                  id="recall"
-                  icons={false}
-                  checked={showRecall}
-                  onChange={e => setShowRecall(e.target.checked)}
-                />
-                <label htmlFor="recall">Show Recall</label>
-              </div>
-              <div className="toggle">
-                <ReactToggle
-                  id="introns"
-                  icons={false}
-                  checked={showIntrons}
-                  onChange={e => setShowIntrons(e.target.checked)}
-                />
-                <label htmlFor="introns">Show Introns</label>
-              </div>
-              <div className="toggle">
-                <ReactToggle
-                  id="noncoding"
-                  icons={false}
-                  checked={showNoncodingIDR}
-                  onChange={e => setShowNoncodingIDR(e.target.checked)}
-                />
-                <label htmlFor="noncoding">Show Non-Coding IDR</label>
-              </div>
-              <div className="toggle">
-                <ReactToggle
-                  id="total"
-                  icons={false}
-                  checked={showTotalIDR}
-                  onChange={e => setShowTotalIDR(e.target.checked)}
-                />
-                <label htmlFor="total">Show Total IDR</label>
-              </div>
-            </div>
-          </div>
+          <PekaControls
+            cellSize={cellSize} zoom={zoom} zooms={zooms}
+            truncated={truncated} setTruncated={setTruncated}
+            showSimilarity={showSimilarity} setShowSimilarity={setShowSimilarity}
+            showIBAQ={showIBAQ} setShowIBAQ={setShowIBAQ}
+            showRecall={showRecall} setShowRecall={setShowRecall}
+            showIntrons={showIntrons} setShowIntrons={setShowIntrons}
+            showNoncodingIDR={showNoncodingIDR} setShowNoncodingIDR={setShowNoncodingIDR}
+            showTotalIDR={showTotalIDR} setShowTotalIDR={setShowTotalIDR}
+          />
 
           <ScrollContainer className="scrollable-graphic">
 

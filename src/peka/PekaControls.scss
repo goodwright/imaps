@@ -1,0 +1,94 @@
+.peka-controls {
+    display: flex;
+    margin-bottom: $gap-6;
+
+    .zoom {
+        border-radius: 4px;
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        border: 1px solid $gray-5;
+        width: 80px;
+        min-width: 80px;
+        height: 100%;
+
+        .zoom-in, .zoom-out {
+            padding: $gap-1 $gap-2;
+            justify-content: center;
+            font-size: $font-size-6;
+            display: flex;
+            align-items: center;
+            width: 50%;
+        }
+
+        .zoom-in:active, .zoom-out:active {
+            box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25), inset 0px -2px 0px rgba(0, 0, 0, 0.08);
+        }
+
+        .disabled, .disabled:active {
+            opacity: 0.5;
+            cursor: default;
+            box-shadow: none;
+        }
+
+        .zoom-in {
+            border-left: 1px solid $gray-5;
+        }
+    }
+
+    .toggles {
+        display: grid;
+        row-gap: $gap-3;
+        column-gap: $gap-5;
+        margin-left: $gap-8;
+        grid-template-columns: repeat(4, fit-content(50%));
+        grid-auto-flow: column;
+        white-space: nowrap;
+        align-items: flex-start;
+
+        .toggle:first-child {
+            grid-area: 1 / 1 / 3 / 2;
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .toggles {
+            grid-template-columns: repeat(3, fit-content(50%));
+
+            .toggle:first-child {
+                grid-area: 1 / 1 / 4 / 2;
+            }
+        }
+    }
+
+    @media (max-width: 950px) {
+        .toggles {
+            grid-template-columns: repeat(2, fit-content(50%));
+            grid-template-rows: repeat(4, 1fr);
+
+            .toggle:first-child {
+                grid-area: 1 / 1 / 2 / 3;
+            }
+        }
+    }
+
+    @media (max-width: 750px) {
+        display: block;
+
+        .toggles {
+            margin-left: 0;
+            margin-top: $gap-5;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .toggles {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(7, 1fr);
+
+            .toggle:first-child {
+                grid-area: 1 / 1 / 2 / 3;
+            }
+        }
+    }
+}
