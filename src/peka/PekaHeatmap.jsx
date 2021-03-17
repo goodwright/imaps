@@ -21,7 +21,7 @@ const PekaHeatmap = () => {
   const [showIntrons, setShowIntrons] = useState(true);
   const [showNoncodingIDR, setShowNoncodingIDR] = useState(true);
   const [showTotalIDR, setShowTotalIDR] = useState(true);
-  const [scrolling, setScrolling] = useState(false);
+  const [visibleHeight, setVisibleHeight] = useState(0);
   const canvasRef = useRef(null);
   const similarityRef = useRef(null);
   const ibaqRef = useRef(null);
@@ -30,14 +30,27 @@ const PekaHeatmap = () => {
   const noncodingIdrRef = useRef(null);
   const totalIdrRef = useRef(null);
 
+  const changeHeight = () => {
+    const height = Math.max(0, window.innerHeight - canvasRef.current.getBoundingClientRect().top - 12)
+    setVisibleHeight(height);
+  }
+
   // Get data
   useEffect(() => {
+    window.addEventListener("resize", changeHeight);
+    const main = document.querySelector("main");
+    main.addEventListener("scroll", changeHeight);
     fetch(
       getApiLocation().replace("graphql", "peka/")
-      ).then(resp => resp.json()).then(json => {
-        setData(json);
+    ).then(resp => resp.json()).then(json => {
+      setData(json);
       drawCanvas(json, cellSize);
     })
+    setTimeout(changeHeight, 1000)
+    return () => {
+      window.removeEventListener("resize", changeHeight);
+      main.removeEventListener("scroll", changeHeight);
+    }
   }, [])
 
   const drawCanvas = (json, size) => {
@@ -83,14 +96,6 @@ const PekaHeatmap = () => {
       }
     }
   }
-
-  const scroll = e => {
-    if (scrolling) {
-      e.persist();
-      console.log(e)
-    }
-  }
-
 
   const zoom = zoomIn => {
     const index = zooms.indexOf(cellSize);
@@ -195,12 +200,6 @@ const PekaHeatmap = () => {
   const secondaryHeight = 30;
   const secondaryGap = 15;
 
-  const truncateToggle = e => {
-    e.persist();
-    setTruncated(!e.target.checked);
-    //drawCanvas(data, cellSize, !e.target.checked);
-  }
-
   return (
     <div className="peka-heatmap">
       <h2>Heatmap</h2>
@@ -229,7 +228,11 @@ const PekaHeatmap = () => {
               labelHeight={proteinsHeight} offset={motifsWidth}
             />
 
-            <div className="main-row">
+            <ScrollContainer className="main-row" style={{
+              width: motifsWidth + (cellSize * data.matrix[0].length) + 100,
+              height: truncated ? "auto": visibleHeight,
+              overflow: truncated ? undefined : "scroll"
+            }}>
               <div className="motifs" style={{
                 width: motifsWidth, height: truncated ? 400 : "auto"
               }}>
@@ -386,9 +389,7 @@ const PekaHeatmap = () => {
                 ))}    
               </div>
 
-            </div>
-          
-          
+            </ScrollContainer>
           </ScrollContainer>
         </div>
       )}
