@@ -136,7 +136,7 @@ const PekaMotif = props => {
     }
   }
 
-  if (!data) return <BarLoader color="#6353C6" />
+  if (!data) return <BarLoader color="#6353C6" css="margin: 64px 355px" />
 
   function tooltipFormatter() {
     return `
@@ -148,6 +148,7 @@ const PekaMotif = props => {
   return (
     <div className="peka-motif">
       <h2>{motif} (Group: {data.group})</h2>
+      <p className="other-motifs">Other members: <span className="members">{data.group_members.filter(m => m !== motif).join(", ")}</span></p>
       <p className="peka-sub-text">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam asperiores, dolore consectetur incidunt perspiciatis beatae? <Link to="/apps/peka/">Back to Heatmap</Link>
       </p>

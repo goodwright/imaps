@@ -72,6 +72,18 @@
         margin-bottom: $gap-4;
     }
 
+    .other-motifs {
+        font-size: $font-size-1;
+        margin-bottom: $gap-3;
+        max-width: 800px;
+        line-height: 1.5;
+
+        .members {
+            font-size: 0.75 * $font-size-1;
+            font-weight: 300;
+        }
+    }
+
     .peka-sub-text {
         color: $purple-2;
         font-size: $font-size-3;
