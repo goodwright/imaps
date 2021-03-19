@@ -74,7 +74,7 @@ const PekaDendrogram = props => {
     canvasRef.current.parentNode.style.height = labelHeight + height + "px";
     canvasRef.current.parentNode.style.width = `${window.innerWidth - canvas.getBoundingClientRect().left}px`;
 
-  }, [cellSize, data])
+  }, [data, cellSize, labelHeight, offset, colCount, lineHeight])
 
 
   return (
@@ -98,7 +98,10 @@ const PekaDendrogram = props => {
 };
 
 PekaDendrogram.propTypes = {
-  
+  data: PropTypes.object.isRequired,
+  cellSize: PropTypes.number.isRequired,
+  labelHeight: PropTypes.number.isRequired,
+  offset: PropTypes.number.isRequired,
 };
 
 export default PekaDendrogram;

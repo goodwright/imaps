@@ -87,7 +87,23 @@ const PekaControls = props => {
 };
 
 PekaControls.propTypes = {
-  
+  cellSize: PropTypes.number.isRequired,
+  zoom: PropTypes.func.isRequired,
+  zooms: PropTypes.array.isRequired,
+  truncated: PropTypes.bool.isRequired,
+  setTruncated: PropTypes.func.isRequired,
+  showSimilarity: PropTypes.bool.isRequired,
+  setShowSimilarity: PropTypes.func.isRequired,
+  showIBAQ: PropTypes.bool.isRequired,
+  setShowIBAQ: PropTypes.func.isRequired,
+  showRecall: PropTypes.bool.isRequired,
+  setShowRecall: PropTypes.func.isRequired,
+  showIntrons: PropTypes.bool.isRequired,
+  setShowIntrons: PropTypes.func.isRequired,
+  showNoncodingIDR: PropTypes.bool.isRequired,
+  setShowNoncodingIDR: PropTypes.func.isRequired,
+  showTotalIDR: PropTypes.bool.isRequired,
+  setShowTotalIDR: PropTypes.func.isRequired,
 };
 
 export default PekaControls;

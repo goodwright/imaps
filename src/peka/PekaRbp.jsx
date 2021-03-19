@@ -20,7 +20,7 @@ const PekaRbp = props => {
     ).then(resp => resp.json()).then(json => {
       setData(json);
     })
-  }, [])
+  }, [rbp])
 
   const tableHover = e => {
     setTooltip(`${e.target.dataset.motif}: ${e.target.dataset.offset}\n${e.target.dataset.value}`)

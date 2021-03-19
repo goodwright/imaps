@@ -171,7 +171,7 @@ const PekaMotif = props => {
                 },
                 proteins: plot.data.map(point => point.label),
                 xAxis: {
-                  title: "z-score", tickLength: 0, title: {text: "z-score"},
+                  tickLength: 0, title: {text: "z-score"},
                   plotLines: [{color: "#555555", width: 1, value: 3, dashStyle: "LongDash"}]
                 },
                 yAxis: {gridLineWidth: 0, lineWidth: 1, title: {text: "max coverage per tXn (%)"}},
@@ -309,7 +309,7 @@ const PekaMotif = props => {
 };
 
 PekaMotif.propTypes = {
-  
+  motif: PropTypes.string.isRequired
 };
 
 export default PekaMotif;

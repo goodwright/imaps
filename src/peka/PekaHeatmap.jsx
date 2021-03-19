@@ -51,7 +51,7 @@ const PekaHeatmap = () => {
       window.removeEventListener("resize", changeHeight);
       main.removeEventListener("scroll", changeHeight);
     }
-  }, [])
+  }, [cellSize])
 
   const drawCanvas = (json, size) => {
     let canvas = canvasRef.current;
@@ -388,7 +388,6 @@ const PekaHeatmap = () => {
                   <div className="value" key={val}>{val}</div>
                 ))}    
               </div>
-
             </ScrollContainer>
           </ScrollContainer>
         </div>
