@@ -8,6 +8,7 @@ import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import paperIcon from "../images/paper.svg";
 import SamplesTable from "../components/SamplesTable";
+import ExecutionHistory from "../components/ExecutionHistory";
 
 const CollectionPage = () => {
   
@@ -67,6 +68,8 @@ const CollectionPage = () => {
           </div>}
         </div>
       </div>
+
+      <ExecutionHistory executions={collection.executions} />
       
       <h2>Samples</h2>
       <p className="samples-explainer">

@@ -3,8 +3,10 @@ import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
 import { SAMPLE } from "../queries";
 import Base from "./Base";
+import moment from "moment";
 import PageNotFound from "./PageNotFound";
 import SampleInfo from "../components/SampleInfo";
+import ExecutionHistory from "../components/ExecutionHistory";
 
 const SamplePage = () => {
   const sampleId = useRouteMatch("/samples/:id").params.id;
@@ -33,6 +35,7 @@ const SamplePage = () => {
   return (
     <Base className="sample-page">
       <SampleInfo sample={sample} />
+      <ExecutionHistory executions={sample.executions} />
     </Base>
   );
 };

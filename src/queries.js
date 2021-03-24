@@ -36,6 +36,9 @@ export const COLLECTION = gql`query collection($id: ID!, $first: Int, $offset: I
       id name organism source piName annotatorName qcPass qcMessage
       creationTime
     } } }
+    executions { id name created started finished process {
+      id name description
+    } }
   }
 }`;
 
@@ -62,5 +65,8 @@ export const SAMPLE = gql`query sample($id: ID!) {
     id name organism source piName annotatorName qcPass qcMessage
     creationTime lastModified
     collection { id name }
+    executions { id name created started finished process {
+      id name description
+    } }
   }
 }`;

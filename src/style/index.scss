@@ -13,6 +13,7 @@
 @import "pages/SettingsPage";
 @import "pages/NewGroupPage";
 @import "pages/CollectionPage";
+@import "pages/SamplePage";
 @import "pages/CollectionsPage";
 @import "pages/UserCollectionsPage";
 @import "pages/PageNotFound";
@@ -36,6 +37,7 @@
 @import "components/SampleInfo";
 @import "components/Paginator";
 @import "components/PasswordResetRequest";
+@import "components/ExecutionHistory";
 
 @import "../peka/PekaPage.scss";
 @import "../peka/PekaHeatmap.scss";
