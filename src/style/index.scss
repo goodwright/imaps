@@ -16,6 +16,7 @@
 @import "pages/SamplePage";
 @import "pages/CollectionsPage";
 @import "pages/UserCollectionsPage";
+@import "pages/ExecutionPage";
 @import "pages/PageNotFound";
 
 @import "components/Nav";
@@ -38,6 +39,7 @@
 @import "components/Paginator";
 @import "components/PasswordResetRequest";
 @import "components/ExecutionHistory";
+@import "components/ParameterValue";
 
 @import "../peka/PekaPage.scss";
 @import "../peka/PekaHeatmap.scss";

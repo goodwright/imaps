@@ -1,0 +1,11 @@
+.execution-page {
+    .parameters {
+        .parameter {
+            display: flex;
+
+            .name {
+                margin-right: $gap-1;
+            }
+        }
+    }
+}

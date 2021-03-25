@@ -7,6 +7,7 @@ import { EXECUTION } from "../queries";
 import { fileSize } from "../utils";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
+import ParameterValue from "../components/ParameterValue";
 
 const ExecutionPage = () => {
   const executionId = useRouteMatch("/executions/:id").params.id;
@@ -36,8 +37,7 @@ const ExecutionPage = () => {
   const outputSchema = JSON.parse(execution.process.outputSchema);
   const inputs = JSON.parse(execution.input);
   const outputs = JSON.parse(execution.output);
-  console.log(outputSchema)
-  console.log(outputs)
+  const upstreamExecutions = execution.upstreamExecutions.reduce((prev, curr) => ({[curr.legacyId]: curr, ...prev}), {})
 
   return (
     <Base className="execution-page">
@@ -55,14 +55,47 @@ const ExecutionPage = () => {
       <div className="process-description">{execution.process.description}</div>
       <br></br>
       <h2>Inputs</h2>
-      {JSON.parse(execution.process.inputSchema).filter(input => Object.keys(inputs).includes(input.name)).map(input => (
-        <div className="input">
-          <span className="input-name">{input.name}: </span>
-          <span className="input-value">{inputs[input.name].toString()}</span>
-        </div>
-      ))}
+      <div className="parameters">
+        {Object.entries(inputs).map(input => (
+          <div className="parameter">
+            <div className="name">{input[0]}</div>
+            <ParameterValue
+              key={input[0]} name={input[0]} value={input[1]}
+              schema={inputSchema.filter(i => i.name === input[0])[0]}
+              dataLoc={execution.legacyId}
+            />
+          </div>
+        ))}
+      </div>
+      {/* {JSON.parse(execution.process.inputSchema).filter(input => Object.keys(inputs).includes(input.name)).map(input => {
+        let value = inputs[input.name].toString();
+        if (input.type.slice(0, 5) === "data:") {
+          const upstream = upstreamExecutions[inputs[input.name]];
+          const file = JSON.parse(upstream.output)[input.name];
+          value = <a href={`https://imaps.genialis.com/data/${upstream.legacyId}/${file.file}?force_download=1`}>{file.file} ({fileSize(file.size)})</a>
+        }
+        return (
+          <div className="input">
+            <span className="input-name">{input.name}: </span>
+            <span className="input-value">{value}</span>
+          </div>
+        )
+      })} */}
       <br></br>
-      <h2>Outputs</h2>
+      <h2>Output</h2>
+      <div className="parameters">
+        {Object.entries(outputs).map(output => (
+          <div className="parameter">
+            <div className="name">{output[0]}</div>
+            <ParameterValue
+              key={output[0]} name={output[0]} value={output[1]}
+              schema={outputSchema.filter(o => o.name === output[0])[0]}
+              dataLoc={execution.legacyId}
+            />
+          </div>
+        ))}
+      </div>
+      {/* <h2>Outputs</h2>
       {JSON.parse(execution.process.outputSchema).filter(output => Object.keys(outputs).includes(output.name)).map(output => {
         let value = outputs[output.name].toString();
         if (output.type === "basic:file:") {
@@ -80,7 +113,7 @@ const ExecutionPage = () => {
             </span>
           </div>
         )
-      })}
+      })} */}
     </Base>
   );
 };
