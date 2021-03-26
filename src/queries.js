@@ -73,12 +73,15 @@ export const SAMPLE = gql`query sample($id: ID!) {
 
 export const EXECUTION = gql`query execution($id: ID!) {
   execution(id: $id) {
-    id name created scheduled started finished input output legacyId
+    id name created scheduled started finished input output dataLocation
     sample { id name }
     collection { id name }
     process { id name description inputSchema outputSchema }
     upstreamExecutions {
-      id legacyId output process { id name outputSchema }
+      id name
+    }
+    downstreamExecutions {
+      id name
     }
   }
 }`;

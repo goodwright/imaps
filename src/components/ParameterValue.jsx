@@ -1,14 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { fileSize } from "../utils";
+import { Link } from "react-router-dom";
 
 const ParameterValue = props => {
 
-  const { name, value, schema, dataLoc } = props;
-  console.log(name)
-  console.log(value)
-  console.log(schema)
-  console.log("")
+  const { name, value, schema, dataLoc, executions } = props;
 
   if (schema.type && schema.type.slice(0, 5) === "list:") {
     return (
@@ -17,8 +14,34 @@ const ParameterValue = props => {
           <ParameterValue
             key={n} name={name} value={sub} dataLoc={dataLoc}
             schema={{...schema, type: schema.type.slice(5)}}
+            executions={executions}
           />
         ))}
+      </div>
+    )
+  }
+
+  if (schema.type && schema.type === "basic:dir:") {
+    return <div className="parameter-value">Directory</div>
+  }
+
+  if (schema.type && schema.type === "basic:json:") {
+    return <div className="parameter-value">JSON</div>
+  }
+
+  if (schema.type && schema.type === "basic:secret:") {
+    return <div className="parameter-value">***</div>
+  }
+
+  if (schema.type && schema.type === "basic:group") {
+    return <div className="parameter-value">{Object.entries(value).map(kv => `${kv[0]}: ${kv[1]}`).join(", ")}</div>
+  }
+
+  if (schema.type && schema.type.slice(0, 5) === "data:") {
+    const execution = executions[value];
+    return (
+      <div className="parameter-value">
+        {execution ? <Link to={`/executions/${execution.id}/`}>{execution.name}</Link> : "-"}
       </div>
     )
   }

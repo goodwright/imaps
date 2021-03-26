@@ -37,7 +37,8 @@ const ExecutionPage = () => {
   const outputSchema = JSON.parse(execution.process.outputSchema);
   const inputs = JSON.parse(execution.input);
   const outputs = JSON.parse(execution.output);
-  const upstreamExecutions = execution.upstreamExecutions.reduce((prev, curr) => ({[curr.legacyId]: curr, ...prev}), {})
+  const upstreamExecutions = execution.upstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
+  const downstreamExecutions = execution.downstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
 
   return (
     <Base className="execution-page">
@@ -56,31 +57,17 @@ const ExecutionPage = () => {
       <br></br>
       <h2>Inputs</h2>
       <div className="parameters">
-        {Object.entries(inputs).map(input => (
-          <div className="parameter">
+        {Object.entries(inputs).map((input, i) => (
+          <div className="parameter" key={i}>
             <div className="name">{input[0]}</div>
             <ParameterValue
               key={input[0]} name={input[0]} value={input[1]}
               schema={inputSchema.filter(i => i.name === input[0])[0]}
-              dataLoc={execution.legacyId}
+              dataLoc={execution.id} executions={upstreamExecutions}
             />
           </div>
         ))}
       </div>
-      {/* {JSON.parse(execution.process.inputSchema).filter(input => Object.keys(inputs).includes(input.name)).map(input => {
-        let value = inputs[input.name].toString();
-        if (input.type.slice(0, 5) === "data:") {
-          const upstream = upstreamExecutions[inputs[input.name]];
-          const file = JSON.parse(upstream.output)[input.name];
-          value = <a href={`https://imaps.genialis.com/data/${upstream.legacyId}/${file.file}?force_download=1`}>{file.file} ({fileSize(file.size)})</a>
-        }
-        return (
-          <div className="input">
-            <span className="input-name">{input.name}: </span>
-            <span className="input-value">{value}</span>
-          </div>
-        )
-      })} */}
       <br></br>
       <h2>Output</h2>
       <div className="parameters">
@@ -90,30 +77,11 @@ const ExecutionPage = () => {
             <ParameterValue
               key={output[0]} name={output[0]} value={output[1]}
               schema={outputSchema.filter(o => o.name === output[0])[0]}
-              dataLoc={execution.legacyId}
+              dataLoc={execution.id} executions={downstreamExecutions}
             />
           </div>
         ))}
       </div>
-      {/* <h2>Outputs</h2>
-      {JSON.parse(execution.process.outputSchema).filter(output => Object.keys(outputs).includes(output.name)).map(output => {
-        let value = outputs[output.name].toString();
-        if (output.type === "basic:file:") {
-          value = <a href={`https://imaps.genialis.com/data/${execution.legacyId}/${outputs[output.name].file}?force_download=1`}>{outputs[output.name].file} ({fileSize(outputs[output.name].size)})</a>
-        }
-        if (output.type.slice(0, 16) === "list:basic:file:") {
-          value = <span>{outputs[output.name].map(f => <a href={`https://imaps.genialis.com/data/${execution.legacyId}/${f.file}?force_download=1`}>{f.file} ({fileSize(f.size)})</a>)}</span>
-        }
-        
-        return (
-          <div className="output">
-            <span className="output-name">{output.name}: </span>
-            <span className="output-value">
-              {value}
-            </span>
-          </div>
-        )
-      })} */}
     </Base>
   );
 };
