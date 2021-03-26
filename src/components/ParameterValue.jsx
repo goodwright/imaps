@@ -37,6 +37,24 @@ const ParameterValue = props => {
     return <div className="parameter-value">{Object.entries(value).map(kv => `${kv[0]}: ${kv[1]}`).join(", ")}</div>
   }
 
+  if (Object.keys(schema).includes("group")) {
+    console.log(schema)
+    return (
+      <div className="parameter-value">
+        {Object.entries(value).map(pair => (
+          <div className="parameter">
+            <div className="name">{pair[0]}</div>
+            <ParameterValue
+              name={pair[0]} value={pair[1]} dataLoc={dataLoc}
+              executions={executions}
+              schema={schema.group.filter(g => g.name === pair[0])[0]}
+            />
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   if (schema.type && schema.type.slice(0, 5) === "data:") {
     const execution = executions[value];
     return (
