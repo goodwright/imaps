@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import Base from "./Base";
 import file from "../images/file.svg";
 import PageNotFound from "./PageNotFound";
+import ReactTooltip from "react-tooltip";
 import ParameterValue from "../components/ParameterValue";
 import { fileSize } from "../utils";
 
@@ -34,10 +35,19 @@ const ExecutionPage = () => {
   }
 
   const execution = data.execution;
-
-  const inputSchema = JSON.parse(execution.process.inputSchema);
-  const outputSchema = JSON.parse(execution.process.outputSchema);
   const inputs = JSON.parse(execution.input);
+  const inputSchema = JSON.parse(execution.process.inputSchema).reduce(
+    (prev, curr) => ({[curr.name]: curr, ...prev}), {}
+  );
+  const basicInputs = Object.values(inputSchema).filter(
+    i => i.type && i.type.slice(0, 6) === "basic:" && i.type.slice(6, 11) !== "group" && i.type.slice(6, 10) !== "file" && !i.hidden
+  ).reduce((prev, curr) => ({[curr.name]: inputs[curr.name], ...prev}), {});
+  const fileInputs = Object.values(inputSchema).filter(
+    i => i.type && i.type.slice(0, 11) === "basic:file:" && !i.hidden
+  ).reduce((prev, curr) => ({[curr.name]: inputs[curr.name], ...prev}), {});
+  console.log(fileInputs)
+
+  const outputSchema = JSON.parse(execution.process.outputSchema);
   const outputs = JSON.parse(execution.output);
   const upstreamExecutions = execution.upstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
   const downstreamExecutions = execution.downstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
@@ -74,12 +84,12 @@ const ExecutionPage = () => {
 
       {Object.values(upstreamExecutions).length > 0 && (
         <div className="upstream">
-          <h2>This execution uses the outputs of the following previous executions:</h2>
+          <h2>This analysis uses the outputs of the following previous executions:</h2>
           <div className="executions">
             {Object.values(upstreamExecutions).map(ex => {
               const out = Object.values(JSON.parse(ex.output));
               return (
-                <div className="execution">
+                <div className="execution" key={ex.id}>
                   <Link to={`/executions/${ex.id}/`}>{ex.name}</Link>
                   {Object.keys(out[0]).includes("file") && (
                     <a className="download" href={`https://imaps.genialis.com/data/${ex.dataLocation}/${out[0].file}?force_download=1`}>
@@ -93,7 +103,41 @@ const ExecutionPage = () => {
         </div>
       )}
 
-      <h2>Inputs</h2>
+      {Object.values(fileInputs).length > 0 && (
+        <div className="file-inputs">
+          <h2>This analysis has the following files uploaded:</h2>
+          <div className="inputs">
+            {Object.entries(fileInputs).map(input => (
+              <div className="input">
+                <span className="key" data-tip data-for={`basicInput${input[0]}`}>{input[0]}: </span>
+                <a href={`https://imaps.genialis.com/data/${execution.dataLocation}/${input[1].file}?force_download=1`} className="value download">{input[1].file} <span>{fileSize(input[1].size)}</span></a>
+                {inputSchema[input[0]].label && (
+                  <ReactTooltip id={`basicInput${input[0]}`}>{inputSchema[input[0]].label}</ReactTooltip>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {Object.values(basicInputs).length > 0 && (
+        <div className="execution-inputs">
+          <h2>This analysis also has the following inputs:</h2>
+          <div className="inputs">
+            {Object.entries(basicInputs).map(input => (
+              <div className="input">
+                <span className="key" data-tip data-for={`basicInput${input[0]}`}>{input[0]}: </span>
+                <span className="value">{input[1].toString()}</span>
+                {inputSchema[input[0]].label && (
+                  <ReactTooltip id={`basicInput${input[0]}`}>{inputSchema[input[0]].label}</ReactTooltip>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* <h2>Inputs</h2>
       <div className="parameters">
         {Object.entries(inputs).map((input, i) => (
           <div className="parameter" key={i}>
@@ -119,7 +163,8 @@ const ExecutionPage = () => {
             />
           </div>
         ))}
-      </div>
+      </div> */}
+    
     </Base>
   );
 };

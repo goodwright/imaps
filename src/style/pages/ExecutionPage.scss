@@ -61,6 +61,19 @@
         }
     }
 
+    a.download {
+        font-size: $font-size-2;
+
+        img {
+            width: 10px;
+        }
+
+        span {
+            color: $purple-1;
+            font-size: $font-size-1;
+        }
+    }
+
     .upstream {
         margin-bottom: $gap-4;
 
@@ -76,21 +89,27 @@
                 font-size: $font-size-3;
                 margin-bottom: $gap-1;
             }
-    
-            a.download {
-                font-size: $font-size-2;
-    
-                img {
-                    width: 10px;
-                }
+        }
 
-                span {
-                    color: $purple-1;
-                    font-size: $font-size-1;
+    }
+
+    .file-inputs, .execution-inputs {
+        margin-bottom: $gap-4;
+
+        .inputs {
+
+            .input {
+                margin-bottom: $gap-1;
+
+                .key, .value {
+                    font-family: monospace;
+                }
+    
+                .key {
+                    font-weight: 500;
                 }
             }
         }
-
     }
 
     
