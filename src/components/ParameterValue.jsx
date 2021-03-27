@@ -38,7 +38,6 @@ const ParameterValue = props => {
   }
 
   if (Object.keys(schema).includes("group")) {
-    console.log(schema)
     return (
       <div className="parameter-value">
         {Object.entries(value).map(pair => (

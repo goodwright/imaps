@@ -31,6 +31,9 @@
     .process {
         margin-bottom: $gap-5;
         max-width: 800px;
+        border: 1px solid $gray-2;
+        padding: $gap-3;
+        border-radius: 5px;
         
         .process-name {
             font-size: $font-size-7;
@@ -44,15 +47,50 @@
         }
     }
 
-    .parent {
+    h2 {
         font-size: $font-size-6;
         font-weight: 500;
+    }
+
+    .parent {
         margin-bottom: $gap-4;
 
         a {
             display: block;
-            font-size: $font-size-2;
+            font-size: $font-size-3;
         }
+    }
+
+    .upstream {
+        margin-bottom: $gap-4;
+
+        h2 {
+            margin-bottom: $gap-2;
+        }
+
+        .execution {
+            margin-bottom: $gap-2;
+
+            a {
+                display: block;
+                font-size: $font-size-3;
+                margin-bottom: $gap-1;
+            }
+    
+            a.download {
+                font-size: $font-size-2;
+    
+                img {
+                    width: 10px;
+                }
+
+                span {
+                    color: $purple-1;
+                    font-size: $font-size-1;
+                }
+            }
+        }
+
     }
 
     

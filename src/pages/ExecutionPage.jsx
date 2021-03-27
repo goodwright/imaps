@@ -6,8 +6,10 @@ import moment from "moment";
 import { EXECUTION } from "../queries";
 import ReactMarkdown from "react-markdown";
 import Base from "./Base";
+import file from "../images/file.svg";
 import PageNotFound from "./PageNotFound";
 import ParameterValue from "../components/ParameterValue";
+import { fileSize } from "../utils";
 
 const ExecutionPage = () => {
   const executionId = useRouteMatch("/executions/:id").params.id;
@@ -34,7 +36,6 @@ const ExecutionPage = () => {
   const execution = data.execution;
 
   const inputSchema = JSON.parse(execution.process.inputSchema);
-  console.log(inputSchema)
   const outputSchema = JSON.parse(execution.process.outputSchema);
   const inputs = JSON.parse(execution.input);
   const outputs = JSON.parse(execution.output);
@@ -66,13 +67,32 @@ const ExecutionPage = () => {
 
       {execution.parent && (
         <div className="parent">
-          This analysis was performed as part of a parent execution:
+          <h2>This analysis was performed as part of a parent execution:</h2>
           <Link className="parent-execution" to={`/executions/${execution.parent.id}/`}>{execution.parent.name}</Link>
         </div>
       )}
 
+      {Object.values(upstreamExecutions).length > 0 && (
+        <div className="upstream">
+          <h2>This execution uses the outputs of the following previous executions:</h2>
+          <div className="executions">
+            {Object.values(upstreamExecutions).map(ex => {
+              const out = Object.values(JSON.parse(ex.output));
+              return (
+                <div className="execution">
+                  <Link to={`/executions/${ex.id}/`}>{ex.name}</Link>
+                  {Object.keys(out[0]).includes("file") && (
+                    <a className="download" href={`https://imaps.genialis.com/data/${ex.dataLocation}/${out[0].file}?force_download=1`}>
+                      <img src={file} alt="" /> {out[0].file} <span>{fileSize(out[0].size)}</span>
+                    </a>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
-      <br></br>
       <h2>Inputs</h2>
       <div className="parameters">
         {Object.entries(inputs).map((input, i) => (
