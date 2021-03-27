@@ -1,4 +1,51 @@
 .execution-page {
+    h1 {
+        color: $purple-4;
+        font-weight: 600;
+        font-size: $font-size-8;
+        margin-bottom: $gap-6;
+    }
+
+    .top-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $gap-4;
+
+        .associations {
+            font-weight: 500;
+
+            a {
+                font-weight: 400;
+            }
+        }
+
+        .dates {
+            font-size: $font-size-2;
+            margin-top: auto;
+            display: grid;
+            gap: $gap-2;
+            text-align: right;
+        }
+    }
+
+    .process {
+        margin-bottom: $gap-4;
+        max-width: 800px;
+        
+        .process-name {
+            font-size: $font-size-6;
+            font-weight: 500;
+            margin-bottom: $gap-1;
+        }
+
+        .process-description {
+            font-weight: 300;
+            line-height: 1.5;
+        }
+    }
+
+    
+
     .parameters {
         .parameter {
             display: flex;

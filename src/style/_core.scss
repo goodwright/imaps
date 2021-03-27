@@ -16,6 +16,15 @@ input {
     color: $purple-2;
 }
 
+a, a:visited {
+    color: $purple-4;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 input:required {
     box-shadow: none;
 }
