@@ -63,6 +63,15 @@ const ExecutionPage = () => {
         <div className="process-name">{execution.process.name}</div>
         <ReactMarkdown className="process-description">{execution.process.description}</ReactMarkdown>
       </div>
+
+      {execution.parent && (
+        <div className="parent">
+          This analysis was performed as part of a parent execution:
+          <Link className="parent-execution" to={`/executions/${execution.parent.id}/`}>{execution.parent.name}</Link>
+        </div>
+      )}
+
+
       <br></br>
       <h2>Inputs</h2>
       <div className="parameters">
