@@ -53,7 +53,7 @@
         margin-bottom: $gap-2;
     }
 
-    .parent, .upstream, .file-inputs {
+    .parent, .upstream, .file-inputs, .basic-inputs {
         margin-bottom: $gap-5;
     }
 
@@ -81,6 +81,21 @@
         .values {
             a {
                 font-family: $font;
+            }
+        }
+    }
+
+    .execution-details {
+        .duration, .status, .warning-message, .error-message {
+            margin-bottom: $gap-2;
+        }
+
+        .warning-message, .error-message {
+            img {
+                width: 18px;
+                margin-right: $gap-1;
+                position: relative;
+                top: 3px;
             }
         }
     }

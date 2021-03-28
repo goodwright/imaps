@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -7,11 +7,14 @@ import { EXECUTION } from "../queries";
 import ReactMarkdown from "react-markdown";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
+import warningIcon from "../images/warning.svg";
+import errorIcon from "../images/error.svg";
 import ReactTooltip from "react-tooltip";
-import { fileSize } from "../utils";
+import { fileSize, duration } from "../utils";
 
 const ExecutionPage = () => {
   const executionId = useRouteMatch("/executions/:id").params.id;
+  const terminal = useRef(null);
 
   const { loading, data, error } = useQuery(EXECUTION, {
     variables: {id: executionId}
@@ -117,7 +120,7 @@ const ExecutionPage = () => {
 
       {Object.values(dataInputs).length > 0 && (
         <div className="upstream">
-          <h2>This analysis uses the outputs of the following previous executions:</h2>
+          <h2>This analysis uses the outputs of the following previous analysis:</h2>
           <div className="executions">
             {Object.entries(dataInputs).map((input, i) => (
               <div className="map" key={i}>
@@ -181,6 +184,25 @@ const ExecutionPage = () => {
           </div>
         </div>
       )}
+
+      <div className="execution-details">
+        <h2>Execution Details</h2>
+        
+        {execution.started && (
+          <div className="duration">
+            Duration: {duration((execution.finished || (moment().unix() / 1000)) - execution.started)}
+          </div>
+        )}
+        <div className="status">
+          Status: {execution.status}
+        </div>
+        {execution.warning && (
+          <div className="warning-message"><img src={warningIcon} alt="warning" />{execution.warning}</div>
+        )}
+        {execution.error && (
+          <div className="error-message"><img src={errorIcon} alt="error" />{execution.error}</div>
+        )}
+      </div>
 
       {/* <h2>Inputs</h2>
       <div className="parameters">
