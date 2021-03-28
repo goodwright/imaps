@@ -50,76 +50,37 @@
     h2 {
         font-size: $font-size-6;
         font-weight: 500;
+        margin-bottom: $gap-2;
+    }
+
+    .parent, .upstream, .file-inputs {
+        margin-bottom: $gap-5;
     }
 
     .parent {
-        margin-bottom: $gap-4;
-
         a {
             display: block;
             font-size: $font-size-3;
         }
     }
 
-    a.download {
+    .map {
+        display: flex;
         font-size: $font-size-2;
+        margin-bottom: $gap-1;
 
-        img {
-            width: 10px;
+        .key, .values {
+            font-family: monospace;
         }
 
-        span {
-            color: $purple-1;
-            font-size: $font-size-1;
-        }
-    }
-
-    .upstream {
-        margin-bottom: $gap-4;
-
-        h2 {
-            margin-bottom: $gap-2;
+        .key {
+            margin-right: $gap-1;
+            font-weight: 700;
         }
 
-        .execution {
-            margin-bottom: $gap-2;
-
+        .values {
             a {
-                display: block;
-                font-size: $font-size-3;
-                margin-bottom: $gap-1;
-            }
-        }
-
-    }
-
-    .file-inputs, .execution-inputs {
-        margin-bottom: $gap-4;
-
-        .inputs {
-
-            .input {
-                margin-bottom: $gap-1;
-
-                .key, .value {
-                    font-family: monospace;
-                }
-    
-                .key {
-                    font-weight: 500;
-                }
-            }
-        }
-    }
-
-    
-
-    .parameters {
-        .parameter {
-            display: flex;
-
-            .name {
-                margin-right: $gap-1;
+                font-family: $font;
             }
         }
     }
