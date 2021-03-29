@@ -1,4 +1,4 @@
-.user-summary {
+.user-summary, .user-summary:visited {
     color: $purple-6;
     display: grid;
     grid-template-columns: 40px 1fr;
@@ -83,11 +83,11 @@
     }
 }
 
-a.user-summary {
+.user-summary {
     text-decoration: none;
 }
 
-a.user-summary:hover {
+.user-summary:hover {
     color: $purple-4;
 
     .username {
