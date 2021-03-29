@@ -169,7 +169,7 @@ const ExecutionPage = () => {
                 <div className="values">
                   {input[1].value.map((value, v) => (
                     <div className="value" key={v}>
-                      {value && <Link to={`/executions/${value.id}/`}>{value.name}</Link>}
+                      {value ? <Link to={`/executions/${value.id}/`}>{value.name}</Link> : <div className="error">Missing</div>}
                     </div>
                   ))}
                 </div>
