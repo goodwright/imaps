@@ -11,11 +11,9 @@ import warningIcon from "../images/warning.svg";
 import errorIcon from "../images/error.svg";
 import ReactTooltip from "react-tooltip";
 import { fileSize, duration } from "../utils";
-import { execute } from "graphql";
 
 const ExecutionPage = () => {
   const executionId = useRouteMatch("/executions/:id").params.id;
-  const terminal = useRef(null);
 
   const { loading, data, error } = useQuery(EXECUTION, {
     variables: {id: executionId}
@@ -32,9 +30,7 @@ const ExecutionPage = () => {
     }
   }
 
-  if (loading) {
-    return <Base className="execution-page" loading={true} />
-  }
+  if (loading) return <Base className="execution-page" loading={true} />
 
   const execution = data.execution;
   
@@ -116,7 +112,12 @@ const ExecutionPage = () => {
   const fileOutputs = Object.entries(outputs).filter(
     output => output[1].schema.rawType.slice(0, 11) === "basic:file:" && !output[1].schema.hidden
   ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {})
-  console.log(fileOutputs)
+
+  // Process basic outputs
+  const basicOutputs = Object.entries(outputs).filter(
+    output => output[1].schema.rawType.slice(0, 6) === "basic:" &&
+    output[1].schema.rawType.slice(6, 10) !== "file" && !output[1].schema.hidden
+  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {});
 
   
   //const downstreamExecutions = execution.downstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
@@ -131,10 +132,10 @@ const ExecutionPage = () => {
           {execution.sample && <div className="association">Sample: <Link to={`/samples/${execution.sample.id}/`}>{execution.sample.name}</Link></div>}
         </div>
         <div className="dates">
-          <div>Created: {moment(execution.created * 1000).format("HH:mm, D MMM YYYY")}</div>
-          <div>Scheduled: {moment(execution.scheduled * 1000).format("HH:mm, D MMM, YYYY")}</div>
-          <div>Started: {moment(execution.started * 1000).format("HH:mm, D MMM, YYYY")}</div>
-          <div>Finished: {moment(execution.finished * 1000).format("HH:mm, D MMM, YYYY")}</div>
+          {execution.created && <div>Created: {moment(execution.created * 1000).format("HH:mm, D MMM YYYY")}</div>}
+          {execution.scheduled && <div>Scheduled: {moment(execution.scheduled * 1000).format("HH:mm, D MMM, YYYY")}</div>}
+          {execution.started && <div>Started: {moment(execution.started * 1000).format("HH:mm, D MMM, YYYY")}</div>}
+          {execution.finished && <div>Finished: {moment(execution.finished * 1000).format("HH:mm, D MMM, YYYY")}</div>}
         </div>
       </div>
 
@@ -264,6 +265,27 @@ const ExecutionPage = () => {
                     <div className="value" key={v}>
                       <a className="download" href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} </a><span className="size">{fileSize(value.size)}</span>
                     </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {Object.values(basicOutputs).length > 0 && (
+        <div className="basic-outputs">
+          <h2>This analysis had the following additional output:</h2>
+          <div className="outputs">
+            {Object.entries(basicOutputs).map((output, o) => (
+              <div className="map" key={o}>
+                <div className="key" data-tip data-for={output[0]}>{output[0]}:</div>
+                {output[1].schema.label && (
+                  <ReactTooltip id={output[0]}>{output[1].schema.label}</ReactTooltip>
+                )}
+                <div className="values">
+                  {output[1].value.map((value, v) => (
+                    <div className="value" key={v}>{value.toString()}</div>
                   ))}
                 </div>
               </div>
