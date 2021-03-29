@@ -112,6 +112,12 @@ const ExecutionPage = () => {
     input => input[1].schema.rawType.slice(0, 5) === "data:" && !input[1].schema.hidden
   ).reduce((prev, curr) => ({[curr[0]]: {...curr[1], value: curr[1].value.map(id => componentExecutions[id])},  ...prev}), {});
 
+  // Process file outputs
+  const fileOutputs = Object.entries(outputs).filter(
+    output => output[1].schema.rawType.slice(0, 11) === "basic:file:" && !output[1].schema.hidden
+  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {})
+  console.log(fileOutputs)
+
   
   //const downstreamExecutions = execution.downstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
 
@@ -180,7 +186,7 @@ const ExecutionPage = () => {
                 <div className="values">
                   {input[1].value.map((value, v) => (
                     <div className="value" key={v}>
-                      <a href={`https://imaps.genialis.com/data/${execution.dataLocation}/${value.file}?force_download=1`}>{value.file} <span>{fileSize(value.size)}</span></a>
+                      <a href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} <span>{fileSize(value.size)}</span></a>
                     </div>
                   ))}
                 </div>
@@ -238,6 +244,29 @@ const ExecutionPage = () => {
               output.value.map(execution => (
                 execution && <Link key={execution.id} className="step" to={`/executions/${execution.id}/`}>{execution.name}</Link>
               ))
+            ))}
+          </div>
+        </div>
+      )}
+
+      {Object.values(fileOutputs).length > 0 && (
+        <div className="files">
+          <h2>This analysis generated these files:</h2>
+          <div className="files">
+            {Object.entries(fileOutputs).map((output, o) => (
+              <div className="map" key={o}>
+                <div className="key" data-tip data-for={output[0]}>{output[0]}:</div>
+                {output[1].schema.label && (
+                  <ReactTooltip id={output[0]}>{output[1].schema.label}</ReactTooltip>
+                )}
+                <div className="values">
+                  {output[1].value.map((value, v) => (
+                    <div className="value" key={v}>
+                      <a className="download" href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} </a><span className="size">{fileSize(value.size)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         </div>

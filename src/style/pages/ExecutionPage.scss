@@ -53,7 +53,7 @@
         margin-bottom: $gap-2;
     }
 
-    .parent, .upstream, .file-inputs, .basic-inputs, .execution-details {
+    .parent, .upstream, .files, .basic-inputs, .execution-details {
         margin-bottom: $gap-5;
     }
 
@@ -106,5 +106,11 @@
             font-size: $font-size-4;
             margin-bottom: $gap-1;
         }
+    }
+
+    span.size {
+        color: $purple-1;
+        font-size: $font-size-1;
+        font-family: $font;
     }
 }
