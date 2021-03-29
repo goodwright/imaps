@@ -79,9 +79,8 @@ export const EXECUTION = gql`query execution($id: ID!) {
     collection { id name }
     process { id name description inputSchema outputSchema }
     parent { id name }
-    upstreamExecutions {id name output dataLocation }
-    downstreamExecutions {
-      id name
-    }
+    upstreamExecutions { id name output dataLocation }
+    downstreamExecutions { id name }
+    componentExecutions { id name }
   }
 }`;

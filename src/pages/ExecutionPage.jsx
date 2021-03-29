@@ -11,6 +11,7 @@ import warningIcon from "../images/warning.svg";
 import errorIcon from "../images/error.svg";
 import ReactTooltip from "react-tooltip";
 import { fileSize, duration } from "../utils";
+import { execute } from "graphql";
 
 const ExecutionPage = () => {
   const executionId = useRouteMatch("/executions/:id").params.id;
@@ -82,12 +83,37 @@ const ExecutionPage = () => {
   const basicInputs = Object.entries(inputs).filter(
     input => input[1].schema.rawType.slice(0, 6) === "basic:" &&
     input[1].schema.rawType.slice(6, 10) !== "file" && !input[1].schema.hidden
-  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {})
+  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {});
 
-
-  const outputSchema = JSON.parse(execution.process.outputSchema);
+  // Parse outputs
   const outputs = JSON.parse(execution.output);
-  const downstreamExecutions = execution.downstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
+  const outputSchema = JSON.parse(execution.process.outputSchema);
+
+  // Assign schema to all inputs
+  for (let schema of outputSchema) {
+    if (Object.keys(outputs).includes(schema.name)) {
+      outputs[schema.name] = {value: outputs[schema.name], schema}
+    }
+  }
+
+  // Handle output lists
+  for (let key in outputs) {
+    outputs[key].schema.rawType = outputs[key].schema.type.replace("list:", "");
+    if (!Array.isArray(outputs[key].value)) {
+      outputs[key].value = [outputs[key].value];
+    }
+  }
+
+  // Data outputs
+  const componentExecutions = execution.componentExecutions.reduce(
+    (prev, curr) => ({[curr.id]: curr, ...prev}), {}
+  );
+  const dataOutputs = Object.entries(outputs).filter(
+    input => input[1].schema.rawType.slice(0, 5) === "data:" && !input[1].schema.hidden
+  ).reduce((prev, curr) => ({[curr[0]]: {...curr[1], value: curr[1].value.map(id => componentExecutions[id])},  ...prev}), {});
+
+  
+  //const downstreamExecutions = execution.downstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
 
   return (
     <Base className="execution-page">
@@ -131,7 +157,7 @@ const ExecutionPage = () => {
                 <div className="values">
                   {input[1].value.map((value, v) => (
                     <div className="value" key={v}>
-                      <Link to={`/executions/${value.id}/`}>{value.name}</Link>
+                      {value && <Link to={`/executions/${value.id}/`}>{value.name}</Link>}
                     </div>
                   ))}
                 </div>
@@ -204,33 +230,18 @@ const ExecutionPage = () => {
         )}
       </div>
 
-      {/* <h2>Inputs</h2>
-      <div className="parameters">
-        {Object.entries(inputs).map((input, i) => (
-          <div className="parameter" key={i}>
-            <div className="name">{inputSchema.filter(i => i.name === input[0])[0].label}</div>
-            <ParameterValue
-              key={input[0]} name={input[0]} value={input[1]}
-              schema={inputSchema.filter(i => i.name === input[0])[0]}
-              dataLoc={execution.id} executions={upstreamExecutions}
-            />
+      {Object.values(dataOutputs).length > 0 && (
+        <div className="data-outputs">
+          <h2>This analysis spawned the following additional analyses:</h2>
+          <div className="outputs">
+            {Object.values(dataOutputs).map(output => (
+              output.value.map(execution => (
+                execution && <Link key={execution.id} className="step" to={`/executions/${execution.id}/`}>{execution.name}</Link>
+              ))
+            ))}
           </div>
-        ))}
-      </div>
-      <br></br>
-      <h2>Output</h2>
-      <div className="parameters">
-        {Object.entries(outputs).map(output => (
-          <div className="parameter">
-            <div className="name">{outputSchema.filter(o => o.name === output[0])[0].label}</div>
-            <ParameterValue
-              key={output[0]} name={output[0]} value={output[1]}
-              schema={outputSchema.filter(o => o.name === output[0])[0]}
-              dataLoc={execution.id} executions={downstreamExecutions}
-            />
-          </div>
-        ))}
-      </div> */}
+        </div>
+      )}
     
     </Base>
   );
