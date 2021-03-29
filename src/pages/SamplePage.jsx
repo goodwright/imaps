@@ -35,6 +35,7 @@ const SamplePage = () => {
   return (
     <Base className="sample-page">
       <SampleInfo sample={sample} />
+      <h2>Analysis History</h2>
       <ExecutionHistory executions={sample.executions} />
     </Base>
   );

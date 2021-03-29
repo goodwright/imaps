@@ -80,7 +80,7 @@ export const EXECUTION = gql`query execution($id: ID!) {
     process { id name description inputSchema outputSchema }
     parent { id name }
     upstreamExecutions { id name output dataLocation }
-    downstreamExecutions { id name }
-    componentExecutions { id name }
+    downstreamExecutions { id started created finished name }
+    componentExecutions { id name started created finished  }
   }
 }`;

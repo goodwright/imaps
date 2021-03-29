@@ -11,6 +11,7 @@ import warningIcon from "../images/warning.svg";
 import errorIcon from "../images/error.svg";
 import ReactTooltip from "react-tooltip";
 import { fileSize, duration } from "../utils";
+import ExecutionHistory from "../components/ExecutionHistory";
 
 const ExecutionPage = () => {
   const executionId = useRouteMatch("/executions/:id").params.id;
@@ -104,9 +105,14 @@ const ExecutionPage = () => {
   const componentExecutions = execution.componentExecutions.reduce(
     (prev, curr) => ({[curr.id]: curr, ...prev}), {}
   );
-  const dataOutputs = Object.entries(outputs).filter(
-    input => input[1].schema.rawType.slice(0, 5) === "data:" && !input[1].schema.hidden
-  ).reduce((prev, curr) => ({[curr[0]]: {...curr[1], value: curr[1].value.map(id => componentExecutions[id])},  ...prev}), {});
+  const dataOutputs = [];
+  for (let output of Object.entries(outputs).filter(
+    o => o[1].schema.rawType.slice(0, 5) === "data:" && !o[1].schema.hidden
+  )) {
+    for (let step of output[1].value.map(id => componentExecutions[id])) {
+      dataOutputs.push(step)
+    }
+  }
 
   // Process file outputs
   const fileOutputs = Object.entries(outputs).filter(
@@ -119,8 +125,7 @@ const ExecutionPage = () => {
     output[1].schema.rawType.slice(6, 10) !== "file" && !output[1].schema.hidden
   ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {});
 
-  
-  //const downstreamExecutions = execution.downstreamExecutions.reduce((prev, curr) => ({[curr.id]: curr, ...prev}), {});
+  const downstreamExecutions = execution.downstreamExecutions;
 
   return (
     <Base className="execution-page">
@@ -240,13 +245,14 @@ const ExecutionPage = () => {
       {Object.values(dataOutputs).length > 0 && (
         <div className="data-outputs">
           <h2>This analysis spawned the following additional analyses:</h2>
-          <div className="outputs">
+          <ExecutionHistory executions={dataOutputs} useName={true} />
+          {/* <div className="outputs">
             {Object.values(dataOutputs).map(output => (
               output.value.map(execution => (
                 execution && <Link key={execution.id} className="step" to={`/executions/${execution.id}/`}>{execution.name}</Link>
               ))
             ))}
-          </div>
+          </div> */}
         </div>
       )}
 
@@ -291,6 +297,13 @@ const ExecutionPage = () => {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {downstreamExecutions.length > 0 && (
+        <div className="downstream">
+          <h2>The following analyses use the output of this analysis:</h2>
+          <ExecutionHistory executions={downstreamExecutions} useName={true} />
         </div>
       )}
     
