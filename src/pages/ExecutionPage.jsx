@@ -201,7 +201,6 @@ const ExecutionPage = () => {
           </div>
         </div>
       )}
-
       {Object.values(basicInputs).length > 0 && (
         <div className="basic-inputs">
           <h2>This analysis has the following basic inputs:</h2>
@@ -213,9 +212,18 @@ const ExecutionPage = () => {
                   <ReactTooltip id={input[0]}>{input[1].schema.label}</ReactTooltip>
                 )}
                 <div className="values">
-                  {input[1].value.map((value, v) => (
-                    <div className="value" key={v}>{value.toString()}</div>
-                  ))}
+                  {input[1].value.length > 10 ? (
+                    <>
+                      {input[1].value.slice(0, 10).map((value, v) => (
+                        <div className="value" key={v}>{value.toString()}</div>
+                      ))}
+                      <div className="value warning">{input[1].value.length - 10} more omitted</div>
+                    </>
+                  ) : (
+                    input[1].value.map((value, v) => (
+                      <div className="value" key={v}>{value.toString()}</div>
+                    ))
+                  )}
                 </div>
               </div>
             ))}
@@ -287,7 +295,7 @@ const ExecutionPage = () => {
                 )}
                 <div className="values">
                   {output[1].value.map((value, v) => (
-                    <div className="value" key={v}>{value.toString()}</div>
+                    <div className="value" key={v}>{output[1].schema.type.includes("json") ? "Not yet implemented in iMaps" : value.toString()}</div>
                   ))}
                 </div>
               </div>

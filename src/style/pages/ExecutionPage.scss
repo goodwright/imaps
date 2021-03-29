@@ -97,6 +97,9 @@
                 position: relative;
                 top: 3px;
             }
+
+            font-family: monospace;
+            font-size: $font-size-2;
         }
     }
 
@@ -115,5 +118,11 @@
     span.size {
         color: $purple-1;
         font-size: $font-size-1;
+    }
+
+    .warning.value {
+        font-style: italic;
+        font-weight: 300;
+        font-family: $font;
     }
 }
