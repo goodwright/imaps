@@ -116,13 +116,13 @@ const ExecutionPage = () => {
 
   // Process file outputs
   const fileOutputs = Object.entries(outputs).filter(
-    output => output[1].schema.rawType.slice(0, 11) === "basic:file:" && !output[1].schema.hidden
+    output => (output[1].schema.rawType.slice(0, 11) === "basic:file:" || output[1].schema.rawType.slice(0, 11) === "basic:dir:") && !output[1].schema.hidden
   ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {})
 
   // Process basic outputs
   const basicOutputs = Object.entries(outputs).filter(
     output => output[1].schema.rawType.slice(0, 6) === "basic:" &&
-    output[1].schema.rawType.slice(6, 10) !== "file" && !output[1].schema.hidden
+    output[1].schema.rawType.slice(6, 10) !== "file" && output[1].schema.rawType.slice(6, 9) !== "dir" && !output[1].schema.hidden
   ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {});
 
   const downstreamExecutions = execution.downstreamExecutions;
@@ -246,13 +246,6 @@ const ExecutionPage = () => {
         <div className="data-outputs">
           <h2>This analysis spawned the following additional analyses:</h2>
           <ExecutionHistory executions={dataOutputs} useName={true} />
-          {/* <div className="outputs">
-            {Object.values(dataOutputs).map(output => (
-              output.value.map(execution => (
-                execution && <Link key={execution.id} className="step" to={`/executions/${execution.id}/`}>{execution.name}</Link>
-              ))
-            ))}
-          </div> */}
         </div>
       )}
 
@@ -269,7 +262,10 @@ const ExecutionPage = () => {
                 <div className="values">
                   {output[1].value.map((value, v) => (
                     <div className="value" key={v}>
-                      <a className="download" href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} </a><span className="size">{fileSize(value.size)}</span>
+                      {value.file ? (
+                        <a className="download" href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} </a>
+                       ) : <span>{value.dir} (directory) </span>
+                      }<span className="size">{fileSize(value.size)}</span>
                     </div>
                   ))}
                 </div>

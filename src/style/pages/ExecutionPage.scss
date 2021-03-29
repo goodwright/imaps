@@ -108,9 +108,12 @@
         }
     }
 
+    span {
+        font-family: $font;
+    }
+
     span.size {
         color: $purple-1;
         font-size: $font-size-1;
-        font-family: $font;
     }
 }

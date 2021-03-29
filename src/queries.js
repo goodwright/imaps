@@ -73,13 +73,13 @@ export const SAMPLE = gql`query sample($id: ID!) {
 
 export const EXECUTION = gql`query execution($id: ID!) {
   execution(id: $id) {
-    id name created scheduled started finished input output dataLocation status
+    id name created scheduled started finished input output status
     warning error
     sample { id name }
     collection { id name }
     process { id name description inputSchema outputSchema }
     parent { id name }
-    upstreamExecutions { id name output dataLocation }
+    upstreamExecutions { id name output }
     downstreamExecutions { id started created finished name }
     componentExecutions { id name started created finished  }
   }
