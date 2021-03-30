@@ -68,7 +68,8 @@ const CollectionPage = () => {
           </div>}
         </div>
       </div>
-
+      
+      <h2>Analysis History</h2>
       <ExecutionHistory executions={collection.executions} />
       
       <h2>Samples</h2>

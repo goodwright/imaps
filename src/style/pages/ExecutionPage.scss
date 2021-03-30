@@ -28,6 +28,11 @@
         }
     }
 
+    .paginator {
+        margin-top: $gap-4;
+        margin-bottom: -$gap-2;
+    }
+
     .process {
         margin-bottom: $gap-5;
         max-width: 800px;

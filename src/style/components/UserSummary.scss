@@ -77,9 +77,13 @@
     }
 }
 
-.user-summary.anonymous {
+.user-summary.anonymous, .user-summary.anonymous:hover {
     .user-photo {
         padding: $gap-2;
+    }
+
+    .username {
+        color: red;
     }
 }
 
@@ -90,7 +94,7 @@
 .user-summary:hover {
     color: $purple-4;
 
-    .username {
+    a {
         color: $purple-3;
     }
 }
