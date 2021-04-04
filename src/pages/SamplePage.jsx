@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useRouteMatch } from "react-router";
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { SAMPLE } from "../queries";
 import Base from "./Base";
-import moment from "moment";
 import PageNotFound from "./PageNotFound";
 import SampleInfo from "../components/SampleInfo";
 import ExecutionHistory from "../components/ExecutionHistory";
@@ -36,7 +36,11 @@ const SamplePage = () => {
     <Base className="sample-page">
       <SampleInfo sample={sample} />
       <h2>Analysis History</h2>
+      <p className="info">A list of the analysis commands run on data in this sample.</p>
       <ExecutionHistory executions={sample.executions} />
+      {sample.owners.length > 0 && <div className="owner">
+        Contributed by <div className="names">{sample.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 
+      </div>}
     </Base>
   );
 };

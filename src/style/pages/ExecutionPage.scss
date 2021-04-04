@@ -33,20 +33,20 @@
         margin-bottom: -$gap-2;
     }
 
-    .process {
+    .command {
         margin-bottom: $gap-5;
         max-width: 800px;
         border: 1px solid $gray-2;
         padding: $gap-3;
         border-radius: 5px;
         
-        .process-name {
+        .command-name {
             font-size: $font-size-7;
             font-weight: 500;
             margin-bottom: $gap-1;
         }
 
-        .process-description {
+        .command-description {
             font-weight: 300;
             line-height: 1.5;
         }
@@ -129,5 +129,27 @@
         font-style: italic;
         font-weight: 300;
         font-family: $font;
+    }
+
+    .owner {
+        width: fit-content;
+        margin-left: auto;
+        margin-top: $gap-7;
+        color: $purple-2;
+        font-weight: 300;
+        font-size: $font-size-5;
+        display: flex;
+
+        .names {
+            margin-left: $gap-1;
+            display: grid;
+            gap: $gap-1;
+        }
+        
+        a {
+            color: $purple-4;
+            font-weight: 500;
+            display: block;
+        }
     }
 }

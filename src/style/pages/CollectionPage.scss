@@ -68,12 +68,14 @@
         }
     }
 
-    .execution-history {
+    .samples-table {
         margin-bottom: $gap-7;
+    }
+
+    .execution-history {
 
         .paginator {
             margin-top: $gap-3;
-            margin-bottom: -$gap-2;
         }
     }
 
@@ -84,11 +86,10 @@
         margin-bottom: $gap-2;
     }
 
-    p.samples-explainer {
+    p.info {
         font-size: $font-size-4;
         font-weight: 200;
         line-height: 1.6;
-        padding-bottom: $gap-3;
         color: $purple-1;
     }
 
@@ -99,15 +100,18 @@
         color: $purple-2;
         font-weight: 300;
         font-size: $font-size-5;
+        display: flex;
 
+        .names {
+            margin-left: $gap-1;
+            display: grid;
+            gap: $gap-1;
+        }
+        
         a {
             color: $purple-4;
-            text-decoration: none;
             font-weight: 500;
-        }
-
-        a:hover {
-            text-decoration: underline;
+            display: block;
         }
     }
 

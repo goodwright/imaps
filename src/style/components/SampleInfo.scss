@@ -11,16 +11,12 @@
     }
 
     .collection {
-        color: $purple-2;
-        text-decoration: none;
-        font-size: $font-size-4;
         font-weight: 500;
-        display: block;
         margin-bottom: $gap-6;
-    }
-    
-    .collection:hover {
-        text-decoration: underline;
+
+        a {
+            font-weight: 400;
+        }
     }
 
     table {

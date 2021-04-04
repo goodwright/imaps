@@ -11,7 +11,7 @@ export const USER_FIELDS = gql`
 export const USER = gql`query user($username: String) {
   user(username: $username) { 
     ...UserFields
-    ownedCollections { id name creationTime owner { name } groups { id slug } }
+    collections { id name created owners { name } groups { id slug } }
   }
 } ${USER_FIELDS}`;
 
@@ -22,7 +22,7 @@ export const GROUP = gql`query group($slug: String!) {
     id slug name description userCount
     users { id name username image } admins { id username }
     groupInvitations { id user { id username name } }
-    collections { id name creationTime owner { name } groups { id slug } }
+    collections { id name created groups { id slug } }
   }
   users { id username name image }
   
@@ -30,42 +30,43 @@ export const GROUP = gql`query group($slug: String!) {
 
 export const COLLECTION = gql`query collection($id: ID!, $first: Int, $offset: Int) {
   collection(id: $id) {
-    id name description creationTime lastModified
-    papers { id year title url } owner { id username name }
+    id name description created lastModified
+    papers { id year title url } owners { id name username }
     sampleCount samples(first: $first offset: $offset) { edges { node {
       id name organism source piName annotatorName qcPass qcMessage
-      creationTime
+      created
     } } }
-    executions { id name created started finished process {
+    executions { id name created started finished command {
       id name description
     } }
   }
 }`;
 
-export const COLLECTIONS = gql`query collections($offset: Int, $first: Int) {
-  collections(offset: $offset first: $first) { edges { node {
-    id name creationTime owner { id name } groups { id slug }
+export const PUBLIC_COLLECTIONS = gql`query publicCollections($offset: Int, $first: Int) {
+  publicCollections(offset: $offset first: $first) { edges { node {
+    id name created groups { id slug }
   } } }
-  collectionCount
+  publicCollectionCount
 }`;
 
-export const USER_COLLECTIONS = gql`{ user {
-  ownedCollections { id name creationTime private owner { name } groups { id slug } }
-  collections { id name creationTime private owner { name } groups { id name slug } users { id } } 
+export const USER_COLLECTIONS = gql`{ userCollections { 
+  id name private created
+  groups { id slug } owners { id }
 } }`;
 
 export const GROUP_COLLECTIONS = gql`query groupCollections($slug: String! $offset: Int $first: Int) {
   group(slug: $slug) { id name allCollectionsCount allCollections(first: $first offset: $offset) {
-    edges { node { id name creationTime private owner { name } groups { id slug } } }
+    edges { node { id name created private groups { id slug } } }
   } }
 }`;
 
 export const SAMPLE = gql`query sample($id: ID!) {
   sample(id: $id) {
     id name organism source piName annotatorName qcPass qcMessage
-    creationTime lastModified
+    created lastModified
     collection { id name }
-    executions { id name created started finished process {
+    owners { id name username }
+    executions { id name created started finished command {
       id name description
     } }
   }
@@ -77,10 +78,11 @@ export const EXECUTION = gql`query execution($id: ID!) {
     warning error
     sample { id name }
     collection { id name }
-    process { id name description inputSchema outputSchema }
+    command { id name description inputSchema outputSchema }
     parent { id name }
     upstreamExecutions { id name output }
     downstreamExecutions { id started created finished name }
-    componentExecutions { id name started created finished  }
+    componentExecutions { id name started created finished }
+    owners { id name username }
   }
 }`;

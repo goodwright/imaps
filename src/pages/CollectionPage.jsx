@@ -49,7 +49,7 @@ const CollectionPage = () => {
         <div className="collection-meta">
           <div className="dates">
             <div className="created">
-              Created {moment(collection.creationTime * 1000).format("D MMMM, YYYY")}
+              Created {moment(collection.created * 1000).format("D MMMM, YYYY")}
             </div>
             <div className="modified">
               Modified {moment(collection.lastModified * 1000).format("D MMMM, YYYY")}
@@ -68,12 +68,9 @@ const CollectionPage = () => {
           </div>}
         </div>
       </div>
-      
-      <h2>Analysis History</h2>
-      <ExecutionHistory executions={collection.executions} />
-      
+        
       <h2>Samples</h2>
-      <p className="samples-explainer">
+      <p className="info">
         These are the individual samples for this collection - each one is the
         result of a single experiment, and together they comprise the data for
         this collection.
@@ -83,9 +80,14 @@ const CollectionPage = () => {
         sampleCount={collection.sampleCount}
         setPageNumber={setPageNumber}
       />
-      <div className="owner">
-        Contributed by <Link to={`/users/${collection.owner.username}/`}>{collection.owner.name}</Link>
-      </div>
+      <h2>Analysis History</h2>
+      <p className="info">
+        A list of the analysis commands run on data in this collection.
+      </p>
+      <ExecutionHistory executions={collection.executions} />
+      {collection.owners.length > 0 && <div className="owner">
+        Contributed by <div className="names">{collection.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 
+      </div>}
     </Base>
   );
 };

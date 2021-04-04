@@ -41,12 +41,9 @@ const UserPage = () => {
         <GroupsList user={user} />
         <div className="collections">
           <h2>Public Collections</h2>
-          <CollectionsGrid collections={user.ownedCollections} />
+          <CollectionsGrid collections={user.collections} />
         </div>
       </div>
-
-      
-
     </Base>
   );
 };

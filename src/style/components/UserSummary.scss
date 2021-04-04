@@ -81,10 +81,6 @@
     .user-photo {
         padding: $gap-2;
     }
-
-    .username {
-        color: red;
-    }
 }
 
 .user-summary {
@@ -93,6 +89,7 @@
 
 .user-summary:hover {
     color: $purple-4;
+    text-decoration: none;
 
     a {
         color: $purple-3;

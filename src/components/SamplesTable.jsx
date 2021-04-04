@@ -28,7 +28,7 @@ const SamplesTable = props => {
               <td className={sample.annotatorName ? "" : "centered"}>{sample.annotatorName || "-"}</td>
               <td className={sample.source ? "" : "centered"}>{sample.source || "-"}</td>
               <td className={sample.organism ? "organism" : "organism centered"}>{sample.organism || "-"}</td>
-              <td>{moment(sample.creationTime * 1000).format("MMM DD, YYYY")}</td>
+              <td>{moment(sample.created * 1000).format("MMM DD, YYYY")}</td>
               <td>
                 {sample.qcPass === null ? "N/A" : sample.qcPass === true ? (
                   <>

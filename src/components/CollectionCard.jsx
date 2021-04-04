@@ -15,11 +15,10 @@ const CollectionCard = props => {
     <Link className="collection-card" to={`/collections/${collection.id}/`}>
       <div className="top-row">
         <div className={canBreak ? "name can-break" : "name"}>{collection.name}</div>
-        <div className="created">{moment(collection.creationTime * 1000).format("D MMM, YYYY")} </div>
+        <div className="created">{moment(collection.created * 1000).format("D MMM, YYYY")} </div>
       </div>
       <div className="bottom-row">
         <div className="owner">
-          {collection.owner.name}
           {collection.private === true && (
             <span className="privacy">
               <img src={privacyIcon} alt="private" />

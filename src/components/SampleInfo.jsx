@@ -16,7 +16,7 @@ const SampleInfo = props => {
     <div className="sample-info">
       <div className="left-column">
         <h1 className={canBreak ? "can-break" : ""}>{sample.name}</h1>
-        <Link className="collection" to={`/collections/${sample.collection.id}/`}>{sample.collection.name}</Link>
+        {sample.collection && <div className="collection">Collection: <Link to={`/collections/${sample.collection.id}/`}>{sample.collection.name}</Link></div>}
 
         <table>
           <tbody>
@@ -55,10 +55,10 @@ const SampleInfo = props => {
 
         <div className="dates">
           <div className="created" data-tip data-for="creation">
-            Created <time>{moment(sample.creationTime * 1000).format("DD MMM, YYYY")}</time>
+            Created <time>{moment(sample.created * 1000).format("DD MMM, YYYY")}</time>
           </div>
           <ReactTooltip id="creation">
-            <span>{moment(sample.creationTime * 1000).format("DD MMMM YYYY - HH:mm UTC")}</span>
+            <span>{moment(sample.created * 1000).format("DD MMMM YYYY - HH:mm UTC")}</span>
           </ReactTooltip>
           <div className="modified" data-tip data-for="modified">
             Modified <time>{moment(sample.lastModified * 1000).format("DD MMM, YYYY")}</time>

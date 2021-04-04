@@ -37,7 +37,7 @@ const ExecutionPage = () => {
   
   // Parse inputs
   const inputs = JSON.parse(execution.input);
-  const inputSchema = JSON.parse(execution.process.inputSchema);
+  const inputSchema = JSON.parse(execution.command.inputSchema);
 
   // Assign schema to all inputs
   for (let schema of inputSchema) {
@@ -84,7 +84,7 @@ const ExecutionPage = () => {
 
   // Parse outputs
   const outputs = JSON.parse(execution.output);
-  const outputSchema = JSON.parse(execution.process.outputSchema);
+  const outputSchema = JSON.parse(execution.command.outputSchema);
 
   // Assign schema to all inputs
   for (let schema of outputSchema) {
@@ -144,9 +144,9 @@ const ExecutionPage = () => {
         </div>
       </div>
 
-      <div className="process">
-        <div className="process-name">{execution.process.name}</div>
-        <ReactMarkdown className="process-description">{execution.process.description}</ReactMarkdown>
+      <div className="command">
+        <div className="command-name">{execution.command.name}</div>
+        <ReactMarkdown className="command-description">{execution.command.description}</ReactMarkdown>
       </div>
 
       {execution.parent && (
@@ -310,6 +310,10 @@ const ExecutionPage = () => {
           <ExecutionHistory executions={downstreamExecutions} useName={true} />
         </div>
       )}
+
+      {execution.owners.length > 0 && <div className="owner">
+        Contributed by <div className="names">{execution.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 
+      </div>}
     
     </Base>
   );
