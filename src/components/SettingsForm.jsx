@@ -71,6 +71,7 @@ const SettingsForm = () => {
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 autoCapitalize="none"
+                autoComplete="username"
                 required
               />
             </div>
@@ -85,6 +86,7 @@ const SettingsForm = () => {
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                autoComplete="email"
                 required
               />
             </div>
@@ -123,6 +125,7 @@ const SettingsForm = () => {
                 type="password"
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
+                autoComplete="current-password"
                 required
               />
             </div>
@@ -137,6 +140,7 @@ const SettingsForm = () => {
                 type="password"
                 value={newPassword}
                 onChange={e => setNewPassword(e.target.value)}
+                autoComplete="new-password"
                 required
               />
             </div>

@@ -32,8 +32,8 @@ const CollectionCard = props => {
             </span>
           )}
         </div>
-        <div className="groups">{collection.groups.map(group => (
-          <div className="group" key={group.slug}>@{group.slug}</div>
+        <div className="owners">{collection.owners.map(owner => (
+          <div className="owner" key={owner.id}>{owner.username}</div>
         ))}</div>
       </div>
     </Link>

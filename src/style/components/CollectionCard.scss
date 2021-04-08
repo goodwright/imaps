@@ -32,7 +32,7 @@
         align-items: flex-end;
 
         .owner {
-            color: $purple-2;
+            color: $purple-3;
 
             .privacy {
                 margin-left: $gap-5;
@@ -51,7 +51,7 @@
             }
         }
 
-        .groups {
+        .owners {
             color: $purple-4;
             display: grid;
             gap: $gap-1;

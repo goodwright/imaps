@@ -9,7 +9,6 @@ const ExecutionHistory = props => {
 
   const { executions, useName } = props;
   const [offset, setOffset] = useState(1);
-  console.log(offset)
   const PER_PAGE = 15;
 
   return (
@@ -33,7 +32,8 @@ const ExecutionHistory = props => {
 };
 
 ExecutionHistory.propTypes = {
-  
+  executions: PropTypes.array.isRequired,
+  useName: PropTypes.bool
 };
 
 export default ExecutionHistory;

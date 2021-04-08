@@ -11,7 +11,7 @@ export const USER_FIELDS = gql`
 export const USER = gql`query user($username: String) {
   user(username: $username) { 
     ...UserFields
-    collections { id name created owners { name } groups { id slug } }
+    collections { id name created owners { id username } groups { id slug } }
   }
 } ${USER_FIELDS}`;
 
@@ -22,7 +22,7 @@ export const GROUP = gql`query group($slug: String!) {
     id slug name description userCount
     users { id name username image } admins { id username }
     groupInvitations { id user { id username name } }
-    collections { id name created groups { id slug } }
+    collections { id name created owners { id username } }
   }
   users { id username name image }
   
@@ -65,7 +65,6 @@ export const SAMPLE = gql`query sample($id: ID!) {
     id name organism source piName annotatorName qcPass qcMessage
     created lastModified
     collection { id name }
-    owners { id name username }
     executions { id name created started finished command {
       id name description
     } }
