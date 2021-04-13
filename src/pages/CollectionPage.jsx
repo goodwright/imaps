@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
@@ -13,12 +13,8 @@ import ExecutionHistory from "../components/ExecutionHistory";
 const CollectionPage = () => {
   
   const collectionId = useRouteMatch("/collections/:id").params.id;
-  const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 20;
 
-  const { loading, data, error } = useQuery(COLLECTION, {
-    variables: {id: collectionId, first: itemsPerPage, offset: (pageNumber - 1) * itemsPerPage}
-  });
+  const { loading, data, error } = useQuery(COLLECTION, {variables: {id: collectionId}});
 
   useEffect(() => {
     document.title = `iMaps${data && data.collection ? " - " + data.collection.name : ""}`;
@@ -36,7 +32,6 @@ const CollectionPage = () => {
   }
 
   const collection = data.collection;
-  const samples = collection.samples.edges.map(edge => edge.node);
   const canBreak = !collection.name.includes(" ");
 
   return (
@@ -69,22 +64,25 @@ const CollectionPage = () => {
         </div>
       </div>
         
-      <h2>Samples</h2>
-      <p className="info">
-        These are the individual samples for this collection - each one is the
-        result of a single experiment, and together they comprise the data for
-        this collection.
-      </p>
-      <SamplesTable 
-        samples={samples} itemsPerPage={itemsPerPage} currentPage={pageNumber}
-        sampleCount={collection.sampleCount}
-        setPageNumber={setPageNumber}
-      />
-      <h2>Analysis History</h2>
-      <p className="info">
-        A list of the analysis commands run on data in this collection.
-      </p>
-      <ExecutionHistory executions={collection.executions} />
+      <div className="children">
+        <div className="samples">
+          <h2>Samples</h2>
+          <p className="info">
+            These are the individual samples for this collection - each one is the
+            result of a single experiment, and together they comprise the data for
+            this collection.
+          </p>
+          <SamplesTable samples={collection.samples} />
+        </div>
+        <div className="executions">
+          <h2>Analysis History</h2>
+          <p className="info">
+            A list of the analysis commands run on data in this collection from
+            more than one sample. The samples may have their own analysis history.
+          </p>
+          <ExecutionHistory executions={collection.executions} />
+        </div>
+      </div>
       {collection.owners.length > 0 && <div className="owner">
         Contributed by <div className="names">{collection.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 
       </div>}

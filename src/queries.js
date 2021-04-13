@@ -34,14 +34,14 @@ export const GROUP = gql`query group($slug: String!) {
   
 }`;
 
-export const COLLECTION = gql`query collection($id: ID!, $first: Int, $offset: Int) {
+export const COLLECTION = gql`query collection($id: ID!) {
   collection(id: $id) {
     id name description created lastModified
     papers { id year title url } owners { id name username }
-    sampleCount samples(first: $first offset: $offset) { edges { node {
+    samples {
       id name organism source piName annotatorName qcPass qcMessage
       created
-    } } }
+    }
     executions { id name created started finished command {
       id name description
     } }

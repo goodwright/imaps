@@ -9,24 +9,26 @@ const ExecutionHistory = props => {
 
   const { executions, useName } = props;
   const [offset, setOffset] = useState(1);
-  const PER_PAGE = 15;
+  const PER_PAGE = 12;
 
   return (
     <div className="execution-history">
 
-      {executions.length > PER_PAGE && <Paginator
+      {executions.length > PER_PAGE ? <Paginator
         count={executions.length} itemsPerPage={PER_PAGE}
         currentPage={offset} onClick={setOffset}
-      />}
-      {executions.slice((offset - 1) * PER_PAGE, offset * PER_PAGE).map(execution => (
-        <div className="execution" key={execution.id}>
-          <Link to={`/executions/${execution.id}/`} className="name">{useName ? execution.name : execution.command.name}</Link>
-          <div className="execution-time">
-            <time>{moment((execution.started || execution.created) * 1000).format("DD MMM, YYYY")}</time>
-            {execution.started && <span className="duration"> ({duration((execution.finished || (moment().unix() / 1000)) - execution.started)})</span>}
+      /> : <div className="paginator" /> }
+      <div className="executions-list">
+        {executions.slice((offset - 1) * PER_PAGE, offset * PER_PAGE).map(execution => (
+          <div className="execution" key={execution.id}>
+            <Link to={`/executions/${execution.id}/`} className="name">{useName ? execution.name : execution.command.name}</Link>
+            <div className="execution-time">
+              <time>{moment((execution.started || execution.created) * 1000).format("DD MMM, YYYY")}</time>
+              {execution.started && <span className="duration"> ({duration((execution.finished || (moment().unix() / 1000)) - execution.started)})</span>}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

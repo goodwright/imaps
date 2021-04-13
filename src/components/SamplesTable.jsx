@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router";
 import moment from "moment";
@@ -8,21 +8,21 @@ import tick from "../images/tick.svg";
 import cross from "../images/cross.svg";
 
 const SamplesTable = props => {
-  const { samples, sampleCount, itemsPerPage, currentPage, setPageNumber } = props;
+  const { samples } = props;
+  const [offset, setOffset] = useState(1);
+  const PER_PAGE = 20;
   const history = useHistory();
 
   return (
     <div className="samples-table">
-      {sampleCount > itemsPerPage && (
-        <Paginator
-          count={sampleCount} itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onClick={setPageNumber}
-        />
-      )}
+      {samples.length > PER_PAGE ? <Paginator
+        count={samples.length} itemsPerPage={PER_PAGE}
+        currentPage={offset} onClick={setOffset}
+      /> : <div className="paginator" />}
+
       <table>
         <tbody>
-          {samples.map(sample => (
+          {samples.slice((offset - 1) * PER_PAGE, offset * PER_PAGE).map(sample => (
             <tr key={sample.id} onClick={() => history.push(`/samples/${sample.id}/`)}>
               <td className="name">{sample.name}</td>
               <td className={sample.annotatorName ? "" : "centered"}>{sample.annotatorName || "-"}</td>
@@ -60,10 +60,6 @@ const SamplesTable = props => {
 
 SamplesTable.propTypes = {
   samples: PropTypes.array.isRequired,
-  sampleCount: PropTypes.number.isRequired,
-  itemsPerPage: PropTypes.number.isRequired,
-  currentPage: PropTypes.number.isRequired,
-  setPageNumber: PropTypes.func.isRequired
 };
 
 export default SamplesTable;

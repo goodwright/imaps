@@ -68,29 +68,54 @@
         }
     }
 
-    .samples-table {
-        margin-bottom: $gap-7;
-    }
+    .children {
+        display: flex;
+        flex-wrap: wrap;
 
-    .execution-history {
+        .samples, .executions {
+            display: inline-block;
+            max-width: 100%;
 
-        .paginator {
-            margin-top: $gap-3;
+            h2 {
+                font-size: $font-size-7;
+                color: $purple-2;
+                font-weight: 600;
+                margin-bottom: $gap-2;
+            }
+
+            p.info {
+                font-size: $font-size-4;
+                font-weight: 200;
+                line-height: 1.6;
+                color: $purple-1;
+                margin-bottom: $gap-3;
+                max-width: 700px;
+            }
+
+            .paginator {
+                margin-bottom: $gap-1;
+                height: 20px;
+                
+                button:first-child {
+                    margin-left: 0;
+                }
+        
+                a, button {
+                    font-size: $font-size-3;
+                }
+        
+                img {
+                    width: 8px;
+                    position: relative;
+                    top: 1px;
+                }
+            }
         }
-    }
 
-    h2 {
-        font-size: $font-size-7;
-        color: $purple-2;
-        font-weight: 600;
-        margin-bottom: $gap-2;
-    }
-
-    p.info {
-        font-size: $font-size-4;
-        font-weight: 200;
-        line-height: 1.6;
-        color: $purple-1;
+        .samples {
+            margin-right: $gap-8;
+            margin-bottom: $gap-8;
+        }
     }
 
     .owner {
@@ -112,6 +137,12 @@
             color: $purple-4;
             font-weight: 500;
             display: block;
+        }
+    }
+
+    @media (max-width: 1700px) {
+        .children {
+            grid-template-columns: 1fr;
         }
     }
 
@@ -161,6 +192,14 @@
                             }
                         }
                     }
+                }
+            }
+        }
+
+        .children {
+            .samples, .executions {
+                p.info {
+                    font-size: $font-size-3;
                 }
             }
         }

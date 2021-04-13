@@ -1,24 +1,5 @@
 .samples-table {
-    padding-top: $gap-5;
     overflow-x: scroll;
-
-    .paginator {
-        margin-bottom: $gap-3;
-
-        button:first-child {
-            margin-left: 0;
-        }
-
-        a, button {
-            font-size: $font-size-3;
-        }
-
-        img {
-            width: 8px;
-            position: relative;
-            top: 1px;
-        }
-    }
 
     table {
         color: $purple-2;

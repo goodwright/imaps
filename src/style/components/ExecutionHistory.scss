@@ -1,18 +1,26 @@
 .execution-history {
-    
     display: grid;
-    gap: $gap-4;
 
-    .name {
-        font-weight: 500;
-        color: $purple-4;
-        font-size: $font-size-4;
-        margin-bottom: $gap-1;
+    .executions-list {
+        display: grid;
+        gap: $gap-4;
+        border-top: 1px solid $gray-4;
+        padding-top: $gap-2;
+
+        .execution {
+            .name {
+                font-weight: 500;
+                color: $purple-4;
+                font-size: $font-size-4;
+                margin-bottom: $gap-1;
+            }
+        
+            .execution-time {
+                font-weight: 300;
+                font-size: $font-size-3;
+            }
+        }
     }
 
-    .execution-time {
-        font-weight: 300;
-        font-size: $font-size-3;
-    }
 
 }
