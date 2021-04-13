@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { useApolloClient, useMutation } from "@apollo/client";
+import { useApolloClient, useLazyQuery, useMutation } from "@apollo/client";
+import BarLoader from "react-spinners/BarLoader";
 import classNames from "classnames";
 import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
 import menuIcon from  "../images/menu-icon.svg";
 import searchIcon from "../images/searchIcon.svg";
 import { UserContext } from "../contexts";
-import { TOKEN } from "../queries";
+import { TOKEN, QUICK_SEARCH } from "../queries";
 import { LOGOUT } from "../mutations";
 import { ClipLoader } from "react-spinners";
 
@@ -58,6 +59,17 @@ const Nav = () => {
     }
   })
 
+  const showResults = searchText.length >= 3;
+
+  const [search, { data }] = useLazyQuery(QUICK_SEARCH)
+
+  const keyUp = e => {
+    const query = e.target.value;
+    if (query.length >= 3) {
+      search({variables: {query}})
+    }
+  }
+
   const className = classNames({
     "show-content": showContent, "show-dropdown": showDropdown,
     "logging-out": logoutMutation.loading
@@ -71,11 +83,46 @@ const Nav = () => {
         <div className="input-icon">
           <img src={searchIcon} className="icon" alt="" />
           <input
-            className="search"
+            className={`search ${showResults ? "has-results" : ""}`}
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
             placeholder="Search"
+            onKeyUp={keyUp}
           />
+          {showResults && data && data.quickSearch.results.length && (
+            <div className="results">
+              {data.quickSearch.results.map((result, r) => {
+                let preMatch, match, postMatch = "";
+                if (result.match) {
+                  preMatch = result.matchLoc[0] != 0 && result.match.slice(0, result.matchLoc[0]);
+                  if (preMatch.length > 20) preMatch = `...${preMatch.slice(preMatch.length - 18)}`
+                  match = result.match.slice(result.matchLoc[0], result.matchLoc[1]);
+                  postMatch = result.match.slice(result.matchLoc[1]);
+                  if (postMatch.length > 20) postMatch = `${postMatch.slice(0, 18)}...`
+                }
+                const path = result.kind === "Group" ? `/@${result.pk}/` : `/${result.kind.toLowerCase()}s/${result.pk}/`;
+                return (
+                  <Link to={path} className="result" key={r} onClick={() => setSearchText("")}>
+                    <div className="kind">{result.kind}</div>
+                    <div className="name">{result.name}</div>
+                    {result.match && (
+                      <div className="match">
+                        <span className="pre">{preMatch}</span>
+                        <span className="exact">{match}</span>
+                        <span className="post">{postMatch}</span>
+                      </div>
+                    )}
+                  </Link>
+                )
+              })}
+            </div>
+          )}
+          {showResults && data && !data.quickSearch.results.length && (
+            <div className="results no-data">No results</div>
+          )}
+          {showResults && !data && (
+            <div className="results loading"><BarLoader color="#6353C6" /></div>
+          )}
         </div>
         {!user && <div className="auth-buttons">
           <Link className="button login-button" to="/login/">Log In</Link>

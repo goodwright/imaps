@@ -17,6 +17,12 @@ export const USER = gql`query user($username: String) {
 
 export const TOKEN = gql`{ accessToken }`;
 
+export const QUICK_SEARCH = gql`query quickSearch($query: String!) {
+  quickSearch(query: $query) { results {
+    name pk kind match matchLoc
+  }}
+}`;
+
 export const GROUP = gql`query group($slug: String!) {
   group(slug: $slug) {
     id slug name description userCount
@@ -44,7 +50,7 @@ export const COLLECTION = gql`query collection($id: ID!, $first: Int, $offset: I
 
 export const PUBLIC_COLLECTIONS = gql`query publicCollections($offset: Int, $first: Int) {
   publicCollections(offset: $offset first: $first) { edges { node {
-    id name created groups { id slug }
+    id name created owners { id username }
   } } }
   publicCollectionCount
 }`;
