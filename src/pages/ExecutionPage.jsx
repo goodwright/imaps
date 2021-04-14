@@ -11,6 +11,7 @@ import warningIcon from "../images/warning.svg";
 import errorIcon from "../images/error.svg";
 import ReactTooltip from "react-tooltip";
 import { fileSize, duration } from "../utils";
+import fileIcon from "../images/file.svg";
 import ExecutionHistory from "../components/ExecutionHistory";
 
 const ExecutionPage = () => {
@@ -144,96 +145,23 @@ const ExecutionPage = () => {
         </div>
       </div>
 
+      <div className="files">
+        {Object.values(fileOutputs).map(f => f.value.map(v => (
+          <div className="file">
+            <a className="file" href={`https://imaps.genialis.com/data/${execution.id}/${v.file}?force_download=1`}>
+              <img src={fileIcon} alt="" />{v.file} 
+            </a>
+            <span>{fileSize(v.size)}</span>
+          </div>
+        )))}
+      </div>
+
       <div className="command">
         <div className="command-name">{execution.command.name}</div>
         <ReactMarkdown className="command-description">{execution.command.description}</ReactMarkdown>
       </div>
 
-      {execution.parent && (
-        <div className="parent">
-          <h2>This analysis was performed as part of a parent execution:</h2>
-          <Link className="parent-execution" to={`/executions/${execution.parent.id}/`}>{execution.parent.name}</Link>
-        </div>
-      )}
-
-      {Object.values(dataInputs).length > 0 && (
-        <div className="upstream">
-          <h2>This analysis uses the outputs of the following previous analysis:</h2>
-          <div className="executions">
-            {Object.entries(dataInputs).map((input, i) => (
-              <div className="map" key={i}>
-                <div className="key" data-tip data-for={input[0]}>{input[0]}:</div>
-                {input[1].schema.label && (
-                  <ReactTooltip id={input[0]}>{input[1].schema.label}</ReactTooltip>
-                )}
-                <div className="values">
-                  {input[1].value.map((value, v) => (
-                    <div className="value" key={v}>
-                      {value ? <Link to={`/executions/${value.id}/`}>{value.name}</Link> : <div className="error">Missing</div>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {Object.values(fileInputs).length > 0 && (
-        <div className="files">
-          <h2>This analysis has the following files uploaded:</h2>
-          <div className="files">
-            {Object.entries(fileInputs).map((input, i) => (
-              <div className="map" key={i}>
-                <div className="key" data-tip data-for={input[0]}>{input[0]}:</div>
-                {input[1].schema.label && (
-                  <ReactTooltip id={input[0]}>{input[1].schema.label}</ReactTooltip>
-                )}
-                <div className="values">
-                  {input[1].value.map((value, v) => (
-                    <div className="value" key={v}>
-                      <a href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} <span>{fileSize(value.size)}</span></a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-      {Object.values(basicInputs).length > 0 && (
-        <div className="basic-inputs">
-          <h2>This analysis has the following basic inputs:</h2>
-          <div className="inputs">
-            {Object.entries(basicInputs).map((input, i) => (
-              <div className="map" key={i}>
-                <div className="key" data-tip data-for={input[0]}>{input[0]}:</div>
-                {input[1].schema.label && (
-                  <ReactTooltip id={input[0]}>{input[1].schema.label}</ReactTooltip>
-                )}
-                <div className="values">
-                  {input[1].value.length > 10 ? (
-                    <>
-                      {input[1].value.slice(0, 10).map((value, v) => (
-                        <div className="value" key={v}>{value.toString()}</div>
-                      ))}
-                      <div className="value warning">{input[1].value.length - 10} more omitted</div>
-                    </>
-                  ) : (
-                    input[1].value.map((value, v) => (
-                      <div className="value" key={v}>{value.toString()}</div>
-                    ))
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       <div className="execution-details">
-        <h2>Execution Details</h2>
-        
         {execution.started && (
           <div className="duration">
             Duration: {duration((execution.finished || (moment().unix() / 1000)) - execution.started)}
@@ -250,66 +178,151 @@ const ExecutionPage = () => {
         )}
       </div>
 
-      {Object.values(dataOutputs).length > 0 && (
-        <div className="data-outputs">
-          <h2>This analysis spawned the following additional analyses:</h2>
-          <ExecutionHistory executions={dataOutputs} useName={true} />
-        </div>
-      )}
-
-      {Object.values(fileOutputs).length > 0 && (
-        <div className="files">
-          <h2>This analysis generated these files:</h2>
-          <div className="files">
-            {Object.entries(fileOutputs).map((output, o) => (
-              <div className="map" key={o}>
-                <div className="key" data-tip data-for={output[0]}>{output[0]}:</div>
-                {output[1].schema.label && (
-                  <ReactTooltip id={output[0]}>{output[1].schema.label}</ReactTooltip>
-                )}
-                <div className="values">
-                  {output[1].value.map((value, v) => (
-                    <div className="value" key={v}>
-                      {value.file ? (
-                        <a className="download" href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} </a>
-                       ) : <span>{value.dir} (directory) </span>
-                      }<span className="size">{fileSize(value.size)}</span>
+      <div className="io">
+        <div className="all-inputs">
+          {execution.parent && (
+            <div className="parent">
+              <h2>This analysis was performed as part of a parent execution:</h2>
+              <Link className="parent-execution" to={`/executions/${execution.parent.id}/`}>{execution.parent.name}</Link>
+            </div>
+          )}
+          {Object.values(dataInputs).length > 0 && (
+            <div className="upstream">
+              <h2>This analysis uses the outputs of previous analysis:</h2>
+              <div className="executions">
+                {Object.entries(dataInputs).map((input, i) => (
+                  <div className="map" key={i}>
+                    <div className="key" data-tip data-for={input[0]}>{input[0]}:</div>
+                    {input[1].schema.label && (
+                      <ReactTooltip id={input[0]}>{input[1].schema.label}</ReactTooltip>
+                    )}
+                    <div className="values">
+                      {input[1].value.map((value, v) => (
+                        <div className="value" key={v}>
+                          {value ? <Link to={`/executions/${value.id}/`}>{value.name}</Link> : <div className="error">Missing</div>}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {Object.values(basicOutputs).length > 0 && (
-        <div className="basic-outputs">
-          <h2>This analysis had the following additional output:</h2>
-          <div className="outputs">
-            {Object.entries(basicOutputs).map((output, o) => (
-              <div className="map" key={o}>
-                <div className="key" data-tip data-for={output[0]}>{output[0]}:</div>
-                {output[1].schema.label && (
-                  <ReactTooltip id={output[0]}>{output[1].schema.label}</ReactTooltip>
-                )}
-                <div className="values">
-                  {output[1].value.map((value, v) => (
-                    <div className="value" key={v}>{output[1].schema.type.includes("json") ? "Not yet implemented in iMaps" : value.toString()}</div>
-                  ))}
-                </div>
+            </div>
+          )}
+          {Object.values(fileInputs).length > 0 && (
+            <div className="files">
+              <h2>Files uploaded:</h2>
+              <div className="files">
+                {Object.entries(fileInputs).map((input, i) => (
+                  <div className="map" key={i}>
+                    <div className="key" data-tip data-for={input[0]}>{input[0]}:</div>
+                    {input[1].schema.label && (
+                      <ReactTooltip id={input[0]}>{input[1].schema.label}</ReactTooltip>
+                    )}
+                    <div className="values">
+                      {input[1].value.map((value, v) => (
+                        <div className="value" key={v}>
+                          <a href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} <span>{fileSize(value.size)}</span></a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+          {Object.values(basicInputs).length > 0 && (
+            <div className="basic-inputs">
+              <h2>Basic inputs:</h2>
+              <div className="inputs">
+                {Object.entries(basicInputs).map((input, i) => (
+                  <div className="map" key={i}>
+                    <div className="key" data-tip data-for={input[0]}>{input[0]}:</div>
+                    {input[1].schema.label && (
+                      <ReactTooltip id={input[0]}>{input[1].schema.label}</ReactTooltip>
+                    )}
+                    <div className="values">
+                      {input[1].value.length > 10 ? (
+                        <>
+                          {input[1].value.slice(0, 10).map((value, v) => (
+                            <div className="value" key={v}>{value.toString()}</div>
+                          ))}
+                          <div className="value warning">{input[1].value.length - 10} more omitted</div>
+                        </>
+                      ) : (
+                        input[1].value.map((value, v) => (
+                          <div className="value" key={v}>{value.toString()}</div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+        <div className="all-outputs">
+          {Object.values(dataOutputs).length > 0 && (
+            <div className="data-outputs">
+              <h2>This analysis spawned the following additional analyses:</h2>
+              <ExecutionHistory executions={dataOutputs} useName={true} />
+            </div>
+          )}
 
-      {downstreamExecutions.length > 0 && (
-        <div className="downstream">
-          <h2>The following analyses use the output of this analysis:</h2>
-          <ExecutionHistory executions={downstreamExecutions} useName={true} />
+          {Object.values(fileOutputs).length > 0 && (
+            <div className="files">
+              <h2>Files Generated:</h2>
+              <div className="files">
+                {Object.entries(fileOutputs).map((output, o) => (
+                  <div className="map" key={o}>
+                    <div className="key" data-tip data-for={output[0]}>{output[0]}:</div>
+                    {output[1].schema.label && (
+                      <ReactTooltip id={output[0]}>{output[1].schema.label}</ReactTooltip>
+                    )}
+                    <div className="values">
+                      {output[1].value.map((value, v) => (
+                        <div className="value" key={v}>
+                          {value.file ? (
+                            <a className="download" href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} </a>
+                          ) : <span>{value.dir} (directory) </span>
+                          }<span className="size">{fileSize(value.size)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {Object.values(basicOutputs).length > 0 && (
+            <div className="basic-outputs">
+              <h2>Additional Output:</h2>
+              <div className="outputs">
+                {Object.entries(basicOutputs).map((output, o) => (
+                  <div className="map" key={o}>
+                    <div className="key" data-tip data-for={output[0]}>{output[0]}:</div>
+                    {output[1].schema.label && (
+                      <ReactTooltip id={output[0]}>{output[1].schema.label}</ReactTooltip>
+                    )}
+                    <div className="values">
+                      {output[1].value.map((value, v) => (
+                        <div className="value" key={v}>{output[1].schema.type.includes("json") ? "Not yet implemented in iMaps" : value.toString()}</div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {downstreamExecutions.length > 0 && (
+            <div className="downstream">
+              <h2>The following analyses use the output of this analysis:</h2>
+              <ExecutionHistory executions={downstreamExecutions} useName={true} />
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {execution.owners.length > 0 && <div className="owner">
         Contributed by <div className="names">{execution.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 

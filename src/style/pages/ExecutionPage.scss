@@ -14,6 +14,10 @@
         .associations {
             font-weight: 500;
 
+            .association {
+                margin-bottom: $gap-2;
+            }
+            
             a {
                 font-weight: 400;
             }
@@ -28,16 +32,32 @@
         }
     }
 
-    .paginator {
-        margin-top: $gap-4;
-        margin-bottom: -$gap-2;
+    .files {
+        display: grid;
+        gap: $gap-3;
+        margin-bottom: $gap-7;
+
+        .file {
+            display: flex;
+            align-items: center;
+            font-size: $font-size-2;
+
+            img {
+                width: 14px;
+                margin-right: $gap-1;
+            }
+
+            span {
+                font-size: $font-size-1;
+                padding-left: $gap-1;
+                color: $purple-6;
+            }
+        }
     }
 
     .command {
-        margin-bottom: $gap-5;
-        max-width: 800px;
-        border: 1px solid $gray-2;
-        padding: $gap-3;
+        margin-bottom: $gap-3;
+        max-width: 700px;
         border-radius: 5px;
         
         .command-name {
@@ -58,9 +78,7 @@
         margin-bottom: $gap-2;
     }
 
-    .parent, .upstream, .files, .basic-inputs, .execution-details, .basic-outputs {
-        margin-bottom: $gap-7;
-    }
+
 
     .parent {
         a {
@@ -91,6 +109,8 @@
     }
 
     .execution-details {
+        margin-bottom: $gap-7;
+
         .duration, .status, .warning-message, .error-message {
             margin-bottom: $gap-2;
         }
@@ -105,6 +125,26 @@
 
             font-family: monospace;
             font-size: $font-size-2;
+        }
+    }
+
+    .io {
+        display: flex;
+        flex-wrap: wrap;
+
+        .all-inputs {
+            margin-right: $gap-9;
+        }
+
+        .all-inputs, .all-outputs {
+            & > div {
+                margin-bottom: $gap-6;
+            }
+        }
+
+        .files {
+            gap: $gap-1;
+            margin-bottom: 0;
         }
     }
 
@@ -131,6 +171,12 @@
         font-family: $font;
     }
 
+    .execution-history {
+        .executions-list {
+            border-top: none;
+        }
+    }
+
     .owner {
         width: fit-content;
         margin-left: auto;
@@ -141,15 +187,30 @@
         display: flex;
 
         .names {
-            margin-left: $gap-1;
+            margin-left: $gap-2;
             display: grid;
-            gap: $gap-1;
+            gap: $gap-2;
         }
         
         a {
             color: $purple-4;
             font-weight: 500;
             display: block;
+        }
+    }
+
+    @media (max-width: 800px) {
+        .top-row {
+            display: block;
+
+            .associations {
+                margin-bottom: $gap-5;
+            }
+
+            .dates {
+                text-align: left;
+                margin-bottom: $gap-5;
+            }
         }
     }
 }
