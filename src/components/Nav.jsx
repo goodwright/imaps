@@ -94,7 +94,7 @@ const Nav = () => {
               {data.quickSearch.results.map((result, r) => {
                 let preMatch, match, postMatch = "";
                 if (result.match) {
-                  preMatch = result.matchLoc[0] != 0 && result.match.slice(0, result.matchLoc[0]);
+                  preMatch = result.matchLoc[0] !== 0 && result.match.slice(0, result.matchLoc[0]);
                   if (preMatch.length > 20) preMatch = `...${preMatch.slice(preMatch.length - 18)}`
                   match = result.match.slice(result.matchLoc[0], result.matchLoc[1]);
                   postMatch = result.match.slice(result.matchLoc[1]);

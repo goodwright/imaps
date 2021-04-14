@@ -146,8 +146,8 @@ const ExecutionPage = () => {
       </div>
 
       <div className="files">
-        {Object.values(fileOutputs).map(f => f.value.map(v => (
-          <div className="file">
+        {Object.values(fileOutputs).map((f, n) => f.value.map((v, m) => (
+          <div className="file" key={`${n}-${m}`}>
             <a className="file" href={`https://imaps.genialis.com/data/${execution.id}/${v.file}?force_download=1`}>
               <img src={fileIcon} alt="" />{v.file} 
             </a>
