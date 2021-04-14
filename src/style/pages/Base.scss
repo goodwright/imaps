@@ -19,7 +19,7 @@
         padding: $gap-6;
         box-shadow: $box-shadow;
         height: fit-content;
-        max-height: calc(100% - #{$gap-3});
+        max-height: calc(100vh - #{$nav-height + $gap-3});
         overflow-y: scroll;
         scrollbar-width: none;
         -ms-overflow-style: none;
