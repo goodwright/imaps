@@ -89,6 +89,7 @@ const Nav = () => {
             placeholder="Search"
             onKeyUp={keyUp}
           />
+          <Link to="/search/" className="search-link">Advanced Search</Link>
           {showResults && data && data.quickSearch.results.length && (
             <div className="results">
               {data.quickSearch.results.map((result, r) => {
