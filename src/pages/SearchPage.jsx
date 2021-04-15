@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Base from "./Base";
 import Select from "react-select";
 import { useLazyQuery } from "@apollo/client";
+import searchIcon from "../images/searchIcon.svg";
 import Paginator from "../components/Paginator";
 import { SEARCH_COLLECTIONS, SEARCH_SAMPLES, SEARCH_EXECUTIONS } from "../queries";
 
@@ -17,8 +18,8 @@ const SearchPage = () => {
   const [sampleOwner, setSampleOwner] = useState("");
   const [sampleDate, setSampleDate] = useState(null);
   const [executionCommand, setExecutionCommand] = useState("");
-  const [executionOwner, setExecutionOwner] = useState();
-  const [executionDate, setExecutionDate] = useState();
+  const [executionOwner, setExecutionOwner] = useState("");
+  const [executionDate, setExecutionDate] = useState(null);
   const [page, setPage] = useState(1);
   const PER_PAGE = 2;
 
@@ -33,11 +34,12 @@ const SearchPage = () => {
     {value: "-name", label: "Name (Z-A)"},
     {value: "created", label: "Creation Time (Earliest First)"},
     {value: "-created", label: "Creation Time (Latest First)"},
-    {value: "created", label: "Last Created (Earliest First)"},
-    {value: "-created", label: "Last Created (Latest First)"},
+    {value: "modified", label: "Last Modified (Earliest First)"},
+    {value: "-modified", label: "Last Modified (Latest First)"},
   ]
 
   const dateTypes = [
+    {value: null, label: "---"},
     {value: "day", label: "Past 24 Hours"},
     {value: "week", label: "Past Week"},
     {value: "month", label: "Past 30 Days"},
@@ -74,82 +76,102 @@ const SearchPage = () => {
   return (
     <Base className="search-page">
       <form onSubmit={formSubmit}>
-        <input
-          value={query}
-          onChange={e => setQuery(e.target.value)}
-          required
-        />
-        <Select
-          options={searchTypes}
-          value={selectedSearchType && searchTypes.filter(t => t.value === selectedSearchType)}
-          onChange={e => setSelectedSearchType(e.value)}
-        />
-        <button type="submit">Search</button>
-        <div>Filter Results</div>
+        <div className="top-row">
+          <div className="input-icon">
+            <img src={searchIcon} alt="" className="icon" />
+            <input
+              value={query}
+              onChange={e => setQuery(e.target.value)}
+              required
+            />
+          </div>
+          <Select
+            options={searchTypes}
+            value={selectedSearchType && searchTypes.filter(t => t.value === selectedSearchType)}
+            onChange={e => setSelectedSearchType(e.value)}
+            className="react-select"
+            classNamePrefix="react-select"
+          />
+        </div>
+        
+        <h2>Filter Results</h2>
         {selectedSearchType === "collection" && (
-          <div>
-            <label>Filter by owner</label>
+          <div className="options-row">
             <input
               value={collectionOwner}
               onChange={e => setCollectionOwner(e.target.value)}
+              placeholder="Owner"
             />
-            <label>Filter by date created</label>
             <Select
               options={dateTypes}
               value={collectionDate && dateTypes.filter(t => t.value === collectionDate)}
               onChange={e => setCollectionDate(e.value)}
+              placeholder="Date created"
+              className="react-select"
+              classNamePrefix="react-select"
             />
           </div>
         )}
         {selectedSearchType === "sample" && (
-          <div>
-            <label>Filter by organism</label>
+          <div className="options-row">
             <input
               value={sampleOrganism}
               onChange={e => setSampleOrganism(e.target.value)}
+              placeholder="Organism"
             />
-            <input />
-            <label>Filter by collection owner</label>
             <input
               value={sampleOwner}
               onChange={e => setSampleOwner(e.target.value)}
+              placeholder="Owner"
             />
-            <label>Filter by date created</label>
             <Select
               options={dateTypes}
               value={sampleDate && dateTypes.filter(t => t.value === sampleDate)}
               onChange={e => setSampleDate(e.value)}
+              placeholder="Date created"
+              className="react-select"
+              classNamePrefix="react-select"
             />
           </div>
         )}
         {selectedSearchType === "execution" && (
-          <div>
-            <label>Filter by command</label>
+          <div className="options-row">
             <input
               value={executionCommand}
               onChange={e => setExecutionCommand(e.target.value)}
+              placeholder="Command"
             />
-            <input />
-            <label>Filter by owner</label>
             <input
               value={executionOwner}
               onChange={e => setExecutionOwner(e.target.value)}
+              placeholder="Owner"
             />
-            <label>Filter by date created</label>
             <Select
               options={dateTypes}
               value={executionDate && dateTypes.filter(t => t.value === executionDate)}
               onChange={e => setExecutionDate(e.value)}
+              placeholder="Date created"
+              className="react-select"
+              classNamePrefix="react-select"
             />
           </div>
         )}
 
-        <div>Sort by</div>
-        <Select
-          options={sortTypes}
-          value={selectedSortType && sortTypes.filter(t => t.value === selectedSortType)}
-          onChange={e => setSelectedSortType(e.value)}
-        />
+        <h2>Sort by</h2>
+
+        <div className="bottom-row">
+          <Select
+            options={sortTypes}
+            value={selectedSortType && sortTypes.filter(t => t.value === selectedSortType)}
+            onChange={e => setSelectedSortType(e.value)}
+            className="react-select"
+            classNamePrefix="react-select"
+          />
+          <button type="submit" className="primary-button">Search</button>
+        </div>
+
+
+        
       </form>
 
       <div className="results">

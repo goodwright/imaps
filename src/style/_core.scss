@@ -138,6 +138,93 @@ input[type=submit], button, a.button {
     word-break: break-all;
 }
 
+.react-select {
+    flex-grow: 5;
+    margin-right: $gap-3;
+    cursor: pointer;
+
+    .react-select__control {
+        cursor: pointer;
+        box-shadow: none;
+        border: none;
+        overflow: hidden;
+        background-color: $gray-4;
+        
+    }
+
+    .react-select__placeholder {
+        color: $purple-1;
+    }
+
+    .react-select__menu {
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .react-select__option {
+        cursor: pointer;
+
+        div {
+            display: flex;
+            align-items: center;
+        }
+
+        img {
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: $gap-2;
+        }
+    }
+
+    .react-select__option--is-disabled {
+        cursor: auto;
+    }
+
+    input {
+        color: $purple-2 !important;
+    }
+
+    .react-select__multi-value__label {
+        color: $purple-2;
+        background-color: $gray-3;
+
+        img {
+            display: none;
+        }
+    }
+
+    .react-select__multi-value__remove {
+        background-color: $gray-3;
+    }
+
+    .react-select__multi-value__remove:hover {
+        background-color: darken($gray-3, 10);
+        color: $purple-4;
+    }
+
+    .react-select__indicator-separator {
+        display: none;
+    }
+
+    .react-select__indicator.react-select__dropdown-indicator {
+        svg {
+            fill: $purple-4;
+            padding: 0;
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    @media (max-width: 500px) {
+        margin-bottom: $gap-3;
+        margin-right: 0;
+
+        .react-select__value-container {
+            min-height: 50px;
+        }
+    }
+}
+
 form {
 
     .input {

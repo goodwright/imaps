@@ -102,6 +102,11 @@ nav {
             }
         }
 
+        .search-link {
+            margin-left: $gap-3;
+            font-size: $font-size-2;
+        }
+
 
         .auth-buttons {
             z-index: 40;
@@ -197,7 +202,7 @@ nav {
         }
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1100px) {
         .nav-main {
             .input-icon {
                 .search {
@@ -215,11 +220,45 @@ nav {
         .nav-main {
             .input-icon {
                 .search {
+                    width: 300px;
+                }
+
+                .results {
+                    width: 300px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 900px) {
+        .nav-main {
+            .input-icon {
+                .search {
                     width: 250px;
                 }
 
                 .results {
                     width: 250px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 800px) {
+        .nav-main {
+            .input-icon {
+                .search, .results {
+                    width: 190px;
+                }
+            }
+
+            .auth-buttons {
+                button, a {
+                    font-size: $font-size-2;
+                }
+    
+                .login-button {
+                    margin-right: $gap-1;
                 }
             }
         }
@@ -240,32 +279,46 @@ nav {
         }
 
         .nav-main {
-            .auth-buttons {
-
-                button, a {
-                    font-size: $font-size-2;
-                }
-    
-                .login-button {
-                    margin-right: $gap-1;
+            .input-icon {
+                .search, .results {
+                    width: 250px;
                 }
             }
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
+        .nav-main {
+            .input-icon {
+                .search, .results {
+                    width: 175px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 535px) {
         $menu-icon-height: 20px;
 
         align-items: center;
         justify-content: space-between;
 
         .nav-main {
+            width: 100%;
+            padding-right: $gap-4;
+            
             .input-icon {
                 width: 100%;
                 padding-right: $gap-3;
+
+                .search {
+                    width: 100%;
+                }
             }
-            .search {
-                width: 100%;
+            
+
+            .search-link {
+                white-space: nowrap;
             }
 
             .auth-buttons {

@@ -64,8 +64,6 @@ const UserImageEditor = props => {
               <path d="M13.1885 6.90917L0.78176 6.90918" strokeWidth="1.5"/>
             </svg>
           )}
-
-          {/* <div className="test">Edit</div> */}
         </div>
         
         <div className="error-container">
