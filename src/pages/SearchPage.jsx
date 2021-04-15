@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { useHistory, useLocation } from "react-router";
 import Base from "./Base";
 import Select from "react-select";
 import { useLazyQuery } from "@apollo/client";
+import Paginator from "../components/Paginator";
 import { SEARCH_COLLECTIONS, SEARCH_SAMPLES, SEARCH_EXECUTIONS } from "../queries";
 
-const SearchPage = props => {
+const SearchPage = () => {
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
 
-  const [query, setQuery] = useState(params.get("q") || "");
-  const [selectedSearchType, setSelectedSearchType] = useState(params.get("kind") || "collection");
-  const [selectedSortType, setSelectedSortType] = useState(params.get("sort") || "name");
-  const [collectionOwner, setCollectionOwner] = useState(params.get("kind") === "collection" ? (params.get("owner") || "") : "");
-  const [collectionDate, setCollectionDate] = useState(params.get("kind") === "collection" ? (params.get("created") || null) : null);
-  const [sampleOrganism, setSampleOrganism] = useState(params.get("kind") === "sample" ? (params.get("organism") || "") : "");
-  const [sampleOwner, setSampleOwner] = useState(params.get("kind") === "sample" ? (params.get("name") || "") : "");
-  const [sampleDate, setSampleDate] = useState(params.get("kind") === "sample" ? (params.get("created") || null) : null);
-  const [executionCommand, setExecutionCommand] = useState(params.get("kind") === "execution" ? (params.get("command") || "") : "");
-  const [executionOwner, setExecutionOwner] = useState(params.get("kind") === "execution" ? (params.get("name") || "") : "");
-  const [executionDate, setExecutionDate] = useState(params.get("kind") === "execution" ? (params.get("created") || null) : null);
-  const history = useHistory();
+  const [query, setQuery] = useState("");
+  const [selectedSearchType, setSelectedSearchType] = useState("collection");
+  const [selectedSortType, setSelectedSortType] = useState("name");
+  const [collectionOwner, setCollectionOwner] = useState("");
+  const [collectionDate, setCollectionDate] = useState(null);
+  const [sampleOrganism, setSampleOrganism] = useState("");
+  const [sampleOwner, setSampleOwner] = useState("");
+  const [sampleDate, setSampleDate] = useState(null);
+  const [executionCommand, setExecutionCommand] = useState("");
+  const [executionOwner, setExecutionOwner] = useState();
+  const [executionDate, setExecutionDate] = useState();
+  const [page, setPage] = useState(1);
+  const PER_PAGE = 2;
 
   const searchTypes = [
     {value: "collection", label: "Collection"},
@@ -49,41 +47,29 @@ const SearchPage = props => {
 
   const formSubmit = e => {
     e.preventDefault();
-    let urlString = `q=${encodeURI(query)}&kind=${selectedSearchType}&sort=${selectedSortType}`
+    setPage(1);
     if (selectedSearchType === "collection") {
-      if (collectionOwner) urlString += `&owner=${encodeURI(collectionOwner)}`;
-      if (collectionDate) urlString += `&date=${collectionDate}`;
       searchCollections({variables: {query, sort: selectedSortType, owner: collectionOwner, created: collectionDate}})
     } else if (selectedSearchType === "sample") {
-      if (sampleOrganism) urlString += `&organism=${encodeURI(sampleOrganism)}`;
-      if (sampleOwner) urlString += `&owner=${encodeURI(sampleOwner)}`;
-      if (sampleDate) urlString += `&created=${sampleDate}`;
       searchSamples({variables: {query, sort: selectedSortType, organism: sampleOrganism, owner: sampleOwner, created: sampleDate}})
     } else if (selectedSearchType === "execution") {
-      if (executionCommand) urlString += `&command=${encodeURI(executionCommand)}`;
-      if (executionOwner) urlString += `&owner=${encodeURI(executionOwner)}`;
-      if (executionDate) urlString += `&created=${executionDate}`;
       searchExecutions({variables: {query, sort: selectedSortType, command: executionCommand, owner: executionOwner, created: executionDate}})
     }
-    history.push(`/search?${urlString}`);
   }
+
+  useEffect(() => {
+    if (selectedSearchType === "collection" && query) {
+      searchCollections({variables: {query, sort: selectedSortType, owner: collectionOwner, created: collectionDate}})
+    } else if (selectedSearchType === "sample" && query) {
+      searchSamples({variables: {query, sort: selectedSortType, organism: sampleOrganism, owner: sampleOwner, created: sampleDate}})
+    } else if (selectedSearchType === "execution" && query) {
+      searchExecutions({variables: {query, sort: selectedSortType, command: executionCommand, owner: executionOwner, created: executionDate}})
+    }
+  }, [page])
 
   const [searchCollections, { loading: collectionsLoading, data: collectionsData }] = useLazyQuery(SEARCH_COLLECTIONS);
   const [searchSamples, { loading: samplesLoading, data: samplesData }] = useLazyQuery(SEARCH_SAMPLES);
   const [searchExecutions, { loading: executionsLoading, data: executionsData }] = useLazyQuery(SEARCH_EXECUTIONS);
-
-  useEffect(() => {
-    if (query && selectedSearchType === "collection") {
-      searchCollections({variables: {query, sort: selectedSortType, owner: collectionOwner, created: collectionDate}})
-    }
-    if (query && selectedSearchType === "sample") {
-      searchSamples({variables: {query, sort: selectedSortType, organism: sampleOrganism, owner: sampleOwner, created: sampleDate}})
-    }
-    if (query && selectedSearchType === "execution") {
-      searchExecutions({variables: {query, sort: selectedSortType, command: executionCommand, owner: executionDate, created: executionDate}})
-    }
-  }, [])
-
 
   return (
     <Base className="search-page">
@@ -168,19 +154,31 @@ const SearchPage = props => {
 
       <div className="results">
         {(collectionsLoading || samplesLoading || executionsLoading) && <div>Loading</div>}
-        {collectionsData && (
+        {collectionsData && selectedSearchType === "collection" && (
           <div>
-            {collectionsData.searchCollections.edges.map(edge => edge.node).map(c => <div key={c.id}>{c.name}</div>)}
+            {collectionsData.searchCollections.length > PER_PAGE ? <Paginator
+              count={collectionsData.searchCollections.length} itemsPerPage={PER_PAGE}
+              currentPage={page} onClick={setPage}
+            /> : <div className="paginator" /> }
+            {collectionsData.searchCollections.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(c => <div key={c.id}>{c.name}</div>)}
           </div>
         )}
-        {samplesData && (
+        {samplesData && selectedSearchType === "sample" && (
           <div>
-            {samplesData.searchSamples.edges.map(edge => edge.node).map(s => <div key={s.id}>{s.name}</div>)}
+            {samplesData.searchSamples.length > PER_PAGE ? <Paginator
+              count={samplesData.searchSamples.length} itemsPerPage={PER_PAGE}
+              currentPage={page} onClick={setPage}
+            /> : <div className="paginator" /> }
+            {samplesData.searchSamples.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(s => <div key={s.id}>{s.name}</div>)}
           </div>
         )}
-        {executionsData && (
+        {executionsData && selectedSearchType === "execution" && (
           <div>
-            {executionsData.searchExecutions.edges.map(edge => edge.node).map(e => <div key={e.id}>{e.name}</div>)}
+            {executionsData.searchExecutions.length > PER_PAGE ? <Paginator
+              count={executionsData.searchExecutions.length} itemsPerPage={PER_PAGE}
+              currentPage={page} onClick={setPage}
+            /> : <div className="paginator" /> }
+            {executionsData.searchExecutions.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(e => <div key={e.id}>{e.name}</div>)}
           </div>
         )}
       </div>
