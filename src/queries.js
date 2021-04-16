@@ -98,7 +98,7 @@ export const SEARCH_COLLECTIONS = gql`query searchCollections(
   searchCollections(
     query: $query sort: $sort owner: $owner created: $created
   ) {
-    id name
+    id name created owners { id name }
   }
 }`;
 
@@ -108,7 +108,7 @@ export const SEARCH_SAMPLES = gql`query searchSamples(
   searchSamples(
     query: $query sort: $sort organism: $organism owner: $owner created: $created
   ) {
-    id name
+    id name organism created collection { id owners { id name } }
   }
 }`;
 
@@ -118,6 +118,8 @@ export const SEARCH_EXECUTIONS = gql`query searchExecutions(
   searchExecutions(
     query: $query sort: $sort command: $command owner: $owner created: $created
   ) {
-    id name
+    id name created command { id name } 
+    collection { id owners { id name } }
+    sample { id collection { id owners { id name } } }
   }
 }`;

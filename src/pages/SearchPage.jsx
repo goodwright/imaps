@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Base from "./Base";
-import Select from "react-select";
+import { useHistory } from "react-router";
 import { useLazyQuery } from "@apollo/client";
+import Select from "react-select";
+import moment from "moment";
+import Base from "./Base";
 import searchIcon from "../images/searchIcon.svg";
 import Paginator from "../components/Paginator";
 import { SEARCH_COLLECTIONS, SEARCH_SAMPLES, SEARCH_EXECUTIONS } from "../queries";
+import { BarLoader } from "react-spinners";
 
 const SearchPage = () => {
 
@@ -20,8 +23,9 @@ const SearchPage = () => {
   const [executionCommand, setExecutionCommand] = useState("");
   const [executionOwner, setExecutionOwner] = useState("");
   const [executionDate, setExecutionDate] = useState(null);
+  const history = useHistory();
   const [page, setPage] = useState(1);
-  const PER_PAGE = 2;
+  const PER_PAGE = 10;
 
   const searchTypes = [
     {value: "collection", label: "Collection"},
@@ -175,32 +179,98 @@ const SearchPage = () => {
       </form>
 
       <div className="results">
-        {(collectionsLoading || samplesLoading || executionsLoading) && <div>Loading</div>}
-        {collectionsData && selectedSearchType === "collection" && (
-          <div>
+        {(collectionsLoading || samplesLoading || executionsLoading) && (
+          <div className="loader">
+            <BarLoader color="#6353C6" />
+          </div>
+        )}
+
+        {((collectionsData && collectionsData.searchCollections.length === 0) || (samplesData && samplesData.searchSamples.length === 0) || (executionsData && executionsData.searchExecutions.length === 0)) && (
+          <div className="no-data">
+            No results for this query.
+          </div>
+        )}
+
+        {collectionsData && collectionsData.searchCollections.length > 0 && selectedSearchType === "collection" && (
+          <div className="results">
             {collectionsData.searchCollections.length > PER_PAGE ? <Paginator
               count={collectionsData.searchCollections.length} itemsPerPage={PER_PAGE}
               currentPage={page} onClick={setPage}
             /> : <div className="paginator" /> }
-            {collectionsData.searchCollections.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(c => <div key={c.id}>{c.name}</div>)}
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Owners</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {collectionsData.searchCollections.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(c => (
+                  <tr key={c.id} onClick={() => history.push(`/collections/${c.id}/`)}>
+                    <td>{c.name}</td>
+                    <td>{c.owners.map(u => u.name).join(", ")}</td>
+                    <td>{moment(c.created * 1000).format("D MMM YYYY")}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
-        {samplesData && selectedSearchType === "sample" && (
-          <div>
+        {samplesData && samplesData.searchIcon.length > 0 && selectedSearchType === "sample" && (
+          <div className="results">
             {samplesData.searchSamples.length > PER_PAGE ? <Paginator
               count={samplesData.searchSamples.length} itemsPerPage={PER_PAGE}
               currentPage={page} onClick={setPage}
             /> : <div className="paginator" /> }
-            {samplesData.searchSamples.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(s => <div key={s.id}>{s.name}</div>)}
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Organism</th>
+                  <th>Owners</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {samplesData.searchSamples.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(s => (
+                  <tr key={s.id} onClick={() => history.push(`/samples/${s.id}/`)}>
+                    <td>{s.name}</td>
+                    <td>{s.organism}</td>
+                    <td>{s.collection.owners.map(u => u.name).join(", ")}</td>
+                    <td>{moment(s.created * 1000).format("D MMM YYYY")}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
-        {executionsData && selectedSearchType === "execution" && (
-          <div>
+        {executionsData && executionsData.searchExecutions.length > 0 && selectedSearchType === "execution" && (
+          <div className="results">
             {executionsData.searchExecutions.length > PER_PAGE ? <Paginator
               count={executionsData.searchExecutions.length} itemsPerPage={PER_PAGE}
               currentPage={page} onClick={setPage}
             /> : <div className="paginator" /> }
-            {executionsData.searchExecutions.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(e => <div key={e.id}>{e.name}</div>)}
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Command</th>
+                  <th>Owners</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {executionsData.searchExecutions.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(e => (
+                  <tr key={e.id} onClick={() => history.push(`/executions/${e.id}/`)}>
+                    <td>{e.name}</td>
+                    <td>{e.command.name}</td>
+                    <td>{[...new Set((e.collection.owners || []).concat(e.sample.collection.owners || []).map(u => u.name))].join(", ")}</td>
+                    <td>{moment(e.created * 1000).format("D MMM YYYY")}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
