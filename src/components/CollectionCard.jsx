@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import privacyIcon from "../images/private.svg";
 import publicIcon from "../images/public.svg";
+import sampleIcon from "../images/sample.svg";
+import executionIcon from "../images/execution.svg";
 
 const CollectionCard = props => {
 
@@ -30,6 +32,12 @@ const CollectionCard = props => {
               <img src={publicIcon} alt="public" />
               Public
             </span>
+          )}
+          {collection.private === undefined && collection.sampleCount !== undefined && (
+            <div className="data">
+              <div className="samples"><img src={sampleIcon} alt="" />{collection.sampleCount}</div>
+              <div className="executions"><img src={executionIcon} alt="" />{collection.executionCount}</div>
+            </div>
           )}
         </div>
         <div className="owners">{collection.owners.map(owner => (

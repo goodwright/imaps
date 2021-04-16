@@ -27,7 +27,10 @@ const CollectionsPage = () => {
 
   return (
     <Base className="collections-page">
-      <h1>Collections</h1>
+      <h1>Public Collections</h1>
+      <div className="info">
+        These are the iMaps Collections which have been set to be publicly available by their owners.
+      </div>
       {data.collectionCount > itemsPerPage && (
         <Paginator
           count={data.collectionCount} itemsPerPage={itemsPerPage}

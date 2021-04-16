@@ -3,7 +3,14 @@
         color: $purple-2;
         font-weight: 500;
         font-size: $font-size-9;
+        margin-bottom: $gap-5;
+    }
+
+    .info {
         margin-bottom: $gap-7;
+        font-size: $font-size-4;
+        font-weight: 300;
+        line-height: 1.5;
     }
 
     .paginator {

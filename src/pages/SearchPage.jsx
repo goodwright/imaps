@@ -48,7 +48,7 @@ const SearchPage = () => {
     {value: "week", label: "Past Week"},
     {value: "month", label: "Past 30 Days"},
     {value: "6month", label: "Past 6 Months"},
-    {value: "year", label: "Past 2 Years"},
+    {value: "year", label: "Past Year"},
   ]
 
   const formSubmit = e => {
@@ -90,7 +90,6 @@ const SearchPage = () => {
             <input
               value={query}
               onChange={e => setQuery(e.target.value)}
-              required
             />
           </div>
           <Select
@@ -266,7 +265,7 @@ const SearchPage = () => {
                   <tr key={e.id} onClick={() => history.push(`/executions/${e.id}/`)}>
                     <td>{e.name}</td>
                     <td>{e.command.name}</td>
-                    <td>{[...new Set((e.collection.owners || []).concat(e.sample.collection.owners || []).map(u => u.name))].join(", ")}</td>
+                    <td>{[...new Set((e.collection ? e.collection.owners : []).concat(e.sample && e.sample.collection ? e.sample.collection.owners : []).map(u => u.name))].join(", ")}</td>
                     <td>{moment(e.created * 1000).format("D MMM YYYY")}</td>
                   </tr>
                 ))}

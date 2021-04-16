@@ -11,7 +11,10 @@ export const USER_FIELDS = gql`
 export const USER = gql`query user($username: String) {
   user(username: $username) { 
     ...UserFields
-    collections { id name created owners { id username } groups { id slug } }
+    collections { 
+      id name created sampleCount executionCount
+      owners { id username } groups { id slug }
+    }
   }
 } ${USER_FIELDS}`;
 
@@ -28,7 +31,7 @@ export const GROUP = gql`query group($slug: String!) {
     id slug name description userCount
     users { id name username image } admins { id username }
     groupInvitations { id user { id username name } }
-    collections { id name created owners { id username } }
+    collections { id name created sampleCount executionCount owners { id username } }
   }
   users { id username name image }
   
@@ -50,7 +53,7 @@ export const COLLECTION = gql`query collection($id: ID!) {
 
 export const PUBLIC_COLLECTIONS = gql`query publicCollections($offset: Int, $first: Int) {
   publicCollections(offset: $offset first: $first) { edges { node {
-    id name created owners { id username }
+    id name created sampleCount executionCount owners { id username }
   } } }
   publicCollectionCount
 }`;
@@ -59,12 +62,6 @@ export const USER_COLLECTIONS = gql`{ userCollections {
   id name private created
   groups { id slug } owners { id }
 } }`;
-
-export const GROUP_COLLECTIONS = gql`query groupCollections($slug: String! $offset: Int $first: Int) {
-  group(slug: $slug) { id name allCollectionsCount allCollections(first: $first offset: $offset) {
-    edges { node { id name created private groups { id slug } } }
-  } }
-}`;
 
 export const SAMPLE = gql`query sample($id: ID!) {
   sample(id: $id) {

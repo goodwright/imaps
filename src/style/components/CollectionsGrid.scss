@@ -1,11 +1,9 @@
 .collections-grid {
     $card-width: 490px - 2 * $gap-5;
-
     display: grid;
     grid-template-columns: repeat(12, $card-width);
     gap: $gap-6;
     width: fit-content;
-    margin: 0 auto;
     
     @media (max-width: $sidebar-width + (2 * $gap-3) + (2 * $gap-4) + (12 * $card-width) + (11 * $gap-6)) {
         grid-template-columns: repeat(11, $card-width);

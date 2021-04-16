@@ -25,7 +25,7 @@ const UserCollectionsPage = () => {
 
   const collections = data.userCollections;
   const ownedCollections = collections.filter(c => c.owners.map(o => o.id).includes(user.id));
-  const sharedCollections = collections.filter(c => !c.owners.map(o => o.id).includes(user.id));
+  const sharedCollections = collections.filter(c => !c.owners.map(o => o.id).includes(user.id) );
   
   return (
     <Base className="user-collections-page">

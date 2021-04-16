@@ -35,7 +35,6 @@
             color: $purple-3;
 
             .privacy {
-                margin-left: $gap-5;
                 font-size: $font-size-2;
                 display: inline-flex;
                 align-items: flex-end;
@@ -47,6 +46,23 @@
                     margin-right: $gap-2;
                     position: relative;
                     top: -2px;
+                }
+            }
+
+            .data {
+                display: flex;
+                align-items: center;
+                color: $purple-2;
+
+                img {
+                    height: 18px;
+                    margin-right: $gap-1;
+                    position: relative;
+                    bottom: -1px;
+                }
+
+                .samples {
+                    margin-right: $gap-4;
                 }
             }
         }
