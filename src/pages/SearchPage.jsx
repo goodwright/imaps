@@ -77,6 +77,10 @@ const SearchPage = () => {
   const [searchSamples, { loading: samplesLoading, data: samplesData }] = useLazyQuery(SEARCH_SAMPLES);
   const [searchExecutions, { loading: executionsLoading, data: executionsData }] = useLazyQuery(SEARCH_EXECUTIONS);
 
+  const showCollections = selectedSearchType === "collection" && collectionsData && collectionsData.searchCollections;
+  const showSamples = selectedSearchType === "sample" && samplesData && samplesData.searchSamples;
+  const showExecutions = selectedSearchType === "execution" && executionsData && executionsData.searchExecutions;
+
   return (
     <Base className="search-page">
       <form onSubmit={formSubmit}>
@@ -185,13 +189,13 @@ const SearchPage = () => {
           </div>
         )}
 
-        {((collectionsData && collectionsData.searchCollections.length === 0) || (samplesData && samplesData.searchSamples.length === 0) || (executionsData && executionsData.searchExecutions.length === 0)) && (
+        {((showCollections && collectionsData.searchCollections.length === 0) || (showSamples && samplesData.searchSamples.length === 0) || (showExecutions && executionsData.searchExecutions.length === 0)) && (
           <div className="no-data">
             No results for this query.
           </div>
         )}
 
-        {collectionsData && collectionsData.searchCollections.length > 0 && selectedSearchType === "collection" && (
+        {showCollections && collectionsData.searchCollections.length > 0 && (
           <div className="results">
             {collectionsData.searchCollections.length > PER_PAGE ? <Paginator
               count={collectionsData.searchCollections.length} itemsPerPage={PER_PAGE}
@@ -217,7 +221,7 @@ const SearchPage = () => {
             </table>
           </div>
         )}
-        {samplesData && samplesData.searchIcon.length > 0 && selectedSearchType === "sample" && (
+        {showSamples && samplesData.searchSamples.length > 0 && (
           <div className="results">
             {samplesData.searchSamples.length > PER_PAGE ? <Paginator
               count={samplesData.searchSamples.length} itemsPerPage={PER_PAGE}
@@ -237,7 +241,7 @@ const SearchPage = () => {
                   <tr key={s.id} onClick={() => history.push(`/samples/${s.id}/`)}>
                     <td>{s.name}</td>
                     <td>{s.organism}</td>
-                    <td>{s.collection.owners.map(u => u.name).join(", ")}</td>
+                    <td>{s.collection ? s.collection.owners.map(u => u.name).join(", ") : ""}</td>
                     <td>{moment(s.created * 1000).format("D MMM YYYY")}</td>
                   </tr>
                 ))}
@@ -245,7 +249,7 @@ const SearchPage = () => {
             </table>
           </div>
         )}
-        {executionsData && executionsData.searchExecutions.length > 0 && selectedSearchType === "execution" && (
+        {showExecutions && executionsData.searchExecutions.length > 0 && (
           <div className="results">
             {executionsData.searchExecutions.length > PER_PAGE ? <Paginator
               count={executionsData.searchExecutions.length} itemsPerPage={PER_PAGE}
