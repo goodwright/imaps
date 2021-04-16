@@ -7,6 +7,10 @@
         border-bottom: 1px solid $gray-3;
     }
 
+    form.not-searched {
+        margin-bottom: $gap-10;
+    }
+
     .react-select {
         margin: 0;
 

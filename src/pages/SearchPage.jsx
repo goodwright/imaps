@@ -83,7 +83,7 @@ const SearchPage = () => {
 
   return (
     <Base className="search-page">
-      <form onSubmit={formSubmit}>
+      <form onSubmit={formSubmit} className={!showCollections && !showSamples && !showExecutions ? "not-searched" : ""}>
         <div className="top-row">
           <div className="input-icon">
             <img src={searchIcon} alt="" className="icon" />
@@ -177,9 +177,6 @@ const SearchPage = () => {
           />
           <button type="submit" className="primary-button">Search</button>
         </div>
-
-
-        
       </form>
 
       <div className="results">
