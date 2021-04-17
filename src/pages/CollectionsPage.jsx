@@ -1,18 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
 import { PUBLIC_COLLECTIONS } from "../queries";
 import Base from "./Base";
-import { useLocation } from "react-router";
 import Paginator from "../components/Paginator";
 import CollectionsGrid from "../components/CollectionsGrid";
 
 const CollectionsPage = () => {
 
-  const page = new URLSearchParams(useLocation().search).get("page") || 1;
+  const [page, setPage] = useState(1);
+  const count = useRef(null);
   const itemsPerPage = 24;
 
   const { loading, data } = useQuery(PUBLIC_COLLECTIONS, {
-    variables: {first: itemsPerPage, offset: (parseInt(page) - 1) * itemsPerPage}
+    variables: {
+      first: page * itemsPerPage,
+      last: count.current ? page * itemsPerPage > count.current ? (
+        count.current - (itemsPerPage * (page - 1))
+       ) : itemsPerPage : itemsPerPage
+    },
+    onCompleted: data => count.current = data.publicCollections.count
   });
 
   useEffect(() => {
@@ -31,19 +37,13 @@ const CollectionsPage = () => {
       <div className="info">
         These are the iMaps Collections which have been set to be publicly available by their owners.
       </div>
-      {data.collectionCount > itemsPerPage && (
+      {data.publicCollections.count > itemsPerPage && (
         <Paginator
-          count={data.collectionCount} itemsPerPage={itemsPerPage}
-          currentPage={parseInt(page)} pathBase="/collections"
+          count={data.publicCollections.count} itemsPerPage={itemsPerPage}
+          currentPage={parseInt(page)} onClick={setPage}
         />
       )}
       <CollectionsGrid collections={collections} />
-      {data.collectionCount > itemsPerPage && (
-        <Paginator
-          count={data.collectionCount} itemsPerPage={itemsPerPage}
-          currentPage={parseInt(page)} pathBase="/collections"
-        />
-      )}
     </Base>
   );
 };

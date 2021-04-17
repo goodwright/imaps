@@ -51,11 +51,10 @@ export const COLLECTION = gql`query collection($id: ID!) {
   }
 }`;
 
-export const PUBLIC_COLLECTIONS = gql`query publicCollections($offset: Int, $first: Int) {
-  publicCollections(offset: $offset first: $first) { edges { node {
+export const PUBLIC_COLLECTIONS = gql`query publicCollections($first: Int $last: Int) {
+  publicCollections(first: $first last: $last) { count edges { node {
     id name created sampleCount executionCount owners { id username }
   } } }
-  publicCollectionCount
 }`;
 
 export const USER_COLLECTIONS = gql`{ userCollections { 
@@ -90,33 +89,36 @@ export const EXECUTION = gql`query execution($id: ID!) {
 }`;
 
 export const SEARCH_COLLECTIONS = gql`query searchCollections(
-  $query: String! $sort: String $owner: String $created: String
+  $query: String! $sort: String $owner: String $created: String $first: Int $last: Int
 ) {
   searchCollections(
-    query: $query sort: $sort owner: $owner created: $created
-  ) {
+    query: $query sort: $sort owner: $owner created: $created first: $first last: $last
+  ) { count edges { node {
     id name created owners { id name }
+  } }
   }
 }`;
 
 export const SEARCH_SAMPLES = gql`query searchSamples(
-  $query: String! $sort: String $ organism: String $owner: String $created: String
+  $query: String! $sort: String $ organism: String $owner: String $created: String $first: Int $last: Int
 ) {
   searchSamples(
     query: $query sort: $sort organism: $organism owner: $owner created: $created
-  ) {
+    first: $first last: $last
+  ) { count edges { node {
     id name organism created collection { id owners { id name } }
-  }
+  } } }
 }`;
 
 export const SEARCH_EXECUTIONS = gql`query searchExecutions(
-  $query: String! $sort: String $command: String $owner: String $created: String
+  $query: String! $sort: String $command: String $owner: String $created: String $first: Int $last: Int
 ) {
   searchExecutions(
     query: $query sort: $sort command: $command owner: $owner created: $created
-  ) {
+    first: $first last: $last
+  ) { count edges { node {
     id name created command { id name } 
     collection { id owners { id name } }
     sample { id collection { id owners { id name } } }
-  }
+  } } }
 }`;

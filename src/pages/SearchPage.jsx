@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useLazyQuery } from "@apollo/client";
 import Select from "react-select";
@@ -25,6 +25,7 @@ const SearchPage = () => {
   const [executionDate, setExecutionDate] = useState(null);
   const history = useHistory();
   const [page, setPage] = useState(1);
+  const count = useRef(null);
   const PER_PAGE = 10;
 
   const searchTypes = [
@@ -73,9 +74,33 @@ const SearchPage = () => {
     }
   }, [page])
 
-  const [searchCollections, { loading: collectionsLoading, data: collectionsData }] = useLazyQuery(SEARCH_COLLECTIONS);
-  const [searchSamples, { loading: samplesLoading, data: samplesData }] = useLazyQuery(SEARCH_SAMPLES);
-  const [searchExecutions, { loading: executionsLoading, data: executionsData }] = useLazyQuery(SEARCH_EXECUTIONS);
+  const [searchCollections, { loading: collectionsLoading, data: collectionsData }] = useLazyQuery(SEARCH_COLLECTIONS, {
+    variables: {
+      first: page * PER_PAGE,
+      last: count.current ? page * PER_PAGE > count.current ? (
+        count.current - (PER_PAGE * (page - 1))
+       ) : PER_PAGE : PER_PAGE
+    },
+    onCompleted: data => count.current = data.searchCollections.count
+  });
+  const [searchSamples, { loading: samplesLoading, data: samplesData }] = useLazyQuery(SEARCH_SAMPLES, {
+    variables: {
+      first: page * PER_PAGE,
+      last: count.current ? page * PER_PAGE > count.current ? (
+        count.current - (PER_PAGE * (page - 1))
+       ) : PER_PAGE : PER_PAGE
+    },
+    onCompleted: data => count.current = data.searchSamples.count
+  });
+  const [searchExecutions, { loading: executionsLoading, data: executionsData }] = useLazyQuery(SEARCH_EXECUTIONS, {
+    variables: {
+      first: page * PER_PAGE,
+      last: count.current ? page * PER_PAGE > count.current ? (
+        count.current - (PER_PAGE * (page - 1))
+       ) : PER_PAGE : PER_PAGE
+    },
+    onCompleted: data => count.current = data.searchExecutions.count
+  });
 
   const showCollections = selectedSearchType === "collection" && collectionsData && collectionsData.searchCollections;
   const showSamples = selectedSearchType === "sample" && samplesData && samplesData.searchSamples;
@@ -185,16 +210,16 @@ const SearchPage = () => {
           </div>
         )}
 
-        {((showCollections && collectionsData.searchCollections.length === 0) || (showSamples && samplesData.searchSamples.length === 0) || (showExecutions && executionsData.searchExecutions.length === 0)) && (
+        {((showCollections && collectionsData.searchCollections.edges.length === 0) || (showSamples && samplesData.searchSamples.edges.length === 0) || (showExecutions && executionsData.searchExecutions.edges.length === 0)) && (
           <div className="no-data">
             No results for this query.
           </div>
         )}
 
-        {showCollections && collectionsData.searchCollections.length > 0 && (
+        {showCollections && collectionsData.searchCollections.edges.length > 0 && (
           <div className="results">
-            {collectionsData.searchCollections.length > PER_PAGE ? <Paginator
-              count={collectionsData.searchCollections.length} itemsPerPage={PER_PAGE}
+            {collectionsData.searchCollections.count > PER_PAGE ? <Paginator
+              count={collectionsData.searchCollections.count} itemsPerPage={PER_PAGE}
               currentPage={page} onClick={setPage}
             /> : <div className="paginator" /> }
             <table>
@@ -206,7 +231,7 @@ const SearchPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {collectionsData.searchCollections.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(c => (
+                {collectionsData.searchCollections.edges.map(edge => edge.node).map(c => (
                   <tr key={c.id} onClick={() => history.push(`/collections/${c.id}/`)}>
                     <td>{c.name}</td>
                     <td>{c.owners.map(u => u.name).join(", ")}</td>
@@ -217,10 +242,10 @@ const SearchPage = () => {
             </table>
           </div>
         )}
-        {showSamples && samplesData.searchSamples.length > 0 && (
+        {showSamples && samplesData.searchSamples.edges.length > 0 && (
           <div className="results">
-            {samplesData.searchSamples.length > PER_PAGE ? <Paginator
-              count={samplesData.searchSamples.length} itemsPerPage={PER_PAGE}
+            {samplesData.searchSamples.count > PER_PAGE ? <Paginator
+              count={samplesData.searchSamples.count} itemsPerPage={PER_PAGE}
               currentPage={page} onClick={setPage}
             /> : <div className="paginator" /> }
             <table>
@@ -233,7 +258,7 @@ const SearchPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {samplesData.searchSamples.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(s => (
+                {samplesData.searchSamples.edges.map(edge => edge.node).map(s => (
                   <tr key={s.id} onClick={() => history.push(`/samples/${s.id}/`)}>
                     <td>{s.name}</td>
                     <td>{s.organism}</td>
@@ -245,10 +270,10 @@ const SearchPage = () => {
             </table>
           </div>
         )}
-        {showExecutions && executionsData.searchExecutions.length > 0 && (
+        {showExecutions && executionsData.searchExecutions.edges.length > 0 && (
           <div className="results">
-            {executionsData.searchExecutions.length > PER_PAGE ? <Paginator
-              count={executionsData.searchExecutions.length} itemsPerPage={PER_PAGE}
+            {executionsData.searchExecutions.count > PER_PAGE ? <Paginator
+              count={executionsData.searchExecutions.count} itemsPerPage={PER_PAGE}
               currentPage={page} onClick={setPage}
             /> : <div className="paginator" /> }
             <table>
@@ -261,7 +286,7 @@ const SearchPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {executionsData.searchExecutions.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(e => (
+                {executionsData.searchExecutions.edges.map(edge => edge.node).map(e => (
                   <tr key={e.id} onClick={() => history.push(`/executions/${e.id}/`)}>
                     <td>{e.name}</td>
                     <td>{e.command.name}</td>

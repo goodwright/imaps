@@ -13,7 +13,7 @@ const UserCollectionsPage = () => {
   const [ownPage, setOwnPage] = useState(1);
   const [sharedPage, setSharedPage] = useState(1);
   const [groupPages, setGroupPages] = useState(null);
-  const PER_PAGE = 6;
+  const PER_PAGE = user.groups.length ? 6 : 12;
 
   useEffect(() => {
     document.title = `iMaps - Your Collections`;
