@@ -45,8 +45,8 @@ export const COLLECTION = gql`query collection($id: ID!) {
       id name organism source piName annotatorName qcPass qcMessage
       created
     }
-    executions { id name created started finished command {
-      id name description
+    executions { id name created started finished input owners { id name } command {
+      id name inputSchema
     } }
   }
 }`;
@@ -67,8 +67,8 @@ export const SAMPLE = gql`query sample($id: ID!) {
     id name organism source piName annotatorName qcPass qcMessage
     created lastModified
     collection { id name }
-    executions { id name created started finished command {
-      id name description
+    executions { id name created started finished input owners { id name } command {
+      id name description inputSchema
     } }
   }
 }`;
@@ -81,9 +81,9 @@ export const EXECUTION = gql`query execution($id: ID!) {
     collection { id name }
     command { id name description inputSchema outputSchema }
     parent { id name }
-    upstreamExecutions { id name output }
-    downstreamExecutions { id started created finished name }
-    componentExecutions { id name started created finished }
+    upstreamExecutions { id name output input owners { id name } command { id inputSchema name } }
+    downstreamExecutions { id started created finished name owners { id name } input command { id inputSchema name } }
+    componentExecutions { id name started created finished input owners { id name } command { id inputSchema name } }
     owners { id name username }
   }
 }`;

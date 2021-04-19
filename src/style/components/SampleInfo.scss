@@ -22,9 +22,12 @@
     table {
         border-collapse: collapse;
         color: $purple-2;
+        border: none;
+        font-size: $font-size-3;
 
         th, td {
             padding: $gap-2 0;
+            border: none;
         }
 
         th {

@@ -2,35 +2,6 @@
     overflow-x: scroll;
 
     table {
-        color: $purple-2;
-        border-collapse: collapse;
-        font-size: $font-size-2;
-        border-top: 1px solid $gray-4;
-
-        tr {
-            cursor: pointer;
-        }
-
-        tr:hover {
-            background-color: $gray-1;
-        }
-
-        td {
-            padding: $gap-2 $gap-2;
-            white-space: nowrap;
-        }
-
-        td:first-child {
-            padding-left: 0;
-        }
-
-        td:last-child {
-            padding-right: 0;
-        }
-
-        td.centered {
-            text-align: center;
-        }
 
         td.name {
             font-size: $font-size-3;

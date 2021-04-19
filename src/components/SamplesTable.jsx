@@ -21,6 +21,16 @@ const SamplesTable = props => {
       /> : <div className="paginator" />}
 
       <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Owners</th>
+            <th>Source</th>
+            <th>Organism</th>
+            <th>Date</th>
+            <th>QC</th>
+          </tr>
+        </thead>
         <tbody>
           {samples.slice((offset - 1) * PER_PAGE, offset * PER_PAGE).map(sample => (
             <tr key={sample.id} onClick={() => history.push(`/samples/${sample.id}/`)}>

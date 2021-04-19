@@ -80,7 +80,7 @@ const CollectionPage = () => {
             A list of the analysis commands run on data in this collection from
             more than one sample. The samples may have their own analysis history.
           </p>
-          <ExecutionHistory executions={collection.executions} />
+          <ExecutionHistory executions={collection.executions} searchable={true} />
         </div>
       </div>
       {collection.owners.length > 0 && <div className="owner">

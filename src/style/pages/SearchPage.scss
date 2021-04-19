@@ -81,35 +81,8 @@
         }
 
         table {
-            border-collapse: collapse;
             width: 100%;
             max-width: 1200px;
-
-            th {
-                border-bottom: 2px solid $gray-5;
-                padding: $gap-1 0;
-                padding-right: $gap-2;
-                text-align: left;
-                color: $purple-2;
-                font-weight: 500;
-            }
-
-            tbody {
-                tr {
-                    cursor: pointer;
-                    font-weight: 300;
-                    border-bottom: 1px solid $gray-5;
-
-                    td {
-                        padding: $gap-2 0;
-                        padding-right: $gap-3;
-                    }
-                }
-
-                tr:hover {
-                    background-color: $gray-1;
-                }
-            }
         }
     }
 
