@@ -86,7 +86,7 @@ const UserSummary = props => {
             {user && !edit && groupAdmins.includes(user.username) && "admin"}
 
             {edit && invitation && (
-              <div className="demote" onClick={() => cancelInvitation({variables: {id: invitation ? invitation.id : null}})}>cancel</div>
+              <div className="demote" onClick={() => cancelInvitation({variables: {user: user.id, group: invitation.id, accept: false}})}>cancel</div>
             )}
             
             {/* Resign or promote or demote */}

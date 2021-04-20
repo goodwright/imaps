@@ -69,7 +69,7 @@ const GroupPage = props => {
 
   const group = data.group;
   const adminUsernames = group.admins.map(user => user.username);
-  const users = [...group.users].map(user => (
+  const users = [...group.members].map(user => (
     {...user, admin: adminUsernames.includes(user.username)}
   )).sort((u1, u2) => u2.admin - u1.admin);
   const allUsers = data.users;
@@ -122,8 +122,8 @@ const GroupPage = props => {
     
       <div className="users-grid">
         {users.map(user => <UserSummary user={user} key={user.id} link={!edit} group={group} edit={edit} />)}
-        {edit && group.groupInvitations.map(invitation => (
-          <UserSummary user={invitation.user} key={invitation.id} invitation={invitation} group={group} edit={true} />
+        {edit && group.invitees.map(user => (
+          <UserSummary user={user} key={user.id} invitation={group} group={group} edit={true} />
         ))}
       </div>
 
@@ -131,7 +131,7 @@ const GroupPage = props => {
 
       <div className="collections">
         <h2>Public Collections</h2>
-        <CollectionsGrid collections={group.collections} />
+        <CollectionsGrid collections={group.publicCollections} />
       </div>
 
       {edit && <GroupDeletion group={group} />}

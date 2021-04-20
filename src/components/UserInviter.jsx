@@ -16,8 +16,8 @@ const UserInviter = props => {
   const [showPlaceholder, setShowPlaceholder] = useState(true);
   const [users, setUsers] = useState([]);
 
-  const usernamesInGroup = group.users.map(user => user.username);
-  const inviteesInGroup = group.groupInvitations.map(invitation => invitation.user);
+  const usernamesInGroup = group.members.map(user => user.username);
+  const inviteesInGroup = group.invitees;
   const inviteeUsernamesInGroup = inviteesInGroup.map(user => user.username);
 
   const options = allUsers.map(user => ({

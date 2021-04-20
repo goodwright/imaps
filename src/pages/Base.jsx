@@ -25,11 +25,11 @@ const Base = props => {
       <Nav />
       <Sidebar />
       <main className={fullClassName}>
-        {user && user.groupInvitations.map((invitation, index) => (
+        {user && user.invitations.map((invitation, index) => (
           <Invitation
             invitation={invitation} key={invitation.id} style={{
               top: (index + 1) * 7 + 8,
-              right: (user.groupInvitations.length - index) * 7 + 8
+              right: (user.invitations.length - index) * 7 + 8
             }}
           />
         ))}

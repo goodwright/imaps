@@ -73,12 +73,12 @@ export const DELETE_GROUP = gql`mutation deleteGroup($id: ID!) { deleteGroup(id:
 
 export const INVITE_TO_GROUP = gql`mutation inviteToGroup($group: ID! $user: ID!) {
   inviteUserToGroup(user: $user group: $group) {
-    invitation { id }
+    group { id } user { id }
   }
 }`;
 
-export const DECLINE_INVITATION = gql`mutation declineInvitation($id: ID!) {
-  deleteGroupInvitation(id: $id) {
+export const DECLINE_INVITATION = gql`mutation processGroupInvitation($user: ID! $group: ID!) {
+  processGroupInvitation(user: $user group: $group accept: false) {
     success
     user { 
       ...UserFields
@@ -86,9 +86,9 @@ export const DECLINE_INVITATION = gql`mutation declineInvitation($id: ID!) {
   }
 } ${USER_FIELDS}`;
 
-export const ACCEPT_INVITATION = gql`mutation acceptInvitation($id: ID!) {
-  acceptGroupInvitation(id: $id) {
-    group { id slug name }
+export const ACCEPT_INVITATION = gql`mutation processGroupInvitation($user: ID! $group: ID!) {
+  processGroupInvitation(user: $user group: $group accept: true) {
+    success
     user { 
       ...UserFields
     }

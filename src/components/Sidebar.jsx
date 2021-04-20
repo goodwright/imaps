@@ -19,10 +19,10 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar-top">
         <UserSummary user={user || null} link={true} />
-        {user && user.groups.length > 0 && <div className="groups-section">
+        {user && user.memberships.length > 0 && <div className="groups-section">
           <div className="label">Your groups:</div>
           <div className="groups">
-            {user.groups.map(group => (
+            {user.memberships.map(group => (
               <Link to={`/@${group.slug}/`} key={group.id} className="group">
                 <span className="at">@</span>{group.slug}
               </Link>

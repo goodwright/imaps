@@ -13,7 +13,7 @@ const UserCollectionsPage = () => {
   const [ownPage, setOwnPage] = useState(1);
   const [sharedPage, setSharedPage] = useState(1);
   const [groupPages, setGroupPages] = useState(null);
-  const PER_PAGE = user.groups.length ? 6 : 12;
+  const PER_PAGE = user.memberships.length ? 6 : 12;
 
   useEffect(() => {
     document.title = `iMaps - Your Collections`;
@@ -25,7 +25,7 @@ const UserCollectionsPage = () => {
 
   const collections = data.userCollections;
   const ownedCollections = collections.filter(c => c.owners.map(o => o.id).includes(user.id));
-  const sharedCollections = collections.filter(c => !c.owners.map(o => o.id).includes(user.id) );
+  const sharedCollections = data.user.collections.filter(c => !c.owners.map(o => o.id).includes(user.id));
   
   return (
     <Base className="user-collections-page">
@@ -43,7 +43,7 @@ const UserCollectionsPage = () => {
       />}
       <CollectionsGrid collections={sharedCollections.slice((sharedPage - 1) * PER_PAGE, sharedPage * PER_PAGE)} />
 
-      {user.groups.map((group, g) => {
+      {user.memberships.map((group, g) => {
         const groupCollections = collections.filter(c => c.groups.map(g => g.id).includes(group.id));
         return (
           <div className="group-owned" key={g}>

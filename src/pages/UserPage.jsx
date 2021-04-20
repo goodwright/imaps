@@ -41,7 +41,7 @@ const UserPage = () => {
         <GroupsList user={user} />
         <div className="collections">
           <h2>Public Collections</h2>
-          <CollectionsGrid collections={user.collections} />
+          <CollectionsGrid collections={user.publicCollections} />
         </div>
       </div>
     </Base>

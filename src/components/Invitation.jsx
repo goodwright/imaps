@@ -10,15 +10,15 @@ const Invitation = props => {
 
   const { invitation, style } = props;
   const [banished, setBanished] = useState(false);
-  const [,setUser] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   const [accept, acceptMutation] = useMutation(ACCEPT_INVITATION, {
-    onCompleted: data => setUser(data.acceptGroupInvitation.user),
+    onCompleted: data => setUser(data.processGroupInvitation.user),
     onError: () => setBanished(true)
   });
 
   const [decline, declineMutation] = useMutation(DECLINE_INVITATION, {
-    onCompleted: data => setUser(data.deleteGroupInvitation.user),
+    onCompleted: data => setUser(data.processGroupInvitation.user),
     onError: () => setBanished(true)
   });
 
@@ -26,12 +26,12 @@ const Invitation = props => {
 
   return (
     <div className="invitation" style={style}>
-      <div className="info">You have been invited to join <Link to={`/@${invitation.group.slug}/`}>{invitation.group.name}</Link></div>
+      <div className="info">You have been invited to join <Link to={`/@${invitation.slug}/`}>{invitation.name}</Link></div>
       <div className="buttons">
-        <button className="button primary-button" onClick={() => accept({variables: {id: invitation.id}})}>
+        <button className="button primary-button" onClick={() => accept({variables: {user: user.id, group: invitation.id}})}>
           {acceptMutation.loading ? <ClipLoader color="white" size="20px" /> : "Accept"}
         </button>
-        <button className="button secondary-button" onClick={() => decline({variables: {id: invitation.id}})}>
+        <button className="button secondary-button" onClick={() => decline({variables: {user: user.id, group: invitation.id}})}>
           {declineMutation.loading ? <ClipLoader color="#9590B5" size="20px" /> : "Decline"}
         </button>
       </div>

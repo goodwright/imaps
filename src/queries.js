@@ -3,17 +3,17 @@ import gql from "graphql-tag";
 export const USER_FIELDS = gql`
   fragment UserFields on UserType { 
     id username email name image
-    groups { id slug name userCount }
+    memberships { id slug name userCount }
     adminGroups { id }
-    groupInvitations { id group { id name slug } }
+    invitations { id name slug }
   }`;
 
 export const USER = gql`query user($username: String) {
   user(username: $username) { 
     ...UserFields
-    collections { 
+    publicCollections { 
       id name created sampleCount executionCount
-      owners { id username } groups { id slug }
+      owners { id username }
     }
   }
 } ${USER_FIELDS}`;
@@ -29,12 +29,11 @@ export const QUICK_SEARCH = gql`query quickSearch($query: String!) {
 export const GROUP = gql`query group($slug: String!) {
   group(slug: $slug) {
     id slug name description userCount
-    users { id name username image } admins { id username }
-    groupInvitations { id user { id username name } }
-    collections { id name created sampleCount executionCount owners { id username } }
+    members { id name username image } admins { id username }
+    invitees { id username name }
+    publicCollections { id name created sampleCount executionCount owners { id username } }
   }
   users { id username name image }
-  
 }`;
 
 export const COLLECTION = gql`query collection($id: ID!) {
@@ -57,10 +56,15 @@ export const PUBLIC_COLLECTIONS = gql`query publicCollections($first: Int $last:
   } } }
 }`;
 
-export const USER_COLLECTIONS = gql`{ userCollections { 
-  id name private created
-  groups { id slug } owners { id }
-} }`;
+export const USER_COLLECTIONS = gql`{
+  userCollections { 
+    id name private created
+    groups { id slug } owners { id }
+  }
+  user { collections { 
+    id name private created owners { id }
+   } }
+}`;
 
 export const SAMPLE = gql`query sample($id: ID!) {
   sample(id: $id) {
