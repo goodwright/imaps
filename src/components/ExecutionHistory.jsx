@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Paginator from "./Paginator";
 import moment from "moment";
-import { duration } from "../utils";
 
 const ExecutionHistory = props => {
 
