@@ -35,9 +35,16 @@ const PekaRbp = props => {
   return (
     <div className="peka-rbp">
       <h2>{rbp}</h2>
-      <p className="peka-sub-text">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam asperiores, dolore consectetur incidunt perspiciatis beatae? <Link to="/apps/peka/">Back to Heatmap</Link>
-      </p>
+      <div className="peka-sub-text">
+        <p>
+          Heatmap visualises the relative occurrence of 40 5-mers with the highest PEKA
+          score around the high-confidence crosslink sites (tXn). 5-mers are clustered
+          based on sequence similarity, the clusters are separated by white lines and
+          arranged from top to bottom by descending maximal value of PEKA score within
+          the cluster. Grayscale heatmap on the right shows the PEKA score of each k-mer.
+        </p>
+        <Link className="back" to="/apps/peka/">Back to Heatmap</Link>
+      </div>
       <div className="graphic">
         <div className="table">
           <div className="title">{rbp} - Relative occurence around tXn for top 40 motifs</div>

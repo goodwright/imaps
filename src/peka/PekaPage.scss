@@ -4,7 +4,7 @@
         display: flex;
         align-items: center;
         margin-bottom: $gap-4;
-        max-width: 800px;
+        max-width: 1000px;
         justify-content: space-between;
     }
 
@@ -59,7 +59,7 @@
         color: $purple-2;
         font-size: $font-size-4;
         line-height: 1.6;
-        max-width: 800px;
+        max-width: 1000px;
         border-bottom: 1px solid $gray-3;
         padding-bottom: $gap-4;
         margin-bottom: $gap-5;
@@ -88,7 +88,32 @@
         color: $purple-2;
         font-size: $font-size-3;
         line-height: 1.5;
-        max-width: 800px;
         margin-bottom: $gap-6;
+
+        h3 {
+            font-size: $font-size-4;
+            font-weight: 600;
+            margin-bottom: $gap-2;
+        }
+        
+
+        p {
+            margin-bottom: $gap-2;
+            max-width: 1000px;
+        }
+
+        .back {
+            display: block;
+        }
+
+        li {
+            list-style: disc;
+            margin-left: $gap-5;
+            margin-top: $gap-1;
+        }
+
+        strong {
+            font-weight: 600;
+        }
     }
 }

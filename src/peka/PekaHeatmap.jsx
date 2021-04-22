@@ -204,7 +204,22 @@ const PekaHeatmap = () => {
     <div className="peka-heatmap">
       <h2>Heatmap</h2>
       <div className="peka-sub-text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam sed, odit dolore magnam quaerat aliquid explicabo incidunt omnis inventore iste ipsam.
+        <p>
+          Heatmap shows the rank of 5-mers for 223 eCLIP datasets produced in either
+          K562 or HepG2 cell lines, encompassing a total of 150 distinct proteins.
+          Datasets are hierarchically clustered based on the similarity of motif ranks.
+        </p>
+        <p>
+          Supplementary data is shown in heatmaps below:
+        </p>
+        <ul>
+          <li><strong>Similarity</strong> score reports how much the top motif ranks of a specific dataset match those of all other datasets.</li>
+          <li><strong>Recall</strong> measures the overlap of top motifs in each eCLIP dataset to its orthogonal in vitro dataset (RNA Bind-N-Seq or RNAcompete).</li>
+          <li><strong>log2FC eRIC</strong> shows the log2-fold change in crosslinked over non-crosslinked samples of the proteins identified by enhanced RNA Interactome Capture (eRIC) in proliferating Jurkat cells <a href="https://paperpile.com/c/KEAU9t/E2nI">(Perez-Perri et al. 2018)</a>.</li>
+          <li><strong>tXn per region (%)</strong> shows the percentage of high-confidence crosslink sites (tXn) for each RBP within introns, 3’ UTRs and other exonic regions of protein-coding genes (coding+5’UTRs).</li>
+          <li><strong>% noncoding peaks</strong> shows the proportion of IDR (irreproducible discovery rate) peaks (as available for eCLIP datasets from (<a href="https://paperpile.com/c/KEAU9t/akVJ">Van Nostrand et al. 2020</a>)) in non-coding regions of the transcriptome (noncoding_exon, noncoding_5ss, noncoding_3ss, noncoding_proxintron, noncoding_distintron).</li>
+          <li><strong>total number of peaks</strong> shows the total number of IDR peaks available for each dataset.</li>
+        </ul>
       </div>
 
       {!data ? <BarLoader color="#6353C6" css="margin: 64px auto" /> : (

@@ -149,9 +149,28 @@ const PekaMotif = props => {
     <div className="peka-motif">
       <h2>{motif} (Group: {data.group})</h2>
       <p className="other-motifs">Other members: <span className="members">{data.group_members.filter(m => m !== motif).join(", ")}</span></p>
-      <p className="peka-sub-text">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam asperiores, dolore consectetur incidunt perspiciatis beatae? <Link to="/apps/peka/">Back to Heatmap</Link>
-      </p>
+      <div className="peka-sub-text">
+        <h3>Metaprofile of motif-group coverage</h3>
+        <p>
+          This page compares the enrichment of the {data.group} motif-group across
+          all eCLIP datasets. The coverage of a given motif-group is visualised
+          around high-confidence crosslink sites (tXn) across multiple transcriptomic
+          regions, with or without repeating elements. Analysed regions were introns,
+          3’ UTRs, other exonic regions of protein-coding genes (5’ UTRs & the
+          coding sequences), and the “whole gene”, combining all previously listed regions.
+        </p>
+        <p>
+          On top right of the page is the legend showing the colour-code for the position
+          around tXn where the coverage of motifs is highest (i.e., max-position). Next to
+          it are the scatterplots displaying, for this particular motif-group, the %
+          coverage at the max-position for each dataset (y-axis), and the maximal enrichment
+          in the selected dataset compared to all other datasets at the same position (z-score).
+          Below, heatmaps display a weighted metaprofile of motif-group coverage for 40 RBP
+          datasets with the highest maximal coverage values in the corresponding region.
+          Datasets are clustered based on the metaprofile similarities, and the groups are
+          arranged from top to bottom by falling max coverage values.
+        </p>
+      </div>
 
       <div className="graphics">
 
