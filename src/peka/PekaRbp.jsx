@@ -8,7 +8,7 @@ import roundTo from "round-to";
 
 const PekaRbp = props => {
 
-  const { rbp } = props;
+  const { rbp, download } = props;
 
   const [data, setData] = useState(null);
   const [tooltip, setTooltip] = useState("");
@@ -34,7 +34,7 @@ const PekaRbp = props => {
 
   return (
     <div className="peka-rbp">
-      <h2>{rbp}</h2>
+      <h2>{rbp} <button onClick={() => download(data, rbp)}>Download Data</button></h2>
       <div className="peka-sub-text">
         <p>
           Heatmap visualises the relative occurrence of 40 5-mers with the highest PEKA

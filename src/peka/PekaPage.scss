@@ -70,6 +70,21 @@
         font-weight: 600;
         font-size: $font-size-8;
         margin-bottom: $gap-4;
+        position: relative;
+
+        button {
+            font-size: $font-size-2;
+            position: absolute;
+            color: $purple-4;
+            padding: 0;
+            top: -$gap-1;
+            font-weight: normal;
+            padding-left: $gap-1;
+        }
+
+        button:hover {
+            text-decoration: underline;
+        }
     }
 
     .other-motifs {

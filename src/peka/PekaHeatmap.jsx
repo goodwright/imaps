@@ -8,9 +8,10 @@ import PekaControls from "./PekaControls";
 import roundTo from "round-to";
 import { getApiLocation } from "../api";
 
-const PekaHeatmap = () => {
+const PekaHeatmap = props => {
 
   const [data, setData] = useState(null);
+  const { download } = props;
   const [cellSize, setCellSize] = useState(6);
   const zooms = [1, 2, 3, 4, 6, 8, 10, 12, 16, 20, 24];
   const [hoveredCell, setHoveredCell] = useState(" ");
@@ -202,7 +203,8 @@ const PekaHeatmap = () => {
 
   return (
     <div className="peka-heatmap">
-      <h2>Heatmap</h2>
+      <h2>Heatmap <button onClick={() => download(data, "peka")}>Download Data</button></h2>
+      
       <div className="peka-sub-text">
         <p>
           Heatmap shows the rank of 5-mers for 223 eCLIP datasets produced in either

@@ -42,6 +42,16 @@ const PekaPage = () => {
     setSearchActive(false);
   }
 
+  const downloadData = (json, name) =>{
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json));
+    const downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",  dataStr);
+    downloadAnchorNode.setAttribute("download", `${name}.json`);
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+
   return (
     <Base className="peka-page">
       <div className="top-row">
@@ -75,7 +85,7 @@ const PekaPage = () => {
         specific transcriptomic regions, including or excluding repetitive elements. PEKA
         code is available from <a href="https://github.com/ulelab/imaps/blob/master/src/imaps/sandbox/kmers.py">Ulelab github</a>.
       </p>
-      {rbp ? <PekaRbp rbp={rbp} /> : motif ? <PekaMotif motif={motif}/> : <PekaHeatmap /> }
+      {rbp ? <PekaRbp rbp={rbp} download={downloadData} /> : motif ? <PekaMotif motif={motif} download={downloadData}/> : <PekaHeatmap download={downloadData} /> }
     </Base>
   )
 };

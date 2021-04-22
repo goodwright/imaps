@@ -9,7 +9,7 @@ import HighchartsReact from "highcharts-react-official";
 import { getApiLocation } from "../api";
 
 const PekaMotif = props => {
-  const { motif } = props;
+  const { motif, download } = props;
 
   const [data, setData] = useState(null);
   const [hoveredCell, setHoveredCell] = useState(" ");
@@ -147,7 +147,7 @@ const PekaMotif = props => {
 
   return (
     <div className="peka-motif">
-      <h2>{motif} (Group: {data.group})</h2>
+      <h2>{motif} (Group: {data.group}) <button onClick={() => download(data, data.group)}>Download Data</button></h2>
       <p className="other-motifs">Other members: <span className="members">{data.group_members.filter(m => m !== motif).join(", ")}</span></p>
       <div className="peka-sub-text">
         <h3>Metaprofile of motif-group coverage</h3>
@@ -170,6 +170,7 @@ const PekaMotif = props => {
           Datasets are clustered based on the metaprofile similarities, and the groups are
           arranged from top to bottom by falling max coverage values.
         </p>
+        <Link className="back" to="/apps/peka/">Back to Heatmap</Link>
       </div>
 
       <div className="graphics">
