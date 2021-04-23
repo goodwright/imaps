@@ -17,7 +17,7 @@ const PekaHeatmap = props => {
   const [hoveredCell, setHoveredCell] = useState(" ");
   const [truncated, setTruncated] = useState(true);
   const [showSimilarity, setShowSimilarity] = useState(true);
-  const [showIBAQ, setShowIBAQ] = useState(true);
+  const [showEric, setShowEric] = useState(true);
   const [showRecall, setShowRecall] = useState(true);
   const [showIntrons, setShowIntrons] = useState(true);
   const [showNoncodingIDR, setShowNoncodingIDR] = useState(true);
@@ -25,7 +25,7 @@ const PekaHeatmap = props => {
   const [visibleHeight, setVisibleHeight] = useState(0);
   const canvasRef = useRef(null);
   const similarityRef = useRef(null);
-  const ibaqRef = useRef(null);
+  const ericRef = useRef(null);
   const recallRef = useRef(null);
   const intronsRef = useRef(null);
   const noncodingIdrRef = useRef(null);
@@ -75,7 +75,7 @@ const PekaHeatmap = props => {
     }
 
     for (let map of [
-      ["similarity", similarityRef], ["iBAQ", ibaqRef], ["recall", recallRef],
+      ["similarity", similarityRef], ["eRIC", ericRef], ["recall", recallRef],
       ["introns", intronsRef], ["noncoding_IDR", noncodingIdrRef], ["total_IDR", totalIdrRef]
     ]) {
       canvas = map[1].current;
@@ -134,14 +134,14 @@ const PekaHeatmap = props => {
     const cell = `${data.similarity.columns[colNum]} - ${data.similarity.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
   }
-  const ibaqMouseMove = e => {
-    const canvas = ibaqRef.current;
+  const ericMouseMove = e => {
+    const canvas = ericRef.current;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const rowNum = Math.max(Math.floor((y - 1) / (secondaryHeight)), 0);
     const colNum = Math.max(Math.floor((x - 1) / cellSize), 0);
-    const value = data.iBAQ.matrix[rowNum][colNum].value === null ? "N/A" : power(roundTo(data.iBAQ.matrix[rowNum][colNum].value, 2), true)
-    const cell = `${data.iBAQ.columns[colNum]} - ${data.iBAQ.rows[rowNum]}\n${value}`
+    const value = data.eRIC.matrix[rowNum][colNum].value === null ? "N/A" : roundTo(data.eRIC.matrix[rowNum][colNum].value, 2)
+    const cell = `${data.eRIC.columns[colNum]} - ${data.eRIC.rows[rowNum]}\n${value}`
     setHoveredCell(cell);
   }
   const recallMouseMove = e => {
@@ -231,7 +231,7 @@ const PekaHeatmap = props => {
             cellSize={cellSize} zoom={zoom} zooms={zooms}
             truncated={truncated} setTruncated={setTruncated}
             showSimilarity={showSimilarity} setShowSimilarity={setShowSimilarity}
-            showIBAQ={showIBAQ} setShowIBAQ={setShowIBAQ}
+            showEric={showEric} setShowEric={setShowEric}
             showRecall={showRecall} setShowRecall={setShowRecall}
             showIntrons={showIntrons} setShowIntrons={setShowIntrons}
             showNoncodingIDR={showNoncodingIDR} setShowNoncodingIDR={setShowNoncodingIDR}
@@ -282,7 +282,7 @@ const PekaHeatmap = props => {
                   <canvas ref={similarityRef} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
                 </div>
                 
-                <div className="supplementary" style={{display: showIBAQ ? "block" : "none"}}>
+                <div className="supplementary" style={{display: showEric ? "block" : "none"}}>
                   <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
                     <div className="horizontal-colors" style={{
                       background: `linear-gradient(90deg, white, black)`
@@ -294,9 +294,9 @@ const PekaHeatmap = props => {
                         <div className="value">10<sup>9</sup></div>
                       </div>
                     </div>
-                    <div className="map-name">iBAQ</div>
+                    <div className="map-name">log2FC eRIC</div>
                   </div>
-                  <canvas ref={ibaqRef} onMouseMove={ibaqMouseMove} data-tip data-for="ibaqTooltip" />
+                  <canvas ref={ericRef} onMouseMove={ericMouseMove} data-tip data-for="ericTooltip" />
                 </div>
                 
                 <div className="supplementary" style={{display: showRecall ? "block" : "none"}}>
@@ -379,7 +379,7 @@ const PekaHeatmap = props => {
                 <ReactTooltip id="similarityTooltip">
                   {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
                 </ReactTooltip>
-                <ReactTooltip id="ibaqTooltip">
+                <ReactTooltip id="ericTooltip">
                   {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
                     {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
                   </div>) : ""}

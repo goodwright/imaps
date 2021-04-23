@@ -89,14 +89,14 @@ const PekaMotif = props => {
         }
       }
 
-      canvas = heatmapsRef.current.querySelectorAll(".heatmap")[h].querySelector(".ibaq-canvas");
-      canvas.width = heatmap["iBAQ"].columns.length * barWidth;
-      canvas.height = heatmap["iBAQ"].rows.length * cellHeight;
+      canvas = heatmapsRef.current.querySelectorAll(".heatmap")[h].querySelector(".eric-canvas");
+      canvas.width = heatmap["eRIC log2FC"].columns.length * barWidth;
+      canvas.height = heatmap["eRIC log2FC"].rows.length * cellHeight;
       context = canvas.getContext("2d");
       context.lineWidth = "0";
-      for (let r = 0; r < heatmap["iBAQ"].rows.length; r++) {
-        const row = heatmap["iBAQ"].matrix[r];
-        for (let c = 0; c < heatmap["iBAQ"].columns.length; c++) {
+      for (let r = 0; r < heatmap["eRIC log2FC"].rows.length; r++) {
+        const row = heatmap["eRIC log2FC"].matrix[r];
+        for (let c = 0; c < heatmap["eRIC log2FC"].columns.length; c++) {
           const cell = row[c];
           context.fillStyle = cell.color;
           context.beginPath();
@@ -293,22 +293,22 @@ const PekaMotif = props => {
                 </div>
               </div>
 
-              <div className="ibaq"  style={{marginTop: cellHeight * 2}}>
+              <div className="eric"  style={{marginTop: cellHeight * 2}}>
                 <div className="labels">
-                  {heatmap["iBAQ"].columns.map(label => <div key={label} className="label">
+                  {heatmap["eRIC log2FC"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
                   </div> )}
                 </div>
-                <canvas className="ibaq-canvas" data-heatmap={n} data-canvas="iBAQ" onMouseMove={e => canvasHover(e, true)} data-tip data-for="canvasTooltip" />
+                <canvas className="eric-canvas" data-heatmap={n} data-canvas="eRIC log2FC" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
 
                 <div className="colors" style={{
-                  background: `linear-gradient(${heatmap["iBAQ"].cmap.slice().reverse().join(",")})`,
+                  background: `linear-gradient(${heatmap["eRIC log2FC"].cmap.slice().reverse().join(",")})`,
                   width: barWidth, height: barWidth * 2.5,
-                  paddingTop: `${(Math.log10(heatmap["iBAQ"].colorbar_ticks[0]) - Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmin)) / (Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmax) - Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmin)) * 100}%`,
-                  paddingBottom: `${(Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmax) - Math.log10(heatmap["iBAQ"].colorbar_ticks[heatmap["iBAQ"].colorbar_ticks.length - 1])) / (Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmax) - Math.log10(heatmap["iBAQ"].colorbar_vmin_vmax.vmin)) * 100}%`,
+                  paddingTop: `${(heatmap["eRIC log2FC"].colorbar_ticks[0] - heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmin) / (heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmax - heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmin) * 100}%`,
+                  paddingBottom: `${(heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmax - heatmap["eRIC log2FC"].colorbar_ticks[heatmap["eRIC log2FC"].colorbar_ticks.length - 1]) / (Math.log10(heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmax) - heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmin) * 100}%`,
                 }}>
-                  {heatmap["iBAQ"].colorbar_ticks.slice().reverse().map(value => (
-                    <div className="value" key={value}>{power(value)}</div>
+                  {heatmap["eRIC log2FC"].colorbar_ticks.slice().reverse().map(value => (
+                    <div className="value" key={value}>{value}</div>
                   ))}
                 </div>
               </div>

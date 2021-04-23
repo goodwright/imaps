@@ -6,7 +6,7 @@ const PekaControls = props => {
 
   const {
     cellSize, zoom, zooms, truncated, setTruncated, showSimilarity, setShowSimilarity,
-    showIBAQ, setShowIBAQ, showRecall, setShowRecall, showIntrons, setShowIntrons,
+    showEric, setShowEric, showRecall, setShowRecall, showIntrons, setShowIntrons,
     showNoncodingIDR, setShowNoncodingIDR, showTotalIDR, setShowTotalIDR
   } = props;
 
@@ -38,12 +38,12 @@ const PekaControls = props => {
         </div>
         <div className="toggle">
           <ReactToggle
-            id="iBAQ"
+            id="eric"
             icons={false}
-            checked={showIBAQ}
-            onChange={e => setShowIBAQ(e.target.checked)}
+            checked={showEric}
+            onChange={e => setShowEric(e.target.checked)}
           />
-          <label htmlFor="iBAQ">Show iBAQ</label>
+          <label htmlFor="eric">Show logF2 eRIC</label>
         </div>
         <div className="toggle">
           <ReactToggle
@@ -94,8 +94,8 @@ PekaControls.propTypes = {
   setTruncated: PropTypes.func.isRequired,
   showSimilarity: PropTypes.bool.isRequired,
   setShowSimilarity: PropTypes.func.isRequired,
-  showIBAQ: PropTypes.bool.isRequired,
-  setShowIBAQ: PropTypes.func.isRequired,
+  showEric: PropTypes.bool.isRequired,
+  setShowEric: PropTypes.func.isRequired,
   showRecall: PropTypes.bool.isRequired,
   setShowRecall: PropTypes.func.isRequired,
   showIntrons: PropTypes.bool.isRequired,
