@@ -80,10 +80,17 @@ $cell-size: 18px;
         margin-top: $cell-size;
         margin-bottom: $cell-size * 2;
         border: 1px solid $gray-5;
+        position: relative;
 
         .score {
             width: $cell-size * 2;
             height: $cell-size;
+        }
+
+        .color-title {
+            position: absolute;
+            font-size: $font-size-2;
+            color: $purple-2;
         }
     }
 
@@ -104,6 +111,15 @@ $cell-size: 18px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        .color-title {
+            position: absolute;
+            font-size: $font-size-1;
+            top: -$gap-4;
+            white-space: nowrap;
+            padding-right: $gap-2;
+            color: $purple-2;
+        }
 
         .tick {
             position: relative;

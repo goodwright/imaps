@@ -185,17 +185,6 @@ const PekaHeatmap = props => {
     setHoveredCell(cell);
   }
 
-  const power = (n, isString) => {
-    const sup = Math.floor(Math.log10(n));
-    const num = roundTo(n / (10 ** sup), 3);
-    if (isString) return `${num} × 10**${sup}`
-    if (Math.log10(n) === sup) {
-      return <div>10<sup>{sup}</sup></div>
-    } else {
-      return <div>{num} × 10<sup>{sup}</sup></div>
-    }
-  }
-
   const proteinsHeight = cellSize >= 6 ? cellSize * 7 : 0;
   const motifsWidth = cellSize >= 6 ? cellSize * 6 : 0;
   const secondaryHeight = 30;
@@ -332,7 +321,7 @@ const PekaHeatmap = props => {
                         <div className="value">100</div>
                       </div>
                     </div>
-                    <div className="map-name">Percentage of thresholded crosslinks per region: {cellSize < 4 && <br />}3'UTR (top), intron (middle), 5'UTR + CDS (bottom)</div>
+                    <div className="map-name">tXn per region (%): {cellSize < 4 && <br />}3'UTR (top), intron (middle), 5'UTR + CDS (bottom)</div>
                   </div>
                   <canvas ref={intronsRef} onMouseMove={intronsMouseMove} data-tip data-for="intronsTooltip" />
                 </div>
@@ -351,7 +340,7 @@ const PekaHeatmap = props => {
                         <div className="value">100</div>
                       </div>
                     </div>
-                    <div className="map-name">% noncoding IDR peaks</div>
+                    <div className="map-name">% noncoding peaks</div>
                   </div>
                   <canvas ref={noncodingIdrRef} onMouseMove={noncodingIdrMouseMove} data-tip data-for="noncodingIdrTooltip" />
                 </div>
@@ -368,7 +357,7 @@ const PekaHeatmap = props => {
                         <div className="value">10<sup>4</sup></div>
                       </div>
                     </div>
-                    <div className="map-name">total IDR peaks</div>
+                    <div className="map-name">total number of peaks</div>
                   </div>
                   <canvas ref={totalIdrRef} onMouseMove={totalIdrMouseMove} data-tip data-for="totalIdrTooltip" />
                 </div>
@@ -401,6 +390,7 @@ const PekaHeatmap = props => {
               <div className="colors" style={{
                 background: `linear-gradient(${data.colors.join(", ")})`
               }}>
+                <div className="rank-label">Rank</div>
                 {[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].map(val => (
                   <div className="value" key={val}>{val}</div>
                 ))}    

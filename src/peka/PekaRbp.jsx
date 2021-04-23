@@ -43,7 +43,7 @@ const PekaRbp = props => {
           arranged from top to bottom by descending maximal value of PEKA score within
           the cluster. Grayscale heatmap on the right shows the PEKA score of each k-mer.
         </p>
-        <Link className="back" to="/apps/peka/">Back to Heatmap</Link>
+        <Link className="back" to="/apps/peka/">Back to Main Heatmap</Link>
       </div>
       <div className="graphic">
         <div className="table">
@@ -82,20 +82,26 @@ const PekaRbp = props => {
               onMouseMove={scoreHover}
               key={i}
             />
-          ))}
+            ))}
+            <div className="color-title" style={{top: data.PEKA_score_heatmap.matrix.length * 18 + 4}}>Average PEKA Score</div>
         </div>
         <div className="maps">
           <div className="map" style={{
             background: `linear-gradient(${data.rbp_heatmap.colors.slice().reverse().join(",")})`,
             paddingBottom: `${(data.rbp_heatmap.colorbar_ticks[0] - data.rbp_heatmap.colorbar_vmin_vmax.vmin) / (data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
             paddingTop: `${(data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_ticks[data.rbp_heatmap.colorbar_ticks.length - 1]) / (data.rbp_heatmap.colorbar_vmin_vmax.vmax - data.rbp_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
-          }}>{data.rbp_heatmap.colorbar_ticks.slice().reverse().map(tick => <div className="tick" key={tick}>{tick}</div> )}</div>
+          }}>
+            <div className="color-title">Relative k-mer occurrence</div>
+            {data.rbp_heatmap.colorbar_ticks.slice().reverse().map(tick => <div className="tick" key={tick}>{tick}</div> )}
+          </div>
           
           <div className="map" style={{
             background: `linear-gradient(${data.PEKA_score_heatmap.cmap.slice().reverse().join(",")})`,
             paddingBottom: `${(data.PEKA_score_heatmap.colorbar_ticks[0] - data.PEKA_score_heatmap.colorbar_vmin_vmax.vmin) / (data.PEKA_score_heatmap.colorbar_vmin_vmax.vmax - data.PEKA_score_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
             paddingTop: `${(data.PEKA_score_heatmap.colorbar_vmin_vmax.vmax - data.PEKA_score_heatmap.colorbar_ticks[data.PEKA_score_heatmap.colorbar_ticks.length - 1]) / (data.PEKA_score_heatmap.colorbar_vmin_vmax.vmax - data.PEKA_score_heatmap.colorbar_vmin_vmax.vmin) * 300}px`,
-          }}>{data.PEKA_score_heatmap.colorbar_ticks.slice().reverse().map(tick => <div className="tick" key={tick}>{tick}</div> )}</div>
+          }}>
+            <div className="color-title">Average PEKA score (ntop= 50)</div>
+            {data.PEKA_score_heatmap.colorbar_ticks.slice().reverse().map(tick => <div className="tick" key={tick}>{tick}</div> )}</div>
           
         </div>
         <ReactTooltip id="tableTooltip">

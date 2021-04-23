@@ -139,9 +139,12 @@ const PekaMotif = props => {
   if (!data) return <BarLoader color="#6353C6" css="margin: 64px 355px" />
 
   function tooltipFormatter() {
+    const datum = this.series.chart.userOptions.fullData[this.point.index];
     return `
+      <div><strong>RBP Name</strong>: ${datum.rbp_name}</div><br>
       <div><strong>z-score</strong>: ${this.point.x}</div><br>
-      <div><strong>max coverage</strong>: ${this.point.y}</div>
+      <div><strong>max coverage</strong>: ${this.point.y}</div><br>
+      <div><strong>Max Peak Position</strong>: ${datum["max peak position"]}</div>
     `;
   }
 
@@ -170,7 +173,7 @@ const PekaMotif = props => {
           Datasets are clustered based on the metaprofile similarities, and the groups are
           arranged from top to bottom by falling max coverage values.
         </p>
-        <Link className="back" to="/apps/peka/">Back to Heatmap</Link>
+        <Link className="back" to="/apps/peka/">Back to Main Heatmap</Link>
       </div>
 
       <div className="graphics">
@@ -195,6 +198,7 @@ const PekaMotif = props => {
                   plotLines: [{color: "#555555", width: 1, value: 3, dashStyle: "LongDash"}]
                 },
                 yAxis: {gridLineWidth: 0, lineWidth: 1, title: {text: "max coverage per tXn (%)"}},
+                fullData: plot.data,
                 series: [{
                   data: plot.data.map(point => ({...point, dataLabels: {enabled: Boolean(point.label), color: point.labelColor, formatter: () => point.label}})),
                   type: "scatter", marker: {radius: 1.5}
@@ -251,6 +255,7 @@ const PekaMotif = props => {
                   paddingLeft: `${(heatmap.rbp_heatmap.colorbar_ticks[0] - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) / (heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100}%`,
                   paddingRight: `${(heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_ticks[heatmap.rbp_heatmap.colorbar_ticks.length - 1]) / (heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100}%`,
                 }}>
+                  <div className="color-title">k-mer group coverage</div>
                   {heatmap.rbp_heatmap.colorbar_ticks.map(value => (
                     <div className="value" key={value}>{value}</div>
                   ))}

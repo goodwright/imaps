@@ -61,7 +61,7 @@ const PekaControls = props => {
             checked={showIntrons}
             onChange={e => setShowIntrons(e.target.checked)}
           />
-          <label htmlFor="introns">Show Introns</label>
+          <label htmlFor="introns">Show tXn per region (%)</label>
         </div>
         <div className="toggle">
           <ReactToggle
@@ -70,7 +70,7 @@ const PekaControls = props => {
             checked={showNoncodingIDR}
             onChange={e => setShowNoncodingIDR(e.target.checked)}
           />
-          <label htmlFor="noncoding">Show Non-Coding IDR</label>
+          <label htmlFor="noncoding">Show % noncoding peaks</label>
         </div>
         <div className="toggle">
           <ReactToggle
@@ -79,7 +79,7 @@ const PekaControls = props => {
             checked={showTotalIDR}
             onChange={e => setShowTotalIDR(e.target.checked)}
           />
-          <label htmlFor="total">Show Total IDR</label>
+          <label htmlFor="total">Show total number of peaks</label>
         </div>
       </div>
     </div>

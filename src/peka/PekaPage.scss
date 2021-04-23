@@ -131,4 +131,10 @@
             font-weight: 600;
         }
     }
+
+    @media (max-width: 700px) {
+        .peka-text {
+            font-size: $font-size-3;
+        }
+    }
 }
