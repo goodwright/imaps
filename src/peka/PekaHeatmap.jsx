@@ -287,11 +287,11 @@ const PekaHeatmap = props => {
                     <div className="horizontal-colors" style={{
                       background: `linear-gradient(90deg, white, black)`
                     }}>
-                      <div className="values" style={{justifyContent: "space-around", padding: "0 10px"}}>
-                        <div className="value">10<sup>6</sup></div>
-                        <div className="value">10<sup>7</sup></div>
-                        <div className="value">10<sup>8</sup></div>
-                        <div className="value">10<sup>9</sup></div>
+                      <div className="values" style={{justifyContent: "space-around", padding: "0 10px", paddingLeft: "0"}}>
+                        <div className="value">2</div>
+                        <div className="value">3</div>
+                        <div className="value">4</div>
+                        <div className="value">5</div>
                       </div>
                     </div>
                     <div className="map-name">log2FC eRIC</div>
