@@ -25,6 +25,7 @@ import SamplePage from "../pages/SamplePage";
 import ExecutionPage from "../pages/ExecutionPage";
 import SearchPage from "../pages/SearchPage";
 import PekaPage from "../peka/PekaPage";
+import NewCollectionPage from "../pages/NewCollectionPage";
 
 const client = makeClient();
 
@@ -92,6 +93,9 @@ const App = () => {
             </Route>
             {user && <Route path="/@:id/edit/" exact>
               <GroupPage edit={true} />
+            </Route>}
+            {user && <Route path="/collections/new/" exact>
+              <NewCollectionPage />
             </Route>}
             <Route path="/collections/:id/" exact>
               <CollectionPage />
