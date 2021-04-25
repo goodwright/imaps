@@ -118,3 +118,10 @@ export const REMOVE_USER = gql`mutation removeUser($group: ID! $user: ID!) {
     group { id }
   }
 }`;
+
+
+export const CREATE_COLLECTION = gql`mutation createCollection(
+  $name: String! $description: String! $private: Boolean!
+) { createCollection(name: $name description: $description private: $private) {
+  collection { id }
+} }`;

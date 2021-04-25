@@ -9,11 +9,16 @@ main {
     margin-bottom: $gap-3;
 }
 
-input {
+input, textarea {
     background-color: $gray-4;
     border-radius: $border-radius;
     padding: $gap-3 $gap-2;
     color: $purple-2;
+}
+
+textarea {
+    resize: none;
+    width: 100%;
 }
 
 a, a:visited {
@@ -45,7 +50,7 @@ input:required {
         text-align: left;
     }
 
-    input {
+    input, textarea {
         border: 1px solid $error-red;
         color: $error-red;
     }
@@ -225,6 +230,66 @@ input[type=submit], button, a.button {
     }
 }
 
+$toggle-height: 20px;
+$toggle-width: 60px;
+$toggle-padding: 5px;
+
+.binary-toggle {
+    display: flex;
+    
+    font-size: $font-size-1;
+    font-weight: 600;
+    align-items: center;
+
+    label {
+        line-height: 1;
+        color: $purple-1;
+    }
+
+    label.selected {
+        color: $purple-4;
+    }
+
+    label:nth-child(1) {
+        text-align: right;
+    }
+
+    .react-toggle {
+        height: $toggle-height;
+        width: $toggle-width;
+        padding: 0;
+        margin: 0 $gap-2;
+    
+        .react-toggle-track {
+            background-color: #dddddd !important;
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            border-radius: 5px;
+        }
+    
+        .react-toggle-thumb {
+            background-color: $purple-4;
+            border: none;
+            height: $toggle-height - (2 * $toggle-padding);
+            width: $toggle-height - (2 * $toggle-padding);
+            top: $toggle-padding;
+            left: $toggle-padding;
+            box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25) !important;
+        }
+    }
+
+    .react-toggle--checked {
+        .react-toggle-thumb {
+            left: $toggle-width - ($toggle-height - $toggle-padding);
+        }
+    }
+
+    @media (min-width: 300px) {
+        font-size: $font-size-2;
+    }
+}
+
 form {
 
     .input {
@@ -239,7 +304,7 @@ form {
             text-align: right;
         }
     
-        input {
+        input, textarea {
             font-size: $font-size-5;
             padding: $gap-4 $gap-3;
             width: 100%;
