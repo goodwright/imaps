@@ -1,17 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
 import { DELETE_COLLECTION } from "../mutations";
-import { UserContext } from "../contexts";
 import { useHistory } from "react-router";
 
 const CollectionDeletion = props => {
 
   const { collection } = props;
   const [showModal, setShowModal] = useState(false);
-  const [,setUser] = useContext(UserContext);
   const history = useHistory();
 
   const [deleteCollection, deleteCollectionMutation] = useMutation(DELETE_COLLECTION, {

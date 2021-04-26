@@ -181,7 +181,6 @@ const CollectionPage = props => {
                       type="url"
                       placeholder="URL"
                       onChange={e => updatePapers(p, "url", e.target.value)}
-                      type="url"
                     />
                     <input
                       value={paper.year}
