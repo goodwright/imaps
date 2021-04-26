@@ -256,6 +256,15 @@
         }
     }
 
+    .collection-deletion {
+        margin-top: $gap-7;
+
+        button {
+            display: block;
+            margin-left: auto;
+        }
+    }
+
     @media (max-width: 1700px) {
         .children {
             grid-template-columns: 1fr;

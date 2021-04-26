@@ -131,3 +131,7 @@ export const UPDATE_COLLECTION = gql`mutation updateCollection(
 ) { updateCollection(id: $id name: $name description: $description private: $private papers: $papers) {
   collection { id }
 } }`;
+
+export const DELETE_COLLECTION = gql`mutation deleteCollection($id: ID!) {
+  deleteCollection(id: $id) { success }
+}`;

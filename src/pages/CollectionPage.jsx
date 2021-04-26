@@ -13,6 +13,7 @@ import PageNotFound from "./PageNotFound";
 import paperIcon from "../images/paper.svg";
 import SamplesTable from "../components/SamplesTable";
 import ExecutionHistory from "../components/ExecutionHistory";
+import CollectionDeletion from "../components/CollectionDeletion";
 import { createErrorObject } from "../forms";
 
 const CollectionPage = props => {
@@ -218,9 +219,11 @@ const CollectionPage = props => {
           <ExecutionHistory executions={collection.executions} searchable={true} />
         </div>
       </div>}
-      {collection.owners.length > 0 && <div className="owner">
+      {!edit && collection.owners.length > 0 && <div className="owner">
         Contributed by <div className="names">{collection.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 
       </div>}
+
+      {edit && <CollectionDeletion collection={collection} />}
     </Base>
   );
 };
