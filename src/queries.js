@@ -38,7 +38,7 @@ export const GROUP = gql`query group($slug: String!) {
 
 export const COLLECTION = gql`query collection($id: ID!) {
   collection(id: $id) {
-    id name description created lastModified
+    id name description created lastModified private
     papers { id year title url } owners { id name username }
     samples {
       id name organism source piName annotatorName qcPass qcMessage

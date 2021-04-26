@@ -125,3 +125,9 @@ export const CREATE_COLLECTION = gql`mutation createCollection(
 ) { createCollection(name: $name description: $description private: $private) {
   collection { id }
 } }`;
+
+export const UPDATE_COLLECTION = gql`mutation updateCollection(
+  $id: ID! $name: String! $description: String! $private: Boolean! $papers: [PaperInput],
+) { updateCollection(id: $id name: $name description: $description private: $private papers: $papers) {
+  collection { id }
+} }`;

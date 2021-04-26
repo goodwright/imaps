@@ -100,6 +100,9 @@ const App = () => {
             <Route path="/collections/:id/" exact>
               <CollectionPage />
             </Route>
+            {user && <Route path="/collections/:id/edit/" exact>
+              <CollectionPage edit={true} />
+            </Route>}
             <Route path="/collections/" exact>
               <CollectionsPage />
             </Route>

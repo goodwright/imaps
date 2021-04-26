@@ -1,4 +1,10 @@
 .collection-page {
+    .editable {
+        background-color: $gray-4;
+        width: fit-content;
+        border-radius: $border-radius-small;
+    }
+
     .collection-info {
         display: grid;
         grid-template-columns: 1fr 350px;
@@ -15,12 +21,31 @@
                 font-size: $font-size-9;
                 margin-bottom: $gap-4;
             }
+
+            .edit-button {
+                margin-top: -$gap-4 + $gap-2;
+                margin-bottom: $gap-4;
+                color: $purple-2;
+                font-size: $font-size-3;
+                display: flex;
+                height: fit-content;
+                justify-content: center;
+                width: 150px;
+                align-items: flex-end;
+                text-decoration: none;
+                margin-left: auto;
+                font-weight: 600;
+            }
         
             .description {
                 font-size: $font-size-4;
                 font-weight: 300;
                 color: $purple-2;
                 line-height: 1.6;
+            }
+
+            .binary-toggle {
+                margin-top: $gap-5;
             }
         }
 
@@ -34,13 +59,20 @@
                 margin-bottom: $gap-7;
             }
 
+            h2 {
+                font-weight: 500;
+                font-size: $font-size-7;
+                margin-bottom: $gap-4;
+                color: $purple-2;
+            }
+
+            h2.right {
+                margin-left: auto;
+                width: fit-content;
+                padding-right: 20px + $gap-2;
+            }
+
             .papers {
-                h2 {
-                    font-weight: 500;
-                    font-size: $font-size-7;
-                    margin-bottom: $gap-4;
-                    color: $purple-2;
-                }
 
                 .papers-grid {
                     display: grid;
@@ -63,6 +95,90 @@
                     .paper:hover {
                         text-decoration: underline;
                     }
+                }
+            }
+
+            .paper-forms {
+                display: grid;
+                gap: $gap-4;
+                width: fit-content;
+                margin-left: auto;
+
+                .paper-form {
+                    display: grid;
+                    grid-template-columns: 200px 20px;
+                    gap: $gap-2;
+                    align-items: center;
+
+                    .inputs {
+                        display: grid;
+                        gap: $gap-1;
+                        grid-template-columns: 3fr 1fr;
+                        grid-template-rows: repeat(2, 1fr);
+                        width: 100%;
+
+                        input {
+                            width: 100%;
+                            font-size: $font-size-1;
+                            padding: $gap-2 $gap-2;
+                        }
+
+                        input:nth-child(1) {
+                            grid-area: 1 / 1 / 2 / 3;
+                        }
+
+                        input:nth-child(2) {
+                            grid-area: 2 / 1 / 3 / 2;
+                        }
+
+                        input:nth-child(3) {
+                            grid-area: 2 / 2 / 3 / 3;
+                        }
+                    }
+
+                    button {
+                        width: 100%;
+                        display: block;
+                        padding: 0;
+                        position: relative;
+                        height: 20px;
+                    }
+
+                    button:before, button:after {
+                        content: "";
+                        width: 2px;
+                        height: 100%;
+                        top: 0;
+                        left: 9px;
+                        background-color: $purple-1;
+                        position: absolute;
+                    }
+
+                    button:hover:before, button:hover:after {
+                        background-color: $purple-2;
+                    }
+
+                    button:before {
+                        transform: rotate(45deg);
+                    }
+
+                    button:after {
+                        transform: rotate(-45deg);
+                    }
+                }
+
+                button.new {
+                    border: 2px dashed transparentize($purple-1, 0.3);
+                    width: 200px;
+                    color: transparentize($purple-1, 0.3);
+                    font-size: $font-size-7;
+                    padding: 0;
+                    padding-bottom: 2px;
+                }
+
+                button.new:hover {
+                    border-color: $purple-1;
+                    color: $purple-1;
                 }
             }
         }
