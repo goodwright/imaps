@@ -1,5 +1,6 @@
-import React, {useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import Base from "./Base";
+import useDocumentTitle from "@rehooks/document-title";
 import SettingsForm from "../components/SettingsForm";
 import AccountDeletion from "../components/AccountDeletion";
 import GroupsList from "../components/GroupsList";
@@ -8,9 +9,7 @@ import UserImageEditor from "../components/UserImageEditor";
 
 const SettingsPage = () => {
 
-  useEffect(() => {
-    document.title = "iMaps - Settings";
-  });
+  useDocumentTitle("iMaps - Settings");
 
   const [user,] = useContext(UserContext)
 

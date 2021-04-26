@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from "react";
+import useDocumentTitle from "@rehooks/document-title";
 import Base from "./Base";
 import Document from "../components/Document";
 import terms from "../documents/terms.md";
@@ -7,9 +8,7 @@ const TermsPage = () => {
     
   const [markdown, setMarkdown] = useState(null);
 
-  useEffect(() => {
-    document.title = "iMaps - Terms of Use";
-  });
+  useDocumentTitle("iMaps - Terms of Use");
 
   useEffect(() => {
     fetch(terms).then(res => res.text()).then(text => setMarkdown(text));

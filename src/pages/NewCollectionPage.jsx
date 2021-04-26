@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import Toggle from "react-toggle";
 import { ClipLoader } from "react-spinners";
 import { USER, PUBLIC_COLLECTIONS, USER_COLLECTIONS } from "../queries";
@@ -17,6 +18,8 @@ const NewCollectionPage = () => {
   const [errors, setErrors] = useState({});
   const [user] = useContext(UserContext);
   const history = useHistory();
+
+  useDocumentTitle("iMaps - New Collection");
 
   const [createCollection, createCollectionMutation] = useMutation(CREATE_COLLECTION, {
     refetchQueries: [

@@ -1,7 +1,8 @@
-import React, { useEffect, useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import moment from "moment";
 import Toggle from "react-toggle";
 import { ClipLoader } from "react-spinners";
@@ -30,9 +31,7 @@ const CollectionPage = props => {
 
   const { loading, data, error } = useQuery(COLLECTION, {variables: {id: collectionId}});
 
-  useEffect(() => {
-    document.title = `iMaps${data && data.collection ? " - " + data.collection.name : ""}`;
-  });
+  useDocumentTitle(data ? `iMaps - ${data.collection.name}` : "iMaps");
 
   const [updateCollection, updateCollectionMutation] = useMutation(UPDATE_COLLECTION, {
     refetchQueries: [

@@ -1,13 +1,12 @@
-import React, {useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import useDocumentTitle from "@rehooks/document-title";
 import SignupForm from "../components/SignupForm";
 import Div100vh from "react-div-100vh";
 
 const SignupPage = () => {
 
-  useEffect(() => {
-    document.title = "iMaps - Sign Up";
-  });
+  useDocumentTitle("iMaps - Sign Up");
 
   return (
     <Div100vh className="signup-page">

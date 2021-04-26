@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import { PUBLIC_COLLECTIONS } from "../queries";
 import Base from "./Base";
 import Paginator from "../components/Paginator";
@@ -21,9 +22,7 @@ const CollectionsPage = () => {
     onCompleted: data => count.current = data.publicCollections.count
   });
 
-  useEffect(() => {
-    document.title = `iMaps - Public Collections`;
-  });
+  useDocumentTitle("iMaps - Public Collections");
 
   if (loading) {
     return <Base className="collections-page" loading={true} />

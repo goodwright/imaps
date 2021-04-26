@@ -1,6 +1,7 @@
-import React, {useEffect } from "react";
+import React from "react";
 import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import { USER } from "../queries";
 import Base from "./Base";
 import UserSummary from "../components/UserSummary";
@@ -16,9 +17,7 @@ const UserPage = () => {
     variables: {username: userId}
   });
 
-  useEffect(() => {
-    document.title = `iMaps${data && data.user ? " - " + data.user.name : ""}`;
-  });
+  useDocumentTitle(data ? `iMaps - ${data.user.name}` : "iMaps");
 
   if (error && error.graphQLErrors && error.graphQLErrors.length) {
     const message = JSON.parse(error.graphQLErrors[0].message);

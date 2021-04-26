@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import { USER_COLLECTIONS } from "../queries";
 import Base from "./Base";
 import CollectionsGrid from "../components/CollectionsGrid";
@@ -15,9 +16,7 @@ const UserCollectionsPage = () => {
   const [groupPages, setGroupPages] = useState(null);
   const PER_PAGE = user.memberships.length ? 6 : 12;
 
-  useEffect(() => {
-    document.title = `iMaps - Your Collections`;
-  });
+  useDocumentTitle("iMaps - Your Collections");
 
   if (loading) {
     return <Base className="user-collections-page" loading={true} />

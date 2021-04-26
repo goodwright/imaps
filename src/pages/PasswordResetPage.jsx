@@ -1,12 +1,11 @@
-import React, {useEffect } from "react";
+import React from "react";
+import useDocumentTitle from "@rehooks/document-title";
 import PasswordResetForm from "../components/PasswordResetForm";
 import Div100vh from "react-div-100vh";
 
 const PasswordResetPage = () => {
 
-  useEffect(() => {
-    document.title = "iMaps - Reset Your Password";
-  });
+  useDocumentTitle("iMaps - Reset Your Password");
 
   return (
     <Div100vh className="password-reset-page">

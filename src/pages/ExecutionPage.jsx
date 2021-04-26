@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import moment from "moment";
 import { EXECUTION } from "../queries";
 import ReactMarkdown from "react-markdown";
@@ -21,9 +22,7 @@ const ExecutionPage = () => {
     variables: {id: executionId}
   });
 
-  useEffect(() => {
-    document.title = `iMaps${data && data.execution ? " - " + data.execution.name : ""}`;
-  });
+  useDocumentTitle(data ? `iMaps - ${data.execution.name}` : "iMaps");
 
   if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
     const message = JSON.parse(error.graphQLErrors[0].message);

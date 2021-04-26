@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import { SAMPLE } from "../queries";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
@@ -14,9 +15,7 @@ const SamplePage = () => {
     variables: {id: sampleId}
   });
 
-  useEffect(() => {
-    document.title = `iMaps${data && data.sample ? " - " + data.sample.name : ""}`;
-  });
+  useDocumentTitle(data ? `iMaps - ${data.sample.name}` : "iMaps");
 
   if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
     const message = JSON.parse(error.graphQLErrors[0].message);

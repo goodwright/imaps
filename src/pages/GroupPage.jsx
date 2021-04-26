@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { useHistory, useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import { ClipLoader } from "react-spinners";
 import { GROUP } from "../queries";
 import { UPDATE_GROUP } from "../mutations";
@@ -31,9 +32,7 @@ const GroupPage = props => {
     variables: {slug: groupId}
   });
 
-  useEffect(() => {
-    document.title = `iMaps${data && data.group ? " - " + data.group.name : ""}`;
-  });
+  useDocumentTitle(data ? `iMaps - ${data.group.name}` : "iMaps");
 
   const [updateGroup, updateGroupMutation] = useMutation(UPDATE_GROUP, {
     onCompleted: data => {

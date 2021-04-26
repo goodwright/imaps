@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useLazyQuery } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import Select from "react-select";
 import moment from "moment";
 import Base from "./Base";
@@ -10,7 +11,6 @@ import { SEARCH_COLLECTIONS, SEARCH_SAMPLES, SEARCH_EXECUTIONS } from "../querie
 import { BarLoader } from "react-spinners";
 
 const SearchPage = () => {
-
 
   const [query, setQuery] = useState("");
   const [selectedSearchType, setSelectedSearchType] = useState("collection");
@@ -27,6 +27,8 @@ const SearchPage = () => {
   const [page, setPage] = useState(1);
   const count = useRef(null);
   const PER_PAGE = 10;
+
+  useDocumentTitle("iMaps - Advanced Search");
 
   const searchTypes = [
     {value: "collection", label: "Collection"},

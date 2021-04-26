@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
+import useDocumentTitle from "@rehooks/document-title";
 import { ClipLoader } from "react-spinners";
 import Base from "./Base";
 import { useMutation } from "@apollo/client";
@@ -11,9 +12,7 @@ import { createErrorObject } from "../forms";
 
 const NewGroupPage = () => {
 
-  useEffect(() => {
-    document.title = "iMaps - New Group";
-  });
+  useDocumentTitle("iMaps - New Group");
 
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");

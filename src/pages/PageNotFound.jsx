@@ -1,12 +1,11 @@
-import React, {useEffect } from "react";
+import React from "react";
+import useDocumentTitle from "@rehooks/document-title";
 import Div100vh from "react-div-100vh";
 import Logo from "../components/Logo";
 
 const PageNotFound = () => {
 
-  useEffect(() => {
-    document.title = "iMaps - Page Not Found";
-  });
+  useDocumentTitle("iMaps - Page Not Found");
 
   return (
     <Div100vh className="page-not-found">
