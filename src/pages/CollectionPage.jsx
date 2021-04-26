@@ -88,7 +88,6 @@ const CollectionPage = props => {
     const updatedPapers = papers.filter((paper,p) => p !== index);
     setNewPapers(updatedPapers);
   }
-
   const save = e => {
     e.preventDefault();
     updateCollection({
@@ -96,7 +95,7 @@ const CollectionPage = props => {
         id: collection.id, name: nameEl.current.innerText,
         description: descriptionEl.current.innerText,
         private: isPrivate,
-        papers: papers.filter(p => p.title.length > 0 && p.url.length > 0 && p.year.length > 0)
+        papers: papers.filter(p => p.title.length > 0 && p.url.length > 0 && p.year)
       }
     })
   }
