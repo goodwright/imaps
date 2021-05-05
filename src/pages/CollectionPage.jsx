@@ -15,6 +15,7 @@ import paperIcon from "../images/paper.svg";
 import SamplesTable from "../components/SamplesTable";
 import ExecutionHistory from "../components/ExecutionHistory";
 import CollectionDeletion from "../components/CollectionDeletion";
+import CollectionAccess from "../components/CollectionAccess";
 import { createErrorObject } from "../forms";
 
 const CollectionPage = props => {
@@ -64,7 +65,7 @@ const CollectionPage = props => {
   const canBreak = !collection.name.includes(" ");
   const ownerUsernames = collection.owners.map(user => user.username);
 
-  if (user && edit && !(ownerUsernames.includes(user.username))) {
+  if (user && edit && !collection.canEdit) {
     return <PageNotFound />
   }
 
@@ -114,7 +115,7 @@ const CollectionPage = props => {
             className={edit ? "editable" : canBreak ? "can-break" : ""} ref={nameEl}
           >{collection.name}</h1>
 
-          {user && ownerUsernames.includes(user.username) && !edit && (
+          {user && collection.canEdit && !edit && (
             <Link to={`/collections/${collection.id}/edit/`} className="edit-button button tertiary-button">edit collection</Link>
           )}
           {edit && (
@@ -221,7 +222,10 @@ const CollectionPage = props => {
         Contributed by <div className="names">{collection.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 
       </div>}
 
-      {edit && <CollectionDeletion collection={collection} />}
+      {edit && collection.canShare && <div className="bottom-buttons">
+        <CollectionAccess collection={collection} allUsers={data.users} allGroups={data.groups}/>
+        {edit && collection.isOwner && <CollectionDeletion collection={collection} />}
+      </div>}
     </Base>
   );
 };

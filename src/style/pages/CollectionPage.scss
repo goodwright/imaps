@@ -256,14 +256,20 @@
         }
     }
 
-    .collection-deletion {
+    .bottom-buttons {
         margin-top: $gap-7;
+        margin-left: auto;
+        display: grid;
+        width: fit-content;
+        grid-template-columns: repeat(2, 170px);
+        gap: $gap-3;
 
         button {
             display: block;
-            margin-left: auto;
+            width: 100%;
         }
     }
+
 
     @media (max-width: 1700px) {
         .children {

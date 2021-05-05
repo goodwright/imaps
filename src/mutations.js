@@ -132,6 +132,12 @@ export const UPDATE_COLLECTION = gql`mutation updateCollection(
   collection { id }
 } }`;
 
+export const UPDATE_COLLECTION_ACCESS = gql`mutation updateCollectionAccess(
+  $id: ID! $user: ID $group: ID $permission: Int!
+) { updateCollectionAccess(id: $id user: $user group: $group permission: $permission) {
+  collection { id }
+} }`;
+
 export const DELETE_COLLECTION = gql`mutation deleteCollection($id: ID!) {
   deleteCollection(id: $id) { success }
 }`;

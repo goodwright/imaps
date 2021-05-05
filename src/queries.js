@@ -38,7 +38,7 @@ export const GROUP = gql`query group($slug: String!) {
 
 export const COLLECTION = gql`query collection($id: ID!) {
   collection(id: $id) {
-    id name description created lastModified private
+    id name description created lastModified private canEdit canShare isOwner
     papers { id year title url } owners { id name username }
     samples {
       id name organism source piName annotatorName qcPass qcMessage
@@ -47,7 +47,11 @@ export const COLLECTION = gql`query collection($id: ID!) {
     executions { id name created started finished input owners { id name } command {
       id name inputSchema
     } }
+    users { id name username collectionPermission(id: $id) }
+    groups { id slug collectionPermission(id: $id) }
   }
+  users { id name username }
+  groups { id slug }
 }`;
 
 export const PUBLIC_COLLECTIONS = gql`query publicCollections($first: Int $last: Int) {
