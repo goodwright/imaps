@@ -38,7 +38,10 @@ const Nav = () => {
     onCompleted: () => {
       setUser(false);
       client.cache.writeQuery({query: TOKEN, data: {accessToken: null}});
-      for (let path of [/\/settings\//, /\/@(.+?)\/edit\//, /\/user-collections\//]) {
+      for (let path of [
+        /\/settings\//, /\/@(.+?)\/edit\//, /\/user-collections\//,
+        /\/collections\/new\//
+      ]) {
         if (path.test(location.pathname)) {
           history.push("/");
           break;

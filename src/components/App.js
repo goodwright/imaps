@@ -97,10 +97,10 @@ const App = () => {
             {user && <Route path="/collections/new/" exact>
               <NewCollectionPage />
             </Route>}
-            <Route path="/collections/:id/" exact>
+            <Route path="/collections/:id(\d+)/" exact>
               <CollectionPage />
             </Route>
-            {user && <Route path="/collections/:id/edit/" exact>
+            {user && <Route path="/collections/:id(\d+)/edit/" exact>
               <CollectionPage edit={true} />
             </Route>}
             <Route path="/collections/" exact>
@@ -109,10 +109,10 @@ const App = () => {
             {user && <Route path="/user-collections/" exact>
               <UserCollectionsPage />
             </Route>}
-            <Route path="/samples/:id/" exact>
+            <Route path="/samples/:id(\d+)/" exact>
               <SamplePage />
             </Route>
-            <Route path="/executions/:id/" exact>
+            <Route path="/executions/:id(\d+)/" exact>
               <ExecutionPage />
             </Route>
             <Route path="/search/" exact>
