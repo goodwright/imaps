@@ -205,25 +205,15 @@ const CollectionAccess = props => {
             </div>
           </div>
         </div>
-        
-        
-        
-        
-
-        
-        
-
-        
-
-
-        
       </Modal>
     </div>
   );
 };
 
 CollectionAccess.propTypes = {
-  
+  collection: PropTypes.object.isRequired,
+  allUsers: PropTypes.array.isRequired,
+  allGroups: PropTypes.array.isRequired,
 };
 
 export default CollectionAccess;

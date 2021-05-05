@@ -57,17 +57,12 @@ const CollectionPage = props => {
     }
   }
 
-  if (loading) {
-    return <Base className="collection-page" loading={true} />
-  }
+  if (loading) return <Base className="collection-page" loading={true} />
 
   const collection = data.collection;
   const canBreak = !collection.name.includes(" ");
-  const ownerUsernames = collection.owners.map(user => user.username);
 
-  if (user && edit && !collection.canEdit) {
-    return <PageNotFound />
-  }
+  if (user && edit && !collection.canEdit) return <PageNotFound />
 
   const isPrivate = specifiedPrivacy === null ? collection.private : specifiedPrivacy;
   const papers = newPapers || collection.papers.map(paper => ({

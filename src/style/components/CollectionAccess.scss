@@ -43,6 +43,9 @@
                 .access-info {
                     font-weight: 300;
                     font-size: $font-size-3;
+                    border-bottom: 0;
+                    padding-bottom: 0;
+                    margin-bottom: 0;
                 }
 
                 .users, .groups {
