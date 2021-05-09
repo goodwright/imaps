@@ -184,6 +184,12 @@
         }
     }
 
+    form.collection-info {
+        .collection-text {
+            border-bottom: none;
+        }
+    }
+
     .children {
         display: flex;
         flex-wrap: wrap;
