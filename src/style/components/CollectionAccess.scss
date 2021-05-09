@@ -65,6 +65,11 @@
                         }
                     }
                 }
+
+                .primary-button {
+                    margin-top: $gap-4;
+                    padding: $gap-2 0;
+                }
             }
 
             .existing:after {

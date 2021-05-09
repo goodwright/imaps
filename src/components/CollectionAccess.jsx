@@ -20,6 +20,8 @@ const CollectionAccess = props => {
   const [selectedGroupPermission, setSelectedGroupPermission] = useState(null);
   const users = [...collection.users].sort((u1, u2) => u2.collectionPermission - u1.collectionPermission);
   const groups = [...collection.groups].sort((g1, g2) => g2.collectionPermission - g1.collectionPermission);
+  const [userChanges, setUserChanges] = useState(users.map(() => null));
+  const [groupChanges, setGroupChanges] = useState(groups.map(() => null));
   const owners = users.filter(u => u.collectionPermission === 4);
   
   const options = [
@@ -41,20 +43,44 @@ const CollectionAccess = props => {
     awaitRefetchQueries: true
   });
 
-  const changeUserLink = (user, permission) => {
-    updateAccess({variables: {
-      id: collection.id,
-      user,
-      permission
-    }})
+  const changeUserLink = (index, permission) => {
+    const newUserChanges = [...userChanges];
+    newUserChanges.splice(index, 1, permission === users[index].collectionPermission ? null : permission);
+    setUserChanges(newUserChanges);
   }
 
-  const changeGroupLink = (group, permission) => {
-    updateAccess({variables: {
-      id: collection.id,
-      group,
-      permission
-    }})
+  const  changeAllUserLinks = async () => {
+    for (let i = 0; i < userChanges.length; i++) {
+      const change = userChanges[i];
+      if (change !== null) {
+        await updateAccess({variables: {
+          id: collection.id,
+          user: users[i].id,
+          permission: change
+        }})
+      }
+    }
+    setUserChanges(users.map(() => null));
+  }
+
+  const changeGroupLink = (index, permission) => {
+    const newGroupChanges = [...groupChanges];
+    newGroupChanges.splice(index, 1, permission === groups[index].collectionPermission ? null : permission);
+    setGroupChanges(newGroupChanges);
+  }
+
+  const changeAllGroupLinks = async () => {
+    for (let i = 0; i < groupChanges.length; i++) {
+      const change = groupChanges[i];
+      if (change !== null) {
+        await updateAccess({variables: {
+          id: collection.id,
+          group: groups[i].id,
+          permission: change
+        }})
+      }
+    }
+    setGroupChanges(groups.map(() => null));
   }
 
   const addUserLink = () => {
@@ -100,7 +126,7 @@ const CollectionAccess = props => {
             <div className="existing-users">
               <h3>Users with Access</h3>
               {users.length > 0 ? (
-                <div className="users">{users.map(user => {
+                <div className="users">{users.map((user, index) => {
                   const isSoleOwner = owners.length === 1 && owners[0].id === user.id;
                   const higher = user.collectionPermission === 4 && !collection.isOwner;
                   return (
@@ -108,8 +134,8 @@ const CollectionAccess = props => {
                       <div className="name">{user.name} ({user.username})</div>
                       <Select
                         options={usersOptions}
-                        value={options[user.collectionPermission]}
-                        onChange={option => changeUserLink(user.id, option.value)}
+                        value={userChanges[index] === null ? options[user.collectionPermission] : options[userChanges[index]]}
+                        onChange={option => changeUserLink(index, option.value)}
                         isDisabled={updateAccessMutation.loading || isSoleOwner || higher}
                         className="react-select"
                         classNamePrefix="react-select"
@@ -118,17 +144,24 @@ const CollectionAccess = props => {
                   )
                 })}</div>
               ) : <div className="access-info">No users have access</div> }
+              {users.length > 0 && (
+                <button
+                  className="primary-button"
+                  disabled={userChanges.every(change => change === null) || updateAccessMutation.loading}
+                  onClick={changeAllUserLinks}
+                >Update</button>
+              )}
             </div>
             <div className="existing-groups">
               <h3>Groups with Access</h3>
               {groups.length > 0 ? (
-                <div className="groups">{groups.map(group => (
+                <div className="groups">{groups.map((group, index) => (
                   <div className="group" key={group.id}>
                     <div className="name">{`@${group.slug}`}</div>
                     <Select
                       options={options.slice(0, 4)}
-                      value={options[group.collectionPermission]}
-                      onChange={option => changeGroupLink(group.id, option.value)}
+                      value={groupChanges[index] === null || !groupChanges.length ? options[group.collectionPermission] : options[groupChanges[index]]}
+                      onChange={option => changeGroupLink(index, option.value)}
                       isDisabled={updateAccessMutation.loading}
                       className="react-select"
                       classNamePrefix="react-select"
@@ -136,6 +169,13 @@ const CollectionAccess = props => {
                   </div>
                 ))}</div>
               ) : <div className="access-info">No groups have access</div> }
+              {groups.length > 0 && (
+                <button
+                  className="primary-button"
+                  disabled={groupChanges.every(change => change === null) || updateAccessMutation.loading}
+                  onClick={changeAllGroupLinks}
+                >Update</button>
+              )}
             </div>
           </div>
           <div className="new">

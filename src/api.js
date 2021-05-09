@@ -74,7 +74,11 @@ export const makeClient = () => {
         ownedCollections: {merge(existing, incoming) { return incoming } },
         groupInvitations: {merge(existing, incoming) { return incoming } },
         groups: {merge(existing, incoming) { return incoming } }
-      }}
+      }},
+      CollectionType: {fields: {
+        users: {merge(existing, incoming) { return incoming } },
+        groups: {merge(existing, incoming) { return incoming } }
+      }},
     }
   })
 
