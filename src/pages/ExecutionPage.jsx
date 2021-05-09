@@ -14,6 +14,8 @@ import ReactTooltip from "react-tooltip";
 import { fileSize, duration } from "../utils";
 import fileIcon from "../images/file.svg";
 import ExecutionHistory from "../components/ExecutionHistory";
+import { detect404 } from "../forms";
+
 
 const ExecutionPage = () => {
   const executionId = useRouteMatch("/executions/:id").params.id;
@@ -24,12 +26,7 @@ const ExecutionPage = () => {
 
   useDocumentTitle(data ? `iMaps - ${data.execution.name}` : "iMaps");
 
-  if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
-    const message = JSON.parse(error.graphQLErrors[0].message);
-    if (message && Object.values(message).some(m => m === "Does not exist")) {
-      return <PageNotFound />
-    }
-  }
+  if (detect404(error)) return <PageNotFound />
 
   if (loading) return <Base className="execution-page" loading={true} />
 

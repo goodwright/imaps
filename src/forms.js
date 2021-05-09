@@ -23,3 +23,19 @@ export const createErrorObject = (errors, graphQLErrors) => {
   }
   return errorObj;
 }
+
+
+export const detect404 = error => {
+  /**
+   * Insepcts an Apollo GraphQL error object and determines if the error is
+   * reporting that an object does not exist.
+   */
+  
+  if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
+    const message = JSON.parse(error.graphQLErrors[0].message);
+    if (message && Object.values(message).some(m => m === "Does not exist")) {
+      return true;
+    }
+  }
+  return false;
+}

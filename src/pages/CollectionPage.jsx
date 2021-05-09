@@ -16,7 +16,7 @@ import SamplesTable from "../components/SamplesTable";
 import ExecutionHistory from "../components/ExecutionHistory";
 import CollectionDeletion from "../components/CollectionDeletion";
 import CollectionAccess from "../components/CollectionAccess";
-import { createErrorObject } from "../forms";
+import { createErrorObject, detect404 } from "../forms";
 
 const CollectionPage = props => {
   
@@ -50,12 +50,7 @@ const CollectionPage = props => {
     }
   });
 
-  if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
-    const message = JSON.parse(error.graphQLErrors[0].message);
-    if (message && Object.values(message).some(m => m === "Does not exist")) {
-      return <PageNotFound />
-    }
-  }
+  if (detect404(error)) return <PageNotFound />
 
   if (loading) return <Base className="collection-page" loading={true} />
 

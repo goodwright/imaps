@@ -7,6 +7,7 @@ import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import SampleInfo from "../components/SampleInfo";
 import ExecutionHistory from "../components/ExecutionHistory";
+import { detect404 } from "../forms";
 
 const SamplePage = () => {
   const sampleId = useRouteMatch("/samples/:id").params.id;
@@ -17,12 +18,7 @@ const SamplePage = () => {
 
   useDocumentTitle(data ? `iMaps - ${data.sample.name}` : "iMaps");
 
-  if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
-    const message = JSON.parse(error.graphQLErrors[0].message);
-    if (message && Object.values(message).some(m => m === "Does not exist")) {
-      return <PageNotFound />
-    }
-  }
+  if (detect404(error)) return <PageNotFound />
 
   if (loading) {
     return <Base className="sample-page" loading={true} />

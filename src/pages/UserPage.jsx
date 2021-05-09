@@ -8,6 +8,7 @@ import UserSummary from "../components/UserSummary";
 import GroupsList from "../components/GroupsList";
 import CollectionsGrid from "../components/CollectionsGrid";
 import PageNotFound from "./PageNotFound";
+import { detect404 } from "../forms";
 
 const UserPage = () => {
 
@@ -19,12 +20,7 @@ const UserPage = () => {
 
   useDocumentTitle(data ? `iMaps - ${data.user.name}` : "iMaps");
 
-  if (error && error.graphQLErrors && error.graphQLErrors.length) {
-    const message = JSON.parse(error.graphQLErrors[0].message);
-    if (message && Object.values(message).some(m => m === "Does not exist")) {
-      return <PageNotFound />
-    }
-  }
+  if (detect404(error)) return <PageNotFound />
 
   if (loading) {
     return <Base className="user-page" loading={true} />

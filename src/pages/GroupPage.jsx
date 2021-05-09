@@ -13,7 +13,7 @@ import UserSummary from "../components/UserSummary";
 import GroupDeletion from "../components/GroupDeletion";
 import { UserContext } from "../contexts";
 import UserInviter from "../components/UserInviter";
-import { createErrorObject } from "../forms";
+import { createErrorObject, detect404 } from "../forms";
 import CollectionsGrid from "../components/CollectionsGrid";
 
 const GroupPage = props => {
@@ -55,12 +55,7 @@ const GroupPage = props => {
     })
   }
 
-  if ((error && error.graphQLErrors && error.graphQLErrors.length)) {
-    const message = JSON.parse(error.graphQLErrors[0].message);
-    if (message && Object.values(message).some(m => m === "Does not exist")) {
-      return <PageNotFound />
-    }
-  }
+  if (detect404(error)) return <PageNotFound />
 
   if (loading) {
     return <Base className="group-page" loading={true} />
