@@ -32,7 +32,7 @@ const GroupDeletion = props => {
         </p>
         <div className="buttons">
           <button type="submit" className="primary-button" onClick={() => deleteGroup({variables: {id: group.id}})}>
-            {deleteGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, delete"}
+            {deleteGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, delete group"}
           </button>
           <button className="secondary-button" onClick={() => setShowModal(false)}>No, take me back</button>
         </div>

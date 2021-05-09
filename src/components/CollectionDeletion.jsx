@@ -29,7 +29,7 @@ const CollectionDeletion = props => {
         </p>
         <div className="buttons">
           <button type="submit" className="primary-button" onClick={() => deleteCollection({variables: {id: collection.id}})}>
-            {deleteCollectionMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, delete"}
+            {deleteCollectionMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, delete collection"}
           </button>
           <button className="secondary-button" onClick={() => setShowModal(false)}>No, take me back</button>
         </div>
