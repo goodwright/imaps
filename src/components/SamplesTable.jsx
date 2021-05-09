@@ -13,6 +13,14 @@ const SamplesTable = props => {
   const PER_PAGE = 20;
   const history = useHistory();
 
+  if (!samples.length) {
+    return (
+      <div className="samples-table">
+        <div className="no-data">Currently no samples.</div>
+      </div>
+    )
+  }
+
   return (
     <div className="samples-table">
       {samples.length > PER_PAGE ? <Paginator

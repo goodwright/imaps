@@ -1,6 +1,10 @@
 .execution-history {
     overflow-x: scroll;
 
+    .no-data {
+        color: $purple-7;
+    }
+
     input {
         width: 100%;
         max-width: 700px;

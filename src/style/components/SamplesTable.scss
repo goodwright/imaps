@@ -1,6 +1,10 @@
 .samples-table {
     overflow-x: scroll;
 
+    .no-data {
+        color: $purple-7;
+    }
+
     table {
 
         td.name {

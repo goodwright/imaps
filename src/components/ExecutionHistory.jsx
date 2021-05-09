@@ -18,6 +18,14 @@ const ExecutionHistory = props => {
     Object.entries(JSON.parse(e.input)).filter(i => `${i[0]}=${i[1]}`.toLowerCase().includes(query.toLowerCase())).length
   )) : executions;
 
+  if (!executions.length) {
+    return (
+      <div className="execution-history">
+        <div className="no-data">Currently no analysis.</div>
+      </div>
+    )
+  }
+
   return (
     <div className="execution-history">
 
