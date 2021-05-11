@@ -151,3 +151,9 @@ export const UPDATE_SAMPLE = gql`mutation updateSample(
 export const DELETE_SAMPLE = gql`mutation deleteSample($id: ID!) {
   deleteSample(id: $id) { success }
 }`;
+
+export const UPDATE_EXECUTION = gql`mutation updateExecution(
+  $id: ID! $name: String!
+) { updateExecution(id: $id name: $name ) {
+  execution { id }
+} }`;

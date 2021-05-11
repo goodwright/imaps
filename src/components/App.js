@@ -118,6 +118,9 @@ const App = () => {
             <Route path="/executions/:id(\d+)/" exact>
               <ExecutionPage />
             </Route>
+            {user && <Route path="/executions/:id(\d+)/edit/" exact>
+              <ExecutionPage edit={true} />
+            </Route>}
             <Route path="/search/" exact>
               <SearchPage />
             </Route>

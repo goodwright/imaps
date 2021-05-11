@@ -98,7 +98,7 @@ const CollectionPage = props => {
       <InfoElement className="collection-info" onSubmit={save}>
         <div className="collection-text">
 
-          {errors.name && <div className="error">{errors.name}</div> }
+          {edit && errors.name && <div className="error">{errors.name}</div> }
 
           <h1
             contentEditable={edit} suppressContentEditableWarning={edit}
@@ -113,7 +113,7 @@ const CollectionPage = props => {
               {updateCollectionMutation.loading ? <ClipLoader color="white" size="20px" /> : "save changes"}
             </button>
           )}
-          {errors.description && <div className="error">{errors.description}</div> }
+          {edit && errors.description && <div className="error">{errors.description}</div> }
           <p
             contentEditable={edit} suppressContentEditableWarning={edit}
             className={edit ? "description editable" : "description"} ref={descriptionEl}
@@ -155,7 +155,7 @@ const CollectionPage = props => {
           </div>}
           {edit && (
             <div className="paper-forms">
-              {(errors.title || errors.year || errors.url) && (
+              {edit && (errors.title || errors.year || errors.url) && (
                 <div className="error">There was a problem with one of the papers.</div>
               )}
               {papers.map((paper, p) => (

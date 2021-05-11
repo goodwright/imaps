@@ -84,7 +84,8 @@ export const SAMPLE = gql`query sample($id: ID!) {
 
 export const EXECUTION = gql`query execution($id: ID!) {
   execution(id: $id) {
-    id name created scheduled started finished input output status
+    id name created scheduled started finished input output status 
+    canEdit canShare isOwner
     warning error
     sample { id name }
     collection { id name }

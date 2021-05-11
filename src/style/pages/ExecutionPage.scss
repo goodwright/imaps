@@ -6,6 +6,24 @@
         margin-bottom: $gap-6;
     }
 
+    .editable {
+        background-color: $gray-4;
+        width: fit-content;
+        border-radius: $border-radius-small;
+        padding: $gap-1 0;
+    }
+
+    .edit-button {
+        margin-bottom: $gap-6;
+        margin-top: -$gap-5;
+        display: block;
+        width: max-content;
+        margin-left: auto;
+        width: 144px;
+        text-align: center;
+        color: $purple-4;
+    }
+
     .top-row {
         display: flex;
         justify-content: space-between;

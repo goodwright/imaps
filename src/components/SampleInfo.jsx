@@ -68,7 +68,7 @@ const SampleInfo = props => {
   return (
     <InfoElement className="sample-info" onSubmit={save}>
       <div className="left-column">
-        {errors.name && <div className="error">{errors.name}</div>}
+        {edit && errors.name && <div className="error">{errors.name}</div>}
         <h1
           contentEditable={edit} suppressContentEditableWarning={edit}
           className={edit ? "editable" : canBreak ? "can-break" : ""} ref={nameEl}
@@ -99,7 +99,7 @@ const SampleInfo = props => {
             <div className="input">
               <label htmlFor="annotatorName">Annotator:</label>
               <div className="error-container">
-                {errors.annotator_name && <div className="error">{errors.annotator_name}</div>}
+                {edit && errors.annotator_name && <div className="error">{errors.annotator_name}</div>}
                 <input
                   id="annotatorName"
                   value={annotatorName === null ? sample.annotatorName : annotatorName}
@@ -110,7 +110,7 @@ const SampleInfo = props => {
             <div className="input">
               <label htmlFor="piName">PI:</label>
               <div className="error-container">
-                {errors.pi_name && <div className="error">{errors.pi_name}</div>}
+                {edit && errors.pi_name && <div className="error">{errors.pi_name}</div>}
                 <input
                   id="piName"
                   value={piName === null ? sample.piName : piName}
@@ -121,7 +121,7 @@ const SampleInfo = props => {
             <div className="input">
               <label htmlFor="organism">Organism:</label>
               <div className="error-container">
-                {errors.organism && <div className="error">{errors.organism}</div>}
+                {edit && errors.organism && <div className="error">{errors.organism}</div>}
                 <input
                   id="organism"
                   value={organism === null ? sample.organism : organism}
@@ -132,7 +132,7 @@ const SampleInfo = props => {
             <div className="input">
               <label htmlFor="source">Source:</label>
               <div className="error-container">
-                {errors.source && <div className="error">{errors.annotator_name}</div>}
+                {edit && errors.source && <div className="error">{errors.annotator_name}</div>}
                 <input
                   id="source"
                   value={source === null ? sample.source : source}
