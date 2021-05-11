@@ -147,3 +147,7 @@ export const UPDATE_SAMPLE = gql`mutation updateSample(
 ) { updateSample(id: $id name: $name collection: $collection annotatorName: $annotatorName piName: $piName organism: $organism source: $source) {
   sample { id }
 } }`;
+
+export const DELETE_SAMPLE = gql`mutation deleteSample($id: ID!) {
+  deleteSample(id: $id) { success }
+}`;
