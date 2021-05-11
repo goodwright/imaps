@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
@@ -8,9 +8,12 @@ import PageNotFound from "./PageNotFound";
 import SampleInfo from "../components/SampleInfo";
 import ExecutionHistory from "../components/ExecutionHistory";
 import { detect404 } from "../forms";
+import { UserContext } from "../contexts";
 
-const SamplePage = () => {
+const SamplePage = props => {
   const sampleId = useRouteMatch("/samples/:id").params.id;
+  const { edit } = props;
+  const [user,] = useContext(UserContext);
 
   const { loading, data, error } = useQuery(SAMPLE, {
     variables: {id: sampleId}
@@ -26,12 +29,18 @@ const SamplePage = () => {
 
   const sample = data.sample;
 
+  if (user && edit && !sample.canEdit) return <PageNotFound />
+
   return (
     <Base className="sample-page">
-      <SampleInfo sample={sample} />
-      <h2>Analysis History</h2>
-      <p className="info">A list of the analysis commands run on data in this sample.</p>
-      <ExecutionHistory executions={sample.executions} />
+      <SampleInfo sample={sample} edit={edit} collections={data.user.ownedCollections} />
+      {!edit && (
+        <>
+          <h2>Analysis History</h2>
+          <p className="info">A list of the analysis commands run on data in this sample.</p>
+          <ExecutionHistory executions={sample.executions} />
+        </>
+      )}
     </Base>
   );
 };

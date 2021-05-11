@@ -73,12 +73,13 @@ export const USER_COLLECTIONS = gql`{
 export const SAMPLE = gql`query sample($id: ID!) {
   sample(id: $id) {
     id name organism source piName annotatorName qcPass qcMessage
-    created lastModified
+    created lastModified canEdit canShare isOwner
     collection { id name }
     executions { id name created started finished input owners { id name } command {
       id name description inputSchema
     } }
   }
+  user { ownedCollections { id name } }
 }`;
 
 export const EXECUTION = gql`query execution($id: ID!) {

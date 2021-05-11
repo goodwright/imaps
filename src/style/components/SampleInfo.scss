@@ -3,6 +3,13 @@
     grid-template-columns: 1fr 180px;
     position: relative;
 
+    .editable {
+        background-color: $gray-4;
+        width: fit-content;
+        border-radius: $border-radius-small;
+        padding: $gap-1 0;
+    }
+
     h1 {
         color: $purple-4;
         font-weight: 600;
@@ -17,7 +24,50 @@
         a {
             font-weight: 400;
         }
+
+        label {
+            margin-right: $gap-2;
+        }
     }
+
+    .edit-button {
+        margin-bottom: $gap-6;
+        margin-top: -$gap-5;
+        display: block;
+        width: max-content;
+        margin-left: auto;
+        width: 144px;
+        text-align: center;
+        color: $purple-4;
+    }
+
+    .react-select {
+        display: inline-block;
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .error {
+        text-align: left;
+    }
+
+    .inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        row-gap: $gap-5;
+        column-gap: $gap-3;
+
+        .input {
+            margin-bottom: 0;
+
+            
+            
+            input {
+                padding: $gap-3 $gap-2;
+            }
+        }
+    }
+    
 
     table {
         border-collapse: collapse;
@@ -93,5 +143,19 @@
             gap: $gap-2;
             text-align: right;
         }
+    }
+
+    @media (max-width: 1000px) {
+        .inputs {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+form.sample-info {
+    grid-template-columns: 1fr;
+
+    h1 {
+        word-break: break-all;
     }
 }

@@ -112,6 +112,9 @@ const App = () => {
             <Route path="/samples/:id(\d+)/" exact>
               <SamplePage />
             </Route>
+            {user && <Route path="/samples/:id(\d+)/edit/" exact>
+              <SamplePage edit={true} />
+            </Route>}
             <Route path="/executions/:id(\d+)/" exact>
               <ExecutionPage />
             </Route>

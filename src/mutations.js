@@ -141,3 +141,9 @@ export const UPDATE_COLLECTION_ACCESS = gql`mutation updateCollectionAccess(
 export const DELETE_COLLECTION = gql`mutation deleteCollection($id: ID!) {
   deleteCollection(id: $id) { success }
 }`;
+
+export const UPDATE_SAMPLE = gql`mutation updateSample(
+  $id: ID! $name: String! $collection: ID! $annotatorName: String! $piName: String! $organism: String! $source: String!
+) { updateSample(id: $id name: $name collection: $collection annotatorName: $annotatorName piName: $piName organism: $organism source: $source) {
+  sample { id }
+} }`;
