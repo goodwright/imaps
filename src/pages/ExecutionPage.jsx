@@ -19,6 +19,7 @@ import fileIcon from "../images/file.svg";
 import ExecutionHistory from "../components/ExecutionHistory";
 import { createErrorObject, detect404 } from "../forms";
 import { UserContext } from "../contexts";
+import ExecutionDeletion from "../components/ExecutionDeletion";
 
 
 const ExecutionPage = props => {
@@ -175,6 +176,10 @@ const ExecutionPage = props => {
           </button>
         )}
       </InfoElement>
+
+      {edit && execution.canShare && <div className="bottom-buttons">
+        {edit && execution.isOwner && <ExecutionDeletion execution={execution} />}
+      </div>}
 
       {!edit &&
         <>

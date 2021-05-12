@@ -157,3 +157,7 @@ export const UPDATE_EXECUTION = gql`mutation updateExecution(
 ) { updateExecution(id: $id name: $name ) {
   execution { id }
 } }`;
+
+export const DELETE_EXECUTION = gql`mutation deleteExecution($id: ID!) {
+  deleteExecution(id: $id) { success }
+}`;
