@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Div100vh from "react-div-100vh";
+import Div100vh, { use100vh } from "react-div-100vh";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
 import { MoonLoader } from "react-spinners";
@@ -20,12 +20,13 @@ const Base = props => {
   let fullClassName = className;
   if (blank) fullClassName += " blank";
   if (loading) fullClassName += " loading";
+  const height = use100vh();
 
   return (
     <Div100vh className="base">
       <Nav />
       <Sidebar />
-      <main className={fullClassName}>
+      <main className={fullClassName} style={{maxHeight: height - 77}}>
         {user && user.invitations.map((invitation, index) => (
           <Invitation
             invitation={invitation} key={invitation.id} style={{
