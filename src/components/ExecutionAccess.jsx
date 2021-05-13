@@ -149,7 +149,8 @@ const ExecutionAccess = props => {
 };
 
 ExecutionAccess.propTypes = {
-  
+  sample: PropTypes.object.isRequired,
+  allUsers: PropTypes.array.isRequired,
 };
 
 export default ExecutionAccess;

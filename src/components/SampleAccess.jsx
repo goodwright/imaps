@@ -148,7 +148,8 @@ const SampleAccess = props => {
 };
 
 SampleAccess.propTypes = {
-  
+  sample: PropTypes.object.isRequired,
+  allUsers: PropTypes.array.isRequired,
 };
 
 export default SampleAccess;

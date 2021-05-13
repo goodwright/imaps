@@ -14,11 +14,13 @@ const ExecutionDeletion = props => {
   const history = useHistory();
 
   const [deleteExecution, deleteExecutionMutation] = useMutation(DELETE_EXECUTION, {
-    onCompleted: data => {
+    onCompleted: () => {
       history.push(execution.sample ? `/samples/${execution.sample.id}/` : execution.collection ? `/collections/${execution.collection.id}/` : "/");
     },
-    refetchQueries: [{query: COLLECTION, variables: {id: execution.collection ? execution.collection.id : null}}],
-    refetchQueries: [{query: SAMPLE, variables: {id: execution.sample ? execution.sample.id : null}}],
+    refetchQueries: [
+      {query: COLLECTION, variables: {id: execution.collection ? execution.collection.id : null}},
+      {query: SAMPLE, variables: {id: execution.sample ? execution.sample.id : null}}
+    ],
     awaitRefetchQueries: true
   });
 
