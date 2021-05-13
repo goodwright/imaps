@@ -143,6 +143,15 @@ input[type=submit], button, a.button {
     word-break: break-all;
 }
 
+.no-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .react-select {
     flex-grow: 5;
     margin-right: $gap-3;

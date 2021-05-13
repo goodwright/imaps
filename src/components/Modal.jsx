@@ -14,7 +14,7 @@ const Modal = props => {
   const className = classNames({modal: true, visible: showModal});
 
   const boxClassName = classNames({
-    "modal-box": true, [props.className]: true
+    "modal-box": true, "no-scroll": true, [props.className]: true
   });
 
   const dismiss = e => {
