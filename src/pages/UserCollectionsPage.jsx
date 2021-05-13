@@ -50,7 +50,7 @@ const UserCollectionsPage = () => {
             {groupCollections.length > PER_PAGE && <Paginator
               count={groupCollections.length} itemsPerPage={PER_PAGE}
               currentPage={groupPages ? groupPages[g] : 1}
-              onClick={n => setGroupPages(groupPages ? groupPages.map((x, i) => i === g ? n : x) : user.groups.map((x, i) => i === g ? n : 1))}
+              onClick={n => setGroupPages(groupPages ? groupPages.map((x, i) => i === g ? n : x) : user.memberships.map((x, i) => i === g ? n : 1))}
             />}
             <CollectionsGrid collections={groupCollections.slice(((groupPages ? groupPages[g] : 1) - 1) * PER_PAGE, (groupPages ? groupPages[g] : 1 )* PER_PAGE)} />
           </div>
