@@ -20,6 +20,7 @@ import ExecutionHistory from "../components/ExecutionHistory";
 import { createErrorObject, detect404 } from "../forms";
 import { UserContext } from "../contexts";
 import ExecutionDeletion from "../components/ExecutionDeletion";
+import ExecutionAccess from "../components/ExecutionAccess";
 
 
 const ExecutionPage = props => {
@@ -178,6 +179,7 @@ const ExecutionPage = props => {
       </InfoElement>
 
       {edit && execution.canShare && <div className="bottom-buttons">
+        <ExecutionAccess execution={execution} allUsers={data.users} />
         {edit && execution.isOwner && <ExecutionDeletion execution={execution} />}
       </div>}
 

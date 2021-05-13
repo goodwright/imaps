@@ -164,6 +164,12 @@ export const UPDATE_EXECUTION = gql`mutation updateExecution(
   execution { id }
 } }`;
 
+export const UPDATE_EXECUTION_ACCESS = gql`mutation updateExecutionAccess(
+  $id: ID! $user: ID $permission: Int!
+) { updateExecutionAccess(id: $id user: $user permission: $permission) {
+  execution { id }
+} }`;
+
 export const DELETE_EXECUTION = gql`mutation deleteExecution($id: ID!) {
   deleteExecution(id: $id) { success }
 }`;

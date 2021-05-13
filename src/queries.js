@@ -97,7 +97,9 @@ export const EXECUTION = gql`query execution($id: ID!) {
     downstreamExecutions { id started created finished name owners { id name } input command { id inputSchema name } }
     componentExecutions { id name started created finished input owners { id name } command { id inputSchema name } }
     owners { id name username }
+    users { id name username executionPermission(id: $id) }
   }
+  users { id name username }
 }`;
 
 export const SEARCH_COLLECTIONS = gql`query searchCollections(

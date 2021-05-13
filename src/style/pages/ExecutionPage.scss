@@ -24,6 +24,20 @@
         color: $purple-4;
     }
 
+    .bottom-buttons {
+        margin-top: $gap-7;
+        margin-left: auto;
+        display: grid;
+        width: fit-content;
+        grid-template-columns: repeat(2, 170px);
+        gap: $gap-3;
+
+        button {
+            display: block;
+            width: 100%;
+        }
+    }
+
     .top-row {
         display: flex;
         justify-content: space-between;

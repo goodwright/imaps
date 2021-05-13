@@ -3,22 +3,22 @@ import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
 import Select from "react-select";
 import Modal from "./Modal";
-import { SAMPLE } from "../queries";
-import { UPDATE_SAMPLE_ACCESS } from "../mutations";
+import { EXECUTION } from "../queries";
+import { UPDATE_EXECUTION_ACCESS } from "../mutations";
 
-const SampleAccess = props => {
+const ExecutionAccess = props => {
 
-  const { sample, allUsers } = props;
+  const { execution, allUsers } = props;
   const [showModal, setShowModal] = useState(false);
   const [showUsersDropdown, setShowUsersDropdown] = useState(false);
   const [showUsersPlaceholder, setShowUsersPlaceholder] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedUserPermission, setSelectedUserPermission] = useState(null);
-  const users = [...sample.users].sort((u1, u2) => u2.samplePermission - u1.samplePermission);
+  const users = [...execution.users].sort((u1, u2) => u2.executionPermission - u1.executionPermission);
   const [userChanges, setUserChanges] = useState(users.map(() => null));
 
-  const [updateAccess, updateAccessMutation] = useMutation(UPDATE_SAMPLE_ACCESS, {
-    refetchQueries: [{query: SAMPLE, variables: {id: sample.id}}],
+  const [updateAccess, updateAccessMutation] = useMutation(UPDATE_EXECUTION_ACCESS, {
+    refetchQueries: [{query: EXECUTION, variables: {id: execution.id}}],
     awaitRefetchQueries: true
   });
 
@@ -27,6 +27,7 @@ const SampleAccess = props => {
     {value: 1, label: "Can View Only"},
     {value: 2, label: "Can Edit"},
     {value: 3, label: "Can Edit and Share"},
+    {value: 4, label: "Is Owner"},
   ]
 
   const changeUserLink = (index, permission) => {
@@ -40,7 +41,7 @@ const SampleAccess = props => {
       const change = userChanges[i];
       if (change !== null) {
         await updateAccess({variables: {
-          id: sample.id,
+          id: execution.id,
           user: users[i].id,
           permission: change
         }})
@@ -51,7 +52,7 @@ const SampleAccess = props => {
 
   const addUserLink = () => {
     updateAccess({variables: {
-      id: sample.id,
+      id: execution.id,
       user: selectedUser.value,
       permission: selectedUserPermission.value 
     }}).then(() =>{
@@ -66,17 +67,17 @@ const SampleAccess = props => {
   ));
 
   return (
-    <div className="sample-access">
+    <div className="execution-access">
       <button className="primary-button" onClick={() => setShowModal(true)}>Control Access</button>
-      <Modal className="sample-access-modal" showModal={showModal} setShowModal={setShowModal}>
-        <h2>Who can access this sample?</h2>
+      <Modal className="execution-access-modal" showModal={showModal} setShowModal={setShowModal}>
+        <h2>Who can access this execution?</h2>
         <p className="access-info">
-          Here you can control users' access to this specific sample. Any users
-          with access to the sample's collection will also have the equivalent
-          access to the sample, but you may wish you to give a collaborator
-          access to just this sample without access to other samples in the
-          collection. Users who only have access via the collection will not
-          be shown here.
+          Here you can control users' access to this specific execution. Any users
+          with access to the execution's collection or sample will also have the
+          equivalent access to the execution, but you may wish you to give a
+          collaborator access to just this execution without access to other
+          executions in the collection or sample. Users who only have access via
+          the collection or sample will not be shown here.
         </p>
 
         <div className="options">
@@ -89,7 +90,7 @@ const SampleAccess = props => {
                     <div className="name">{user.name} ({user.username})</div>
                     <Select
                       options={options}
-                      value={userChanges[index] === null ? options[user.samplePermission] : options[userChanges[index]]}
+                      value={userChanges[index] === null ? options[user.executionPermission] : options[userChanges[index]]}
                       onChange={option => changeUserLink(index, option.value)}
                       isDisabled={updateAccessMutation.loading}
                       className="react-select"
@@ -102,7 +103,7 @@ const SampleAccess = props => {
             {users.length > 0 && (
               <button
                 className="primary-button"
-                disabled={userChanges.every(change => change === null) /* || updateAccessMutation.loading */}
+                disabled={userChanges.every(change => change === null|| updateAccessMutation.loading)}
                 onClick={changeAllUserLinks}
               >Update</button>
             )}
@@ -127,7 +128,7 @@ const SampleAccess = props => {
                 classNamePrefix="react-select"
               />
               <Select
-                options={options.slice(1, 4)}
+                options={options.slice(1, 5)}
                 value={selectedUserPermission}
                 onChange={setSelectedUserPermission}
                 isDisabled={updateAccessMutation.loading}
@@ -147,8 +148,8 @@ const SampleAccess = props => {
   );
 };
 
-SampleAccess.propTypes = {
+ExecutionAccess.propTypes = {
   
 };
 
-export default SampleAccess;
+export default ExecutionAccess;
