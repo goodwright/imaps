@@ -78,8 +78,10 @@ export const SAMPLE = gql`query sample($id: ID!) {
     executions { id name created started finished input owners { id name } command {
       id name description inputSchema
     } }
+    users { id name username samplePermission(id: $id) }
   }
   user { ownedCollections { id name } }
+  users { id name username }
 }`;
 
 export const EXECUTION = gql`query execution($id: ID!) {

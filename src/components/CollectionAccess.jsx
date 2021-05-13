@@ -49,7 +49,7 @@ const CollectionAccess = props => {
     setUserChanges(newUserChanges);
   }
 
-  const  changeAllUserLinks = async () => {
+  const changeAllUserLinks = async () => {
     for (let i = 0; i < userChanges.length; i++) {
       const change = userChanges[i];
       if (change !== null) {
@@ -91,6 +91,7 @@ const CollectionAccess = props => {
     }}).then(() =>{
       setSelectedUser(null);
       setSelectedUserPermission(null);
+      setUserChanges(users.map(() => null).concat([null]));
     })
   }
 
@@ -102,6 +103,7 @@ const CollectionAccess = props => {
     }}).then(() =>{
       setSelectedGroup(null);
       setSelectedGroupPermission(null);
+      setGroupChanges(groups.map(() => null).concat([null]));
     })
   }
   const usersOptions = collection.isOwner ? options : options.slice(0, 4);

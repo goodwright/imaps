@@ -10,6 +10,7 @@ import ExecutionHistory from "../components/ExecutionHistory";
 import { detect404 } from "../forms";
 import { UserContext } from "../contexts";
 import SampleDeletion from "../components/SampleDeletion";
+import SampleAccess from "../components/SampleAccess";
 
 const SamplePage = props => {
   const sampleId = useRouteMatch("/samples/:id").params.id;
@@ -43,6 +44,7 @@ const SamplePage = props => {
         </>
       )}
       {edit && sample.canShare && <div className="bottom-buttons">
+        <SampleAccess sample={sample} allUsers={data.users} />
         {edit && sample.isOwner && <SampleDeletion sample={sample} />}
       </div>}
     </Base>

@@ -148,6 +148,12 @@ export const UPDATE_SAMPLE = gql`mutation updateSample(
   sample { id }
 } }`;
 
+export const UPDATE_SAMPLE_ACCESS = gql`mutation updateSampleAccess(
+  $id: ID! $user: ID $permission: Int!
+) { updateSampleAccess(id: $id user: $user permission: $permission) {
+  sample { id }
+} }`;
+
 export const DELETE_SAMPLE = gql`mutation deleteSample($id: ID!) {
   deleteSample(id: $id) { success }
 }`;

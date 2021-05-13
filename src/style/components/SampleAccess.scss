@@ -1,0 +1,145 @@
+.sample-access {
+    .sample-access-modal {
+        width: fit-content;
+        max-height: 90vh;
+        overflow: scroll;
+        padding-bottom: $gap-8;
+
+        .access-info {
+            width: auto;
+            padding-bottom: $gap-8 / 2;
+            margin-bottom: $gap-8 / 2;
+            max-width: 800px;
+            font-size: $font-size-4;
+            border-bottom: 1px solid $gray-4;
+        }
+
+        h3 {
+            color: $purple-2;
+            font-size: $font-size-5;
+            font-weight: 500;
+            margin-bottom: $gap-3;
+        }
+
+        .react-select {
+            margin-right: 0;
+        }
+
+        .react-select.react-select--is-disabled {
+            opacity: 0.6;
+        }
+
+        .options {
+            display: grid;
+            gap: $gap-8;
+            grid-template-columns: 238px auto;
+
+            .existing {
+            
+                position: relative;
+
+                .access-info {
+                    font-weight: 300;
+                    font-size: $font-size-3;
+                    border-bottom: 0;
+                    padding-bottom: 0;
+                    margin-bottom: 0;
+                }
+
+                .users {
+                    display: grid;
+                    gap: $gap-3;
+                    max-width: 238px;
+
+                    .name {
+                        color: $purple-4;
+                        margin-bottom: $gap-1;
+                    }
+
+                    .react-select {
+                        .react-select__control, .react-select__indicators, .react-select__value-container {
+                            height: 32px;
+                            min-height: 0;
+                        }
+                    }
+                }
+
+                .primary-button {
+                    margin-top: $gap-4;
+                    padding: $gap-2 0;
+                    width: 100%;
+                }
+            }
+
+            .existing:after {
+                content: "";
+                width: 1px;
+                height: 100%;
+                top: 0;
+                background-color: $gray-4;
+                position: absolute;
+                right: -$gap-8 / 2;
+            }
+
+            .new {
+                .user {
+                    display: grid;
+                    grid-template-columns: 240px 180px 80px;
+                    gap: $gap-3;
+
+                    .react-select {
+                        .react-select__control, .react-select__indicators, .react-select__value-container {
+                            height: 38px;
+                            min-height: 0 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media (max-width: 900px) {
+        .sample-access-modal {
+
+            .access-info {
+                max-width: 240px + 180px + 80px + 2 * $gap-3;
+            }
+
+            .options {
+                gap: $gap-8;
+                grid-template-columns: 1fr;
+
+                .existing {
+                    .users {
+                        max-width: none;
+                    }
+                }
+
+                .existing:after {
+                    content: "";
+                    height: 1px;
+                    width: 100%;
+                    background-color: $gray-4;
+                    position: absolute;
+                    right: 0;
+                    top: auto;
+                    bottom: -$gap-8 / 2 - 4px;
+                    left: 0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 600px) {
+        .sample-access-modal {
+            .options {
+                .new {
+                    .user {
+                        grid-template-columns: 1fr;
+                        gap: $gap-3;
+                    }
+                }
+            }
+        }
+    }
+}
