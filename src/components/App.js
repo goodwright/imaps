@@ -26,6 +26,7 @@ import ExecutionPage from "../pages/ExecutionPage";
 import SearchPage from "../pages/SearchPage";
 import PekaPage from "../peka/PekaPage";
 import NewCollectionPage from "../pages/NewCollectionPage";
+import AnalysisPage from "../pages/AnalysisPage";
 
 const client = makeClient();
 
@@ -124,6 +125,9 @@ const App = () => {
             <Route path="/search/" exact>
               <SearchPage />
             </Route>
+            {user && <Route path="/analysis/" exact>
+              <AnalysisPage />
+            </Route>}
             <Route path="/apps/peka/" exact>
               <PekaPage />
             </Route>

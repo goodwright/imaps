@@ -5,6 +5,7 @@ import { UserContext } from "../contexts";
 import yourCollectionsIcon from "../images/your-collections.svg"
 import collectionsIcon from "../images/collections.svg"
 import newItemIcon from "../images/new.svg"
+import gearIcon from "../images/gear.svg"
 import goodwright from "../images/goodwright.svg";
 import goodwrightIcon from "../images/goodwright-icon.svg";
 import githubIcon from "../images/github.svg"
@@ -16,6 +17,7 @@ const Sidebar = () => {
   const onCollectionsPage = useLocation().pathname === "/collections/";
   const onUserCollectionsPage = useLocation().pathname === "/user-collections/";
   const onNewCollectionPage = useLocation().pathname === "/collections/new/";
+  const onAnalysisPage = useLocation().pathname === "/analysis/";
 
   return (
     <div className="sidebar">
@@ -45,6 +47,10 @@ const Sidebar = () => {
             <Link className={onNewCollectionPage ? "selected" : ""} to="/collections/new/">
               <span className="full">+ New Collection</span>
               <img src={newItemIcon} alt="new-collection" className="mini" />
+            </Link>
+            <Link className={onAnalysisPage ? "selected" : ""} to="/analysis/">
+              <span className="full">Run Analysis</span>
+              <img src={gearIcon} alt="run-analysis" className="mini" />
             </Link>
           </div>
         ) : (
