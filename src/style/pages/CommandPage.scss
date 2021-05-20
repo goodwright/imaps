@@ -10,4 +10,23 @@
         font-weight: 300;
         line-height: 1.5;
     }
+
+    form {
+        .inputs {
+            display: block;
+
+            .input {
+                display: block;
+                
+                label {
+                    display: block;
+                    text-align: left;
+                }
+            }
+        }
+
+        button {
+            margin-left: 0;
+        }
+    }
 }
