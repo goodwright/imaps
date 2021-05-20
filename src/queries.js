@@ -102,6 +102,10 @@ export const EXECUTION = gql`query execution($id: ID!) {
   users { id name username }
 }`;
 
+export const COMMANDS = gql`{
+  commands { id name category type }
+}`;
+
 export const SEARCH_COLLECTIONS = gql`query searchCollections(
   $query: String! $sort: String $owner: String $created: String $first: Int $last: Int
 ) {

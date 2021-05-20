@@ -1,0 +1,30 @@
+.analysis-page {
+    h1 {
+        color: $purple-4;
+        font-weight: 600;
+        font-size: $font-size-8;
+        margin-bottom: $gap-6;
+    }
+
+    h2 {
+        font-size: $font-size-6;
+        font-weight: 500;
+        margin-bottom: $gap-2;
+        margin-top: $gap-4;
+    }
+
+    .category {
+        h3 {
+            font-size: $font-size-4;
+            font-weight: 500;
+            margin-top: $gap-2;
+            margin-bottom: $gap-1;
+        }
+    }
+
+    .command {
+        h4 {
+            //font-weight: 500;
+        }
+    }
+}
