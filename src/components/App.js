@@ -27,6 +27,7 @@ import SearchPage from "../pages/SearchPage";
 import PekaPage from "../peka/PekaPage";
 import NewCollectionPage from "../pages/NewCollectionPage";
 import AnalysisPage from "../pages/AnalysisPage";
+import CommandPage from "../pages/CommandPage";
 
 const client = makeClient();
 
@@ -127,6 +128,9 @@ const App = () => {
             </Route>
             {user && <Route path="/analysis/" exact>
               <AnalysisPage />
+            </Route>}
+            {user && <Route path="/commands/:id(\d+)/" exact>
+              <CommandPage />
             </Route>}
             <Route path="/apps/peka/" exact>
               <PekaPage />

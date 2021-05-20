@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
 import { COMMANDS } from "../queries";
 import Base from "./Base";
+import { Link } from "react-router-dom";
 
 const AnalysisPage = () => {
 
@@ -17,9 +18,20 @@ const AnalysisPage = () => {
 
   const categories = [...new Set(commands.map(command => command.category))];
   categories.sort((c1, c2) => c1.toLowerCase() < c2.toLowerCase() ? -1 : 1);
-
-  const iCountCommands = commands.filter(command => command.category.includes("icount"));
-  console.log(iCountCommands)
+  const slugs = commands.reduce((prev, curr) => ({...prev, [curr.slug]: curr}), {})
+  const dataUpload = ["upload-iclip-annotation", "upload-fastq-single"].map(slug => slugs[slug]);
+  const completeWorkflows = ["workflow-icount-demultiplex"].map(slug => slugs[slug]);
+  const otherPipelines = [
+    "workflow-icount", "workflow-icount-alternative",
+    "workflow-icount-group-analysis", "workflow-icount-resequencing"
+  ].map(slug => slugs[slug]);
+  const preprocess = ["icount-segment", "icount-xlsites"].map(slug => slugs[slug]);
+  const analyse = [
+    "icount-annotate", "icount-clusters", "icount-group", "icount-peaks",
+    "paraclu", "icount-summary", "icount-rnamaps", "kmers"
+  ].map(slug => slugs[slug]);
+  
+  
 
   return (
     <Base className="analysis-page">
@@ -28,37 +40,45 @@ const AnalysisPage = () => {
       <h2>Workflows</h2>
       <div className="category">
         <h3>Upload data</h3>
-        <div className="command"><h4>Upload iCount sample annotation</h4></div>
-        <div className="command"><h4>FASTQ file (single-end)</h4></div>
+        {dataUpload.map(command => (
+          <div key={command.name} className="command">
+            <h4><Link to={`/commands/${command.id}/`}>{command.name}</Link></h4>
+          </div>
+        ))}
       </div>
       <div className="category">
         <h3>Complete workflow</h3>
-        <div className="command"><h4>iCount demultiplex and analyse</h4></div>
+        {completeWorkflows.map(command => (
+          <div key={command.name} className="command">
+            <h4><Link to={`/commands/${command.id}/`}>{command.name}</Link></h4>
+          </div>
+        ))}
       </div>
       <div className="category">
         <h3>Other iCount pipelines</h3>
-        <div className="command"><h4>iCount Primary Analysis</h4></div>
-        <div className="command"><h4>iCount Primary Analysis (Consensus mapping)</h4></div>
-        <div className="command"><h4>iCount Group Analysis</h4></div>
-        <div className="command"><h4>Analyse resequences sample</h4></div>
+        {otherPipelines.map(command => (
+          <div key={command.name} className="command">
+            <h4><Link to={`/commands/${command.id}/`}>{command.name}</Link></h4>
+          </div>
+        ))}
       </div>
 
       <h2>Other iCount pipelines</h2>
       <div className="category">
         <h3>Preprocess</h3>
-        <div className="command"><h4>iCount segment</h4></div>
-        <div className="command"><h4>iCount xlsites</h4></div>
+        {preprocess.map(command => (
+          <div key={command.name} className="command">
+            <h4><Link to={`/commands/${command.id}/`}>{command.name}</Link></h4>
+          </div>
+        ))}
       </div>
       <div className="category">
         <h3>Analyse</h3>
-        <div className="command"><h4>iCount annotate</h4></div>
-        <div className="command"><h4>iCount clusters</h4></div>
-        <div className="command"><h4>iCount group</h4></div>
-        <div className="command"><h4>iCount peaks</h4></div>
-        <div className="command"><h4>Paraclu</h4></div>
-        <div className="command"><h4>iCount summary</h4></div>
-        <div className="command"><h4>iCount RNA-maps</h4></div>
-        <div className="command"><h4>PEKA</h4></div>
+        {analyse.map(command => (
+          <div key={command.name} className="command">
+            <h4><Link to={`/commands/${command.id}/`}>{command.name}</Link></h4>
+          </div>
+        ))}
       </div>
 
       <h2>Tool Catalogue</h2>
@@ -67,7 +87,7 @@ const AnalysisPage = () => {
           <h3>{category}</h3>
           {commands.filter(command => command.category === category).map(command => (
             <div key={command.name} className="command">
-              <h4>{command.name}</h4>
+              <h4><Link to={`/commands/${command.id}/`}>{command.name}</Link></h4>
             </div>
           ))}
         </div>

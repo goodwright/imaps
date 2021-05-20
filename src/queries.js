@@ -103,7 +103,13 @@ export const EXECUTION = gql`query execution($id: ID!) {
 }`;
 
 export const COMMANDS = gql`{
-  commands { id name category type }
+  commands { id name category type slug }
+}`;
+
+export const COMMAND = gql`query command($id: ID!) {
+  command(id: $id) {
+    id name description inputSchema
+  }
 }`;
 
 export const SEARCH_COLLECTIONS = gql`query searchCollections(
