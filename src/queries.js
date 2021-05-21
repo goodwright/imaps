@@ -54,6 +54,12 @@ export const COLLECTION = gql`query collection($id: ID!) {
   groups { id slug }
 }`;
 
+export const COLLECTION_DATA = gql`query collection($id: ID!) {
+  collection(id: $id) {
+    id executions { id name command { id type } }
+  }
+}`;
+
 export const PUBLIC_COLLECTIONS = gql`query publicCollections($first: Int $last: Int) {
   publicCollections(first: $first last: $last) { count edges { node {
     id name created sampleCount executionCount owners { id username }
@@ -110,6 +116,7 @@ export const COMMAND = gql`query command($id: ID!) {
   command(id: $id) {
     id name description inputSchema
   }
+  user { ownedCollections { id name } }
 }`;
 
 export const SEARCH_COLLECTIONS = gql`query searchCollections(
