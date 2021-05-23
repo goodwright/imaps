@@ -53,6 +53,7 @@ const CommandPage = () => {
 
       <ReactMarkdown className="description">{command.description}</ReactMarkdown>
 
+      <label className="collection-label">Select a Collection</label>
       <Select
         options={collectionOptions}
         value={collectionOptions.filter(c => c.value === selectedCollection)[0]}
@@ -96,7 +97,6 @@ const CommandPage = () => {
                     classNamePrefix="react-select"
                   />
                 </div>
-                
               )
             }
             if (input.type.includes("basic:boolean")) {
@@ -133,7 +133,7 @@ const CommandPage = () => {
                     //value={inputValues[input.name]}
                     multiple={isMulti}
                     type="file"
-                    onChange={e => setInputValues({...inputValues, [input.name]: isMulti ? e.target.files : e.target.files[0]})}
+                    onChange={e => setInputValues({...inputValues, [input.name]: isMulti ? [...e.target.files] : e.target.files[0]})}
                   />
                 </div>
               )
