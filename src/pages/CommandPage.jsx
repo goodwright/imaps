@@ -21,7 +21,9 @@ const CommandPage = () => {
   const { loading, data, error } = useQuery(COMMAND, {
     variables: {id: commandId},
     onCompleted: data => setInputValues(JSON.parse(data.command.inputSchema).reduce(
-      (prev, curr) => ({...prev, [curr.name]: (curr.default === undefined ? "" : curr.default)}), {}
+      (prev, curr) => ({...prev, [curr.name]: (curr.default === undefined ? (
+        curr.type && curr.type.slice(0, 5) === "list:" ? [] : ""
+      ) : curr.default)}), {}
     ))
   });
 
@@ -87,6 +89,7 @@ const CommandPage = () => {
                     options={options}
                     value={options.filter(c => c.value === inputValues[input.name])[0]}
                     onChange={({value}) => setInputValues({...inputValues, [input.name]: value})}
+                    isMulti={input.type && input.type.slice(0, 5) === "list:"}
                     placeholder="Select a ..."
                     isDisabled={!collectionQuery.data}
                     className="react-select"
@@ -118,6 +121,23 @@ const CommandPage = () => {
             ) ? "number" : (
               input.type.includes("basic:file")
             ) ? "file" : "text";
+
+            if (type === "file") {
+              const isMulti = input.type.slice(0, 5) === "list:";
+              return (
+                <div className="input" key={input.name}>
+                  <label htmlFor={input.name}>{input.name}</label>
+                  <div className="label">{input.label}</div>
+                  <input
+                    required={input.required}
+                    //value={inputValues[input.name]}
+                    multiple={isMulti}
+                    type="file"
+                    onChange={e => setInputValues({...inputValues, [input.name]: isMulti ? e.target.files : e.target.files[0]})}
+                  />
+                </div>
+              )
+            }
             
             return (
               <div className="input" key={input.name}>
@@ -126,6 +146,7 @@ const CommandPage = () => {
                 <input
                   required={input.required}
                   value={inputValues[input.name]}
+                  multiple={input.type && input.type.slice(0, 5) === "list:"}
                   type={type}
                   onChange={e => setInputValues({...inputValues, [input.name]: e.target.value})}
                 />
