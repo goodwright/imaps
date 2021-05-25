@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useRouteMatch } from "react-router";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useHistory, useRouteMatch } from "react-router";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
 import ReactMarkdown from "react-markdown";
 import Toggle from "react-toggle";
@@ -9,6 +9,7 @@ import { COMMAND, COLLECTION_DATA } from "../queries";
 import { detect404 } from "../forms";
 import PageNotFound from "./PageNotFound";
 import Base from "./Base";
+import { RUN_COMMAND } from "../mutations";
 
 const CommandPage = () => {
 
@@ -16,6 +17,7 @@ const CommandPage = () => {
 
   const [inputValues, setInputValues] = useState(null);
   const [selectedCollection, setSelectedCollection] = useState(null);
+  const history = useHistory();
   console.log(inputValues)
 
   const { loading, data, error } = useQuery(COMMAND, {
@@ -35,6 +37,12 @@ const CommandPage = () => {
 
   useDocumentTitle(data ? `iMaps - ${data.command.name}` : "iMaps");
 
+  const [runCommand, runCommandMutation] = useMutation(RUN_COMMAND, {
+    onCompleted: data => {
+      history.push(`/executions/${data.runCommand.execution.id}/`);
+    }
+  })
+
   if (detect404(error)) return <PageNotFound />
 
   if (loading || inputValues === null) return <Base className="command-page" loading={true} />
@@ -46,6 +54,13 @@ const CommandPage = () => {
   const collectionOptions = data.user.ownedCollections.map(collection => ({
     label: collection.name, value: collection.id
   }))
+
+  const formSubmit = e => {
+    e.preventDefault();
+    runCommand({variables: {
+      command: commandId, inputs: JSON.stringify(inputs), collection: selectedCollection
+    }})
+  }
 
   return (
     <Base className="command-page">
@@ -63,7 +78,7 @@ const CommandPage = () => {
         classNamePrefix="react-select"
       />
 
-      <form>
+      <form onSubmit={formSubmit}>
         <div className="inputs">
           {inputs.map(input => {
             if (!input.type) {

@@ -5,7 +5,6 @@ import PekaHeatmap from "./PekaHeatmap";
 import PekaRbp from "./PekaRbp";
 import Base from "../pages/Base";
 import PekaMotif from "./PekaMotif";
-import { getApiLocation } from "../api";
 
 const PekaPage = () => {
 
@@ -24,7 +23,7 @@ const PekaPage = () => {
 
   useEffect(() => {
     fetch(
-      getApiLocation().replace("graphql", `peka/entities/`)
+      `${process.env.REACT_APP_BACKEND}/graphql`.replace("graphql", `peka/entities/`)
     ).then(resp => resp.json()).then(json => {
       setData(json);
     })

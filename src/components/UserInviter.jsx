@@ -22,7 +22,7 @@ const UserInviter = props => {
 
   const options = allUsers.map(user => ({
     value: user.username,
-    label: <div><img alt="user" src={user && user.image ? `${getMediaLocation()}${user.image}` : anonymousUser} height="30px" width="30px"/>{`${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}${inviteeUsernamesInGroup.includes(user.username) ? " (Already invited)" : ""}`}</div>,
+    label: <div><img alt="user" src={user && user.image ? `${process.env.REACT_APP_FILES}${user.image}` : anonymousUser} height="30px" width="30px"/>{`${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}${inviteeUsernamesInGroup.includes(user.username) ? " (Already invited)" : ""}`}</div>,
     isDisabled: usernamesInGroup.includes(user.username) || inviteeUsernamesInGroup.includes(user.username),
     id: user.id
   }));

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import BarLoader from "react-spinners/BarLoader";
 import ReactTooltip from "react-tooltip";
-import { getApiLocation } from "../api";
 import { Link } from "react-router-dom";
 import roundTo from "round-to";
 
@@ -16,7 +15,7 @@ const PekaRbp = props => {
 
   useEffect(() => {
     fetch(
-      getApiLocation().replace("graphql", `peka/rbp?name=${rbp}`)
+      `${process.env.REACT_APP_BACKEND}/graphql`.replace("graphql", `peka/rbp?name=${rbp}`)
     ).then(resp => resp.json()).then(json => {
       setData(json);
     })

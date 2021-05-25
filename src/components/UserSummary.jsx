@@ -9,7 +9,6 @@ import Modal from "./Modal";
 import { DECLINE_INVITATION, MAKE_ADMIN, REMOVE_USER, REVOKE_ADMIN } from "../mutations";
 import { GROUP } from "../queries";
 import { createErrorObject } from "../forms";
-import { getMediaLocation } from "../api";
 import anonymousUser from "../images/anonymous-user.svg";
 
 const UserSummary = props => {
@@ -74,7 +73,7 @@ const UserSummary = props => {
   return (
     <Element className={className} to={`/users/${user && user.username}/`}>
       <div className="user-photo">
-        <img src={user && user.image ? `${getMediaLocation()}${user.image}#${Date.now()}` : anonymousUser} alt="user" />
+        <img src={user && user.image ? `${process.env.REACT_APP_FILES}${user.image}#${Date.now()}` : anonymousUser} alt="user" />
        
       </div>
       <div className="user-info">

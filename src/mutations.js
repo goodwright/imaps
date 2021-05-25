@@ -173,3 +173,7 @@ export const UPDATE_EXECUTION_ACCESS = gql`mutation updateExecutionAccess(
 export const DELETE_EXECUTION = gql`mutation deleteExecution($id: ID!) {
   deleteExecution(id: $id) { success }
 }`;
+
+export const RUN_COMMAND = gql`mutation runCommand($command: String! $inputs: String! $collection: ID!) {
+  runCommand(command: $command inputs: $inputs command: $command) { execution { id } }
+}`

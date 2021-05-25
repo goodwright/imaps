@@ -55,7 +55,7 @@ const UserImageEditor = props => {
           <input type="file" id="file" ref={fileRef} onChange={imageChanged} accept="image/*"/>
 
           {user.image && !(fileRef.current&& fileRef.current.files.length) ? (
-            <img src={`${getMediaLocation()}${user.image}`} alt=""/>
+            <img src={`${process.env.REACT_APP_FILES}${user.image}`} alt=""/>
           ) : fileRef.current && fileRef.current.files.length ? (
             <img src={URL.createObjectURL(fileRef.current.files[0])} alt="" />
           ): (

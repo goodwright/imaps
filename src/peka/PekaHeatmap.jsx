@@ -6,7 +6,6 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import PekaDendrogram from "./PekaDendrogram";
 import PekaControls from "./PekaControls";
 import roundTo from "round-to";
-import { getApiLocation } from "../api";
 
 const PekaHeatmap = props => {
 
@@ -42,7 +41,7 @@ const PekaHeatmap = props => {
     const main = document.querySelector("main");
     main.addEventListener("scroll", changeHeight);
     fetch(
-      getApiLocation().replace("graphql", "peka/")
+      `${process.env.REACT_APP_BACKEND}/graphql`.replace("graphql", "peka/")
     ).then(resp => resp.json()).then(json => {
       setData(json);
       drawCanvas(json, cellSize);

@@ -6,7 +6,6 @@ import roundTo from "round-to";
 import ReactTooltip from "react-tooltip";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import { getApiLocation } from "../api";
 
 const PekaMotif = props => {
   const { motif, download } = props;
@@ -21,7 +20,7 @@ const PekaMotif = props => {
   useEffect(() => {
     setData(null);
     fetch(
-      getApiLocation().replace("graphql", `peka/motif?sequence=${motif}`)
+      `${process.env.REACT_APP_BACKEND}/graphql`.replace("graphql", `peka/motif?sequence=${motif}`)
     ).then(resp => resp.json()).then(json => {
       setData(json);
       drawCanvases(json);
