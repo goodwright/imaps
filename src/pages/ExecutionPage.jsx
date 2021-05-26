@@ -201,7 +201,7 @@ const ExecutionPage = props => {
           <div className="files">
             {Object.values(fileOutputs).map((f, n) => f.value.map((v, m) => (
               <div className="file" key={`${n}-${m}`}>
-                <a className="file" href={`https://imaps.genialis.com/data/${execution.id}/${v.file}?force_download=1`}>
+                <a className="file" href={`${process.env.REACT_APP_DATA}/${execution.id}/${v.file}`}>
                   <img src={fileIcon} alt="" />{v.file} 
                 </a>
                 <span>{fileSize(v.size)}</span>
@@ -274,7 +274,7 @@ const ExecutionPage = props => {
                         <div className="values">
                           {input[1].value.map((value, v) => (
                             <div className="value" key={v}>
-                              <a href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} <span>{fileSize(value.size)}</span></a>
+                              <a href={`${process.env.REACT_APP_DATA}/${execution.id}/${value.file}`}>{value.file} <span>{fileSize(value.size)}</span></a>
                             </div>
                           ))}
                         </div>
@@ -335,7 +335,7 @@ const ExecutionPage = props => {
                           {output[1].value.map((value, v) => (
                             <div className="value" key={v}>
                               {value.file ? (
-                                <a className="download" href={`https://imaps.genialis.com/data/${execution.id}/${value.file}?force_download=1`}>{value.file} </a>
+                                <a className="download" href={`${process.env.REACT_APP_DATA}/${execution.id}/${value.file}`}>{value.file} </a>
                               ) : <span>{value.dir} (directory) </span>
                               }<span className="size">{fileSize(value.size)}</span>
                             </div>
