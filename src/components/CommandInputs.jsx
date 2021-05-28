@@ -222,6 +222,7 @@ const CommandInputs = props => {
         // File input?
         if (input.type && input.type.includes("file:")) {
           const isMulti = input.type.slice(0, 5) === "list:";
+          const parseFile = file => ({name: file.name, size: file.size})
           return (
             <div className="input" key={input.name}>
               <label htmlFor={input.name}>{input.name}</label>
@@ -229,9 +230,9 @@ const CommandInputs = props => {
               <input
                 type="file"
                 onChange={e => setInputValues({...inputValues, [input.name]: isMulti ? (
-                  [...e.target.files]
+                  [...e.target.files].map(parseFile)
                 ) : (
-                  e.target.files.length ? e.target.files[0] : null
+                  e.target.files.length ? parseFile(e.target.files[0]) : null
                 )})}
                 multiple={isMulti}
                 accept={input.validate_regex || undefined}

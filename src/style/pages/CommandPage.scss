@@ -30,4 +30,9 @@
     form {
         margin-top: $gap-7;
     }
+
+    button[type=submit] {
+        margin-left: 0;
+        margin-top: $gap-8;
+    }
 }

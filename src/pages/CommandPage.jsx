@@ -63,6 +63,23 @@ const CommandPage = () => {
   // Update the page title
   useDocumentTitle(data ? `iMaps - ${data.command.name}` : "iMaps");
 
+  // Data submit function
+  const [runCommand, runCommandMutation] = useMutation(RUN_COMMAND, {
+    onCompleted: console.log
+  })
+  const formSubmit = e => {
+    e.preventDefault();
+    const files = []
+    for (let input of document.querySelectorAll("input[type=file]")) {
+      for (let file of input.files) files.push(file)
+    }
+    runCommand({variables: {
+      command: commandId,
+      inputs: JSON.stringify(inputValues),
+      uploads: files
+    }})
+  }
+
   // While fetching the command, the page is loading
   if (loading || collectionQuery.loading) return <Base className="command-page" loading={true} />
 
@@ -85,13 +102,14 @@ const CommandPage = () => {
       {collection && <div className="collection">{collection.name}</div>}
 
       {canShowForm && (
-        <form>
+        <form onSubmit={formSubmit}>
           <CommandInputs
             inputSchema={JSON.parse(command.inputSchema)}
             inputValues={inputValues}
             setInputValues={setInputValues}
             collection={collection}
           />
+          <button type="submit" className="primary-button">Run Command</button>
         </form>
       )}
     </Base>
