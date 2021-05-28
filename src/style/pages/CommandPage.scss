@@ -9,51 +9,87 @@
     .description {
         font-weight: 300;
         line-height: 1.5;
+        margin-bottom: $gap-5;
+    }
+
+    .collection, .no-collection {
         margin-bottom: $gap-8;
     }
 
-    label.collection-label {
-        font-weight: 600;
-        margin-bottom: $gap-1;
-        display: block;
+    .no-collection {
+        font-size: $font-size-2;
+        font-style: italic;
     }
 
-    label.collection-label + .react-select {
-        max-width: 700px;
+    .collection {
+        font-weight: 600;
+        font-size: $font-size-4;
+        color: $purple-2;
     }
 
     form {
         margin-top: $gap-7;
 
-        .inputs {
+
+        .input {
             display: block;
-
-            .input {
+            margin-bottom: $gap-6;
+            
+            > label {
                 display: block;
-                margin-bottom: $gap-6;
-                
-                > label {
-                    display: block;
-                    text-align: left;
-                    font-weight: 700;
-                    margin-bottom: $gap-1;
-                }
+                text-align: left;
+                font-family: monospace;
+                font-weight: 700;
+                margin-bottom: $gap-1;
+                color: $purple-4;
+            }
 
-                .label {
+            .label {
+                font-weight: 300;
+                margin-bottom: $gap-2;
+            }
+
+            .collection-checkbox {
+                display: flex;
+                align-items: center;
+                margin-bottom: $gap-2;
+
+                label {
+                    font-size: $font-size-3;
                     font-weight: 300;
-                    margin-bottom: $gap-2;
+                    margin-left: $gap-1;
+                    display: block;
                 }
+            }
 
-                input, .react-select {
-                    max-width: 500px;
-                }
+            input, .react-select {
+                max-width: 500px;
+            }
 
-                input[type=number] {
-                    max-width: 250px;
-                }
+            input[type=number] {
+                max-width: 250px;
+            }
 
-                .react-select--is-disabled {
-                    opacity: 0.5;
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: auto;
+            }
+
+            input[type=number] {
+                -moz-appearance: auto;
+            }
+
+            .paginator {
+                margin-bottom: $gap-1;
+            }
+
+            .no-data {
+                font-weight: 300;
+            }
+
+            .react-select {
+                .react-select__value-container {
+                    cursor: text !important;
                 }
             }
         }

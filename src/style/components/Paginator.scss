@@ -1,12 +1,13 @@
 .paginator {
     display: flex;
+    margin-left: -$gap-3 / 2;
 
-    a, button {
+    a, button, .ellipsis {
         padding: 0;
         color: $purple-2;
         text-decoration: none;
         font-size: $font-size-5;
-        margin: 0 $gap-3 / 2;
+        margin: 0 $gap-3 / 2 !important;
         display: block;
         line-height: 1;
     }

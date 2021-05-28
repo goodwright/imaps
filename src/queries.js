@@ -56,7 +56,9 @@ export const COLLECTION = gql`query collection($id: ID!) {
 
 export const COLLECTION_DATA = gql`query collection($id: ID!) {
   collection(id: $id) {
-    id executions { id name command { id type } }
+    id executions { id name created started finished input owners { id name } command {
+      id name description inputSchema type
+    } }
   }
 }`;
 
@@ -110,13 +112,21 @@ export const EXECUTION = gql`query execution($id: ID!) {
 
 export const COMMANDS = gql`{
   commands { id name category type slug }
+  user { ownedCollections { id name } }
 }`;
 
 export const COMMAND = gql`query command($id: ID!) {
   command(id: $id) {
     id name description inputSchema
   }
-  user { ownedCollections { id name } }
+}`;
+
+export const POSSIBLE_EXECUTIONS = gql`query possibleExecutions($dataType: String $first: Int $last: Int $collection: ID) {
+  executions(dataType: $dataType first: $first last: $last collection: $collection) { count edges { node {
+    id name created started finished input owners { id name } command {
+      id name description inputSchema
+    }
+  } } }
 }`;
 
 export const SEARCH_COLLECTIONS = gql`query searchCollections(

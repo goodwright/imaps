@@ -299,6 +299,18 @@ $toggle-padding: 5px;
     }
 }
 
+input[type=checkbox] {
+    width: 20px !important;
+    height: 20px !important;
+    padding: 2px !important;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+input[type=checkbox]:checked {
+    background-color: $purple-4;
+}
+
 form {
 
     .input {
@@ -399,6 +411,10 @@ table {
 
     td {
         border-bottom: 1px solid $gray-3;
+
+        input[type=checkbox] {
+            margin: 0 0 0 $gap-2 !important;
+        }
     }
 
     th {

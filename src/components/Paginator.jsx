@@ -17,15 +17,15 @@ const Paginator = props => {
       {hasPrevious ? pathBase ? (
         <Link to={`${pathBase}?page=${currentPage - 1}`}><img src={previous} alt="previous" /></Link>
       ) : (
-        <button onClick={() => onClick(currentPage - 1)}><img src={previous} alt="previous" /></button>
+        <button onClick={() => onClick(currentPage - 1)} type="button"><img src={previous} alt="previous" /></button>
       ) : (
-        <button className="disabled"><img src={previous} alt="next" /></button>
+        <button className="disabled" type="button"><img src={previous} alt="next" /></button>
       )}
       {pageNumbers.map(n => {
         const className = n + 1 === currentPage ? "current" : null;
         if ( Math.abs((n + 1) - currentPage) > 1 && n > 1 && n < pageCount - 2) {
           if (n === currentPage - 3 || n === currentPage + 1) {
-            return <div key={n}>...</div>
+            return <div className="ellipsis" key={n}>...</div>
           }
           return <div key={n} />
         }
@@ -44,9 +44,9 @@ const Paginator = props => {
       {hasNext ? pathBase ? (
         <Link to={`${pathBase}?page=${currentPage + 1}`}><img src={next} alt="next" /></Link>
       ) : (
-        <button onClick={() => onClick(currentPage + 1)}><img src={next} alt="next" /></button>
+        <button onClick={() => onClick(currentPage + 1)} type="button"><img src={next} alt="next" /></button>
       ) : (
-        <button className="disabled"><img src={next} alt="next" /></button>
+        <button className="disabled" type="button"><img src={next} alt="next" /></button>
       )}
     </div>
   );

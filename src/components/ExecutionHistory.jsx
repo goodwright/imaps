@@ -6,7 +6,7 @@ import moment from "moment";
 
 const ExecutionHistory = props => {
 
-  const { executions, useName, searchable } = props;
+  const { executions, useName, searchable, selected, setSelected } = props;
   const [offset, setOffset] = useState(1);
   const [query, setQuery] = useState("");
   const history = useHistory();
@@ -18,10 +18,26 @@ const ExecutionHistory = props => {
     Object.entries(JSON.parse(e.input)).filter(i => `${i[0]}=${i[1]}`.toLowerCase().includes(query.toLowerCase())).length
   )) : executions;
 
+  const updateSelected = executionId => {
+    if (Array.isArray(selected)) {
+      if (selected.includes(executionId)) {
+        setSelected(selected.filter(e => e !== executionId))
+      } else {
+        setSelected([...selected, executionId])
+      }
+    } else {
+      if (selected === executionId) {
+        setSelected(null)
+      } else {
+        setSelected(executionId)
+      }
+    }
+  }
+
   if (!executions.length) {
     return (
       <div className="execution-history">
-        <div className="no-data">Currently no analysis.</div>
+        {selected === undefined && <div className="no-data">Currently no analysis.</div>}
       </div>
     )
   }
@@ -41,6 +57,7 @@ const ExecutionHistory = props => {
       <table>
         <thead>
           <tr>
+            {selected !== undefined && <th></th>}
             <th>{useName ? "Name" : "Command"}</th>
             <th>Date</th>
             <th>Owners</th>
@@ -52,7 +69,16 @@ const ExecutionHistory = props => {
             const basicSchema = JSON.parse(execution.command.inputSchema).filter(i => i.type && i.type.includes("basic:") && !i.type.includes("file")).map(i => i.name);
             const params = Object.entries(JSON.parse(execution.input)).filter(i => basicSchema.includes(i[0]));
             return (
-              <tr key={execution.id} onClick={() => history.push(`/executions/${execution.id}/`)}>
+              <tr key={execution.id} onClick={selected !== undefined ? () => updateSelected(parseInt(execution.id)) : () => history.push(`/executions/${execution.id}/`)}>
+                {selected !== undefined && (
+                  <td>
+                    <input
+                      type="checkbox"
+                      readOnly={true}
+                      checked={Array.isArray(selected) ? selected.includes(parseInt(execution.id)) : selected === parseInt(execution.id)}
+                    />
+                  </td>
+                )}
                 <td>{useName ? execution.name : execution.command.name}</td>
                 <td>{moment(execution.created * 1000).format("D MMM YYYY")}</td>
                 <td>{execution.owners.map(u => u.name).join(", ")}</td>
