@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useRouteMatch, useLocation } from "react-router";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
 import ReactMarkdown from "react-markdown";
-import Toggle from "react-toggle";
-import Select from "react-select";
-import Creatable from "react-select/creatable";
 import { COMMAND, COLLECTION_DATA, POSSIBLE_EXECUTIONS, COLLECTION } from "../queries";
 import { detect404 } from "../forms";
 import PageNotFound from "./PageNotFound";
-import ExecutionHistory from "../components/ExecutionHistory";
 import Base from "./Base";
 import { RUN_COMMAND } from "../mutations";
-import { BarLoader } from "react-spinners";
-import Paginator from "../components/Paginator";
 import CommandInputs from "../components/CommandInputs";
 
 const createDefaults = inputSchema => {

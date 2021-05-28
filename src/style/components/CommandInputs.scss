@@ -1,0 +1,73 @@
+.command-inputs {
+    .command-inputs {
+        margin: $gap-5;
+        margin-right: 0;
+    }
+
+    .input {
+        display: block;
+        margin-bottom: $gap-6;
+        
+        > label {
+            display: block;
+            text-align: left;
+            font-family: monospace;
+            font-weight: 700;
+            margin-bottom: $gap-1;
+            color: $purple-4;
+        }
+
+        .label {
+            font-weight: 300;
+            margin-bottom: $gap-2;
+        }
+
+        .collection-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: $gap-2;
+
+            label {
+                font-size: $font-size-3;
+                font-weight: 300;
+                margin-left: $gap-1;
+                display: block;
+            }
+        }
+
+        input, .react-select {
+            max-width: 500px;
+        }
+
+        input[type=number] {
+            max-width: 250px;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: auto;
+        }
+
+        input[type=number] {
+            -moz-appearance: auto;
+        }
+
+        .paginator {
+            margin-bottom: $gap-1;
+        }
+
+        .no-data {
+            font-weight: 300;
+        }
+
+        .react-select {
+            .react-select__value-container {
+                cursor: text !important;
+            }
+        }
+    }
+
+    button {
+        margin-left: 0;
+    }
+}

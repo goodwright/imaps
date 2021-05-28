@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, useRouteMatch, useLocation } from "react-router";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import useDocumentTitle from "@rehooks/document-title";
-import ReactMarkdown from "react-markdown";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
 import Toggle from "react-toggle";
 import Select from "react-select";
 import Creatable from "react-select/creatable";
-import { COMMAND, COLLECTION_DATA, POSSIBLE_EXECUTIONS, COLLECTION } from "../queries";
-import { detect404 } from "../forms";
+import { POSSIBLE_EXECUTIONS } from "../queries";
 import ExecutionHistory from "../components/ExecutionHistory";
-import { RUN_COMMAND } from "../mutations";
 import { BarLoader } from "react-spinners";
 import Paginator from "../components/Paginator";
 
 const CommandInputs = props => {
 
   const { inputSchema, inputValues, setInputValues, collection } = props;
-  console.log(inputSchema)
   const possibleExecutions = inputSchema.filter(input => input.type && input.type.includes("data:")).reduce(
     (prev, curr) => ({...prev, [curr.name]: {
       name: curr.name, page: 1, executions: null, limitToCollection: true,
@@ -243,6 +237,22 @@ const CommandInputs = props => {
                 accept={input.validate_regex || undefined}
                 required={input.required}
                 disabled={input.disabled}
+              />
+            </div>
+          )
+        }
+
+        // Group input?
+        if (!input.type && input.group) {
+          return (
+            <div className="input" key={input.name}>
+              <label htmlFor={input.name}>{input.name}</label>
+              <div className="label">{input.label}</div>
+              <CommandInputs
+                inputSchema={input.group}
+                inputValues={inputValues[input.name]}
+                setInputValues={inputs => setInputValues({...inputValues, [input.name]: inputs})}
+                collection={collection}
               />
             </div>
           )
