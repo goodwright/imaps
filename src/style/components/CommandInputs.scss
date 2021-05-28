@@ -1,4 +1,6 @@
 .command-inputs {
+    width: max-content;
+    
     .command-inputs {
         margin: $gap-5;
         margin-right: 0;
@@ -6,7 +8,9 @@
 
     .input {
         display: block;
-        margin-bottom: $gap-6;
+        margin-bottom: 0;
+        padding: $gap-6 / 2 0;
+        border-top: 1px solid $gray-5;
         
         > label {
             display: block;
@@ -65,6 +69,10 @@
                 cursor: text !important;
             }
         }
+    }
+
+    .input:last-child {
+        border-bottom: 1px solid $gray-5;;
     }
 
     button {

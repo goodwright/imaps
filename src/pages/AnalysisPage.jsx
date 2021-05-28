@@ -44,8 +44,8 @@ const AnalysisPage = () => {
     <Base className="analysis-page">
       <h1>Analysis</h1>
 
-      <div>
-        <label className="collection-label">Select a Collection</label>
+      <div className="collection">
+        <label className="collection-label">Select a Collection to perform the analysis within (or leave blank to work outside the context of a collection).</label>
         <Select
           options={collectionOptions}
           value={collectionOptions.filter(c => c.value === selectedCollection)[0]}
@@ -56,61 +56,56 @@ const AnalysisPage = () => {
         />
       </div>
 
-      <h2>Workflows</h2>
-      <div className="category">
-        <h3>Upload data</h3>
-        {dataUpload.map(command => (
-          <div key={command.name} className="command">
-            <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+      <div className="commands">
+        <div className="column">
+          <h2>Workflows</h2>
+          <div className="category">
+            <h3>Upload data</h3>
+            {dataUpload.map(command => (
+              <div key={command.name} className="command">
+                <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="category">
-        <h3>Complete workflow</h3>
-        {completeWorkflows.map(command => (
-          <div key={command.name} className="command">
-            <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+          <div className="category">
+            <h3>Complete workflow</h3>
+            {completeWorkflows.map(command => (
+              <div key={command.name} className="command">
+                <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="category">
-        <h3>Other iCount pipelines</h3>
-        {otherPipelines.map(command => (
-          <div key={command.name} className="command">
-            <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+          <div className="category">
+            <h3>Other iCount pipelines</h3>
+            {otherPipelines.map(command => (
+              <div key={command.name} className="command">
+                <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-
-      <h2>Other iCount pipelines</h2>
-      <div className="category">
-        <h3>Preprocess</h3>
-        {preprocess.map(command => (
-          <div key={command.name} className="command">
-            <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
-          </div>
-        ))}
-      </div>
-      <div className="category">
-        <h3>Analyse</h3>
-        {analyse.map(command => (
-          <div key={command.name} className="command">
-            <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
-          </div>
-        ))}
-      </div>
-
-      <h2>Tool Catalogue</h2>
-      {categories.map(category => (
-        <div className="category" key={category}>
-          <h3>{category}</h3>
-          {commands.filter(command => command.category === category).map(command => (
-            <div key={command.name} className="command">
-              <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
-            </div>
-          ))}
         </div>
-      ))}
+
+        <div className="column">
+          <h2>Other iCount pipelines</h2>
+          <div className="category">
+            <h3>Preprocess</h3>
+            {preprocess.map(command => (
+              <div key={command.name} className="command">
+                <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+              </div>
+            ))}
+          </div>
+          <div className="category">
+            <h3>Analyse</h3>
+            {analyse.map(command => (
+              <div key={command.name} className="command">
+                <h4><Link to={makeUrl(command)}>{command.name}</Link></h4>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
     </Base>
   );
 };
