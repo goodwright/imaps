@@ -15,6 +15,26 @@ import { RUN_COMMAND } from "../mutations";
 import { BarLoader } from "react-spinners";
 import Paginator from "../components/Paginator";
 
+const createDefaults = inputSchema => {
+  const inputs = {};
+  for (let input of inputSchema) {
+    let value = "";
+    if (input.default !== undefined) {
+      value = input.default;
+    } else if (!input.type) {
+      value = createDefaults(input.group);
+    } else if (input.type.slice(0, 5) === "list:") {
+      value = [];
+    } else if (input.type.slice(0, 5) === "data:") {
+      value = null;
+    } else if (input.type === "basic:boolean:") {
+      value = false;
+    }
+    inputs[input.name] = value;
+  }
+  return inputs;
+}
+
 const CommandPage = () => {
 
   const commandId = useRouteMatch("/commands/:id").params.id;
@@ -47,15 +67,7 @@ const CommandPage = () => {
       const inputSchema = JSON.parse(data.command.inputSchema);
 
       // Create the initial inputs object
-      setInputValues(inputSchema.reduce(
-        (prev, curr) => ({...prev, [curr.name]: (curr.default === undefined ? (
-          curr.type && curr.type.slice(0, 5) === "list:" ? [] : (
-            curr.type && curr.type.slice(0, 5) === "data:"
-          ) ? null : (
-            curr.type && curr.type === "basic:boolean:"
-          ) ? false : ""
-        ) : curr.default)}), {}
-      ))
+      setInputValues(createDefaults(inputSchema))
 
       // Create the executions object
       setExecutions(inputSchema.filter(input => input.type && input.type.includes("data:")).reduce(
