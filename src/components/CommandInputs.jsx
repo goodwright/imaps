@@ -222,7 +222,7 @@ const CommandInputs = props => {
         // File input?
         if (input.type && input.type.includes("file:")) {
           const isMulti = input.type.slice(0, 5) === "list:";
-          const parseFile = file => ({name: file.name, size: file.size})
+          const parseFile = file => ({file: file.name})
           return (
             <div className="input" key={input.name}>
               <label htmlFor={input.name}>{input.name}</label>

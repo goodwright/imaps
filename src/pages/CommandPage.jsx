@@ -65,7 +65,7 @@ const CommandPage = () => {
 
   // Data submit function
   const [runCommand, runCommandMutation] = useMutation(RUN_COMMAND, {
-    onCompleted: console.log
+    onCompleted: data => history.push(`/executions/${data.runCommand.execution.id}/`)
   })
   const formSubmit = e => {
     e.preventDefault();
@@ -76,7 +76,8 @@ const CommandPage = () => {
     runCommand({variables: {
       command: commandId,
       inputs: JSON.stringify(inputValues),
-      uploads: files
+      uploads: files,
+      collection: collection ? collection.id : null
     }})
   }
 

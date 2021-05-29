@@ -174,6 +174,10 @@ export const DELETE_EXECUTION = gql`mutation deleteExecution($id: ID!) {
   deleteExecution(id: $id) { success }
 }`;
 
-export const RUN_COMMAND = gql`mutation runCommand($command: ID! $inputs: String! $uploads: [Upload]) {
-  runCommand(command: $command inputs: $inputs uploads: $uploads) { execution { id } }
-}`
+export const RUN_COMMAND = gql`mutation runCommand(
+  $command: ID! $inputs: String! $collection: ID $uploads: [Upload]
+) {
+  runCommand(command: $command inputs: $inputs uploads: $uploads collection: $collection) {
+    execution { id }
+  }
+}`;
