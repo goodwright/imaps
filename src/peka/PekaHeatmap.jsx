@@ -31,8 +31,10 @@ const PekaHeatmap = props => {
   const totalIdrRef = useRef(null);
 
   const changeHeight = () => {
-    const height = Math.max(0, window.innerHeight - canvasRef.current.getBoundingClientRect().top - 12)
-    setVisibleHeight(height);
+    if (canvasRef.current) {
+      const height = Math.max(0, window.innerHeight - canvasRef.current.getBoundingClientRect().top - 12)
+      setVisibleHeight(height);
+    }
   }
 
   // Get data
@@ -55,6 +57,7 @@ const PekaHeatmap = props => {
 
   const drawCanvas = (json, size) => {
     let canvas = canvasRef.current;
+    if (!canvas) return; 
     canvas.width = json.matrix[0].length * size;
     canvas.style.width = `${canvas.width}px`;
     canvas.height = json.matrix.length * size;
