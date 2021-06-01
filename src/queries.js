@@ -124,7 +124,7 @@ export const COMMAND = gql`query command($id: ID!) {
 export const POSSIBLE_EXECUTIONS = gql`query possibleExecutions($dataType: String $first: Int $last: Int $collection: ID) {
   executions(dataType: $dataType first: $first last: $last collection: $collection) { count edges { node {
     id name created started finished input owners { id name } command {
-      id name description inputSchema
+      id name description inputSchema type
     }
   } } }
 }`;

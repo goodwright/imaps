@@ -110,7 +110,7 @@ const CommandPage = () => {
             setInputValues={setInputValues}
             collection={collection}
           />
-          <button type="submit" className="primary-button">Run Command</button>
+          <button type="submit" className="primary-button" disabled>Run Command</button>
         </form>
       )}
     </Base>

@@ -1,7 +1,7 @@
 host="imaps.goodwright.org"
 
 # Build app
-npm run build
+REACT_APP_BACKEND=https://api.imaps.goodwright.org REACT_APP_FILES=https://files.imaps.goodwright.org npm run build
 
 # Make temp directory on the server
 ssh marvin@$host "mkdir ~/$host-temp"
