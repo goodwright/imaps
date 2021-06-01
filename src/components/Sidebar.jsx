@@ -18,9 +18,10 @@ const Sidebar = () => {
   const onUserCollectionsPage = useLocation().pathname === "/user-collections/";
   const onNewCollectionPage = useLocation().pathname === "/collections/new/";
   const onAnalysisPage = useLocation().pathname === "/analysis/";
+  const onPekaPages = useLocation().pathname.slice(0, 10) === "/apps/peka";
 
   return (
-    <div className="sidebar">
+    <div className="sidebar no-scroll">
       <div className="sidebar-top">
         <UserSummary user={user || null} link={true} />
         {user && user.memberships.length > 0 && <div className="groups-section">
@@ -33,34 +34,43 @@ const Sidebar = () => {
             ))}
           </div>
         </div>}
+        <div className="nav-links">
 
-        {user ? (
-          <div className="nav-links">
-            <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
-              <span className="full">Public Collections</span>
-              <img src={collectionsIcon} alt="public-collections" className="mini" />
-            </Link>
-            <Link className={onUserCollectionsPage ? "selected" : ""} to="/user-collections/">
-              <span className="full">Your Collections</span>
-              <img src={yourCollectionsIcon} alt="your-collections" className="mini" />
-            </Link>
-            <Link className={onNewCollectionPage ? "selected" : ""} to="/collections/new/">
-              <span className="full">+ New Collection</span>
-              <img src={newItemIcon} alt="new-collection" className="mini" />
-            </Link>
-            <Link className={onAnalysisPage ? "selected" : ""} to="/analysis/">
-              <span className="full">Run Analysis</span>
-              <img src={gearIcon} alt="run-analysis" className="mini" />
-            </Link>
-          </div>
-        ) : (
-          <div className="nav-links">
-            <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
-              <span className="full">Collections</span>
+          {user ? (
+            <>
+              <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
+                <span className="full">Public Collections</span>
+                <img src={collectionsIcon} alt="public-collections" className="mini" />
+              </Link>
+              <Link className={onUserCollectionsPage ? "selected" : ""} to="/user-collections/">
+                <span className="full">Your Collections</span>
+                <img src={yourCollectionsIcon} alt="your-collections" className="mini" />
+              </Link>
+              <Link className={onNewCollectionPage ? "selected" : ""} to="/collections/new/">
+                <span className="full">+ New Collection</span>
+                <img src={newItemIcon} alt="new-collection" className="mini" />
+              </Link>
+              <Link className={onAnalysisPage ? "selected" : ""} to="/analysis/">
+                <span className="full">Run Analysis</span>
+                <img src={gearIcon} alt="run-analysis" className="mini" />
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
+                <span className="full">Collections</span>
+                <img src={collectionsIcon} alt="collections" className="mini" />
+              </Link>
+            </>
+          )}
+          <div className="applications">
+            <div className="heading">Applications</div>
+            <Link className={onPekaPages ? "selected" : ""} to="/apps/peka/">
+              <span className="full">PEKA</span>
               <img src={collectionsIcon} alt="collections" className="mini" />
             </Link>
           </div>
-        )}
+        </div>
       </div>
 
       <div className="goodwright">
