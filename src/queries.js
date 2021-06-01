@@ -44,8 +44,8 @@ export const COLLECTION = gql`query collection($id: ID!) {
       id name organism source piName annotatorName qcPass qcMessage
       created
     }
-    executions { id name created started finished input owners { id name } command {
-      id name inputSchema
+    executions { id name created started finished input command {
+      id name inputSchema type
     } }
     users { id name username collectionPermission(id: $id) }
     groups { id slug collectionPermission(id: $id) }
@@ -84,7 +84,7 @@ export const SAMPLE = gql`query sample($id: ID!) {
     created lastModified canEdit canShare isOwner
     collection { id name }
     executions { id name created started finished input owners { id name } command {
-      id name description inputSchema
+      id name description inputSchema type
     } }
     users { id name username samplePermission(id: $id) }
   }
@@ -99,7 +99,7 @@ export const EXECUTION = gql`query execution($id: ID!) {
     warning error
     sample { id name }
     collection { id name }
-    command { id name description inputSchema outputSchema }
+    command { id name description inputSchema outputSchema type }
     parent { id name }
     upstreamExecutions { id name output input owners { id name } command { id inputSchema name } }
     downstreamExecutions { id started created finished name owners { id name } input command { id inputSchema name } }

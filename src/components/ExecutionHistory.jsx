@@ -12,9 +12,11 @@ const ExecutionHistory = props => {
   const history = useHistory();
   const PER_PAGE = 12;
 
+  const parseType = type => type.split(":").filter(Boolean).filter(s => !["data", "list"].includes(s)).join(" / ");
+
   const filteredExecutions = query.length ? executions.filter(e => (
     e.command.name.toLowerCase().includes(query.toLowerCase()) ||
-    e.owners.filter(u => u.name.toLowerCase().includes(query.toLowerCase())).length ||
+    parseType(e.command.type).toLowerCase().includes(query.toLowerCase()) ||
     Object.entries(JSON.parse(e.input)).filter(i => `${i[0]}=${i[1]}`.toLowerCase().includes(query.toLowerCase())).length
   )) : executions;
 
@@ -42,6 +44,9 @@ const ExecutionHistory = props => {
     )
   }
 
+  const pageCount = Math.ceil(filteredExecutions.length / PER_PAGE)
+  const page = offset > pageCount ? pageCount : offset;
+
   return (
     <div className="execution-history">
 
@@ -52,7 +57,7 @@ const ExecutionHistory = props => {
       />}
       {filteredExecutions.length > PER_PAGE && <Paginator
         count={filteredExecutions.length} itemsPerPage={PER_PAGE}
-        currentPage={offset} onClick={setOffset}
+        currentPage={page} onClick={setOffset}
       />}
       <table>
         <thead>
@@ -60,12 +65,12 @@ const ExecutionHistory = props => {
             {selected !== undefined && <th></th>}
             <th>{useName ? "Name" : "Command"}</th>
             <th>Date</th>
-            <th>Owners</th>
+            <th>Data Type</th>
             <th>Basic Parameters</th>
           </tr>
         </thead>
         <tbody>
-          {filteredExecutions.slice((offset - 1) * PER_PAGE, offset * PER_PAGE).map(execution => {
+          {filteredExecutions.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(execution => {
             const basicSchema = JSON.parse(execution.command.inputSchema).filter(i => i.type && i.type.includes("basic:") && !i.type.includes("file")).map(i => i.name);
             const params = Object.entries(JSON.parse(execution.input)).filter(i => basicSchema.includes(i[0]));
             return (
@@ -81,7 +86,7 @@ const ExecutionHistory = props => {
                 )}
                 <td>{useName ? execution.name : execution.command.name}</td>
                 <td>{moment(execution.created * 1000).format("D MMM YYYY")}</td>
-                <td>{execution.owners.map(u => u.name).join(", ")}</td>
+                <td>{parseType(execution.command.type)}</td>
                 <td>{params.map(input => `${input[0]}=${input[1]}`).join(", ")}</td>
               </tr>
             )
