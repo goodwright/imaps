@@ -7,6 +7,7 @@ import collectionsIcon from "../images/collections.svg"
 import newItemIcon from "../images/new.svg"
 import gearIcon from "../images/gear.svg"
 import goodwright from "../images/goodwright.svg";
+import pekaIcon from "../images/peka.svg";
 import goodwrightIcon from "../images/goodwright-icon.svg";
 import githubIcon from "../images/github.svg"
 import slackIcon from "../images/slack.svg"
@@ -68,7 +69,7 @@ const Sidebar = () => {
             <div className="heading">Applications</div>
             <Link className={onPekaPages ? "selected" : ""} to="/apps/peka/">
               <span className="full">PEKA</span>
-              <img src={collectionsIcon} alt="collections" className="mini" />
+              <img src={pekaIcon} alt="peka" className="mini" />
             </Link>
           </div>
         </div>
