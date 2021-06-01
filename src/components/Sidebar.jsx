@@ -11,6 +11,7 @@ import pekaIcon from "../images/peka.svg";
 import goodwrightIcon from "../images/goodwright-icon.svg";
 import githubIcon from "../images/github.svg"
 import slackIcon from "../images/slack.svg"
+import searchIcon from "../images/searchIcon.svg"
 
 const Sidebar = () => {
 
@@ -19,6 +20,7 @@ const Sidebar = () => {
   const onCollectionsPage = useLocation().pathname === "/collections/";
   const onUserCollectionsPage = useLocation().pathname === "/user-collections/";
   const onNewCollectionPage = useLocation().pathname === "/collections/new/";
+  const onSearchPage = useLocation().pathname === "/search/";
   const onAnalysisPage = useLocation().pathname === "/analysis/";
   const onPekaPages = useLocation().pathname.slice(0, 10) === "/apps/peka";
 
@@ -65,6 +67,10 @@ const Sidebar = () => {
               </Link>
             </>
           )}
+          <Link className={onSearchPage ? "selected" : ""} to="/search/">
+            <span className="full">Search Data</span>
+            <img src={searchIcon} alt="search" className="mini" />
+          </Link>
           <div className="applications">
             <div className="heading">Applications</div>
             <Link className={onPekaPages ? "selected" : ""} to="/apps/peka/">

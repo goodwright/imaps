@@ -180,6 +180,9 @@
             a.selected {
                 background: none;
 
+                width: 100%;
+                margin-left: 0;
+
                 .mini {
                     opacity: 1;
                 }
