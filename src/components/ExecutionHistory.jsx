@@ -12,7 +12,7 @@ const ExecutionHistory = props => {
   const history = useHistory();
   const PER_PAGE = 12;
 
-  const parseType = type => type.split(":").filter(Boolean).filter(s => !["data", "list"].includes(s)).join(" / ");
+  const parseType = type => (type || "").split(":").filter(Boolean).filter(s => !["data", "list"].includes(s)).join(" / ");
 
   const filteredExecutions = query.length ? executions.filter(e => (
     e.command.name.toLowerCase().includes(query.toLowerCase()) ||

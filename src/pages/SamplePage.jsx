@@ -35,7 +35,7 @@ const SamplePage = props => {
 
   return (
     <Base className="sample-page">
-      <SampleInfo sample={sample} edit={edit} collections={data.user.ownedCollections} />
+      <SampleInfo sample={sample} edit={edit} collections={data.user ? data.user.ownedCollections : []} />
       {!edit && (
         <>
           <h2>Analysis History</h2>
