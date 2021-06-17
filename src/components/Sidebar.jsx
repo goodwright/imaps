@@ -10,7 +10,8 @@ import goodwright from "../images/goodwright.svg";
 import pekaIcon from "../images/peka.svg";
 import goodwrightIcon from "../images/goodwright-icon.svg";
 import githubIcon from "../images/github.svg"
-import slackIcon from "../images/slack.svg"
+import slackIcon from "../images/slack.svg";
+import documentationIcon from "../images/documentation.svg";
 import searchIcon from "../images/searchIcon.svg"
 
 const Sidebar = () => {
@@ -93,6 +94,7 @@ const Sidebar = () => {
         <div className="links gh-links">
           <a href="https://github.com/goodwright/imaps-api"><img src={githubIcon} alt="github" /> Backend code</a>
           <a href="https://github.com/goodwright/imaps"><img src={githubIcon} alt="github" /> Frontend code</a>
+          <a href="https://docs.imaps.goodwright.org/"><img src={documentationIcon} alt="github" /> CLIP forum</a>
           <a href=" https://join.slack.com/t/imapsgroup/shared_invite/zt-r24y3591-Xbhnym2t38u_urU~I0K0lQ"><img src={slackIcon} alt="github" /> Slack Workspace</a>
         </div>
       </div>
