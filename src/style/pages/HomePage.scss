@@ -1,0 +1,19 @@
+.home-page {
+    .home-text {
+        font-size: $font-size-5;
+        line-height: 1.6;
+        color: $purple-2;
+        max-width: 900px;
+        margin: 0 auto;
+
+        p {
+            margin-bottom: $gap-4;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .home-text {
+            font-size: $font-size-3;
+        }
+    }
+}
