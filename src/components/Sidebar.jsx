@@ -79,6 +79,18 @@ const Sidebar = () => {
               <img src={pekaIcon} alt="peka" className="mini" />
             </Link>
           </div>
+
+          <div className="applications">
+            <div className="heading">Resources</div>
+            <a href="https://docs.imaps.goodwright.org/">
+              <span className="full">CLIP forum</span>
+              <img src={documentationIcon} alt="peka" className="mini" />
+            </a>
+            <a href="https://join.slack.com/t/imapsgroup/shared_invite/zt-r24y3591-Xbhnym2t38u_urU~I0K0lQ">
+              <span className="full">Slack Workspace</span>
+              <img src={slackIcon} alt="peka" className="mini" />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -94,8 +106,6 @@ const Sidebar = () => {
         <div className="links gh-links">
           <a href="https://github.com/goodwright/imaps-api"><img src={githubIcon} alt="github" /> Backend code</a>
           <a href="https://github.com/goodwright/imaps"><img src={githubIcon} alt="github" /> Frontend code</a>
-          <a href="https://docs.imaps.goodwright.org/"><img src={documentationIcon} alt="github" /> CLIP forum</a>
-          <a href=" https://join.slack.com/t/imapsgroup/shared_invite/zt-r24y3591-Xbhnym2t38u_urU~I0K0lQ"><img src={slackIcon} alt="github" /> Slack Workspace</a>
         </div>
       </div>
     </div>
