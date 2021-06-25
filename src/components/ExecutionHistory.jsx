@@ -71,7 +71,7 @@ const ExecutionHistory = props => {
         </thead>
         <tbody>
           {filteredExecutions.slice((page - 1) * PER_PAGE, page * PER_PAGE).map(execution => {
-            const basicSchema = JSON.parse(execution.command.inputSchema).filter(i => i.type && i.type.includes("basic:") && !i.type.includes("file")).map(i => i.name);
+            const basicSchema = JSON.parse(execution.input).filter(i => i.type && i.type.includes("basic:") && !i.type.includes("file")).map(i => i.name);
             const params = Object.entries(JSON.parse(execution.input)).filter(i => basicSchema.includes(i[0]));
             return (
               <tr key={execution.id} onClick={selected !== undefined ? () => updateSelected(parseInt(execution.id)) : () => history.push(`/executions/${execution.id}/`)}>
@@ -86,7 +86,7 @@ const ExecutionHistory = props => {
                 )}
                 <td>{useName ? execution.name : execution.command.name}</td>
                 <td>{moment(execution.created * 1000).format("D MMM YYYY")}</td>
-                <td>{parseType(execution.command.type)}</td>
+                <td>{parseType(execution.command.outputType)}</td>
                 <td>{params.map(input => `${input[0]}=${input[1]}`).join(", ")}</td>
               </tr>
             )

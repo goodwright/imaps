@@ -65,6 +65,197 @@ const ExecutionPage = props => {
   }
 
   const execution = data.execution;
+
+  const input = JSON.parse(data.execution.input);
+  const output = JSON.parse(data.execution.output);
+
+  const basicInputs = input.filter(i => i.type && i.type.includes("basic:") && !i.type.includes("file:"));
+  const fileInputs = input.filter(i => i.type && i.type.includes("basic:file:"));
+  const dataInputs = input.filter(i => i.type && i.type.includes("data:"));
+  const upstream = execution.upstream.reduce((prev, curr) => ({
+    ...prev, [curr.id]: curr
+  }), {});
+  
+  const basicOutputs = output.filter(o => o.type && o.value !== undefined && o.type.includes("basic:") && !o.type.includes("file:"));
+  const fileOutputs = output.filter(o => o.type && o.value !== undefined && o.type.includes("basic:file:"));
+
+  return (
+    <Base className="execution-page">
+      <h1>{execution.name}</h1>
+      <Link to={`/commands/${execution.command.id}/`}>
+        <div>({execution.command.category}) {execution.command.name}: {execution.command.outputType}</div>
+      </Link>
+      <br /><br />
+
+      {edit && execution.canShare && <div className="bottom-buttons">
+        <ExecutionAccess execution={execution} allUsers={data.users} />
+        {edit && execution.isOwner && <ExecutionDeletion execution={execution} />}
+      </div>}
+
+      {execution.collection && (
+        <div className="collection">Collection: <Link to={`/collections/${execution.collection.id}/`}>{execution.collection.name}</Link></div>
+      )}
+      {execution.sample && (
+        <div className="sample">Sample: <Link to={`/samples/${execution.sample.id}/`}>{execution.sample.name}</Link></div>
+      )}
+      <br/>
+
+      <div className="dates">
+        {execution.created && <div>Created: {moment(execution.created * 1000).format("HH:mm, D MMM YYYY")}</div>}
+        {execution.started && <div>Started: {moment(execution.started * 1000).format("HH:mm, D MMM, YYYY")}</div>}
+        {execution.finished && <div>Finished: {moment(execution.finished * 1000).format("HH:mm, D MMM, YYYY")}</div>}
+      </div>
+
+      <div className="process">
+        {execution.status && <div>Status: {execution.status}</div>}
+        {execution.warning && <div>Warning: {execution.warning}</div>}
+        {execution.error && <div>Error: {execution.error}</div>}
+      </div>
+      <br />
+      
+      {execution.demultiplexExecution && <div className="demultiplex">
+        Demultiplxed from:
+        <div><Link to={`/executions/${execution.demultiplexExecution.id}/`}>{execution.demultiplexExecution.name}</Link></div>
+        <br />
+      </div>}
+
+      {execution.demultiplexed.length > 0 && (
+        <div>
+          Demultiplexed into:
+          {execution.demultiplexed.map(ex => (
+            <div key={ex.id}><Link to={`/executions/${ex.id}/`}>{ex.name}</Link></div>
+          ))}
+          <br />
+        </div>
+      )}
+
+      {execution.parent && (
+        <div>
+          Performed as part of a workflow:
+          <div><Link to={`/executions/${execution.parent.id}/`}>{execution.parent.name}</Link></div>
+          <div>{execution.parent.command.name}</div>
+          <br />
+        </div>
+      )}
+
+      {dataInputs.length > 0 && (
+        <div>
+          Data Inputs:
+          {dataInputs.map(input => {
+            const values = Array.isArray(input.value) ? input.value : [input.value]
+            return (
+              <div key={input.name}>
+                <div>{input.name}:</div>
+                <div>
+                  {values.filter(value => value in upstream).map((value, index) => (
+                    <div key={index}>
+                      <Link to={`/executions/${value}/`}>{upstream[value].name}</Link>
+                      <div>{upstream[value].command.name}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+            })}
+          <br />
+        </div>
+      )}
+
+      {fileInputs.length > 0 && (
+        <div>
+          File Inputs:
+          {fileInputs.map(input => {
+            const values = Array.isArray(input.value) ? input.value : [input.value]
+            return (
+              <div key={input.name}>
+                <div>{input.name}:</div>
+                <div>
+                  {values.map((value, index) => <a key={index} href={`${process.env.REACT_APP_DATA}/${execution.id}/${value.file}`}>{value.file}</a>)}
+                </div>
+              </div>
+            )
+            })}
+          <br />
+        </div>
+      )}
+
+      {basicInputs.length > 0 && (
+        <div>
+          Basic Inputs:
+          {basicInputs.map(input => {
+            const values = Array.isArray(input.value) ? input.value : [input.value];
+            return (
+              <div key={input.name}>
+                <span>{input.name}: </span><span>{values.map(v => v.toString()).join(", ")}</span>
+              </div>
+            )
+            })}
+          <br />
+        </div>
+      )}
+
+      {basicOutputs.length > 0 && (
+        <div>
+          Basic Outputs:
+          {basicOutputs.map(output => {
+            const values = Array.isArray(output.value) ? output.value : [output.value];
+            return (
+              <div key={output.name}>
+                <span>{output.name}:</span>
+                <span>{values.map(v => v.toString()).join(", ")}</span>
+              </div>
+            )
+            })}
+          <br />
+        </div>
+      )}
+
+      {fileOutputs.length > 0 && (
+        <div>
+          File Outputs:
+          {fileOutputs.map(output => {
+            const values = Array.isArray(output.value) ? output.value : [output.value]
+            return (
+              <div key={output.name}>
+                <div>{output.name}:</div>
+                <div>
+                  {values.map((value, index) => <a key={index} href={`${process.env.REACT_APP_DATA}/${execution.id}/${value.file}`}>{value.file}</a>)}
+                </div>
+              </div>
+            )
+          })}
+          <br />
+        </div>
+      )}
+
+      {execution.children.length > 0 && (
+        <div>
+          Steps:
+          {execution.children.map(child => (
+            <div key={child.id}>{child.command.name}: <Link to={`/executions/${child.id}/`}>{child.name}</Link></div>
+          ))}
+        </div>
+      )}
+
+      {execution.downstream.length > 0 && (
+        <div>
+          Downstream:
+          {execution.downstream.map(down => (
+            <div key={down.id}>
+                <Link to={`/executions/${down.id}/`}>{down.name}</Link>
+            </div>
+          ))}
+          <br />
+        </div>
+      )}
+
+      {execution.owners.length > 0 && <div className="owner">
+        Contributed by <div className="names">{execution.owners.map(user => <Link key={user.id} to={`/users/${user.username}/`}>{user.name}</Link>)}</div> 
+      </div>}
+
+
+    </Base>
+  )
   
   // Parse inputs
   const inputs = JSON.parse(execution.input);
@@ -91,7 +282,7 @@ const ExecutionPage = props => {
   }
 
   // Process upstream executions
-  const dataInputs = {}
+  /* const dataInputs = {}
   const upstreamExecutions = execution.upstreamExecutions.reduce(
     (prev, curr) => ({[curr.id]: curr, ...prev}), {}
   );
@@ -100,18 +291,12 @@ const ExecutionPage = props => {
       dataInputs[input[0]] = input[1]
       dataInputs[input[0]].value = input[1].value.map(id => upstreamExecutions[id])   
     }
-  }
+  } */
 
   // Process upload inputs
-  const fileInputs = Object.entries(inputs).filter(
-    input => input[1].schema.rawType.slice(0, 11) === "basic:file:" && !input[1].schema.hidden
-  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {})
 
   // Process basic inputs
-  const basicInputs = Object.entries(inputs).filter(
-    input => input[1].schema.rawType.slice(0, 6) === "basic:" &&
-    input[1].schema.rawType.slice(6, 10) !== "file" && !input[1].schema.hidden
-  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {});
+  
 
   // Parse outputs
   const outputs = JSON.parse(execution.output);
@@ -146,15 +331,7 @@ const ExecutionPage = props => {
   }
 
   // Process file outputs
-  const fileOutputs = Object.entries(outputs).filter(
-    output => (output[1].schema.rawType.slice(0, 11) === "basic:file:" || output[1].schema.rawType.slice(0, 11) === "basic:dir:") && !output[1].schema.hidden
-  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {})
 
-  // Process basic outputs
-  const basicOutputs = Object.entries(outputs).filter(
-    output => output[1].schema.rawType.slice(0, 6) === "basic:" &&
-    output[1].schema.rawType.slice(6, 10) !== "file" && output[1].schema.rawType.slice(6, 9) !== "dir" && !output[1].schema.hidden
-  ).reduce((prev, curr) => ({[curr[0]]: curr[1],  ...prev}), {});
 
   const downstreamExecutions = execution.downstreamExecutions;
   const InfoElement = edit ? "form" : "div";

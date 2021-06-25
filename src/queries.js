@@ -45,7 +45,7 @@ export const COLLECTION = gql`query collection($id: ID!) {
       created
     }
     executions { id name created started finished input command {
-      id name inputSchema type
+      id name outputType
     } }
     users { id name username collectionPermission(id: $id) }
     groups { id slug collectionPermission(id: $id) }
@@ -57,7 +57,7 @@ export const COLLECTION = gql`query collection($id: ID!) {
 export const COLLECTION_DATA = gql`query collection($id: ID!) {
   collection(id: $id) {
     id executions { id name created started finished input owners { id name } command {
-      id name description inputSchema type
+      id name description outputType
     } }
   }
 }`;
@@ -84,7 +84,7 @@ export const SAMPLE = gql`query sample($id: ID!) {
     created lastModified canEdit canShare isOwner
     collection { id name }
     executions { id name created started finished input owners { id name } command {
-      id name description inputSchema type
+      id name description outputType
     } }
     users { id name username samplePermission(id: $id) }
   }
@@ -93,37 +93,35 @@ export const SAMPLE = gql`query sample($id: ID!) {
 
 export const EXECUTION = gql`query execution($id: ID!) {
   execution(id: $id) {
-    id name created scheduled started finished input output status 
-    canEdit canShare isOwner
-    warning error
-    sample { id name }
-    collection { id name }
-    command { id name description inputSchema outputSchema type }
-    parent { id name }
-    upstreamExecutions { id name output input owners { id name } command { id inputSchema name } }
-    downstreamExecutions { id started created finished name owners { id name } input command { id inputSchema name type } }
-    componentExecutions { id name started created finished input owners { id name } command { id inputSchema name type } }
-    owners { id name username }
-    users { id name username executionPermission(id: $id) }
+    id name
+    created started finished status warning error
+    input output
+    command { id name category outputType }
+    demultiplexExecution { id name }
+    demultiplexed { id name }
+    upstream { id name command { name } } downstream { id name command { name } }
+    parent { id name command { name } } children { id name command { id name } }
+    sample { id name } collection { id name }
+    owners { id name }
   }
   users { id name username }
 }`;
 
 export const COMMANDS = gql`{
-  commands { id name category type slug }
+  commands { id name category outputType slug }
   user { ownedCollections { id name } }
 }`;
 
 export const COMMAND = gql`query command($id: ID!) {
   command(id: $id) {
-    id name description inputSchema
+    id name description
   }
 }`;
 
 export const POSSIBLE_EXECUTIONS = gql`query possibleExecutions($dataType: String $first: Int $last: Int $collection: ID) {
   executions(dataType: $dataType first: $first last: $last collection: $collection) { count edges { node {
     id name created started finished input owners { id name } command {
-      id name description inputSchema type
+      id name description outputType
     }
   } } }
 }`;
