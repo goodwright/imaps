@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { ClipLoader } from "react-spinners";
-import classNames from "classnames";
+import { useMutation } from "@apollo/client";
 import Modal from "./Modal";
 import { REQUEST_PASSWORD_RESET } from "../mutations";
-import { useMutation } from "@apollo/client";
+import Button from "./Button";
 import emailIcon from "../images/email.svg";
 
 const PasswordResetRequest = props => {
+  /**
+   * Modal for taking a user's email and then reporting it has been submitted.
+   */
 
   const { showModal, setShowModal } = props;
   const [email, setEmail] = useState("");
   const [emailUp, setEmailUp] = useState(false);
-  const emailClass = classNames({up: emailUp});
 
   const [requestReset, requestResetMutation] = useMutation(REQUEST_PASSWORD_RESET, {
     onCompleted: () => setTimeout(() => setEmailUp(true), 500)
@@ -23,32 +24,44 @@ const PasswordResetRequest = props => {
     requestReset({variables: {email}})
   }
 
+  if (requestResetMutation.data) {
+    return (
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        title={"Check your Inbox"}
+        text={`We have sent password recovery instructions to ${email}`}
+        className="max-w-lg w-max"
+      >
+        <div className="text-primary-200 text-xs -mt-1 mb-2">Didn't receive an email? Check your spam filter.</div>
+        <img src={emailIcon} className={`h-28 mx-auto opacity-50 -mb-2 transition duration-1000 transform  relative ${emailUp ? "translate-y-0" : "translate-y-36"}`} alt="email" />
+      </Modal>
+    )
+  }
+
   return (
-    <Modal className="password-reset-request" showModal={showModal} setShowModal={setShowModal}>
-      {requestResetMutation.data ? (
-        <div className="success">
-          <h2>Check your Inbox</h2>
-          <div className="info">We have sent password recovery instructions to {email}</div>
-          <div className="small-info">Didn't receive an email? Check your spam filter.</div>
-          <img src={emailIcon} className={emailClass} alt="email" />
-        </div>
-      ): (
-        <form id="reset" onSubmit={onSubmit}>
-          <h2>Reset Password</h2>
-          <div className="info">Enter the email associated with your account and we'll send an email with instructions to reset your password.</div>
-          <label>Email</label>
-          <input type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-          />
-          <button type="submit" className="button primary-button">
-            {requestResetMutation.loading ? <ClipLoader color="white" size="20px" /> : "Request Password Reset"}
-          </button>
-        </form>
-      )}
+    <Modal
+      showModal={showModal}
+      setShowModal={setShowModal}
+      title="Reset Password"
+      text="Enter the email associated with your account and we'll send an email with instructions to reset your password."
+      className="max-w-lg"
+    >
+      <form id="reset" onSubmit={onSubmit}>
+        <input
+          type="email"
+          className="text-lg mb-4 text-primary-400 mt-3 placeholder-gray-400 placeholder-opacity-70"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
+        <Button type="submit" className="btn-primary w-full" loading={requestResetMutation.loading}>
+          Request Password Reset
+        </Button>
+      </form>
     </Modal>
-  );
+  )
 };
 
 PasswordResetRequest.propTypes = {
