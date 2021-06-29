@@ -42,7 +42,7 @@ const LoginForm = () => {
     <>
       <form className="bg-primary-400 px-8 py-12 w-full h-full relative sm:rounded-lg sm:max-w-md sm:h-auto sm:px-12" onSubmit={formSubmit}>
         <Logo inverted={true} showGoodwright={true} className="mx-auto mb-10" svgClassName="h-16 sm:h-20" />
-        {error && <div className="ml-16 pl-3 mb-2 text-red-800">Those credentials aren't valid.</div>}
+        {error && <div className="ml-16 pl-3 mb-2 text-red-800 font-medium">Those credentials aren't valid.</div>}
         <div className={`flex items-center mb-8 w-full ${error ? "" : "pt-8"}`}>
           <label htmlFor="username" className="text-white mr-3 w-16 text-right">username</label>
           <input

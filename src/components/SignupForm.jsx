@@ -1,14 +1,13 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
-import { ClipLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/client";
 import { TOKEN } from "../queries";
 import { SIGNUP } from "../mutations";
-import Logo from "./Logo";
-import goodwright from "../images/by-goodwright.svg"
 import { UserContext } from "../contexts";
 import { createErrorObject } from "../forms";
+import Logo from "./Logo";
+import Button from "./Button";
 
 const SignupForm = () => {
 
@@ -43,74 +42,83 @@ const SignupForm = () => {
   }
 
   return (
-    <form className="signup-form" onSubmit={formSubmit}>
-      <div className="logo-container">
-        <Logo inverted={true} />
-        <img src={goodwright} alt="by goodwright" />
+    <form className="bg-primary-400 px-8 py-12 w-full h-full relative sm:rounded-lg sm:max-w-md sm:h-auto sm:px-12" onSubmit={formSubmit}>
+      <Logo inverted={true} showGoodwright={true} className="mx-auto mb-10" svgClassName="h-16 sm:h-20" />
+
+      {errors.general && <div className="text-red-800 mb-1 text-xs ml-16 pl-3">There was an error.</div>}
+
+      {errors.username && <div className="text-red-800 mb-1 text-xs ml-16 pl-3 font-medium -mt-2">{errors.username}</div>}
+      <div className={`flex items-center mb-8 w-full`}>
+        <label htmlFor="username" className="text-white mr-3 w-16 block text-right">username</label>
+        <input
+          className={`big-input bg-white text-primary-500 font-medium flex-grow ${errors.username ? "error" : ""}`}
+          type="text"
+          id="username"
+          required
+          value={username}
+          onChange={e => setUsername(e.target.value)}
+          autoCapitalize="none"
+          autoComplete="username"
+        />
+
       </div>
 
-      {errors.general && <div className="error">There was an error.</div>}
-      <div className={errors.username ? "input error-input" : "input"}>
-        <label htmlFor="username">username</label>
-        <div className="error-container">
-          {errors.username && <div className="error">{errors.username}</div>}
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-            autoCapitalize="none"
-            autoComplete="username"
-          />
-        </div>
+      {errors.name && <div className="text-red-800 mb-1 text-xs ml-16 pl-3 font-medium -mt-2">{errors.name}</div>}
+      <div className="flex items-center mb-8 w-full">
+        <label htmlFor="name" className="text-white mr-3 block w-16 block text-right">name</label>
+
+        <input
+          className={`big-input bg-white text-primary-500 font-medium flex-grow ${errors.name ? "error" : ""}`}
+          type="text"
+          id="name"
+          required
+          value={name}
+          onChange={e => setName(e.target.value)}
+          autoComplete="name"
+        />
       </div>
 
-      <div className={errors.name ? "input error-input" : "input"}>
-        <label htmlFor="name">name</label>
-        <div className="error-container">
-          {errors.name && <div className="error">{errors.name}</div>}
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            autoComplete="name"
-          />
-        </div>
+      {errors.email && <div className="text-red-800 mb-1 text-xs ml-16 pl-3 font-medium -mt-2">{errors.email}</div>}
+      <div className="flex items-center mb-8 w-full">
+        <label htmlFor="email" className="text-white mr-3 w-16 text-right">email</label>
+
+        <input
+          className={`big-input bg-white text-primary-500 font-medium flex-grow ${errors.email ? "error" : ""}`}
+          type="email"
+          id="email"
+          required
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          autoComplete="email"
+        />
       </div>
 
-      <div className={errors.email ? "input error-input" : "input"}>
-        <label htmlFor="email">email</label>
-        <div className="error-container">
-          {errors.email && <div className="error">{errors.email}</div>}
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            autoComplete="email"
-          />
-        </div>
+      {errors.password && <div className="text-red-800 mb-1 text-xs ml-16 pl-3 font-medium -mt-2">{errors.password}</div>}
+      <div className="flex items-center mb-8 w-full">
+        <label htmlFor="password" className="text-white mr-3 w-16 text-right">password</label>
+        <input
+          className={`big-input bg-white text-primary-500 font-medium block flex-grow ${errors.password ? "error" : ""}`}
+          type="password"
+          id="password"
+          required
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          autoComplete="new-password"
+        />
       </div>
 
-      <div className={errors.password ? "input error-input" : "input"}>
-        <label htmlFor="password">password</label>
-        <div className="error-container">
-          {errors.password && <div className="error">{errors.password}</div>}
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            autoComplete="new-password"
-          />
-        </div>
+      <div className="ml-16 pl-3 ">
+        <Link className="block text-white cursor-pointer mb-7" to="/terms/">
+          Terms and Conditions
+        </Link>
+        <Button
+          type="submit"
+          className="btn-primary bg-primary-500 w-36 py-2 rounded-md text-lg font-medium hover:bg-primary-600"
+          loading={signupMutation.loading}
+        >Sign Up</Button>
+
       </div>
-      <a className="terms-link" target="_blank" href="/terms/">Terms and Conditions</a>
-      <button type="submit" className="primary-button">
-        {signupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Sign Up"}
-      </button>
-      <Link className="auth-link" to="/login/">Log In</Link>
+      <Link className="absolute text-white right-5 bottom-5 text-lg" to="/login/">Log In</Link>
     </form>
   );
 };

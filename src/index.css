@@ -14,7 +14,7 @@
   }
 
   input[type=text], input[type=password], input[type=email] {
-    @apply rounded w-full px-2 py-2;
+    @apply rounded px-2 py-2;
   }
 
   input.big-input {
