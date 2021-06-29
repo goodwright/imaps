@@ -3,8 +3,47 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-      @apply text-primary-200;
-      @apply text-sm;
-    }
+  body {
+    @apply text-primary-200;
+    @apply text-sm;
+    @apply bg-gray-100;
   }
+
+  input {
+    @apply outline-none;
+  }
+
+  input[type=text], input[type=password], input[type=email] {
+    @apply rounded w-full px-2 py-2;
+  }
+
+  input.big-input {
+    @apply py-3 px-3 text-xl;
+  }
+
+  input.error {
+    @apply bg-red-100 text-red-700;
+  }
+}
+
+@layer components {
+  /* .btn {
+    @apply text-white px-5 py-2 text-sm rounded leading-4 cursor-pointer
+  } */
+
+  .btn {
+    @apply cursor-pointer rounded px-2 py-3 leading-4 text-center focus:outline-none;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-400 text-white hover:bg-primary-500 active:shadow-inner;
+  }
+  
+  .btn-secondary {
+    /* @apply btn border-2 border-p-500 font-medium text-p-500 hover:bg-p-500 hover:text-white active:filter active:shadow-inset; */
+  }
+  
+  .btn-tertiary {
+    /* @apply btn font-medium text-p-500 hover:border-2 hover:bg-gray-400 hover:border-gray-400 active:bg-gray-tint-200; */
+  }
+}

@@ -50,7 +50,7 @@ const PasswordResetRequest = props => {
       <form id="reset" onSubmit={onSubmit}>
         <input
           type="email"
-          className="text-lg mb-4 text-primary-400 mt-3 placeholder-gray-400 placeholder-opacity-70"
+          className="bg-gray-100 text-lg mb-4 text-primary-400 mt-3 placeholder-gray-400 placeholder-opacity-70"
           placeholder="Email"
           value={email}
           onChange={e => setEmail(e.target.value)}

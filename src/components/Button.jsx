@@ -21,8 +21,8 @@ const Button = props => {
   }, [loading]);
 
   return (
-    <button className={className} required={required} type={type} ref={ref} onClick={onClick} style={{
-      width: width ? width: null, height: height ? height : null, padding: width && height ? 0 : null
+    <button className={`${loading ? "flex items-center justify-center" : ""} ${className || ""}`} required={required} type={type} ref={ref} onClick={onClick} style={{
+      width: width ? width: null, height: height ? height : null, padding: width && height ? 0 : null,
     }}>
       {height && width ? <ClipLoader color="white" css={`width: ${height / 2}px; height: ${height / 2}px;`}/> : children}
     </button>
