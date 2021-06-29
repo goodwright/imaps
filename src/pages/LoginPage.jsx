@@ -8,7 +8,7 @@ const LoginPage = () => {
   useDocumentTitle("iMaps - Sign In");
 
   return (
-    <Div100vh className="login-page">
+    <Div100vh className="flex items-center justify-center">
       <LoginForm />
     </Div100vh>
   );
