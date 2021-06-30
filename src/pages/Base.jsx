@@ -5,7 +5,7 @@ import { MoonLoader } from "react-spinners";
 import { UserContext } from "../contexts";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
-import Invitation from "../components/Invitation";
+import Invitations from "../components/Invitations";
 const colors = require("../colors").colors;
 
 const Base = props => {
@@ -20,14 +20,7 @@ const Base = props => {
       <Nav />
       <Sidebar />
       <main className={`bg-white h-fit overflow-scroll p-3 rounded-md mr-3 sm:p-5 shadow md:p-8 md:text-lg ${loading && "flex justify-center items-center py-16 sm:py-py-20 md:py-24 lg:py-28"}`} style={{maxHeight: height - 70}}>
-        {user && user.invitations.map((invitation, index) => (
-          <Invitation
-            invitation={invitation} key={invitation.id} style={{
-              top: (index + 1) * 7 + 8,
-              right: (user.invitations.length - index) * 7 + 8
-            }}
-          />
-        ))}
+        {user && user.invitations.length > 0 && <Invitations invitations={user.invitations} />}
         {loading ? <MoonLoader size="70px" color={colors.primary[600]} /> : props.children}
       </main>
     </Div100vh>

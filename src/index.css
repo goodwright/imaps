@@ -26,7 +26,7 @@
   }
 
   a {
-    @apply hover:underline;
+    @apply text-primary-500 hover:underline;
   }
 }
 
@@ -36,15 +36,15 @@
   } */
 
   .btn {
-    @apply cursor-pointer rounded px-2 py-3 leading-4 text-center focus:outline-none;
+    @apply cursor-pointer rounded px-2 py-3 leading-4 text-center focus:outline-none border-2;
   }
   
   .btn-primary {
-    @apply btn bg-primary-400 text-white hover:bg-primary-500 active:shadow-inner;
+    @apply btn bg-primary-400 border-primary-400 text-white hover:bg-primary-500 active:shadow-inner;
   }
   
   .btn-secondary {
-    /* @apply btn border-2 border-p-500 font-medium text-p-500 hover:bg-p-500 hover:text-white active:filter active:shadow-inset; */
+    @apply btn text-primary-400 border-primary-400 hover:bg-primary-400 hover:text-white active:shadow-inner;
   }
   
   .btn-tertiary {
@@ -61,5 +61,10 @@
 
   .areas-main {
     grid-area: 2 / 2 / 3 / 3;
+  }
+
+  .grid-cols-max {
+    grid-template-columns: max-content;
+    grid-auto-flow: column;
   }
 }
