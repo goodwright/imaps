@@ -6,7 +6,7 @@ import BarLoader from "react-spinners/BarLoader";
 import searchIcon from "../images/searchIcon.svg";
 const colors = require("../colors").colors;
 
-const SearchBar = () => {
+const SearchBar = props => {
 
   const [query, setQuery] = useState("");
 
@@ -35,7 +35,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="flex-grow max-w-md mr-4 ml-4 z-10 sm:ml-0 sm:mr-3 sm:relative">
+    <div className={`mr-4 ml-0 z-10 sm:mr-3 sm:relative ${props.className || ""}`}>
 
       <div className="w-full relative h-full py-2 flex items-center">
         <img src={searchIcon} className="absolute w-4 ml-2" alt="" />
@@ -49,14 +49,14 @@ const SearchBar = () => {
       </div>
 
       {showResults && (
-        <div className={`bg-white text-gray-800 w-11/12 inset-x-1 max-h-96 mx-auto border border-top-0 shadow-lg -mt-2 rounded-md max-h-120 overflow-scroll no-scroll sm:w-full sm:l-0 sm:r-0 sm:inset-x-0 sm:top-14 ${showResults ? "rounded-t-none" : ""}`}>
+        <div className={`bg-white text-gray-800 w-full max-h-96 mx-auto border border-top-0 shadow-lg -mt-2 rounded-md max-h-120 overflow-scroll no-scroll ${showResults ? "rounded-t-none" : ""}`}>
           {Boolean(loading) && (
-            <div className="h-14 w-full flex justify-center items-center">
+            <div className="h-14 flex justify-center items-center">
               <BarLoader color={colors.primary[500]} css="width: 50%; max-width: 300px" />
             </div>
           )}
           {Boolean(data) && resultsCount === 0 && (
-            <div className="h-14 w-full px-3 flex items-center text-primary-300 italic">No results</div>
+            <div className="h-14 px-3 flex items-center text-primary-300 italic">No results</div>
           )}
           {Boolean(data) && resultsCount > 0 && (
             <div className="grid bg-gray-100 gap-px" onClick={() => setQuery("")}>

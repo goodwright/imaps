@@ -24,9 +24,9 @@ const SearchResult = props => {
     const [namePre, nameWithin, namePost] = splitString(collection.name, query);
     const [descriptionPre, descriptionWithin, descriptionPost] = splitString(collection.description, query, true);
     return (
-      <Link className="block w-full px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/collections/${collection.id}/`}>
+      <Link className="overflow-hidden block px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/collections/${collection.id}/`}>
         <div className="text-xs font-medium text-primary-600">Collection</div>
-        <div className="font-medium text-primary-200">{namePre}<span className="text-primary-500">{nameWithin}</span>{namePost}</div>
+        <div className="font-medium text-primary-200 whitespace-nowrap">{namePre}<span className="text-primary-500">{nameWithin}</span>{namePost}</div>
         <div className="text-xs text-primary-100">
           {moment(collection.created * 1000).format("D MMM, YYYY")}{descriptionWithin.length > 0 && <span> · {descriptionPre}<span className="text-primary-500">{descriptionWithin}</span>{descriptionPost}</span>}
         </div>
@@ -38,9 +38,9 @@ const SearchResult = props => {
     const [namePre, nameWithin, namePost] = splitString(sample.name, query);
     const [organismPre, organismWithin, organismPost] = splitString(sample.organism, query, true);
     return (
-      <Link className="block w-full px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/samples/${sample.id}/`}>
+      <Link className="overflow-hidden block px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/samples/${sample.id}/`}>
         <div className="text-xs font-medium text-primary-600">Sample</div>
-        <div className="font-medium text-primary-200">{namePre}<span className="text-primary-500">{nameWithin}</span>{namePost}</div>
+        <div className="font-medium text-primary-200 whitespace-nowrap">{namePre}<span className="text-primary-500">{nameWithin}</span>{namePost}</div>
         <div className="text-xs text-primary-100">
           {moment(sample.created * 1000).format("D MMM, YYYY")}{organismWithin.length > 0 && <span> · {organismPre}<span className="text-primary-500">{organismWithin}</span>{organismPost}</span>}
         </div>
@@ -51,9 +51,9 @@ const SearchResult = props => {
   if (execution) {
     const [pre, within, post] = splitString(execution.name, query);
     return (
-      <Link className="block w-full px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/executions/${execution.id}/`}>
+      <Link className="overflow-hidden block px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/executions/${execution.id}/`}>
         <div className="text-xs font-medium text-primary-600">Execution</div>
-        <div className="font-medium text-primary-200">{pre}<span className="text-primary-500">{within}</span>{post}</div>
+        <div className="font-medium text-primary-200 whitespace-nowrap">{pre}<span className="text-primary-500">{within}</span>{post}</div>
         <div className="text-xs text-primary-100">
           {moment(execution.created * 1000).format("D MMM, YYYY")}
         </div>
@@ -65,9 +65,9 @@ const SearchResult = props => {
     const [namePre, nameWithin, namePost] = splitString(group.name, query);
     const [descriptionPre, descriptionWithin, descriptionPost] = splitString(group.description, query, true);
     return (
-      <Link className="block w-full px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/@${group.slug}/`}>
+      <Link className=" overflow-hidden block px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/@${group.slug}/`}>
         <div className="text-xs font-medium text-primary-600">Group</div>
-        <div className="font-medium text-primary-200">{namePre}<span className="text-primary-500">{nameWithin}</span>{namePost}</div>
+        <div className="font-medium text-primary-200 whitespace-nowrap">{namePre}<span className="text-primary-500">{nameWithin}</span>{namePost}</div>
         {descriptionWithin.length > 0 && <div className="text-xs text-primary-100">{descriptionPre}<span className="text-primary-500">{descriptionWithin}</span>{descriptionPost}</div>}
       </Link>
     )
@@ -76,7 +76,7 @@ const SearchResult = props => {
   if (user) {
     const [pre, within, post] = splitString(user.name, query);
     return (
-      <Link className="block w-full px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/users/${user.username}/`}>
+      <Link className="overflow-hidden block px-2 py-3 bg-white hover:bg-gray-100 hover:no-underline" to={`/users/${user.username}/`}>
         <div className="text-xs font-medium text-primary-600">User</div>
         <div className="font-medium text-primary-200 whitespace-nowrap">{pre}<span className="text-primary-500">{within}</span>{post}</div>
       </Link>

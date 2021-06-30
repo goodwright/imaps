@@ -31,9 +31,6 @@
 }
 
 @layer components {
-  /* .btn {
-    @apply text-white px-5 py-2 text-sm rounded leading-4 cursor-pointer
-  } */
 
   .btn {
     @apply cursor-pointer rounded px-2 py-3 leading-4 text-center focus:outline-none border-2;
@@ -46,9 +43,9 @@
   .btn-secondary {
     @apply btn text-primary-400 border-primary-400 hover:bg-primary-400 hover:text-white active:shadow-inner;
   }
-  
+
   .btn-tertiary {
-    /* @apply btn font-medium text-p-500 hover:border-2 hover:bg-gray-400 hover:border-gray-400 active:bg-gray-tint-200; */
+    @apply btn border-transparent hover:bg-gray-200;
   }
 
   .areas-nav {
