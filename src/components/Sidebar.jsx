@@ -28,7 +28,14 @@ const Sidebar = () => {
   return (
     <div className="sidebar areas-sidebar no-scroll">
       <div className="sidebar-top">
-        <UserSummary user={user || null} link={true} />
+        <UserSummary user={user || null} link={Boolean(user)} size={10}>
+          {user ? (
+            <div className="text-primary-300 hover:text-primary-500">
+              <div className="">{user.name}</div>
+              <div className="text-xs text-primary-200">{user.username}</div>
+            </div>
+          ) : <div className="text-primary-200">Guest</div>}
+        </UserSummary>
         {user && user.memberships.length > 0 && <div className="groups-section">
           <div className="label">Your groups:</div>
           <div className="groups">
@@ -40,7 +47,6 @@ const Sidebar = () => {
           </div>
         </div>}
         <div className="nav-links">
-
           {user ? (
             <>
               <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
