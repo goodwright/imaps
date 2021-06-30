@@ -21,9 +21,13 @@ export const USER = gql`query user($username: String) {
 export const TOKEN = gql`{ accessToken }`;
 
 export const QUICK_SEARCH = gql`query quickSearch($query: String!) {
-  quickSearch(query: $query) { results {
-    name pk kind match matchLoc
-  }}
+  quickSearch(query: $query) {
+    collections { id name description created }
+    samples { id name organism created }
+    executions { id name created }
+    groups { id name description slug }
+    users { id name username }
+  }
 }`;
 
 export const GROUP = gql`query group($slug: String!) {

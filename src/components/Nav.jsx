@@ -6,11 +6,11 @@ import classNames from "classnames";
 import Logo from "./Logo";
 import MiniLogo from "./MinoLogo";
 import menuIcon from  "../images/menu-icon.svg";
-import searchIcon from "../images/searchIcon.svg";
 import { UserContext } from "../contexts";
 import { TOKEN, QUICK_SEARCH } from "../queries";
 import { LOGOUT } from "../mutations";
 import { ClipLoader } from "react-spinners";
+import SearchBar from "./SearchBar";
 
 const Nav = () => {
 
@@ -79,10 +79,12 @@ const Nav = () => {
   });
 
   return (
-    <nav className={className}>
+    <nav className="flex areas-nav">
       <div className="logo-container"><Logo /><MiniLogo /></div>
 
-      <div className="nav-main">
+      <SearchBar />
+
+      {/* <div className="nav-main">
         <div className="input-icon">
           <img src={searchIcon} className="icon" alt="" />
           <input
@@ -132,7 +134,7 @@ const Nav = () => {
           <Link className="button login-button" to="/login/">Log In</Link>
           <Link className="button signup-button primary-button" to="/signup/">Sign Up</Link>
         </div>}
-      </div>
+      </div> */}
 
       {!user && <div className="menu-icon" onClick={() => setShowContent(!showContent)}>
         <div className="menu-icon-bar"></div>
