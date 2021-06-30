@@ -9,7 +9,7 @@ import { createErrorObject } from "../forms";
 import Logo from "./Logo";
 import Button from "./Button";
 
-const SignupForm = () => {
+const SignupForm = props => {
 
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
@@ -42,7 +42,7 @@ const SignupForm = () => {
   }
 
   return (
-    <form className="bg-primary-400 px-8 py-12 w-full h-full relative sm:rounded-lg sm:max-w-md sm:h-auto sm:px-12" onSubmit={formSubmit}>
+    <form className={`bg-primary-400 px-8 py-12 w-full h-full relative sm:rounded-lg sm:max-w-md sm:h-auto sm:px-12 ${props.className || ""}`} onSubmit={formSubmit}>
       <Logo inverted={true} showGoodwright={true} className="mx-auto mb-10" svgClassName="h-16 sm:h-20" />
 
       {errors.general && <div className="text-red-800 mb-1 text-xs ml-16 pl-3">There was an error.</div>}
