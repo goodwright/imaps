@@ -50,4 +50,16 @@
   .btn-tertiary {
     /* @apply btn font-medium text-p-500 hover:border-2 hover:bg-gray-400 hover:border-gray-400 active:bg-gray-tint-200; */
   }
+
+  .areas-nav {
+    grid-area: 1 / 1 / 2 / 3;
+  }
+
+  .areas-sidebar {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  .areas-main {
+    grid-area: 2 / 2 / 3 / 3;
+  }
 }

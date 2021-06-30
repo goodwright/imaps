@@ -8,6 +8,17 @@ module.exports = {
       width: {
         100: "25rem",
       },
+      height: {
+        "fit": "fit-content"
+      },
+      gridTemplateRows: {
+        "mob-base": "3.5rem 1fr",
+        "base": "3.5rem 1fr",
+      },
+      gridTemplateColumns: {
+        "mob-base": "3rem 1fr",
+        "base": "12.5rem 1fr",
+      },
       colors
     },
   },

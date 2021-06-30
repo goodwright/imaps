@@ -26,7 +26,7 @@ const Sidebar = () => {
   const onPekaPages = useLocation().pathname.slice(0, 10) === "/apps/peka";
 
   return (
-    <div className="sidebar no-scroll">
+    <div className="sidebar areas-sidebar no-scroll">
       <div className="sidebar-top">
         <UserSummary user={user || null} link={true} />
         {user && user.memberships.length > 0 && <div className="groups-section">

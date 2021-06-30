@@ -1,32 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import Div100vh, { use100vh } from "react-div-100vh";
+import { MoonLoader } from "react-spinners";
+import { UserContext } from "../contexts";
 import Nav from "../components/Nav";
 import Sidebar from "../components/Sidebar";
-import { MoonLoader } from "react-spinners";
-import { useContext } from "react";
-import { UserContext } from "../contexts";
 import Invitation from "../components/Invitation";
+const colors = require("../colors").colors;
 
 const Base = props => {
-  /**
-   * Provides the basic logged in layout.
-   */
 
-  const { className, blank, loading } = props;
+  const { loading } = props;
 
   const [user,] = useContext(UserContext);
-
-  let fullClassName = className;
-  if (blank) fullClassName += " blank";
-  if (loading) fullClassName += " loading";
   const height = use100vh();
 
   return (
-    <Div100vh className="base">
+    <Div100vh className="grid grid-rows-base grid-cols-mob-base sm:grid-cols-base">
       <Nav />
       <Sidebar />
-      <main className={fullClassName} style={{maxHeight: height - 77}}>
+      <main className={`bg-white h-fit overflow-scroll p-3 rounded-md mr-3 sm:p-5 shadow md:p-8 md:text-lg ${loading && "flex justify-center items-center py-16 sm:py-py-20 md:py-24 lg:py-28"}`} style={{maxHeight: height - 70}}>
         {user && user.invitations.map((invitation, index) => (
           <Invitation
             invitation={invitation} key={invitation.id} style={{
@@ -35,7 +28,7 @@ const Base = props => {
             }}
           />
         ))}
-        {loading ? <MoonLoader size="70px" color="#6353C6" /> : props.children}
+        {loading ? <MoonLoader size="70px" color={colors.primary[600]} /> : props.children}
       </main>
     </Div100vh>
   )

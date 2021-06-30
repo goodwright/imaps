@@ -74,8 +74,8 @@ const Nav = () => {
   }
 
   const className = classNames({
-    "show-content": showContent, "show-dropdown": showDropdown,
-    "logging-out": logoutMutation.loading
+    "show-content": showContent, "show-dropdown": showDropdown, "areas-nav": true,
+    "logging-out": logoutMutation.loading, "overflow-hidden": true,
   });
 
   return (
