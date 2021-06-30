@@ -64,4 +64,13 @@
     grid-template-columns: max-content;
     grid-auto-flow: column;
   }
+
+  .no-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

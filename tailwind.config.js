@@ -16,6 +16,9 @@ module.exports = {
       height: {
         "fit": "fit-content"
       },
+      fontSize: {
+        "2xs": ".625rem"
+      },
       gridTemplateRows: {
         "mob-base": "3.5rem 1fr",
         "base": "3.5rem 1fr",

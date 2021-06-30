@@ -5,9 +5,9 @@ import anonymousUser from "../images/anonymous-user.svg";
 
 const UserSummary = props => {
 
-  const { user, link, children, size, sm, md, lg, pxSize } = props;
+  const { user, link, children, size, sm, md, lg, pxSize, noGap } = props;
 
-  const s2m = s =>  !children ? 0 : s > 36 ? 5 : s > 24 ? 4 : s > 14 ? 3 : s > 6 ? 2 : 1;
+  const s2m = s =>  !children || noGap ? 0 : s > 36 ? 5 : s > 24 ? 4 : s > 14 ? 3 : s > 6 ? 2 : 1;
   const imageSrc =  user && user.image ? `${process.env.REACT_APP_FILES}/${user.image}` : anonymousUser;
   let className = `object-cover rounded-full bg-gray-200 mr-${s2m(size)} ${(!user || !user.image) ? "p-2" : ""}`;
   if (size) className += ` h-${size} w-${size} min-w-${size}`;
@@ -37,6 +37,7 @@ UserSummary.propTypes = {
   sm: PropTypes.number,
   md: PropTypes.number,
   link: PropTypes.bool,
+  noGap: PropTypes.bool,
   pxSize: PropTypes.number
 };
 
