@@ -84,7 +84,7 @@ const Sidebar = () => {
                   const selected = pathname === link.href;
                   return (
                     <Element className={`inline-flex justify-center w-full px-2 py-2 ml-auto rounded sm:w-max hover:no-underline ${selected ? "bg-gray-200" : ""}`} to={link.href} href={link.href}>
-                      <span className={`hidden sm:inline text-primary-200 hover:text-primary-500 ${selected ? "text-primary-500" : ""}`}>{link.text}</span>
+                      <span className={`hidden sm:inline text-primary-100 hover:text-primary-500 ${selected ? "text-primary-500" : ""}`}>{link.text}</span>
                       <img src={link.img} alt="public-collections" className="block w-2/3 mr-0 opacity-90 hover:opacity-100 sm:hidden" />
                     </Element>
                   )
