@@ -4,7 +4,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 const Button = props => {
 
-  const { loading, className, required, type, onClick, children } = props;
+  const { loading, className, required, type, disabled, onClick, children } = props;
 
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
@@ -21,7 +21,7 @@ const Button = props => {
   }, [loading]);
 
   return (
-    <button className={`${loading ? "flex items-center justify-center" : ""} ${className || ""}`} required={required} type={type} ref={ref} onClick={onClick} style={{
+    <button className={`${loading ? "flex items-center justify-center" : ""} ${className || ""}`} required={required} type={type} ref={ref} onClick={onClick} disabled={disabled} style={{
       width: width ? width: null, height: height ? height : null, padding: width && height ? 0 : null,
     }}>
       {height && width ? <ClipLoader color="white" css={`width: ${height / 2}px; height: ${height / 2}px;`}/> : children}
@@ -32,6 +32,7 @@ const Button = props => {
 Button.propTypes = {
   loading: PropTypes.bool,
   required: PropTypes.bool,
+  disabled: PropTypes.bool,
   type: PropTypes.string,
   onClick: PropTypes.func
 };
