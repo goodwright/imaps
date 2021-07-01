@@ -49,8 +49,8 @@ const UserImageEditor = props => {
   return (
     <div>
       <h2 className="text-primary-200 text-xl mb-2 md:mb-3">Edit Photo</h2>
-      <form onSubmit={formSubmit} className="flex items-center">
-        <div className="mr-6">
+      <form onSubmit={formSubmit} className="flex items-center flex-col sm:flex-row w-max">
+        <div className="sm:mr-6">
           <label
             htmlFor="file"
             className="bg-gray-200 text-gray-500 mb-1 w-28 h-28 rounded-full flex justify-center items-center text-7xl leading-1 overflow-hidden cursor-pointer hover:bg-gray-300 hover:text-gray-600"
@@ -69,7 +69,7 @@ const UserImageEditor = props => {
           <input type="file" id="file" ref={fileRef} onChange={imageChanged} accept="image/*" className="hidden" />
         </div>
         
-        <div className="relative">
+        <div className="relative mt-3 sm:mt-0">
           {errors.image && <div className="text-red-800 absolute -top-5 text-sm">{errors.image}</div>}
           <Button type="submit" className={`btn-primary text-base py-1 w-48 ${!fileName && "opacity-50 cursor-auto hover:bg-primary-400"}`} disabled={!fileName} loading={updateImageMutation.loading}>
             Upload New Photo

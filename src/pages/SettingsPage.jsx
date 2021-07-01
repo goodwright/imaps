@@ -16,10 +16,10 @@ const SettingsPage = () => {
   return (
     <Base className="settings-page">
       <h1>Settings</h1>
-      <SettingsForm />
 
+      <SettingsForm className="mt-10 mb-10 lg:mb-16" />
 
-      <div className="settings-grid">
+      <div className="grid grid-reverse gap-16 border-t pt-8 w-max lg:grid-cols-max lg:pt-16 mb-16 lg:gap-36 xl:gap-60">
         <GroupsList user={user} editable={true} />
         <UserImageEditor user={user} />
       </div>
