@@ -7,6 +7,7 @@ import { useMutation } from "@apollo/client";
 import { LEAVE_GROUP } from "../mutations";
 import { UserContext } from "../contexts";
 import { createErrorObject } from "../forms";
+import Button from "./Button";
 
 const GroupSummary = props => {
 
@@ -26,28 +27,36 @@ const GroupSummary = props => {
   });
 
   return (
-    <div className="group-container">
-      <Link to={`/@${group.slug}/`} className="group">
-        <div className="group-name"><span className="at">@</span>{group.slug}</div>
-        <div className="user-count">
-          <span className="number">{group.userCount}</span> member{group.userCount === 1 ? "" : "s"}
+    <div className="sm:flex items-center">
+      <Link to={`/@${group.slug}/`} className="text-primary-200 bg-gray-50 flex justify-between w-full max-w-xs sm:w-60 sm:max-w-none rounded-lg text-sm px-3 py-4 hover:no-underline hover:bg-gray-100">
+        <div className="font-bold"><span className="font-medium">@</span>{group.slug}</div>
+        <div className="text-primary-100">
+          <span className="text-primary-500">{group.userCount}</span> member{group.userCount === 1 ? "" : "s"}
         </div>
       </Link>
-      {editable && <>
-        <div className="leave" onClick={() => setShowModal(true)}>leave</div>
-        <Modal showModal={showModal} setShowModal={setShowModal} className="leave-group-modal">
-          <h2>Leave {group.name}?</h2>
-          <p>You will lose access to its private data and will have to be invited
-            to rejoin.</p>
-            {error.group && <div className="error">{error.group}</div> }
-          <div className="buttons">
-            <button type="submit" className="primary-button" onClick={() => leaveGroup({variables: {id: group.id}})}>
-              {leaveGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, leave group"}
-            </button>
-            <button className="secondary-button" onClick={() => setShowModal(false)}>No, take me back</button>
-          </div>
-        </Modal>
-      </>}
+      {editable && (
+        <>
+          <div className="text-red-400 text-sm hover:text-red-500 cursor-pointer mt-1 sm:ml-3 sm:mt-0" onClick={() => setShowModal(true)}>leave</div>
+          <Modal
+            showModal={showModal}
+            className="max-w-md"
+            setShowModal={setShowModal}
+            title={`Leave ${group.name}?`}
+            text="You will lose access to its private data and will have to be invited to rejoin."
+          >
+            {error.group && <div className="text-red-800">{error.group}</div> }
+            <div className="grid grid-cols-max gap-3 w-max mt-7">
+              <Button
+                type="submit"
+                className="btn-primary text-sm py-2 w-36 block"
+                onClick={() => leaveGroup({variables: {id: group.id}})}
+                loading={leaveGroupMutation.loading}
+              >Yes, leave group</Button>
+              <button className="btn-secondary text-sm py-2 w-36 block" onClick={() => setShowModal(false)}>No, take me back</button>
+            </div>
+          </Modal>
+        </>
+      )}
     </div>
   );
 };
