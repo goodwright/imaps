@@ -8,9 +8,9 @@ const PageNotFound = () => {
   useDocumentTitle("iMaps - Page Not Found");
 
   return (
-    <Div100vh className="page-not-found">
-      <Logo />
-      <h1>Page Not Found</h1>
+    <Div100vh className="flex flex-col items-center justify-center">
+      <Logo svgClassName="w-20 mb-6" />
+      <h1 className="text-primary-100 font-light text-4xl mt-6">Page Not Found</h1>
     </Div100vh>
   );
 };
