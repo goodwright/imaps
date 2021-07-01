@@ -75,15 +75,15 @@ const Sidebar = () => {
         )}
 
         <div className="grid gap-8 mt-6 w-full pr-2">
-          {linkSections.map(section => (
-            <div className="w-full">
+          {linkSections.map((section, index) => (
+            <div className="w-full" key={index}>
               {section.name && <div className="hidden w-full font-bold text-xs mb-1 pr-2 text-right sm:block sm:justify-end">{section.name}</div>}
               <div className="grid gap-5 items-center w-full sm:text-right sm:gap-px">
                 {section.links.map(link => {
                   const Element = link.href.slice(0, 4) === "http" ? "a" : Link;
                   const selected = pathname === link.href;
                   return (
-                    <Element className={`inline-flex justify-center w-full px-2 py-2 ml-auto rounded sm:w-max hover:no-underline ${selected ? "bg-gray-200" : ""}`} to={link.href} href={link.href}>
+                    <Element className={`inline-flex justify-center w-full px-2 py-2 ml-auto rounded sm:w-max hover:no-underline ${selected ? "bg-gray-200" : ""}`} to={link.href} href={link.href} key={link.href}>
                       <span className={`hidden sm:inline text-primary-100 hover:text-primary-500 ${selected ? "text-primary-500" : ""}`}>{link.text}</span>
                       <img src={link.img} alt="public-collections" className="block w-2/3 mr-0 opacity-90 hover:opacity-100 sm:hidden" />
                     </Element>
@@ -109,77 +109,6 @@ const Sidebar = () => {
           <a href="https://github.com/goodwright/imaps" className="flex text-primary-200 text-xs items-center"><img className="mr-1 w-5" src={githubIcon} alt="github" /> Frontend code</a>
         </div>
       </div>
-{/* 
-      <div className="sidebar-top">
-
-        <div className="nav-links">
-          {user ? (
-            <>
-              <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
-                <span className="full">Public Collections</span>
-                <img src={collectionsIcon} alt="public-collections" className="mini" />
-              </Link>
-              <Link className={onUserCollectionsPage ? "selected" : ""} to="/user-collections/">
-                <span className="full">Your Collections</span>
-                <img src={yourCollectionsIcon} alt="your-collections" className="mini" />
-              </Link>
-              <Link className={onNewCollectionPage ? "selected" : ""} to="/collections/new/">
-                <span className="full">+ New Collection</span>
-                <img src={newItemIcon} alt="new-collection" className="mini" />
-              </Link>
-              <Link className={onAnalysisPage ? "selected" : ""} to="/analysis/">
-                <span className="full">Run Analysis</span>
-                <img src={gearIcon} alt="run-analysis" className="mini" />
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link className={onCollectionsPage ? "selected" : ""} to="/collections/">
-                <span className="full">Collections</span>
-                <img src={collectionsIcon} alt="collections" className="mini" />
-              </Link>
-            </>
-          )}
-          <Link className={onSearchPage ? "selected" : ""} to="/search/">
-            <span className="full">Search Data</span>
-            <img src={searchIcon} alt="search" className="mini" />
-          </Link>
-          <div className="applications">
-            <div className="heading">Applications</div>
-            <Link className={onPekaPages ? "selected" : ""} to="/apps/peka/">
-              <span className="full">PEKA</span>
-              <img src={pekaIcon} alt="peka" className="mini" />
-            </Link>
-          </div>
-
-          <div className="applications">
-            <div className="heading">Resources</div>
-            <a href="https://docs.imaps.goodwright.org/">
-              <span className="full">CLIP forum</span>
-              <img src={documentationIcon} alt="peka" className="mini" />
-            </a>
-            <a href="https://join.slack.com/t/imapsgroup/shared_invite/zt-r24y3591-Xbhnym2t38u_urU~I0K0lQ">
-              <span className="full">Slack Workspace</span>
-              <img src={slackIcon} alt="peka" className="mini" />
-            </a>
-          </div>
-        </div>
-      </div>
- */}
-      {/* <div className="goodwright">
-        <a href="https://goodwright.org">
-          <img src={goodwright} alt="goodwright" className="goodwright-logo"/>
-          <img src={goodwrightIcon} alt="goodwright-icon" className="goodwright-icon" />
-        </a>
-        <div className="links">
-          <Link to="/privacy/">Privacy<span className="full"> Policy</span></Link>
-          <Link to="/terms/">Terms<span className="full"> of Use</span></Link>
-        </div>
-        <div className="links gh-links">
-          <a href="https://github.com/goodwright/imaps-api"><img src={githubIcon} alt="github" /> Backend code</a>
-          <a href="https://github.com/goodwright/imaps"><img src={githubIcon} alt="github" /> Frontend code</a>
-        </div>
-      </div> */}
     </div>
   );
 };

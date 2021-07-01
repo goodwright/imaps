@@ -32,7 +32,7 @@ const UserSummary = props => {
 };
 
 UserSummary.propTypes = {
-  member: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
   size: PropTypes.number,
   sm: PropTypes.number,
   md: PropTypes.number,

@@ -9,8 +9,9 @@ import { TOKEN, USER } from "../queries";
 import { UserContext } from "../contexts";
 import HomePage from "../pages/HomePage";
 import UserPage from "../pages/UserPage";
-import PrivacyPolicyPage from "../pages/PrivacyPolicyPage";
-import TermsPage from "../pages/TermsPage";
+import DocumentPage from "../pages/DocumentPage";
+import privacy from "../documents/privacy.md";
+import terms from "../documents/terms.md";
 import SignupPage from "../pages/SignupPage";
 import LoginPage from "../pages/LoginPage";
 import SettingsPage from "../pages/SettingsPage";
@@ -68,10 +69,10 @@ const App = () => {
               <HomePage />
             </Route>
             <Route path="/privacy/" exact>
-              <PrivacyPolicyPage />
+              <DocumentPage document={privacy} title="Privacy Policy" />
             </Route>
             <Route path="/terms/" exact>
-              <TermsPage />
+            <DocumentPage document={terms} title="Terms of Use" />
             </Route>
             <Route path="/signup/" exact>
               <SignupPage />
