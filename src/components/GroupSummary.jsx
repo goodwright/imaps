@@ -45,14 +45,14 @@ const GroupSummary = props => {
             text="You will lose access to its private data and will have to be invited to rejoin."
           >
             {error.group && <div className="text-red-800">{error.group}</div> }
-            <div className="grid grid-cols-max gap-3 w-max mt-7">
+            <div className="btn-box mt-7 w-full">
               <Button
                 type="submit"
-                className="btn-primary text-sm py-2 w-36 block"
+                className="btn-primary text-sm py-2 w-full sm:w-36 block"
                 onClick={() => leaveGroup({variables: {id: group.id}})}
                 loading={leaveGroupMutation.loading}
               >Yes, leave group</Button>
-              <button className="btn-secondary text-sm py-2 w-36 block" onClick={() => setShowModal(false)}>No, take me back</button>
+              <button className="btn-secondary text-sm py-2 w-full sm:w-36 block" onClick={() => setShowModal(false)}>No, take me back</button>
             </div>
           </Modal>
         </>

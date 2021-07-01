@@ -52,13 +52,13 @@ const Sidebar = () => {
   return (
     <div className="areas-sidebar no-scroll flex flex-col items-center justify-between overflow-y-scroll sm:px-3">
       <div className="flex flex-col items-center sm:items-start w-full">
-        <UserSummary user={user || null} link={Boolean(user)} size={8} sm={12} noGap={Boolean(user)} className="border-b py-3 w-full">
+        <UserSummary user={user || null} link={Boolean(user)} size={8} sm={12} noGap={Boolean(user)} className={`border-b py-3 w-max ${!user && "relative left-1"}`}>
           {user ? (
             <div className="text-primary-300 sm:mx-auto hover:text-primary-500 hidden sm:block sm:ml-2">
               <div className="">{user.name}</div>
               <div className="text-xs text-primary-200">{user.username}</div>
             </div>
-          ) : <div className="text-primary-200">Guest</div>}
+          ) : <div className="text-primary-200 sm:mx-auto hidden sm:block">Guest</div>}
         </UserSummary>
 
         {user && user.memberships.length > 0 && (
