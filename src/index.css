@@ -36,6 +36,13 @@
 
 @layer components {
 
+  @variants responsive {
+    .grid-cols-max {
+      grid-template-columns: max-content;
+      grid-auto-flow: column;
+    }
+  }
+
   .btn {
     @apply cursor-pointer rounded px-2 py-3 leading-4 text-center focus:outline-none border-2;
   }
@@ -62,11 +69,6 @@
 
   .areas-main {
     grid-area: 2 / 2 / 3 / 3;
-  }
-
-  .grid-cols-max {
-    grid-template-columns: max-content;
-    grid-auto-flow: column;
   }
 
   .no-scroll::-webkit-scrollbar {

@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
-import { ClipLoader } from "react-spinners";
 import { UserContext } from "../contexts";
 import { useMutation } from "@apollo/client";
 import { UPDATE_PASSWORD, UPDATE_USER } from "../mutations";
 import { createErrorObject } from "../forms";
+import Button from "./Button";
 
-const SettingsForm = () => {
+const SettingsForm = props => {
 
   const [user, setUser] = useContext(UserContext);
 
@@ -53,105 +53,115 @@ const SettingsForm = () => {
     })
   }
 
+  const offset = "ml-14 pl-2 md:ml-16";
+  const formClass = "max-w-xl xl:max-w-full xl:w-100";
+  const h2Class = `text-primary-200 text-xl mb-3 ${offset} md:mb-4`
+  const labelClass = "mr-2 block w-14 text-xs block text-right md:text-sm md:w-16"
+  const buttonClass = "btn-primary w-32 text-sm py-2";
+  const errorClass = `${offset} text-red-800 text-sm`;
+
 
   return (
-    <div className="settings-form">
-      <div className="left-column">
-        <form className="user-form" onSubmit={userFormSubmit}>
-          <h2>Edit details</h2>
+    <div className={`grid gap-10 md:gap-14 xl:grid-cols-max ${props.className || ""}`}>
 
-          {userErrors.general && <div className="error">There was an error.</div>}
-          <div className={userErrors.username ? "input error-input" : "input"}>
-            <label htmlFor="username">username</label>
-            <div className="error-container">
-              {userErrors.username && <div className="error">{userErrors.username}</div>}
-              <input
-                id="username"
-                type="text"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                autoCapitalize="none"
-                autoComplete="username"
-                required
-              />
-            </div>
-          </div>
+      <form onSubmit={userFormSubmit} className={formClass}>
 
-          <div className={userErrors.email ? "input error-input" : "input"}>
-            <label htmlFor="email">email</label>
-            <div className="error-container">
-              {userErrors.email && <div className="error">{userErrors.email}</div>}
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                autoComplete="email"
-                required
-              />
-            </div>
-          </div>
+        <h2 className={h2Class}>Edit details</h2>
 
-          <div className={userErrors.name ? "input error-input" : "input"}>
-            <label htmlFor="name">name</label>
-            <div className="error-container">
-              {userErrors.name && <div className="error">{userErrors.name}</div>}
-              <input
-                id="name"
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
-              />
-            </div>
-          </div>
+        {userErrors.general && <div className={errorClass}>There was an error.</div>}
+        
+        {userErrors.username && <div className={errorClass}>{userErrors.username}</div>}
+        <div className="flex items-center mb-6 w-full">
+          <label htmlFor="username" className={labelClass}>username</label>
+          <input
+            id="username"
+            type="text"
+            className={`bg-gray-100 flex-grow ${userErrors.username ? "error" : ""}`}
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            autoCapitalize="none"
+            autoComplete="username"
+            required
+          />
+        </div>
 
-          <button type="submit" className="primary-button">
-            {updateUserMutation.loading ? <ClipLoader color="white" size="20px" /> : "Save details"}
-          </button>
-        </form>
-      </div>
+        {userErrors.email && <div className={errorClass}>{userErrors.email}</div>}
+        <div className="flex items-center mb-6 w-full">
+          <label htmlFor="email" className={labelClass}>email</label>
+          <input
+            id="email"
+            type="email"
+            className={`bg-gray-100 flex-grow ${userErrors.email ? "error" : ""}`}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-      <div className="right-column">
-        <form className="password-form" onSubmit={passwordFormSubmit}>
-          <h2>Edit password</h2>
-          {passwordErrors.general && <div className="error">There was an error.</div>}
-          <div className={passwordErrors.current ? "input error-input" : "input"}>
-            <label htmlFor="currentPassword">current</label>
-            <div className="error-container">
-              {passwordErrors.current && <div className="error">{passwordErrors.current}</div>}
-              <input
-                id="currentPassword"
-                type="password"
-                value={currentPassword}
-                onChange={e => setCurrentPassword(e.target.value)}
-                autoComplete="current-password"
-                required
-              />
-            </div>
-          </div>
+        {userErrors.name && <div className={errorClass}>{userErrors.name}</div>}
+        <div className="flex items-center mb-6 w-full">
+          <label htmlFor="name" className={labelClass}>name</label>
+          <input
+            id="name"
+            type="text"
+            className={`bg-gray-100 flex-grow ${userErrors.name ? "error" : ""}`}
+            value={name}
+            onChange={e => setName(e.target.value)}
+            required
+          />
+        </div>
 
-          <div className={passwordErrors.new ? "input error-input" : "input"}>
-            <label htmlFor="newPassword">new</label>
-            <div className="error-container">
-              {passwordErrors.new && <div className="error">{passwordErrors.new}</div>}
-              <input
-                id="newPassword"
-                type="password"
-                value={newPassword}
-                onChange={e => setNewPassword(e.target.value)}
-                autoComplete="new-password"
-                required
-              />
-            </div>
-          </div>
+        <div className={offset}>
+          <Button
+            type="submit"
+            className={buttonClass}
+            loading={updateUserMutation.loading}
+          >Save details</Button>
+        </div>
+      </form>
 
-          <button type="submit" className="primary-button">
-            {updatePasswordMutation.loading ? <ClipLoader color="white" size="20px" /> : "Save password"}
-          </button>
-          
-        </form>
-      </div>
+
+      <form onSubmit={passwordFormSubmit} className={formClass}>
+        <h2 className={h2Class}>Edit password</h2>
+
+        {passwordErrors.general && <div className={errorClass}>There was an error.</div>}
+        
+        {passwordErrors.current && <div className={errorClass}>{passwordErrors.current}</div>}
+        <div className="flex items-center mb-6 w-full">
+          <label htmlFor="currentPassword" className={labelClass}>current</label>
+          <input
+            id="currentPassword"
+            type="password"
+            value={currentPassword}
+            className={`bg-gray-100 flex-grow ${passwordErrors.current ? "error" : ""}`}
+            onChange={e => setCurrentPassword(e.target.value)}
+            autoComplete="current-password"
+            required
+          />
+        </div>
+
+        {passwordErrors.new && <div className={errorClass}>{passwordErrors.new}</div>}
+        <div className="flex items-center mb-6 w-full">
+          <label htmlFor="newPassword" className={labelClass}>new</label>
+          <input
+            id="newPassword"
+            type="password"
+            value={newPassword}
+            className={`bg-gray-100 flex-grow ${passwordErrors.new ? "error" : ""}`}
+            onChange={e => setNewPassword(e.target.value)}
+            autoComplete="new-password"
+            required
+          />
+        </div>
+
+        <div className={offset}>
+          <Button
+            type="submit"
+            className={buttonClass}
+            loading={updatePasswordMutation.loading}
+          >Save password</Button>
+        </div>
+      </form>
     </div>
   );
 };
