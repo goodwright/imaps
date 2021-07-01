@@ -8,7 +8,7 @@ const PasswordResetPage = () => {
   useDocumentTitle("iMaps - Reset Your Password");
 
   return (
-    <Div100vh className="password-reset-page">
+    <Div100vh className="flex items-center justify-center">
       <PasswordResetForm />
     </Div100vh>
   );

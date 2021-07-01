@@ -30,7 +30,7 @@ const DocumentPage = props => {
   }
 
   return (
-    <Base blank={true}>
+    <Base>
       <ReactMarkdown
         source={markdown}
         renderers={{
