@@ -9,6 +9,7 @@ import GroupsList from "../components/GroupsList";
 import CollectionsGrid from "../components/CollectionsGrid";
 import PageNotFound from "./PageNotFound";
 import { detect404 } from "../forms";
+import CollectionCard from "../components/CollectionCard";
 
 const UserPage = () => {
 
@@ -36,7 +37,7 @@ const UserPage = () => {
         <GroupsList user={user} />
         <div className="collections">
           <h2>Public Collections</h2>
-          <CollectionsGrid collections={user.publicCollections} />
+          <CollectionsGrid collections={user.publicCollections} noMessage="User has no collections." />
         </div>
       </div>
     </Base>

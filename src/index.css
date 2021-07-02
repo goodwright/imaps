@@ -41,6 +41,14 @@
       grid-template-columns: max-content;
       grid-auto-flow: column;
     }
+
+    .grid-fill-100 {
+      grid-template-columns: repeat( auto-fit, minmax(25rem, 25rem) )
+    }
+
+    .grid-fill-120 {
+      grid-template-columns: repeat( auto-fit, minmax(30rem, 30rem) )
+    }
   }
 
   .btn {
