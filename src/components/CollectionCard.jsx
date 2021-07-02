@@ -14,34 +14,34 @@ const CollectionCard = props => {
   const canBreak = !collection.name.includes(" ");
 
   return (
-    <Link className="collection-card" to={`/collections/${collection.id}/`}>
-      <div className="top-row">
-        <div className={canBreak ? "name can-break" : "name"}>{collection.name}</div>
-        <div className="created">{moment(collection.created * 1000).format("D MMM, YYYY")} </div>
+    <Link className="flex flex-col justify-between bg-gray-50 p-3 rounded-md border border-gray-100 hover:no-underline hover:bg-gray-100" to={`/collections/${collection.id}/`}>
+      <div className="flex justify-between mb-2">
+        <div className={`font-medium text-base ${canBreak && "break-words"} sm:text-lg`}>{collection.name}</div>
+        <div className="text-primary-200 text-sm whitespace-nowrap ml-3">{moment(collection.created * 1000).format("D MMM, YYYY")} </div>
       </div>
-      <div className="bottom-row">
-        <div className="owner">
+      <div className="flex justify-between items-end text-primary-200">
+        <div className="text-xs sm:text-sm">
           {collection.private === true && (
-            <span className="privacy">
-              <img src={privacyIcon} alt="private" />
+            <span className="flex items-center">
+              <img src={privacyIcon} className="mr-1" alt="private" />
               Private
             </span>
           )}
           {collection.private === false && (
-            <span className="privacy">
-              <img src={publicIcon} alt="public" />
+            <span className="flex items-center">
+              <img src={publicIcon} className="mr-1" alt="public" />
               Public
             </span>
           )}
           {collection.private === undefined && collection.sampleCount !== undefined && (
-            <div className="data">
-              <div className="samples"><img src={sampleIcon} alt="" />{collection.sampleCount}</div>
-              <div className="executions"><img src={executionIcon} alt="" />{collection.executionCount}</div>
+            <div className="grid grid-cols-max gap-2">
+              <div className="grid grid-cols-max items-baseline gap-1 mr-2"><img src={sampleIcon} alt="" className="h-6" />{collection.sampleCount}</div>
+              <div className="grid grid-cols-max items-baseline gap-1"><img src={executionIcon} alt="" className="h-6" />{collection.executionCount}</div>
             </div>
           )}
         </div>
-        <div className="owners">{collection.owners.map(owner => (
-          <div className="owner" key={owner.id}>{owner.username}</div>
+        <div className="text-sm text-primary-400 font-light">{collection.owners.map(owner => (
+          <div key={owner.id}>{owner.username}</div>
         ))}</div>
       </div>
     </Link>
