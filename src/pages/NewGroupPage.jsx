@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import useDocumentTitle from "@rehooks/document-title";
-import { ClipLoader } from "react-spinners";
-import Base from "./Base";
 import { useMutation } from "@apollo/client";
+import useDocumentTitle from "@rehooks/document-title";
 import { CREATE_GROUP } from "../mutations";
 import { USER } from "../queries";
 import { useContext } from "react";
 import { UserContext } from "../contexts";
 import { createErrorObject } from "../forms";
+import Base from "./Base";
+import Button from "../components/Button";
 
 const NewGroupPage = () => {
 
@@ -39,63 +39,70 @@ const NewGroupPage = () => {
     })
   }
 
-  return (
-    <Base className="new-group-page">
-      <div className="page-content">     
-        <h1>Create a group</h1>
+  const rowClass = "flex items-center mb-8 w-full"
+  const offset = "ml-16 pl-2 sm:ml-20";
+  const labelClass = "mr-2 block w-16 whitespace-nowrap text-xs block text-right md:text-sm md:w-20";
+  const inputClass = "bg-gray-100 flex-grow";
+  const errorClass = `${offset} text-red-800 text-sm mb-1`;
 
-        <p>
+  return (
+    <Base>
+      <div className="max-w-2xl">
+        <h1>Create a group</h1>
+        <p className="font-light mb-8">
           Groups are how you organise the members of your lab or organisation.
           You can make data available to just members of your group if you like,
           as well as make it your public profile for showing your previous research.
-        </p>
+        </p>  
 
         <form onSubmit={formSubmit}>
-          <div className={errors.name ? "input error-input" : "input"}>
-            <label htmlFor="name">group name</label>
-            <div className="error-container">
-              {errors.name && <div className="error">{errors.name}</div>}
+
+          {errors.name && <div className={errorClass}>{errors.name}</div>}
+          <div className={rowClass}>
+            <label htmlFor="name" className={labelClass}>group name</label>
+            <input
+              id="name"
+              className={`${inputClass} ${errors.name && "error"}`}
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          {errors.slug && <div className={errorClass}>{errors.slug.replace("Slug", "ID")}</div>}
+          <div className={rowClass}>
+            <label htmlFor="slug" className={labelClass}>group URL</label>
+            <div className={`${inputClass} ${errors.slug && "bg-red-100 text-red-700"} flex items-center rounded relative`}>
+              <div className="absolute left-0 -top-7 text-xs opacity-50 sm:pl-2 sm:static relative z-10">{window.location.origin}/<span className="at">@</span></div>
               <input
-                id="name"
-                value={name}
-                onChange={e => setName(e.target.value)}
+                id="slug"
+                className={`${inputClass} ${errors.slug && "bg-red-100 text-red-700"} absolute w-full sm:-ml-2 sm:static`}
+                type="text"
+                value={slug}
+                onChange={e => setSlug(e.target.value)}
                 required
               />
             </div>
           </div>
 
-          <div className={errors.slug ? "input error-input" : "input"}>
-            <label htmlFor="slug">group URL</label>
-            <div className="error-container">
-              {errors.slug && <div className="error">{errors.slug.replace("Slug", "ID")}</div>}
-              <div className="url-container">
-                <div className="url">{window.location.origin}/<span className="at">@</span></div>
-                <input
-                  id="slug"
-                  value={slug}
-                  onChange={e => setSlug(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
+          {errors.description && <div className={errorClass}>{errors.description}</div>}
+          <div className={rowClass}>
+            <label htmlFor="description" className={labelClass}>description</label>
+            <input
+              id="description"
+              className={`${inputClass} ${errors.description && "error"}`}
+              type="text"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              required
+            />
           </div>
-
-          <div className={errors.name ? "input error-input" : "input"}>
-            <label htmlFor="description">description</label>
-            <div className="error-container">
-              {errors.description && <div className="error">{errors.description}</div>}
-              <input
-                id="description"
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                required
-              />
-            </div>
+          <div className={offset}>
+            <Button type="submit" className="btn-primary py-2 sm:py-3" loading={createGroupMutation.loading}>
+              Create Group
+            </Button>
           </div>
-
-          <button type="submit" className="primary-button">
-            {createGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Create Group"}
-          </button>
         </form>
       </div>
     </Base>
