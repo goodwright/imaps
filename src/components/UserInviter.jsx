@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Select from "react-select";
-import { ClipLoader } from "react-spinners";
+import Select from "./Select";
 import { useMutation } from "@apollo/client";
 import { INVITE_TO_GROUP } from "../mutations";
 import { GROUP } from "../queries";
-import { getMediaLocation } from "../api";
-import anonymousUser from "../images/anonymous-user.svg";
+import Button from "./Button";
+import UserSummary from "./UserSummary";
 
 const UserInviter = props => {
 
@@ -14,7 +13,7 @@ const UserInviter = props => {
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [showPlaceholder, setShowPlaceholder] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null);
 
   const usernamesInGroup = group.members.map(user => user.username);
   const inviteesInGroup = group.invitees;
@@ -22,42 +21,45 @@ const UserInviter = props => {
 
   const options = allUsers.map(user => ({
     value: user.username,
-    label: <div><img alt="user" src={user && user.image ? `${process.env.REACT_APP_FILES}${user.image}` : anonymousUser} height="30px" width="30px"/>{`${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}${inviteeUsernamesInGroup.includes(user.username) ? " (Already invited)" : ""}`}</div>,
+    label: (
+      <UserSummary user={user} size={8} noGap={true}>
+        <div className="font-medium ml-2 ">
+          {`${user.name}${usernamesInGroup.includes(user.username) ? " (Already in group)" : ""}${inviteeUsernamesInGroup.includes(user.username) ? " (Already invited)" : ""}`}
+        </div>
+      </UserSummary>
+    ),
     isDisabled: usernamesInGroup.includes(user.username) || inviteeUsernamesInGroup.includes(user.username),
     id: user.id
-  }));
+  }))
 
   const [invite, inviteMutation] = useMutation(INVITE_TO_GROUP, {
-    onCompleted: () => setUsers([]),
+    onCompleted: () => setUser(null),
     refetchQueries: [{query: GROUP, variables: {slug: group.slug}}]
   });
 
-  const formSubmit = async e => {
+  const formSubmit = e => {
     e.preventDefault();
-    for (let user of users) {
-      await invite({variables: {user: user.id, group: group.id}});
-    }
+    invite({variables: {user: user, group: group.id}});
+    setUser(null);
   }
 
   return (
-    <form className="user-inviter" onSubmit={formSubmit}>
+    <form className={`grid gap-3 max-w-xl md:flex ${props.className || ""}`} onSubmit={formSubmit}>
       <Select
         onInputChange={value => setShowDropdown(value.length >= 3)}
-        onChange={setUsers}
-        value={users}
+        onChange={e => setUser(e.id)}
+        value={options.filter(option => option.id === user)[0] || null}
         options={options}
-        isMulti={true}
         openMenuOnClick={true}
         onFocus={() => setShowPlaceholder(false)}
         onBlur={() => setShowPlaceholder(true)}
         menuIsOpen={showDropdown}
         placeholder={showPlaceholder ? "Select users to invite to group..." : null}
-        className="react-select"
-        classNamePrefix="react-select"
+        className="flex-grow text-base h-full"
       />
-      <button className="button primary-button">
-        {inviteMutation.loading ? <ClipLoader color="white" size="20px" /> : "Invite"}
-      </button>
+      <Button className="btn-primary text-base py-2 h-full md:ml-0 md:w-24 md:py-1" loading={inviteMutation.loading}>
+        Invite
+      </Button>
     </form>
   );
 };
