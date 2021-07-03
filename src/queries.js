@@ -18,6 +18,19 @@ export const USER = gql`query user($username: String) {
   }
 } ${USER_FIELDS}`;
 
+export const PUBLIC_USER = gql`query user($username: String) {
+  user(username: $username) { 
+    ...UserFields
+    publicCollections { 
+      id name created sampleCount executionCount
+      owners { id username }
+    }
+    uploads {
+      id name created command { id outputType }
+    }
+  }
+} ${USER_FIELDS}`;
+
 export const TOKEN = gql`{ accessToken }`;
 
 export const QUICK_SEARCH = gql`query quickSearch($query: String!) {

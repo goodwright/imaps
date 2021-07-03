@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
 import { useMutation } from "@apollo/client";
 import { LEAVE_GROUP } from "../mutations";
