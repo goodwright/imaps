@@ -42,6 +42,14 @@
       grid-auto-flow: column;
     }
 
+    .grid-fill-60 {
+      grid-template-columns: repeat( auto-fit, minmax(20rem, 25rem) )
+    }
+
+    .grid-fill-80 {
+      grid-template-columns: repeat( auto-fit, minmax(20rem, 20rem) )
+    }
+
     .grid-fill-100 {
       grid-template-columns: repeat( auto-fit, minmax(25rem, 25rem) )
     }

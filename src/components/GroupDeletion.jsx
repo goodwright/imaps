@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import { DELETE_GROUP } from "../mutations";
 import { UserContext } from "../contexts";
 import { useHistory } from "react-router";
+import Button from "./Button";
 
 const GroupDeletion = props => {
 
@@ -22,25 +23,41 @@ const GroupDeletion = props => {
   });
 
   return (
-    <div className="group-deletion">
-      <button className="secondary-button" onClick={() => setShowModal(true)}>Delete Group</button>
-      <Modal className="delete-group-modal" showModal={showModal} setShowModal={setShowModal}>
-        <h2>Delete {group.name}</h2>
-        <p>
-          Deleting this group is an irreversible step and will delete all
-          associated information. Are you sure you wish to continue?
-        </p>
-        <div className="buttons">
-          <button type="submit" className="primary-button" onClick={() => deleteGroup({variables: {id: group.id}})}>
-            {deleteGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, delete group"}
-          </button>
-          <button className="secondary-button" onClick={() => setShowModal(false)}>No, take me back</button>
+    <div className={`flex flex-col items-end ${props.className || ""}`}>
+      <button className="btn-secondary py-2 w-44 sm:py-3" onClick={() => setShowModal(true)}>Delete Group</button>
+      <Modal
+        className="max-w-xl"
+        showModal={showModal} setShowModal={setShowModal}
+        title={`Delete ${group.name}?`}
+        text="Deleting this group is an irreversible step and will delete all associated information. Are you sure you wish to continue?"
+      >
+        <div className="btn-box mt-6">
+          <Button type="submit" className="btn-primary px-4 py-2 text-base" onClick={deleteGroup} loading={deleteGroupMutation.loading}>
+            Yes, delete group
+          </Button>
+          <button className="btn-secondary px-4 py-2 text-base" onClick={() => setShowModal(false)}>No, take me back</button>
         </div>
       </Modal>
     </div>
   );
 };
 
+{/* <div className="group-deletion">
+  <button className="secondary-button" onClick={() => setShowModal(true)}>Delete Group</button>
+  <Modal className="delete-group-modal" showModal={showModal} setShowModal={setShowModal}>
+    <h2>Delete {group.name}</h2>
+    <p>
+      Deleting this group is an irreversible step and will delete all
+      associated information. Are you sure you wish to continue?
+    </p>
+    <div className="buttons">
+      <button type="submit" className="primary-button" onClick={() => deleteGroup({variables: {id: group.id}})}>
+        {deleteGroupMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, delete group"}
+      </button>
+      <button className="secondary-button" onClick={() => setShowModal(false)}>No, take me back</button>
+    </div>
+  </Modal>
+</div> */}
 GroupDeletion.propTypes = {
   group: PropTypes.object.isRequired
 };
