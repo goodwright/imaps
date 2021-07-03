@@ -6,7 +6,6 @@ import anonymousUser from "../images/anonymous-user.svg";
 const UserSummary = props => {
 
   const { user, link, children, size, sm, md, pxSize, noGap } = props;
-  console.log(user)
 
   const s2m = s =>  !children || noGap ? 0 : s > 36 ? 5 : s > 24 ? 4 : s > 14 ? 3 : s > 6 ? 2 : 1;
   const imageSrc =  user && user.image ? `${process.env.REACT_APP_FILES}/${user.image}` : anonymousUser;

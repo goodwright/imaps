@@ -11,7 +11,7 @@ const CollectionsGrid = props => {
   }
 
   return (
-    <div className="grid gap-4 grid-fill-120 w-full">
+    <div className="grid gap-4 w-full md:grid-fill-120">
       {collections.map(collection => (
         <CollectionCard collection={collection} key={collection.id} className="w-full" />
       ))}

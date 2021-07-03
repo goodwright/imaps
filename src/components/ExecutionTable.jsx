@@ -6,7 +6,7 @@ import Paginator from "./Paginator";
 
 const ExecutionTable = props => {
 
-  const { executions } = props;
+  const { executions, noMessage } = props;
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const rowCount = 10;
@@ -19,22 +19,26 @@ const ExecutionTable = props => {
   const actualPage = page > pageCount ? pageCount : page;
   const visible = matching.slice((actualPage - 1) * rowCount, actualPage * rowCount);
 
+  if (executions.length === 0) {
+    return <p className="font-light text-base">{noMessage}</p>
+  }
+
   return (
     <div>
-      <div className="grid gap-3 mb-2 ml-2 sm:flex">
+      {pageCount > 1 && <div className="grid gap-3 mb-2 ml-2 sm:flex mb-4">
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Filter"
           className="border-b text-sm w-40 mr-3 h-8"
         />
-        {pageCount > 1 && <Paginator
+        <Paginator
           currentPage={actualPage}
           totalPages={pageCount}
           onChange={setPage}
-        />}
-      </div>
-      <div className="overflow-y-scroll mt-4">
+        />
+      </div>}
+      <div className="overflow-y-scroll">
         <table className="border-collapse border-0">
           <tbody>
             {visible.map(upload => (
@@ -61,7 +65,7 @@ const Td = props => {
 }
 
 ExecutionTable.propTypes = {
-  executions: PropTypes.object.isRequired
+  executions: PropTypes.array.isRequired
 };
 
 export default ExecutionTable;
