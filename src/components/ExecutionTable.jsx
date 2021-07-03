@@ -11,6 +11,8 @@ const ExecutionTable = props => {
   const [query, setQuery] = useState("");
   const rowCount = 10;
 
+  const fitsOnOnePage = Math.ceil(executions.length / rowCount) === 1;
+
   const matching = query ? executions.filter(
     e => e.name.toLowerCase().includes(query.toLowerCase()) || e.command.outputType.toLowerCase().includes(query.toLowerCase())
   ) : executions;
@@ -25,7 +27,7 @@ const ExecutionTable = props => {
 
   return (
     <div>
-      {pageCount > 1 && <div className="grid gap-3 mb-2 ml-2 sm:flex mb-4">
+      {!fitsOnOnePage && <div className="grid gap-3 mb-2 ml-2 sm:flex mb-4">
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
