@@ -38,8 +38,8 @@ const CollectionsPage = () => {
       </div>
       {data.publicCollections.count > itemsPerPage && (
         <Paginator
-          count={data.publicCollections.count} itemsPerPage={itemsPerPage}
-          currentPage={parseInt(page)} onClick={setPage}
+          currentPage={parseInt(page)} totalPages={Math.ceil(data.publicCollections.count / itemsPerPage)}
+          onChange={setPage}
         />
       )}
       <CollectionsGrid collections={collections} />

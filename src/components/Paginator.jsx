@@ -1,63 +1,66 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import previous from "../images/left-arrow.svg"
-import next from "../images/right-arrow.svg"
+import previousIcon from "../images/left-arrow.svg";
+import nextIcon from "../images/right-arrow.svg";
 
 const Paginator = props => {
 
-  const { count, itemsPerPage, currentPage, pathBase, onClick } = props;
-  const pageCount = Math.ceil(count / itemsPerPage);
-  const pageNumbers = [...Array(pageCount).keys()];
-  const hasPrevious = currentPage !== 1;
-  const hasNext = currentPage !== pageCount;
+  const { currentPage, totalPages, onChange } = props;
+
+  let cells = [...Array(totalPages).keys()].map(p => p + 1);
+  if (totalPages > 7) {
+    if (currentPage <= 2 || currentPage >= totalPages - 1) {
+      cells = [1, 2, 3, null, totalPages - 2, totalPages - 1, totalPages];
+    } else if (currentPage <= 4) {
+      cells = [1, 2, 3, 4, 5, null, totalPages];
+    } else if (currentPage >= totalPages - 3) {
+      cells = [1, null, totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    } else {
+      cells = [1, null, currentPage - 1, currentPage, currentPage + 1, null, totalPages]
+    }
+  }
+
+  const arrowClass = "px-2 flex items-center justify-end rounded-xl w-6 sm:w-8";
 
   return (
-    <div className="paginator">
-      {hasPrevious ? pathBase ? (
-        <Link to={`${pathBase}?page=${currentPage - 1}`}><img src={previous} alt="previous" /></Link>
-      ) : (
-        <button onClick={() => onClick(currentPage - 1)} type="button"><img src={previous} alt="previous" /></button>
-      ) : (
-        <button className="disabled" type="button"><img src={previous} alt="next" /></button>
-      )}
-      {pageNumbers.map(n => {
-        const className = n + 1 === currentPage ? "current" : null;
-        if ( Math.abs((n + 1) - currentPage) > 1 && n > 1 && n < pageCount - 2) {
-          if (n === currentPage - 3 || n === currentPage + 1) {
-            return <div className="ellipsis" key={n}>...</div>
-          }
-          return <div key={n} />
-        }
-        if (pathBase) {
-          return ( 
-            <Link key={n} to={`${pathBase}?page=${n + 1}`} className={className}>
-              {n + 1}
-            </Link>
-          )
-        } else {
+    <div className={`flex w-max overflow-hidden ${props.className || ""}`}>
+      <div
+        className={`${arrowClass} rounded-r-none ${currentPage === 1 ? "opacity-50" : "cursor-pointer hover:bg-gray-50"}`}
+        onClick={() => currentPage !== 1 && onChange(currentPage - 1)}
+      >
+        <img src={previousIcon} alt="previous" className="h-5 w-5" />
+      </div>
+      {cells.map((page, index) => {
+        let className = "w-6 h-6 px-2 py-2 text-xs font-medium flex rounded-lg items-center justify-center ml-px text-gray-500 select-none sm:w-8 sm:h-8 sm:px-3 sm:py-3 sm:text-sm";
+        if (!page) {
           return (
-            <button className={className} key={n} onClick={() => onClick(n + 1)}>{n + 1}</button>
+            <div key={index} className={`${className} relative bottom-px sm:bottom-1`}>...</div>
           )
         }
+        if (page === currentPage) className += " bg-primary-500  bg-opacity-80 text-purple-50 relative z-10";
+        if (page !== currentPage) className += " cursor-pointer hover:bg-gray-100"
+        return (
+          <div
+            key={index}
+            className={className}
+            onClick={() => onChange(page)}
+          >{page}</div>
+        )
       })}
-      {hasNext ? pathBase ? (
-        <Link to={`${pathBase}?page=${currentPage + 1}`}><img src={next} alt="next" /></Link>
-      ) : (
-        <button onClick={() => onClick(currentPage + 1)} type="button"><img src={next} alt="next" /></button>
-      ) : (
-        <button className="disabled" type="button"><img src={next} alt="next" /></button>
-      )}
+      <div
+        className={`${arrowClass} rounded-l-none ${currentPage === totalPages ? "opacity-50" : "cursor-pointer hover:bg-gray-50"}`}
+        onClick={() => currentPage !== totalPages && onChange(currentPage + 1)}
+      >
+        <img src={nextIcon} alt="next" className="h-5 w-5" />
+      </div>
     </div>
   );
 };
 
 Paginator.propTypes = {
-  count: PropTypes.number.isRequired,
-  itemsPerPage: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
-  pathBase: PropTypes.string,
-  onClick: PropTypes.func
+  totalPages: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 export default Paginator;
