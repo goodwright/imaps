@@ -18,11 +18,11 @@ const SearchBar = props => {
     return () => window.removeEventListener("click", dismiss);
   })
 
-  const collections = data ? data.quickSearch.collections : [];
-  const samples = data ? data.quickSearch.samples : [];
-  const executions = data ? data.quickSearch.executions : [];
-  const groups = data ? data.quickSearch.groups : [];
-  const users = data ? data.quickSearch.users : [];
+  const collections = data && data.quickSearch ? data.quickSearch.collections : [];
+  const samples = data && data.quickSearch ? data.quickSearch.samples : [];
+  const executions = data && data.quickSearch ? data.quickSearch.executions : [];
+  const groups = data && data.quickSearch ? data.quickSearch.groups : [];
+  const users = data && data.quickSearch ? data.quickSearch.users : [];
   const resultsCount = collections.length + samples.length + executions.length + users.length + groups.length;
 
   const showResults = query.length >= 3;
