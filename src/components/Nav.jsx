@@ -34,6 +34,7 @@ const Nav = () => {
     onCompleted: () => {
       setUser(false);
       client.cache.writeQuery({query: TOKEN, data: {accessToken: null}});
+      client.cache.reset();
       for (let path of [
         /\/settings\//, /\/@(.+?)\/edit\//, /\/user-collections\//,
         /\/collections\/new\//
