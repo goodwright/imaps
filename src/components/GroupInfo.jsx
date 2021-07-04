@@ -40,7 +40,7 @@ const GroupInfo = props => {
     })
   };
 
-  const buttonClass = "py-0 px-3 ml-2 text-sm flex items-center hover:no-underline";
+  const buttonClass = "py-0 px-2 sm:px-3 ml-2 text-xs sm:text-sm flex items-center hover:no-underline";
 
   return (
     <div className={`mb-8 md:mb-12 ${props.className || ""}`} onSubmit={updateClick}>
@@ -71,7 +71,7 @@ const GroupInfo = props => {
         )}
         {editing && (
           <div
-            className={`ml-2 text-sm flex items-center border-b border-primary-200 ${errors.slug ? "bg-red-100" : "bg-gray-100"}`}
+            className={`ml-2 text-xs sm:text-sm flex items-center border-b flex-wrap border-primary-200 ${errors.slug ? "bg-red-100" : "bg-gray-100"}`}
           >@<span className="outline-none" contentEditable={true} suppressContentEditableWarning={true} ref={slugEl}>{group.slug}</span></div>
         )}
       </div>

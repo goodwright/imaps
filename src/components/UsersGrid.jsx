@@ -9,7 +9,7 @@ const UsersGrid = props => {
   const { group, users, invitees, adminUsernames } = props;
   const [self,] = useContext(UserContext);
 
-  const className = `md:w-72 text-primary-700 ${!invitees && "hover:text-primary-500"}`;
+  const className = `md:w-72 text-base sm:text-lg text-primary-700 ${!invitees && "hover:text-primary-500"}`;
 
   return (
     <div className="grid gap-4 py-4 md:grid-fill-80 md:gap-6 text-primary-700 sm:py-6 border-t border-b mb-8 md:mb-12">

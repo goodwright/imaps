@@ -55,7 +55,7 @@ const UserInviter = props => {
         onBlur={() => setShowPlaceholder(true)}
         menuIsOpen={showDropdown}
         placeholder={showPlaceholder ? "Select users to invite to group..." : null}
-        className="flex-grow text-base h-full"
+        className="flex-grow h-full text-sm sm:text-base"
       />
       <Button className="btn-primary text-base py-2 h-full md:ml-0 md:w-24 md:py-1" loading={inviteMutation.loading}>
         Invite
