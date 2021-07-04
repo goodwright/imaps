@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import UserSummary from "../components/UserSummary";
+import UserAdmin from "./UserAdmin";
+import { UserContext } from "../contexts";
 
 const UsersGrid = props => {
 
-  const { users, invitees, adminUsernames } = props;
+  const { group, users, invitees, adminUsernames } = props;
+  const [self,] = useContext(UserContext);
 
   const className = `md:w-72 text-primary-700 ${!invitees && "hover:text-primary-500"}`;
 
@@ -16,7 +19,11 @@ const UsersGrid = props => {
           className={className} link={!invitees}
         >
           <div className="font-light">{user.name}</div>
-          {adminUsernames.includes(user.username) && <div className="font-light text-xs">admin</div>}
+          {invitees ? (
+            <UserAdmin group={group} user={user} isSelf={self.username === user.username} isAdmin={adminUsernames.includes(user.username)} isInvited={false} />
+          ) : adminUsernames.includes(user.username) && (
+            <div className="font-light text-xs">admin</div>
+          )}
         </UserSummary>
       ))}
       {invitees && invitees.map(user => (
@@ -25,6 +32,7 @@ const UsersGrid = props => {
           className={`${className} opacity-50`}
         >
           <div className="font-light">{user.name}</div>
+          <UserAdmin group={group} user={user} isSelf={false} isAdmin={false} isInvited={true} />
         </UserSummary>
       ))}
     </div>
