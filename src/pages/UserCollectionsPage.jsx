@@ -1,62 +1,61 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useQuery } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
 import { USER_COLLECTIONS } from "../queries";
 import Base from "./Base";
 import CollectionsGrid from "../components/CollectionsGrid";
 import { UserContext } from "../contexts";
-import Paginator from "../components/Paginator";
 
 const UserCollectionsPage = () => {
 
   const { loading, data } = useQuery(USER_COLLECTIONS);
   const [user,] = useContext(UserContext);
-  const [ownPage, setOwnPage] = useState(1);
-  const [sharedPage, setSharedPage] = useState(1);
-  const [groupPages, setGroupPages] = useState(null);
-  const PER_PAGE = user.memberships.length ? 6 : 12;
 
   useDocumentTitle("iMaps - Your Collections");
 
-  if (loading) {
-    return <Base className="user-collections-page" loading={true} />
-  }
+  if (loading) return <Base loading={true} />
 
   const collections = data.userCollections;
   const ownedCollections = collections.filter(c => c.owners.map(o => o.id).includes(user.id));
   const sharedCollections = data.user.collections.filter(c => !c.owners.map(o => o.id).includes(user.id));
+
+  const h2Class = "text-primary-200 text-xl mb-2 md:mb-3 md:text-2xl";
   
   return (
-    <Base className="user-collections-page">
-      <h2>Collections you Own</h2>
-      {ownedCollections.length > PER_PAGE && <Paginator
-        count={ownedCollections.length} itemsPerPage={PER_PAGE}
-        currentPage={ownPage} onClick={setOwnPage}
-      />}
-      <CollectionsGrid collections={ownedCollections.slice((ownPage - 1) * PER_PAGE, ownPage * PER_PAGE)} />
+    <Base>
+      <h1>Your Collections</h1>
+      <div className="grid gap-10 md:gap-16 mt-6">
+        <div>
+          <h2 className={h2Class}>Collections you Own</h2>
+          <CollectionsGrid
+            collections={ownedCollections}
+            pageLength={sharedCollections.length ? 6 : 12}
+            noMessage="You don't currently own any collections."
+          />
+        </div>
 
-      <h2>Collections Shared with You</h2>
-      {sharedCollections.length > PER_PAGE && <Paginator
-        count={sharedCollections.length} itemsPerPage={PER_PAGE}
-        currentPage={sharedPage} onClick={setSharedPage}
-      />}
-      <CollectionsGrid collections={sharedCollections.slice((sharedPage - 1) * PER_PAGE, sharedPage * PER_PAGE)} />
+        <div>
+          <h2 className={h2Class}>Collections Shared with You</h2>
+          <CollectionsGrid
+            collections={sharedCollections} pageLength={ownedCollections.length ? 6 : 12} 
+            noMessage="There aren't any additional collections shared with you."
+          />
+        </div>
 
-      {user.memberships.map((group, g) => {
-        const groupCollections = collections.filter(c => c.groups.map(g => g.id).includes(group.id));
-        return (
-          <div className="group-owned" key={g}>
-            <h2>Collections Shared with {group.name}</h2>
-            {groupCollections.length > PER_PAGE && <Paginator
-              count={groupCollections.length} itemsPerPage={PER_PAGE}
-              currentPage={groupPages ? groupPages[g] : 1}
-              onClick={n => setGroupPages(groupPages ? groupPages.map((x, i) => i === g ? n : x) : user.memberships.map((x, i) => i === g ? n : 1))}
-            />}
-            <CollectionsGrid collections={groupCollections.slice(((groupPages ? groupPages[g] : 1) - 1) * PER_PAGE, (groupPages ? groupPages[g] : 1 )* PER_PAGE)} />
-          </div>
-        )
-      })}
-
+        {user.memberships.map((group, g) => {
+          const groupCollections = collections.filter(c => c.groups.map(g => g.id).includes(group.id));
+          return (
+            <div key={g}>
+              <h2 className={h2Class}>Collections Shared with <span className="text-primary-300">{group.name}</span></h2>
+              <CollectionsGrid
+                collections={groupCollections}
+                pageLength={user.memberships.length === 1 ? 12 : 6}
+                noMessage="There are no collections shared with this group."
+              />
+            </div>
+          )
+        })}
+      </div>
     </Base>
   );
 };
