@@ -31,7 +31,7 @@ const GroupDeletion = props => {
         text="Deleting this group is an irreversible step and will delete all associated information. Are you sure you wish to continue?"
       >
         <div className="btn-box mt-6">
-          <Button type="submit" className="btn-primary px-4 py-2 text-base" onClick={deleteGroup} loading={deleteGroupMutation.loading}>
+          <Button type="submit" className="btn-primary px-4 py-2 text-base" onClick={() => deleteGroup({variables: {id: group.id}})} loading={deleteGroupMutation.loading}>
             Yes, delete group
           </Button>
           <button className="btn-secondary px-4 py-2 text-base" onClick={() => setShowModal(false)}>No, take me back</button>
