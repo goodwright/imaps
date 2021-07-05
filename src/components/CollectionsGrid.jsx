@@ -5,24 +5,23 @@ import Paginator from "./Paginator";
 
 const CollectionsGrid = props => {
 
-  const { collections, noMessage } = props;
+  const { collections, noMessage, pageLength } = props;
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
-  const rowCount = 10;
 
   if (!collections.length) {
     return <div className="font-light text-base">{noMessage}</div>
   }
 
-  const fitsOnOnePage = Math.ceil(collections.length / rowCount) === 1;
+  const fitsOnOnePage = Math.ceil(collections.length / pageLength) === 1;
 
   const matching = query ? collections.filter(
     c => c.name.toLowerCase().includes(query.toLowerCase())
   ) : collections;
 
-  const pageCount = Math.ceil(matching.length / rowCount);
+  const pageCount = Math.ceil(matching.length / pageLength);
   const actualPage = page > pageCount ? pageCount : page;
-  const visible = matching.slice((actualPage - 1) * rowCount, actualPage * rowCount);
+  const visible = matching.slice((actualPage - 1) * pageLength, actualPage * pageLength);
 
   return (
     <div>
@@ -51,6 +50,7 @@ const CollectionsGrid = props => {
 CollectionsGrid.propTypes = {
   collections: PropTypes.array.isRequired,
   noMessage: PropTypes.string,
+  pageLength: PropTypes.number.isRequired,
 };
 
 export default CollectionsGrid;

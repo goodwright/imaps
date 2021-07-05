@@ -53,7 +53,11 @@ const UserPage = () => {
 
       <div>
         <h2 className={h2Class}>Public Collections</h2>
-        <CollectionsGrid collections={user.publicCollections} noMessage="User has no collections." />
+        <CollectionsGrid
+          collections={user.publicCollections}
+          noMessage="User has no collections."
+          pageLength={12}
+        />
       </div>
 
     </Base>

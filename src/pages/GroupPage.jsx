@@ -62,6 +62,7 @@ const GroupPage = props => {
         <CollectionsGrid
           collections={group.publicCollections}
           noMessage="There are no public collections associated with this group."
+          pageLength={12}
         />
       </div>}
 
