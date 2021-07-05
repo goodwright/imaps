@@ -16,7 +16,7 @@ const CollectionCard = props => {
   return (
     <Link className={`flex flex-col justify-between bg-gray-50 p-3 rounded-md border border-gray-100 hover:no-underline hover:bg-gray-100 ${props.className || ""}`} to={`/collections/${collection.id}/`}>
       <div className="flex justify-between mb-2">
-        <div className={`font-medium text-base ${canBreak && "break-words"} sm:text-lg`}>{collection.name}</div>
+        <div className={`font-medium text-base ${canBreak && "break-all"} sm:text-lg`}>{collection.name}</div>
         <div className="text-primary-200 text-sm whitespace-nowrap ml-3">{moment(collection.created * 1000).format("D MMM, YYYY")} </div>
       </div>
       <div className="flex justify-between items-end text-primary-200">
