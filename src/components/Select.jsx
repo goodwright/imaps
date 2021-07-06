@@ -11,14 +11,22 @@ const Select = props => {
     control: (provided) => ({
       ...provided,
       boxShadow: null,
-      backgroundColor: colors.gray[200],
+      backgroundColor: colors.coolGray[200],
       borderWidth: 0,
+      height: "100%",
+      cursor: "pointer",
       fontSize: config.theme.fontSize.sm[0]
     }),
 
     singleValue: (provided) => ({
       ...provided,
       color: imapsColors.primary[200]
+    }),
+
+    // Placeholder
+    placeholder: (provided) => ({
+      ...provided,
+      color: imapsColors.primary[100]
     }),
 
     // Vertical line
@@ -36,10 +44,16 @@ const Select = props => {
       }
     }),
 
+    // Floating menu
+    menu: provided => ({
+      ...provided,
+      overflow: "hidden"
+    }),
+
     // Dropdown container of options
     menuList: provided => ({
       ...provided,
-      backgroundColor: colors.gray[100],
+      backgroundColor: colors.coolGray[100],
     }),
 
     // Selectable Option
@@ -52,7 +66,7 @@ const Select = props => {
       display: "flex",
       alignItems: "center",
       padding: `0 ${config.theme.spacing[3]}`,
-      backgroundColor: state.isFocused ? imapsColors.primary[200] : colors.gray[100],
+      backgroundColor: state.isFocused ? imapsColors.primary[200] : colors.coolGray[100],
       "&:hover": {
         backgroundColor: imapsColors.primary[200],
         color: "white",
