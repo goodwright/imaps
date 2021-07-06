@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useHistory } from "react-router";
 import { useLazyQuery } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
-import Select from "react-select";
+import Select from "../components/Select";
 import moment from "moment";
 import Base from "./Base";
 import searchIcon from "../images/searchIcon.svg";

@@ -1,62 +1,66 @@
 import React from "react";
 import { default as ReactSelect } from "react-select";
 const colors = require("tailwindcss/colors");
+const config = require("tailwindcss/defaultConfig");
 const imapsColors = require("../colors").colors;
 
 const Select = props => {
 
   const baseStyles = {
-    control: (provided, state) => ({
+    // Main body
+    control: (provided) => ({
       ...provided,
       boxShadow: null,
-      borderColor: colors.gray[200],
       backgroundColor: colors.gray[200],
-      cursor: "text",
-      borderBottomLeftRadius: state.menuIsOpen ? 0 : null,
-      borderBottomRightRadius: state.menuIsOpen ? 0 : null,
-      borderBottomWidth: state.menuIsOpen ? 0 : 1,
-      paddingBottom: state.menuIsOpen ? 1 : 0,
+      borderWidth: 0,
+      fontSize: config.theme.fontSize.sm[0]
+    }),
+
+    singleValue: (provided) => ({
+      ...provided,
+      color: imapsColors.primary[200]
+    }),
+
+    // Vertical line
+    indicatorSeparator: (provided) => ({
+      ...provided,
+      width: 0
+    }),
+
+    // Down arrow
+    dropdownIndicator: provided => ({
+      ...provided,
+      color: imapsColors.primary[500],
       "&:hover": {
-        borderColor: colors.gray[200]
+        color: imapsColors.primary[200],
       }
     }),
+
+    // Dropdown container of options
+    menuList: provided => ({
+      ...provided,
+      backgroundColor: colors.gray[100],
+    }),
+
+    // Selectable Option
     option: (provided, state) => ({
       ...provided,
       cursor: "pointer",
-      backgroundColor: state.isFocused ? colors.gray[100] : null,
-      "&:active": {
-        backgroundColor: colors.gray[100]
-      }
-    }),
-    menu: provided => ({
-      ...provided,
-      marginTop: 0,
-      borderWidth: 0,
-      borderColor: colors.gray[200],
-      borderTopLeftRadius: 0,
-      borderTopRightRadius: 0,
-      borderTopWidth: 0,
-      left: 0,
-      backgroundColor: colors.gray[200],
-      boxShadow: null,
-    }),
-    multiValue: provided => ({
-      borderWidth: 1,
-      borderColor: colors.gray[300],
-      backgroundColor: colors.gray[100],
-      borderRadius: 6,
-      display: "flex"
-    }),
-    multiValueRemove: provided => ({
-      ...provided,
-      cursor: "pointer",
+      fontSize: config.theme.fontSize.sm[0],
+      color: state.isFocused ? "white" : imapsColors.primary[200],
+      height: config.theme.spacing[10],
+      display: "flex",
+      alignItems: "center",
+      padding: `0 ${config.theme.spacing[3]}`,
+      backgroundColor: state.isFocused ? imapsColors.primary[200] : colors.gray[100],
       "&:hover": {
-        backgroundColor: colors.red[100]
+        backgroundColor: imapsColors.primary[200],
+        color: "white",
+      },
+      "&:active": {
+        backgroundColor: imapsColors.primary[400],
+        color: "white",
       }
-    }),
-    dropdownIndicator: provided => ({
-      ...provided,
-      color: imapsColors.primary[500]
     })
   }
 
