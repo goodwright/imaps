@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { useMutation } from "@apollo/client";
-import { ClipLoader } from "react-spinners";
-import Modal from "./Modal";
-import { DELETE_COLLECTION } from "../mutations";
 import { useHistory } from "react-router";
+import { useMutation } from "@apollo/client";
+import { PUBLIC_COLLECTIONS, USER_COLLECTIONS } from "../queries";
+import { DELETE_COLLECTION } from "../mutations";
+import Modal from "./Modal";
+import Button from "./Button";
 
 const CollectionDeletion = props => {
 
@@ -13,25 +14,26 @@ const CollectionDeletion = props => {
   const history = useHistory();
 
   const [deleteCollection, deleteCollectionMutation] = useMutation(DELETE_COLLECTION, {
-    onCompleted: data => {
+    refetchQueries: [{query: PUBLIC_COLLECTIONS}, {query: USER_COLLECTIONS}],
+    onCompleted: () => {
       history.push("/");
     }
   });
 
   return (
-    <div className="collection-deletion">
-      <button className="secondary-button" onClick={() => setShowModal(true)}>Delete Collection</button>
-      <Modal className="delete-collection-modal" showModal={showModal} setShowModal={setShowModal}>
-        <h2>Delete {collection.name}</h2>
-        <p>
-          Deleting this collection is an irreversible step and will delete all
-          associated information. Are you sure you wish to continue?
-        </p>
-        <div className="buttons">
-          <button type="submit" className="primary-button" onClick={() => deleteCollection({variables: {id: collection.id}})}>
-            {deleteCollectionMutation.loading ? <ClipLoader color="white" size="20px" /> : "Yes, delete collection"}
-          </button>
-          <button className="secondary-button" onClick={() => setShowModal(false)}>No, take me back</button>
+    <div>
+      <button className="btn-secondary" onClick={() => setShowModal(true)}>Delete Collection</button>
+      <Modal
+        className="max-w-xl"
+        showModal={showModal} setShowModal={setShowModal}
+        title={`Delete ${collection.name}?`}
+        text="Deleting this collection is an irreversible step and will delete all associated information. Are you sure you wish to continue?"
+      >
+        <div className="btn-box mt-6">
+          <Button type="submit" className="btn-primary px-4 py-2 text-base" onClick={() => deleteCollection({variables: {id: collection.id}})} loading={deleteCollectionMutation.loading}>
+            Yes, delete collection
+          </Button>
+          <button className="btn-secondary px-4 py-2 text-base" onClick={() => setShowModal(false)}>No, take me back</button>
         </div>
       </Modal>
     </div>
