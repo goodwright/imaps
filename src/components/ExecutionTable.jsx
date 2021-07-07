@@ -6,7 +6,7 @@ import Paginator from "./Paginator";
 
 const ExecutionTable = props => {
 
-  const { executions, noMessage } = props;
+  const { executions, noMessage, showCategory } = props;
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const rowCount = 10;
@@ -27,7 +27,7 @@ const ExecutionTable = props => {
 
   return (
     <div>
-      {!fitsOnOnePage && <div className="grid gap-3 mb-2 ml-2 sm:flex mb-4">
+      {!fitsOnOnePage && <div className="grid gap-3 mb-2 sm:flex mb-4">
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
@@ -40,14 +40,15 @@ const ExecutionTable = props => {
           onChange={setPage}
         />
       </div>}
-      <div className="overflow-y-scroll">
-        <table className="border-collapse border-0">
+      <div className="overflow-y-scroll rounded-md w-max max-w-full shadow">
+        <table className="border-collapse border-0 overflow-hidden">
           <tbody>
-            {visible.map(upload => (
-              <tr key={upload.id} className="hover:bg-gray-100 border-0 text-xs">
-                <Td id={upload.id} className="text-xs border-0 p-0 rounded-md rounded-r-none">{upload.name}</Td>
+            {visible.map((upload, index) => (
+              <tr key={upload.id} className={`bg-gray-100 ${index % 2 ? "bg-opacity-40" : "bg-opacity-90"} border-0 text-xs hover:bg-gray-200`}>
+                <Td id={upload.id} className="text-xs border-0 p-0">{upload.name}</Td>
                 <Td id={upload.id} className="whitespace-nowrap">{moment(upload.created * 1000).format("D MMM YYYY")}</Td>
-                <Td className="rounded-md rounded-l-none" id={upload.id}>{upload.command.outputType}</Td>
+                {showCategory && <Td className="" id={upload.id}>{upload.command.category}</Td>}
+                <Td className="" id={upload.id}>{upload.command.outputType}</Td>
               </tr>
             ))}
           </tbody>

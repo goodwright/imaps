@@ -62,7 +62,7 @@ export const COLLECTION = gql`query collection($id: ID!) {
       created
     }
     executions { id name created started finished input command {
-      id name outputType
+      id name outputType category
     } }
     users { id name username collectionPermission(id: $id) }
     groups { id slug collectionPermission(id: $id) }
