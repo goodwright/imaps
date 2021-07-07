@@ -22,7 +22,7 @@ const CollectionDeletion = props => {
 
   return (
     <div>
-      <button className="btn-secondary" onClick={() => setShowModal(true)}>Delete Collection</button>
+      <button className="btn-secondary text-base py-2" onClick={() => setShowModal(true)}>Delete Collection</button>
       <Modal
         className="max-w-xl"
         showModal={showModal} setShowModal={setShowModal}

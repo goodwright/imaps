@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Modal from "./Modal";
-import Select from "react-select";
+import Select from "./Select";
 import { useMutation } from "@apollo/client";
 import { UPDATE_COLLECTION_ACCESS } from "../mutations";
 import { COLLECTION } from "../queries";
@@ -108,39 +108,44 @@ const CollectionAccess = props => {
   }
   const usersOptions = collection.isOwner ? options : options.slice(0, 4);
 
-  return (
-    <div className="collection-access">
-      <button className="primary-button" onClick={() => setShowModal(true)}>Control Access</button>
-      <Modal className="collection-access-modal" showModal={showModal} setShowModal={setShowModal}>
-        <h2>Who can access this collection?</h2>
-        <p className="access-info">
-          Here you can decide which users and groups should have what level of
-          access to the collection. Where a user has access themselves and via
-          their group, the more permissive permission applies. You cannot give
-          someone a higher level of permission than you yourself have, and you
-          cannot demote yourself if it would leave no owners. Be wary when
-          creating new owners - they will have full permissions over the
-          collection, including the ability to remove other owners.
-        </p>
+  const text = `
+  Here you can decide which users and groups should have what level of
+  access to the collection. Where a user has access themselves and via
+  their group, the more permissive permission applies. You cannot give
+  someone a higher level of permission than you yourself have, and you
+  cannot demote yourself if it would leave no owners. Be wary when
+  creating new owners - they will have full permissions over the
+  collection, including the ability to remove other owners.`;
 
-        <div className="options">
-          <div className="existing">
+  const h3Class = "font-medium text-lg mb-1 w-max";
+  const nameClass = "text-base text-primary-500 mb-1";
+  const primaryClass = "btn-primary w-full text-sm py-2 disabled:opacity-50";
+
+  return (
+    <div>
+      <button className="btn-primary text-base py-2" onClick={() => setShowModal(true)}>Control Access</button>
+      <Modal
+        className="max-w-xl xl:max-w-7xl overflow-scroll no-scroll"
+        showModal={showModal} setShowModal={setShowModal}
+        title="Who can access this collection?"
+        text={text}
+      >
+        <div className="border-t mt-8 pt-8 grid xl:grid-cols-2">
+          <div className="grid sm:grid-cols-2 gap-6 border-b pb-8 xl:pr-8 xl:pb-0 xl:border-r xl:border-b-0">
             <div className="existing-users">
-              <h3>Users with Access</h3>
+              <h3 className={h3Class}>Users with Access</h3>
               {users.length > 0 ? (
-                <div className="users">{users.map((user, index) => {
+                <div className="grid gap-3 mb-4">{users.map((user, index) => {
                   const isSoleOwner = owners.length === 1 && owners[0].id === user.id;
                   const higher = user.collectionPermission === 4 && !collection.isOwner;
                   return (
-                    <div className="user" key={user.id}>
-                      <div className="name">{user.name} ({user.username})</div>
+                    <div className="" key={user.id}>
+                      <div className={nameClass}>{user.name} ({user.username})</div>
                       <Select
                         options={usersOptions}
                         value={userChanges[index] === null ? options[user.collectionPermission] : options[userChanges[index]]}
                         onChange={option => changeUserLink(index, option.value)}
                         isDisabled={updateAccessMutation.loading || isSoleOwner || higher}
-                        className="react-select"
-                        classNamePrefix="react-select"
                       />
                     </div>
                   )
@@ -148,101 +153,95 @@ const CollectionAccess = props => {
               ) : <div className="access-info">No users have access</div> }
               {users.length > 0 && (
                 <button
-                  className="primary-button"
+                  className={`${primaryClass} ${(userChanges.every(change => change === null) || updateAccessMutation.loading) ? "opacity-50 cursor-auto hover:bg-primary-400" : ""}`}
                   disabled={userChanges.every(change => change === null) || updateAccessMutation.loading}
                   onClick={changeAllUserLinks}
                 >Update</button>
               )}
             </div>
-            <div className="existing-groups">
-              <h3>Groups with Access</h3>
+            <div className="">
+              <h3 className={h3Class}>Groups with Access</h3>
               {groups.length > 0 ? (
-                <div className="groups">{groups.map((group, index) => (
-                  <div className="group" key={group.id}>
-                    <div className="name">{`@${group.slug}`}</div>
+                <div className="grid gap-3 mb-4">{groups.map((group, index) => (
+                  <div className="" key={group.id}>
+                    <div className={nameClass}>{`@${group.slug}`}</div>
                     <Select
                       options={options.slice(0, 4)}
                       value={groupChanges[index] === null || !groupChanges.length ? options[group.collectionPermission] : options[groupChanges[index]]}
                       onChange={option => changeGroupLink(index, option.value)}
                       isDisabled={updateAccessMutation.loading}
-                      className="react-select"
-                      classNamePrefix="react-select"
                     />
                   </div>
                 ))}</div>
-              ) : <div className="access-info">No groups have access</div> }
+              ) : <div className="font-light text-base">No groups have access</div> }
               {groups.length > 0 && (
                 <button
-                  className="primary-button"
+                  className={`${primaryClass} ${(groupChanges.every(change => change === null) || updateAccessMutation.loading) ? "opacity-50 cursor-auto hover:bg-primary-400" : ""}`}
                   disabled={groupChanges.every(change => change === null) || updateAccessMutation.loading}
                   onClick={changeAllGroupLinks}
                 >Update</button>
               )}
             </div>
           </div>
-          <div className="new">
-            <div className="users">
-              <h3>Provide User Access</h3>
-              <div className="user">
-              <Select
-                options={possibleUsers}
-                onInputChange={value => setShowUsersDropdown(value.length >= 3)}
-                onChange={setSelectedUser}
-                value={selectedUser}
-                openMenuOnClick={true}
-                onFocus={() => setShowUsersPlaceholder(false)}
-                onBlur={() => setShowUsersPlaceholder(true)}
-                isDisabled={updateAccessMutation.loading}
-                menuIsOpen={showUsersDropdown}
-                placeholder={showUsersPlaceholder ? "Select user..." : null}
-                className="react-select"
-                classNamePrefix="react-select"
-              />
-              <Select
-                options={usersOptions.slice(1, 5)}
-                value={selectedUserPermission}
-                onChange={setSelectedUserPermission}
-                isDisabled={updateAccessMutation.loading}
-                className="react-select"
-                classNamePrefix="react-select"
-              />
-              <button
-                className="primary-button"
-                onClick={addUserLink}
-                disabled={selectedUser === null || selectedUserPermission === null || updateAccessMutation.loading}
-              >Set</button>
+          <div className="pt-6 xl:pt-0 xl:pl-8">
+            <div className="mb-8">
+              <h3 className={h3Class}>Provide User Access</h3>
+              <div className="grid gap-3 sm:flex">
+                <Select
+                  options={possibleUsers}
+                  onInputChange={value => setShowUsersDropdown(value.length >= 3)}
+                  onChange={setSelectedUser}
+                  value={selectedUser}
+                  openMenuOnClick={true}
+                  onFocus={() => setShowUsersPlaceholder(false)}
+                  onBlur={() => setShowUsersPlaceholder(true)}
+                  isDisabled={updateAccessMutation.loading}
+                  menuIsOpen={showUsersDropdown}
+                  placeholder={showUsersPlaceholder ? "Select user..." : null}
+                  className="flex-grow sm:mr-3"
+                />
+                <Select
+                  options={usersOptions.slice(1, 5)}
+                  value={selectedUserPermission}
+                  onChange={setSelectedUserPermission}
+                  isDisabled={updateAccessMutation.loading}
+                  className="sm:w-40 sm:mr-3"
+                />
+                <button
+                  className="btn-primary w-full sm:w-16 text-base py-1"
+                  onClick={addUserLink}
+                  disabled={selectedUser === null || selectedUserPermission === null || updateAccessMutation.loading}
+                >Set</button>
               </div>
             </div>
-            <div className="groups">
-              <h3>Provide Group Access</h3>
-              <div className="group">
-              <Select
-                options={possibleGroups}
-                onInputChange={value => setShowGroupsDropdown(value.length >= 3)}
-                onChange={setSelectedGroup}
-                value={selectedGroup}
-                isDisabled={updateAccessMutation.loading}
-                openMenuOnClick={true}
-                onFocus={() => setShowGroupsPlaceholder(false)}
-                onBlur={() => setShowGroupsPlaceholder(true)}
-                menuIsOpen={showGroupsDropdown}
-                placeholder={showGroupsPlaceholder ? "Select group..." : null}
-                className="react-select"
-                classNamePrefix="react-select"
-              />
-              <Select
-                options={options.slice(1, 4)}
-                value={selectedGroupPermission}
-                isDisabled={updateAccessMutation.loading}
-                onChange={setSelectedGroupPermission}
-                className="react-select"
-                classNamePrefix="react-select"
-              />
-              <button
-                className="primary-button"
-                onClick={addGroupLink}
-                disabled={selectedGroup === null || selectedGroupPermission === null || updateAccessMutation.loading}
-              >Set</button>
+            <div className="">
+              <h3 className={h3Class}>Provide Group Access</h3>
+              <div className="grid gap-3 sm:flex">
+                <Select
+                  options={possibleGroups}
+                  onInputChange={value => setShowGroupsDropdown(value.length >= 3)}
+                  onChange={setSelectedGroup}
+                  value={selectedGroup}
+                  isDisabled={updateAccessMutation.loading}
+                  openMenuOnClick={true}
+                  onFocus={() => setShowGroupsPlaceholder(false)}
+                  onBlur={() => setShowGroupsPlaceholder(true)}
+                  menuIsOpen={showGroupsDropdown}
+                  placeholder={showGroupsPlaceholder ? "Select group..." : null}
+                  className="flex-grow sm:mr-3"
+                />
+                <Select
+                  options={options.slice(1, 4)}
+                  value={selectedGroupPermission}
+                  isDisabled={updateAccessMutation.loading}
+                  onChange={setSelectedGroupPermission}
+                  className="sm:w-40 sm:mr-3"
+                />
+                <button
+                  className="btn-primary w-full sm:w-16 text-base py-1"
+                  onClick={addGroupLink}
+                  disabled={selectedGroup === null || selectedGroupPermission === null || updateAccessMutation.loading}
+                >Set</button>
               </div>
             </div>
           </div>

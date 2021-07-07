@@ -8,14 +8,15 @@ const Select = props => {
 
   const baseStyles = {
     // Main body
-    control: (provided) => ({
+    control: (provided, state) => ({
       ...provided,
       boxShadow: null,
       backgroundColor: colors.coolGray[200],
       borderWidth: 0,
       height: "100%",
       cursor: "pointer",
-      fontSize: config.theme.fontSize.sm[0]
+      fontSize: config.theme.fontSize.sm[0],
+      opacity: state.isDisabled ? 0.5 : 1
     }),
 
     singleValue: (provided) => ({
