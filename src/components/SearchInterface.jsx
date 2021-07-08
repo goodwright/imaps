@@ -198,7 +198,7 @@ const SearchInterface = () => {
           />
           <Button
             type="submit"
-            className={`btn-primary py-0 text-base w-full md:w-24 ${height}`}
+            className={`btn-primary py-0 text-base w-full md:w-36 ${height}`}
             loading={collectionsLoading || samplesLoading || executionsLoading}
           >Search</Button>
         </div>

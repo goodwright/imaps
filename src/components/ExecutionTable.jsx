@@ -62,7 +62,7 @@ const Td = props => {
   return <td {...props}>
     <Link
       to={`/executions/${props.id}/`}
-      className="h-8 whitespace-nowrap px-2 hover:no-underline flex w-full items-center text-primary-200"
+      className="h-9 whitespace-nowrap px-3 hover:no-underline flex w-full items-center text-primary-200"
     >{props.children}</Link>
   </td>
 }

@@ -30,7 +30,7 @@
   }
 
   h1 {
-    @apply text-primary-600 font-medium mb-3 text-3xl md:text-4xl md:mb-4; 
+    @apply text-primary-600 font-semibold mb-3 text-2xl sm:text-3xl md:text-4xl md:mb-4; 
   }
 }
 
@@ -56,6 +56,10 @@
 
     .grid-fill-120 {
       grid-template-columns: repeat( auto-fit, minmax(30rem, 30rem) )
+    }
+
+    .min-w-20 {
+      min-width: 5rem;
     }
   }
 

@@ -53,12 +53,12 @@ const SamplesTable = props => {
                 <Td id={sample.id} className="">{sample.source || "-"}</Td>
                 <Td id={sample.id} className="italic">{sample.organism || "-"}</Td>
                 <Td id={sample.id} className="whitespace-nowrap">{moment(sample.created * 1000).format("D MMM YYYY")}</Td>
-                <Td id={sample.id} className="">
+                <Td id={sample.id} className="w-max">
                   {sample.qcPass === null && "N/A"}
                   {sample.qcPass !== null && (
                     <div
                       data-tip data-for={sample.id}
-                      className={`${sample.qcPass ? "bg-green-500" : "bg-red-700"} bg-opacity-80 flex text-white rounded-sm px-1 py-0.5`}
+                      className={`${sample.qcPass ? "bg-green-500" : "bg-red-700"} bg-opacity-80 w-max flex text-white rounded-sm px-1 py-0.5`}
                     >
                       QC <img src={sample.qcPass ? tick : cross} alt="" className="ml-2" />
                     </div>
@@ -78,7 +78,7 @@ const Td = props => {
   return <td {...props}>
     <Link
       to={`/samples/${props.id}/`}
-      className="h-8 whitespace-nowrap px-2 hover:no-underline flex w-full items-center text-primary-200"
+      className="h-9 whitespace-nowrap px-3 hover:no-underline flex w-full items-center text-primary-200"
     >{props.children}</Link>
   </td>
 }
