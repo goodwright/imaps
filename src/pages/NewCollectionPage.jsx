@@ -2,13 +2,13 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
-import Toggle from "react-toggle";
-import { ClipLoader } from "react-spinners";
+import Toggle from "../components/Toggle";
 import { USER, PUBLIC_COLLECTIONS, USER_COLLECTIONS } from "../queries";
 import { CREATE_COLLECTION } from "../mutations";
 import { UserContext } from "../contexts";
 import { createErrorObject } from "../forms";
 import Base from "./Base";
+import Button from "../components/Button";
 
 const NewCollectionPage = () => {
 
@@ -41,64 +41,66 @@ const NewCollectionPage = () => {
     })
   }
 
+  const rowClass = "sm:flex items-center mb-8 w-full";
+  const offset = "sm:ml-20 sm:pl-2";
+  const inputClass = "bg-gray-100 w-full sm:w-auto sm:flex-grow rounded outline-none px-2 py-2";
+  const labelClass = "mr-2 block w-20 whitespace-nowrap text-xs block sm:text-right md:text-sm md:w-20";
+  const errorClass = `${offset} text-red-800 text-sm mb-1`;
+
   return (
-    <Base className="new-collection-page">
-      <div className="page-content">
-        <h1>Create a collection</h1>
-        <p>
-          Collections are the top-level container for data in iMaps. They are used
-          to group related samples and other data which together contribute to a
-          single overall research question. They may be associated with a particular
-          published paper, and you can decide whether to make it private or public.
-        </p>
-
-        <form onSubmit={formSubmit}>
-          <div className={errors.name ? "input error-input" : "input"}>
-            <label htmlFor="name">Name</label>
-            <div className="error-container">
-              {errors.name && <div className="error">{errors.name}</div>}
-              <input
-                id="name"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-          <div className={errors.description ? "input error-input" : "input"}>
-            <label htmlFor="description">Description</label>
-            <div className="error-container">
-              {errors.description && <div className="error">{errors.description}</div>}
-              <textarea
-                id="description"
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="input">
-            <label htmlFor="private">Privacy</label>
-            <div>
-              <div className="binary-toggle">
-                <label className={isPrivate ? "" : "selected"}>Public</label>
-                <Toggle
-                  checked={isPrivate}
-                  onChange={() => setIsPrivate(!isPrivate)}
-                  icons={false}
-                  />
-                <label className={isPrivate ? "selected" : ""}>Private</label>
-              </div>
-              <div className="info">(You can change this setting later if, for example, you wanted to make a dataset public upon publication of a paper.)</div>
-            </div>
-          </div>
-
-          <button type="submit" className="primary-button">
-            {createCollectionMutation.loading ? <ClipLoader color="white" size="20px" /> : "Create Collection"}
-          </button>
-        </form>
+    <Base>
+      <h1>Create a collection</h1>
+      <div className="font-light mb-6 md:mb-10 max-w-2xl">
+        Collections are the top-level container for data in iMaps. They are used
+        to group related samples and other data which together contribute to a
+        single overall research question. They may be associated with a particular
+        published paper, and you can decide whether to make it private or public.
       </div>
+
+      <form onSubmit={formSubmit} className="max-w-2xl">
+        {errors.name && <div className={errorClass}>{errors.name}</div>}
+        <div className={rowClass}>
+          <label htmlFor="name" className={labelClass}>Name</label>
+          <input
+            id="name"
+            type="text"
+            className={inputClass}
+            value={name}
+            onChange={e => setName(e.target.value)}
+            required
+          />
+        </div>
+
+        {errors.description && <div className={errorClass}>{errors.description}</div>}
+        <div className={`${rowClass} items-start`}>
+          <label htmlFor="description" className={labelClass}>Description</label>
+          <textarea
+            id="description"
+            value={description}
+            className={`${inputClass} h-24 resize-none sm:h-30 md:h-36 text-sm`}
+            onChange={e => setDescription(e.target.value)}
+            required
+          />
+        </div>
+
+        <Toggle
+          checked={isPrivate}
+          onChange={() => setIsPrivate(!isPrivate)}
+          icons={false}
+          trueLabel="Private"
+          falseLabel="Public"
+          className={`w-max ${offset} mb-2`}
+        />
+        <div className={`text-sm mb-8 font-light ${offset}`}>
+          (You can change this setting later if, for example, you wanted to make a dataset public upon publication of a paper.)
+        </div>
+
+        <div className={offset}>
+          <Button type="submit" className="btn-primary py-2 sm:py-3" loading={createCollectionMutation.loading}>
+            Create Collection
+          </Button>
+        </div>
+      </form>
     </Base>
   );
 };
