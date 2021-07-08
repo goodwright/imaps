@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
-import Select from "react-select";
+import Select from "./Select";
 import Modal from "./Modal";
 import { SAMPLE } from "../queries";
 import { UPDATE_SAMPLE_ACCESS } from "../mutations";
@@ -65,53 +65,58 @@ const SampleAccess = props => {
     {value: user.id, label: `${user.name} (${user.username})`}
   ));
 
-  return (
-    <div className="sample-access">
-      <button className="primary-button" onClick={() => setShowModal(true)}>Control Access</button>
-      <Modal className="sample-access-modal" showModal={showModal} setShowModal={setShowModal}>
-        <h2>Who can access this sample?</h2>
-        <p className="access-info">
-          Here you can control users' access to this specific sample. Any users
-          with access to the sample's collection will also have the equivalent
-          access to the sample, but you may wish you to give a collaborator
-          access to just this sample without access to other samples in the
-          collection. Users who only have access via the collection will not
-          be shown here.
-        </p>
+  const text = `
+  Here you can control users' access to this specific sample. Any users
+  with access to the sample's collection will also have the equivalent
+  access to the sample, but you may wish you to give a collaborator
+  access to just this sample without access to other samples in the
+  collection. Users who only have access via the collection will not
+  be shown here.`;
 
-        <div className="options">
-          <div className="existing">
-            <h3>Users with Access</h3>
+  const h3Class = "font-medium text-lg mb-1 w-max";
+  const nameClass = "text-base text-primary-500 mb-1";
+  const primaryClass = "btn-primary w-full text-sm py-2 disabled:opacity-50";
+
+  return (
+    <div>
+      <button className="btn-primary text-base py-2" onClick={() => setShowModal(true)}>Control Access</button>
+      <Modal
+        className="max-w-xl lg:max-w-3xl overflow-scroll no-scroll"
+        showModal={showModal} setShowModal={setShowModal}
+        title="Who can access this sample?"
+        text={text}
+      >
+
+        <div className="border-t mt-8 pt-8 grid lg:grid-cols-max">
+          <div className="lg:w-60">
+            <h3 className={h3Class}>Users with Access</h3>
             {users.length > 0 ? (
-              <div className="users">{users.map((user, index) => {
+              <div className="grid gap-3 mb-4">{users.map((user, index) => {
                 return (
-                  <div className="user" key={user.id}>
-                    <div className="name">{user.name} ({user.username})</div>
+                  <div className="" key={user.id}>
+                    <div className={nameClass}>{user.name} ({user.username})</div>
                     <Select
                       options={options}
                       value={userChanges[index] === null ? options[user.samplePermission] : options[userChanges[index]]}
                       onChange={option => changeUserLink(index, option.value)}
                       isDisabled={updateAccessMutation.loading}
-                      className="react-select"
-                      classNamePrefix="react-select"
                     />
                   </div>
                 )
               })}</div>
-            ) : <div className="access-info">No users have access</div> }
+            ) : <div className="text-base font-light">No users have access</div> }
             {users.length > 0 && (
               <button
-                className="primary-button"
-                disabled={userChanges.every(change => change === null) /* || updateAccessMutation.loading */}
+                className={`${primaryClass} ${(userChanges.every(change => change === null) || updateAccessMutation.loading) ? "opacity-50 cursor-auto hover:bg-primary-400" : ""}`}
+                disabled={userChanges.every(change => change === null)}
                 onClick={changeAllUserLinks}
               >Update</button>
             )}
           </div>
         
-          <div className="new">
-
-            <h3>Provide User Access</h3>
-            <div className="user">
+          <div className="pt-6 lg:pt-0 lg:pl-8">
+            <h3 className={h3Class}>Provide User Access</h3>
+            <div className="grid gap-0 sm:flex">
               <Select
                 options={possibleUsers}
                 onInputChange={value => setShowUsersDropdown(value.length >= 3)}
@@ -123,19 +128,17 @@ const SampleAccess = props => {
                 isDisabled={updateAccessMutation.loading}
                 menuIsOpen={showUsersDropdown}
                 placeholder={showUsersPlaceholder ? "Select user..." : null}
-                className="react-select"
-                classNamePrefix="react-select"
+                className="flex-grow sm:mr-3"
               />
               <Select
                 options={options.slice(1, 4)}
                 value={selectedUserPermission}
                 onChange={setSelectedUserPermission}
                 isDisabled={updateAccessMutation.loading}
-                className="react-select"
-                classNamePrefix="react-select"
+                className="sm:w-40 sm:mr-3"
               />
               <button
-                className="primary-button"
+                className="btn-primary w-full sm:w-16 text-base py-1"
                 onClick={addUserLink}
                 disabled={selectedUser === null || selectedUserPermission === null || updateAccessMutation.loading}
               >Set</button>

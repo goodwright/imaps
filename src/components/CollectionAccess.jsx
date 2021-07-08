@@ -132,7 +132,7 @@ const CollectionAccess = props => {
       >
         <div className="border-t mt-8 pt-8 grid xl:grid-cols-2">
           <div className="grid sm:grid-cols-2 gap-6 border-b pb-8 xl:pr-8 xl:pb-0 xl:border-r xl:border-b-0">
-            <div className="existing-users">
+            <div>
               <h3 className={h3Class}>Users with Access</h3>
               {users.length > 0 ? (
                 <div className="grid gap-3 mb-4">{users.map((user, index) => {
@@ -150,7 +150,7 @@ const CollectionAccess = props => {
                     </div>
                   )
                 })}</div>
-              ) : <div className="access-info">No users have access</div> }
+              ) : <div>No users have access</div> }
               {users.length > 0 && (
                 <button
                   className={`${primaryClass} ${(userChanges.every(change => change === null) || updateAccessMutation.loading) ? "opacity-50 cursor-auto hover:bg-primary-400" : ""}`}
