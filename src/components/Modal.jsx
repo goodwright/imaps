@@ -6,7 +6,7 @@ const Modal = props => {
    * A white box that floats over the page.
    */
 
-  const { showModal, setShowModal, title, text } = props;
+  const { showModal, setShowModal, title, text, breakTitle } = props;
   const boxRef = useRef();
 
   const dismiss = e => {
@@ -18,7 +18,7 @@ const Modal = props => {
   return (
     <div className={showModal ? "fixed left-0 top-0 w-full h-full flex py-8 bg-opacity-40 justify-center bg-gray-700 z-50" : "hidden"} onClick={dismiss}>
       <div className={`bg-white shadow-lg rounded-md w-max p-7 max-h-full my-auto ml-6 mr-6 ${props.className || ""}`} ref={boxRef}>
-        {title && <div className="text-primary-500 text-3xl mb-3">{title}</div>}
+        {title && <div className={`text-primary-500 text-3xl mb-3 ${breakTitle && "break-all"}`}>{title}</div>}
         {text && <div className="text-primary-700 mb-4 font-normal text-base">{text}</div>}
         {props.children}
       </div>
@@ -31,6 +31,7 @@ Modal.propTypes = {
   setShowModal: PropTypes.func.isRequired,
   title: PropTypes.string,
   text: PropTypes.string,
+  breakTitle: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
