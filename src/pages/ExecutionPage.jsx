@@ -22,6 +22,7 @@ import { UserContext } from "../contexts";
 import ExecutionDeletion from "../components/ExecutionDeletion";
 import ExecutionAccess from "../components/ExecutionAccess";
 import ExecutionInfo from "../components/ExecutionInfo";
+import ExecutionProcess from "../components/ExecutionProcess";
 
 
 const ExecutionPage = props => {
@@ -81,8 +82,9 @@ const ExecutionPage = props => {
   const fileOutputs = output.filter(o => o.type && o.value !== undefined && o.type.includes("basic:file:"));
 
   return (
-    <Base className="execution-page">
-      <ExecutionInfo execution={execution} />
+    <Base className="relative">
+      <ExecutionInfo execution={execution} className="mb-12" />
+      <ExecutionProcess execution={execution} />
 
 
 
@@ -99,17 +101,6 @@ const ExecutionPage = props => {
 
 
 
-      <div className="dates">
-        {execution.started && <div>Started: {moment(execution.started * 1000).format("HH:mm, D MMM, YYYY")}</div>}
-        {execution.finished && <div>Finished: {moment(execution.finished * 1000).format("HH:mm, D MMM, YYYY")}</div>}
-      </div>
-
-      <div className="process">
-        {execution.status && <div>Status: {execution.status}</div>}
-        {execution.warning && <div>Warning: {execution.warning}</div>}
-        {execution.error && <div>Error: {execution.error}</div>}
-      </div>
-      <br />
       
       {execution.demultiplexExecution && <div className="demultiplex">
         Demultiplxed from:

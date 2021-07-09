@@ -29,7 +29,7 @@ const CommandPage = () => {
     <Base>
       <div className="flex items-start">
         <h1 className="flex-grow">{command.name}</h1>
-        <CommandCategory command={command.category} />
+        <CommandCategory category={command.category} />
       </div>
       <div className="text-xl text-primary-300 tracking-wide mb-4 -mt-2">{command.outputType}</div>
       <ReactMarkdown className="font-light pb-8 border-b max-w-4xl">
