@@ -132,7 +132,7 @@ export const COMMANDS = gql`{
 
 export const COMMAND = gql`query command($id: ID!) {
   command(id: $id) {
-    id name description
+    id name description category outputType
   }
 }`;
 
