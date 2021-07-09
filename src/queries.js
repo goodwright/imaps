@@ -112,9 +112,9 @@ export const SAMPLE = gql`query sample($id: ID!) {
 export const EXECUTION = gql`query execution($id: ID!) {
   execution(id: $id) {
     id name
-    created started finished status warning error
+    created lastModified started finished status warning error
     input output
-    command { id name category outputType }
+    command { id name description category outputType }
     demultiplexExecution { id name }
     demultiplexed { id name }
     upstream { id name command { name } } downstream { id name command { name } }

@@ -21,6 +21,7 @@ import { createErrorObject, detect404 } from "../forms";
 import { UserContext } from "../contexts";
 import ExecutionDeletion from "../components/ExecutionDeletion";
 import ExecutionAccess from "../components/ExecutionAccess";
+import ExecutionInfo from "../components/ExecutionInfo";
 
 
 const ExecutionPage = props => {
@@ -81,27 +82,24 @@ const ExecutionPage = props => {
 
   return (
     <Base className="execution-page">
-      <h1>{execution.name}</h1>
-      <Link to={`/commands/${execution.command.id}/`}>
-        <div>({execution.command.category}) {execution.command.name}: {execution.command.outputType}</div>
-      </Link>
-      <br /><br />
+      <ExecutionInfo execution={execution} />
+
+
+
+
+
+      <div className="mt-80" />
+
+
 
       {edit && execution.canShare && <div className="bottom-buttons">
         <ExecutionAccess execution={execution} allUsers={data.users} />
         {edit && execution.isOwner && <ExecutionDeletion execution={execution} />}
       </div>}
 
-      {execution.collection && (
-        <div className="collection">Collection: <Link to={`/collections/${execution.collection.id}/`}>{execution.collection.name}</Link></div>
-      )}
-      {execution.sample && (
-        <div className="sample">Sample: <Link to={`/samples/${execution.sample.id}/`}>{execution.sample.name}</Link></div>
-      )}
-      <br/>
+
 
       <div className="dates">
-        {execution.created && <div>Created: {moment(execution.created * 1000).format("HH:mm, D MMM YYYY")}</div>}
         {execution.started && <div>Started: {moment(execution.started * 1000).format("HH:mm, D MMM, YYYY")}</div>}
         {execution.finished && <div>Finished: {moment(execution.finished * 1000).format("HH:mm, D MMM, YYYY")}</div>}
       </div>
