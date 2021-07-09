@@ -6,11 +6,11 @@ import { SAMPLE } from "../queries";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import SampleInfo from "../components/SampleInfo";
-import ExecutionHistory from "../components/ExecutionHistory";
 import { detect404 } from "../forms";
 import { UserContext } from "../contexts";
 import SampleDeletion from "../components/SampleDeletion";
 import SampleAccess from "../components/SampleAccess";
+import ExecutionTable from "../components/ExecutionTable";
 
 const SamplePage = props => {
   const sampleId = useRouteMatch("/samples/:id").params.id;
@@ -34,21 +34,23 @@ const SamplePage = props => {
 
   if (user && edit && !sample.canEdit) return <PageNotFound />
 
+  const h2Class = "text-primary-200 text-xl mb-1";
+
   return (
     <Base className="sample-page">
       <SampleInfo
         sample={sample} editing={edit}
         possibleCollections={data.user ? data.user.ownedCollections : []}
-        className="mb-20"
+        className="mb-12"
       />
       {!edit && (
         <>
-          <h2>Analysis History</h2>
-          <p className="info">A list of the analysis commands run on data in this sample.</p>
-          <ExecutionHistory executions={sample.executions} />
+          <h2 className={h2Class}>Analysis History</h2>
+          <p className="font-light mb-4 text-sm md:text-base">A list of the analysis commands run on data in this sample.</p>
+          <ExecutionTable executions={sample.executions} noMessage="No analysis yet." />
         </>
       )}
-      {edit && sample.canShare && <div className="bottom-buttons">
+      {edit && sample.canShare && <div className="btn-box ml-auto">
         <SampleAccess sample={sample} allUsers={data.users} />
         {edit && sample.isOwner && <SampleDeletion sample={sample} />}
       </div>}
