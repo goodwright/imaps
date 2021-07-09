@@ -18,7 +18,8 @@ const SamplePage = props => {
   const [user,] = useContext(UserContext);
 
   const { loading, data, error } = useQuery(SAMPLE, {
-    variables: {id: sampleId}
+    variables: {id: sampleId},
+    onError: console.log
   });
 
   useDocumentTitle(data ? `iMaps - ${data.sample.name}` : "iMaps");
@@ -35,7 +36,11 @@ const SamplePage = props => {
 
   return (
     <Base className="sample-page">
-      <SampleInfo sample={sample} edit={edit} collections={data.user ? data.user.ownedCollections : []} />
+      <SampleInfo
+        sample={sample} editing={edit}
+        possibleCollections={data.user ? data.user.ownedCollections : []}
+        className="mb-20"
+      />
       {!edit && (
         <>
           <h2>Analysis History</h2>

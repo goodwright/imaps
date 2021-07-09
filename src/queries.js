@@ -90,7 +90,7 @@ export const USER_COLLECTIONS = gql`{
     id name private created
     groups { id slug } owners { id }
   }
-  user { collections { 
+  user { id collections { 
     id name private created owners { id }
    } }
 }`;
@@ -105,6 +105,7 @@ export const SAMPLE = gql`query sample($id: ID!) {
     } }
     users { id name username samplePermission(id: $id) }
   }
+  user { id ownedCollections { id name } }
   users { id name username }
 }`;
 

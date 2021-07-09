@@ -46,8 +46,7 @@ const App = () => {
   useQuery(USER, {
     client,
     skip: tokenQuery.loading || user !== null,
-    onCompleted: data => setUser(data.user),
-    onError: () => setUser(false)
+    onCompleted: data => setUser(data.user || false)
   })
 
   // While token request loading, or log-in status is unknown, show loading page

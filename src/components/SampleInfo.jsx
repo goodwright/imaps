@@ -1,37 +1,30 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import moment from "moment";
-import ClipLoader from "react-spinners/ClipLoader";
-import Select from "react-select";
-import ReactTooltip from "react-tooltip";
-import tick from "../images/tick.svg";
-import cross from "../images/cross.svg";
-import { UserContext } from "../contexts";
 import { COLLECTION, SAMPLE, PUBLIC_COLLECTIONS, USER_COLLECTIONS } from "../queries";
 import { UPDATE_SAMPLE } from "../mutations";
+import tick from "../images/tick.svg";
+import cross from "../images/cross.svg";
 import { createErrorObject } from "../forms";
+import Button from "./Button";
 
 const SampleInfo = props => {
 
-  const { sample, edit, collections } = props;
-  const [user,] = useContext(UserContext);
-  const canBreak = !sample.name.includes(" ");
-  const InfoElement = edit ? "form" : "div";
+  const { sample, editing, possibleCollections } = props;
   const nameEl = useRef(null);
-  const [collection, setCollection] = useState(null);
-  const [annotatorName, setAnnotatorName] = useState(null);
-  const [piName, setPi] = useState(null);
-  const [organism, setOrganism] = useState(null);
-  const [source, setSource] = useState(null);
+  const annotatorEl = useRef(null);
+  const organismEl = useRef(null);
+  const piEl = useRef(null);
+  const sourceEl = useRef(null);
   const [errors, setErrors] = useState({});
   const history = useHistory();
-
-  const collectionOptions = collections.map(c => ({value: c.id, label: c.name}));
-  const selectedCollection = collectionOptions.filter(c => c.value === (
-    collection === null ? sample.collection.id : collection
-  ))[0]
+  const [selectedCollection, setSelectedCollection] = useState(sample.collection ? sample.collection.id : null);
+  const collections = [...possibleCollections];
+  if (sample.collection && !collections.map(c => c.id).includes(sample.collection.id)) {
+    collections.push(sample.collection)
+  }
 
   const [updateSample, updateSampleMutation] = useMutation(UPDATE_SAMPLE, {
     refetchQueries: [
@@ -56,148 +49,127 @@ const SampleInfo = props => {
       variables: {
         id: sample.id,
         name: nameEl.current.innerText,
-        collection: collection || sample.collection.id,
-        annotatorName: annotatorName || sample.annotatorName,
-        piName: piName || sample.piName,
-        organism: organism || sample.organism,
-        source: source || sample.source,
+        collection: selectedCollection,
+        annotatorName: annotatorEl.current.innerText,
+        piName: piEl.current.innerText,
+        organism: organismEl.current.innerText,
+        source: sourceEl.current.innerText,
       }
     })
   }
 
+  const Element = editing ? "form" : "div";
+  const canBreak = !sample.name.includes(" ");
+
+  const pairClass = "flex sm:inline-flex mr-6 mb-1";
+  const propertyClass = "font-semibold";
+  const valueClass = "font-light border-b border-opacity-0";
+  const editingClass = "outline-none border-opacity-100 border-primary-200";
+  const buttonClass = "w-max py-px px-2 -ml-2 sm:px-3 sm:ml-2 text-xs sm:text-sm flex items-center hover:no-underline";
+
   return (
-    <InfoElement className="sample-info" onSubmit={save}>
-      <div className="left-column">
-        {edit && errors.name && <div className="error">{errors.name}</div>}
+    <Element className={`flex relative justify-between ${props.className || ""}`} onSubmit={save}>
+      {errors.name && <div className=" absolute -top-8 text-red-800 text-sm mt-2">{errors.name}</div>}
+      <div className="flex-grow">
         <h1
-          contentEditable={edit} suppressContentEditableWarning={edit}
-          className={edit ? "editable" : canBreak ? "can-break" : ""} ref={nameEl}
+          className={`border-b border-opacity-0 ${canBreak && "break-all"} ${editing && "outline-none border-opacity-100 border-primary-200 max-w-full"} ${errors.name ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
+          contentEditable={editing} suppressContentEditableWarning={editing}
+          ref={nameEl}
         >{sample.name}</h1>
-        {sample.collection && !edit && <div className="collection">Collection: <Link to={`/collections/${sample.collection.id}/`}>{sample.collection.name}</Link></div>}
-        {errors.collection && <div className="error">{errors.collection}</div>}
-        {sample.collection && edit && <div className="collection">
-          <label>Collection:</label>
-          <Select
-            options={collectionOptions}
-            value={selectedCollection}
-            onChange={({value}) => setCollection(value)}
-            className="react-select"
-            classNamePrefix="react-select"
-          />
-        </div>}
-
-        {user && sample.canEdit && !edit && (
-          <Link to={`/samples/${sample.id}/edit/`} className="edit-button button tertiary-button">edit sample</Link>
-        )}
-        {edit && (
-          <button type="submit" className="edit-button button tertiary-button">
-            {updateSampleMutation.loading ? <ClipLoader color="#9590B5" size="20px" /> : "save changes"}
-          </button>
-        )}
-        {edit ? (
-          <div className="inputs">
-            <div className="input">
-              <label htmlFor="annotatorName">Annotator:</label>
-              <div className="error-container">
-                {edit && errors.annotator_name && <div className="error">{errors.annotator_name}</div>}
-                <input
-                  id="annotatorName"
-                  value={annotatorName === null ? sample.annotatorName : annotatorName}
-                  onChange={e => setAnnotatorName(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="input">
-              <label htmlFor="piName">PI:</label>
-              <div className="error-container">
-                {edit && errors.pi_name && <div className="error">{errors.pi_name}</div>}
-                <input
-                  id="piName"
-                  value={piName === null ? sample.piName : piName}
-                  onChange={e => setPi(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="input">
-              <label htmlFor="organism">Organism:</label>
-              <div className="error-container">
-                {edit && errors.organism && <div className="error">{errors.organism}</div>}
-                <input
-                  id="organism"
-                  value={organism === null ? sample.organism : organism}
-                  onChange={e => setOrganism(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="input">
-              <label htmlFor="source">Source:</label>
-              <div className="error-container">
-                {edit && errors.source && <div className="error">{errors.annotator_name}</div>}
-                <input
-                  id="source"
-                  value={source === null ? sample.source : source}
-                  onChange={e => setSource(e.target.value)}
-                />
-              </div>
-            </div>
-
+        {sample.collection && (
+          <div className="text-sm">
+            <span>Collection:&nbsp;</span>
+            {!editing && <Link to={`/collections/${sample.collection.id}/`}>{sample.collection.name}</Link>}
+            {editing && (
+              <select
+                className="outline-none cursor-pointer"
+                value={selectedCollection}
+                onChange={e => setSelectedCollection(e.target.value)}
+              >
+                {possibleCollections.map(c => (
+                  <option value={c.id} key={c.id}>{c.name}</option>
+                ))}
+              </select>
+            )}
           </div>
-        ) : (
-          <table>
-            <tbody>
-              <tr>
-                <th>Annotator:</th>
-                <td>{sample.annotatorName || "N/A"}</td>
-                <th>Organism:</th>
-                <td>{sample.organism || "N/A"}</td>
-              </tr>
-              <tr>
-                <th>PI:</th>
-                <td>{sample.piName || "N/A"}</td>
-                <th>Source:</th>
-                <td>{sample.source || "N/A"}</td>
-              </tr>
-            </tbody>
-          </table>
         )}
+        <div className={`sm:flex items-center font-light text-primary-100 text-xs sm:text-sm mt-1 mb-4`}>
+          <div className={`mb-1 sm:mb-0  ${editing && "opacity-0"}`}>
+            Created {moment(sample.created * 1000).format("D MMMM, YYYY")}
+          </div>
+          <div className={`hidden sm:block mx-2 ${editing && "opacity-0"}`}>|</div>
+          <div className={editing && "opacity-0"}>
+            Modified {moment(sample.lastModified * 1000).format("D MMMM, YYYY")}
+          </div>
+          {sample.canEdit && !editing && (
+            <Link
+              className={`btn-tertiary text-primary-500 ${buttonClass}`}
+              to={`/samples/${sample.id}/edit/`}
+            >Edit Sample</Link>
+          )}
+          {editing && (
+            <Button onClick={() =>{}} className={`btn-primary text-white ${buttonClass}`} loading={updateSampleMutation.loading}>
+              Save Changes
+            </Button>
+          )}
+        </div>
+
+        {errors.annotator_name && <div className="text-red-800 text-sm mt-2">{errors.annotator_name}</div>}
+        {errors.pi_name && <div className="text-red-800 text-sm mt-2">{errors.pi_name}</div>}
+        {errors.source && <div className="text-red-800 text-sm mt-2">{errors.source}</div>}
+        {errors.organism && <div className="text-red-800 text-sm mt-2">{errors.organism}</div>}
+        <div className="text-sm md:text-base text-primary-300 -mr-6 -mb-1">
+          <div className={pairClass}>
+            <div className={propertyClass}>Annotator:&nbsp;</div>
+            <div
+              className={`${valueClass} ${editing && editingClass} ${errors.annotator_name ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
+              contentEditable={editing} suppressContentEditableWarning={editing}
+              ref={annotatorEl}
+            >{sample.annotatorName || "N/A"}</div>
+          </div>
+          <div className={pairClass}>
+            <div className={propertyClass}>Organism:&nbsp;</div>
+            <div
+              className={`${valueClass} ${sample.organism ? "italic" : ""} ${editing && editingClass} ${errors.organism ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
+              contentEditable={editing} suppressContentEditableWarning={editing}
+              ref={organismEl}
+            >{sample.organism || "N/A"}</div>
+          </div>
+          <div className={pairClass}>
+            <div className={propertyClass}>PI:&nbsp;</div>
+            <div
+              className={`${valueClass} ${editing && editingClass} ${errors.pi_name ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
+              contentEditable={editing} suppressContentEditableWarning={editing}
+              ref={piEl}
+            >{sample.piName || "N/A"}</div>
+          </div>
+          <div className={pairClass}>
+            <div className={propertyClass}>Source:&nbsp;</div>
+            <div
+              className={`${valueClass} ${editing && editingClass} ${errors.source ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
+              contentEditable={editing} suppressContentEditableWarning={editing}
+              ref={sourceEl}
+            >{sample.source || "N/A"}</div>
+          </div>
+        </div>
       </div>
-      {!edit && <div className="right-column">
-        {sample.qcPass !== null && sample.qcPass === true && (
-          <div className="quality-status pass">
-            QC <img src={tick} alt="pass" />
-          </div>
-        )}
-        {sample.qcPass !== null && sample.qcPass === false && (
-          <div className="quality-status fail">
-            QC <img src={cross} alt="fail" />
-          </div>
-        )}
 
+      <div className={`hidden lg:block w-max ml-3 ${editing && "opacity-0"}`}>
+        {sample.qcPass !== null && (
+          <div
+            className={`${sample.qcPass ? "bg-green-500" : "bg-red-700"} shadow bg-opacity-80 w-max flex text-base text-white ml-auto rounded-sm px-2 py-0.5 mb-4`}
+          >
+            QC <img src={sample.qcPass ? tick : cross} alt="" className="ml-2 w-4" />
+          </div>
+        )}
         {sample.qcMessage && (
-          <div className="qc-message">{sample.qcMessage.replace(/\.$/, "").split("; ").map((s, i) => (
+          <div className="text-right whitespace-nowrap font-light grid gap-1 text-gray-400 text-sm">{sample.qcMessage.replace(/\.$/, "").split("; ").map((s, i) => (
             <div key={i}>{s}</div>
           ))}</div>
         )}
-
-        <div className="dates">
-          <div className="created" data-tip data-for="creation">
-            Created <time>{moment(sample.created * 1000).format("DD MMM, YYYY")}</time>
-          </div>
-          <ReactTooltip id="creation">
-            <span>{moment(sample.created * 1000).format("DD MMMM YYYY - HH:mm UTC")}</span>
-          </ReactTooltip>
-          <div className="modified" data-tip data-for="modified">
-            Modified <time>{moment(sample.lastModified * 1000).format("DD MMM, YYYY")}</time>
-          </div>
-          <ReactTooltip id="modified">
-            <span>{moment(sample.lastModified * 1000).format("DD MMMM YYYY - HH:mm UTC")}</span>
-          </ReactTooltip>
-        </div>
-      </div>}
-
-
-    </InfoElement>
-  );
+      </div>
+    </Element>
+  )
 };
 
 SampleInfo.propTypes = {

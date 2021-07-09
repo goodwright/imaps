@@ -68,7 +68,7 @@ const CollectionInfo = props => {
       >{collection.description}</p>
 
 
-      <div className={`sm:flex items-center font-light text-primary-100 text-xs sm:text-sm md:text-base`}>
+      <div className={`sm:flex items-center font-light text-primary-100 text-xs sm:text-sm`}>
         {editing && (
           <Toggle
             checked={isPrivate}
