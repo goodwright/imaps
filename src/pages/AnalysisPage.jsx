@@ -9,7 +9,7 @@ const AnalysisPage = () => {
   return (
     <Base>
       <h1>Analysis</h1>
-      <p className="font-light max-w-4xl">
+      <p className="font-light max-w-4xl mt-8 bg-gray-50 shadow p-2 rounded italic">
         This is the page for running new analyses and uploading new data to
         iMaps. While iMaps is undergoing its redevelopment, this functionality
         is not yet available. Check back over July and August 2021 as we
