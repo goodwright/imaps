@@ -8,7 +8,7 @@ const ExecutionSection = props => {
   const { heading, text, children, table, isFile, isLink, execution, lookup } = props;
 
   return (
-    <div className="mb-10">
+    <div className="mb-12">
       <h2 className="font-medium text-lg">{heading}</h2>
       <div className="font-light text-base mb-2">{text}</div>
       {table && (

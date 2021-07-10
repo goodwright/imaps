@@ -4,7 +4,7 @@ import ReactTooltip from "react-tooltip";
 
 const CommandCategory = props => {
 
-  const { category } = props;
+  const { category, small } = props;
 
   const categoryColor = {
     "process": "bg-blue-400",
@@ -22,7 +22,7 @@ const CommandCategory = props => {
 
   return (
     <>
-      <div className={`text-white w-max rounded text-sm md:text-base px-2 py-0.5 cursor-default shadow ${categoryColor}`} data-tip data-for="category">
+      <div className={`text-white w-max rounded ${small ? "text-xs md:text-sm" : "text-sm md:text-base"} px-2 py-0.5 cursor-default shadow ${categoryColor}`} data-tip data-for="category">
         {category}
       </div>
       <ReactTooltip id="category">{categoryHelp}</ReactTooltip>
@@ -31,7 +31,8 @@ const CommandCategory = props => {
 };
 
 CommandCategory.propTypes = {
-  category: PropTypes.string.isRequired
+  category: PropTypes.string.isRequired,
+  small: PropTypes.bool
 };
 
 export default CommandCategory;

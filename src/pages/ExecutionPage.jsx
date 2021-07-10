@@ -79,76 +79,81 @@ const ExecutionPage = props => {
       <ExecutionInfo execution={execution} className="mb-12" />
       <ExecutionProcess execution={execution} className="mb-12" />
 
-      {execution.demultiplexExecution && (
-        <ExecutionSection heading="Demultiplexing" text="This reads file was created as part of demultiplexing:">
-          <Link className={`${linkClass} -mt-2`} to={`/executions/${execution.demultiplexExecution.id}/`}>
-            {execution.demultiplexExecution.name}
-          </Link>
-        </ExecutionSection>
-      )}
+      <div className="flex flex-wrap items-start pt-10 border-t">
+        <div className="w-max mr-28">
+          {execution.demultiplexExecution && (
+            <ExecutionSection heading="Demultiplexing" text="This reads file was created as part of demultiplexing:">
+              <Link className={`${linkClass} -mt-2`} to={`/executions/${execution.demultiplexExecution.id}/`}>
+                {execution.demultiplexExecution.name}
+              </Link>
+            </ExecutionSection>
+          )}
 
-      {execution.parent && (
-        <ExecutionSection heading="Workflows" text="This analysis was a component in a workflow:">
-          <Link className={`${linkClass} -mt-2`} to={`/executions/${execution.parent.id}/`}>
-            {execution.parent.name}
-          </Link>
-        </ExecutionSection>
-      )}
+          {execution.parent && (
+            <ExecutionSection heading="Workflows" text="This analysis was a component in a workflow:">
+              <Link className={`${linkClass} -mt-2`} to={`/executions/${execution.parent.id}/`}>
+                {execution.parent.name}
+              </Link>
+            </ExecutionSection>
+          )}
 
-      {fileInputs.length > 0 && (
-        <ExecutionSection
-          heading="Uploads" text="The following files were uploaded:"
-          table={fileInputs} isFile={true} execution={execution}
-        />
-      )}
+          {fileInputs.length > 0 && (
+            <ExecutionSection
+              heading="Uploads" text="The following files were uploaded:"
+              table={fileInputs} isFile={true} execution={execution}
+            />
+          )}
 
-      {dataInputs.length > 0 && (
-        <ExecutionSection
-          heading="Upstream Analysis" text="The following previous analyses were used as input:"
-          table={dataInputs} isLink={true} lookup={upstream}
-        />
-      )}
+          {dataInputs.length > 0 && (
+            <ExecutionSection
+              heading="Upstream Analysis" text="The following previous analyses were used as input:"
+              table={dataInputs} isLink={true} lookup={upstream}
+            />
+          )}
 
-      {basicInputs.length > 0 && (
-        <ExecutionSection
-          heading={`${fileInputs.length || dataInputs.length ? "Basic " : ""}Inputs`}
-          text={`The following ${fileInputs.length || dataInputs.length ? " additional" : ""} inputs were provided:`}
-          table={basicInputs}
-        />
-      )}
+          {basicInputs.length > 0 && (
+            <ExecutionSection
+              heading={`${fileInputs.length || dataInputs.length ? "Basic " : ""}Inputs`}
+              text={`The following ${fileInputs.length || dataInputs.length ? " additional" : ""} inputs were provided:`}
+              table={basicInputs}
+            />
+          )}
+        </div>
+        <div className="w-max inline-block">
+          {execution.demultiplexed.length > 0 && (
+            <ExecutionSection heading="Demultiplexing" text="This demultiplexing produced the following reads files:">
+              <ExecutionTable executions={execution.demultiplexed} />
+            </ExecutionSection>
+          )}
 
-      {execution.demultiplexed.length > 0 && (
-        <ExecutionSection heading="Demultiplexing" text="This demultiplexing produced the following reads files:">
-          <ExecutionTable executions={execution.demultiplexed} />
-        </ExecutionSection>
-      )}
+          {execution.children.length > 0 && (
+            <ExecutionSection heading="Steps" text="The following processes were carried out as part of this workflow:">
+              <ExecutionTable executions={execution.children} />
+            </ExecutionSection>
+          )}
 
-      {execution.children.length > 0 && (
-        <ExecutionSection heading="Steps" text="The following processes were carried out as part of this workflow:">
-          <ExecutionTable executions={execution.children} />
-        </ExecutionSection>
-      )}
+          {fileOutputs.length > 0 && (
+            <ExecutionSection
+              heading="Output Files" text="This following files were produced:"
+              table={fileOutputs} isFile={true} execution={execution}
+            />
+          )}
 
-      {fileOutputs.length > 0 && (
-        <ExecutionSection
-          heading="Files" text="This following files were produced:"
-          table={fileOutputs} isFile={true} execution={execution}
-        />
-      )}
+          {basicOutputs.length > 0 && (
+            <ExecutionSection
+              heading={`${fileOutputs.length ? "Additional " : ""}Outputs`}
+              text={`The following ${fileOutputs.length ? " additional" : ""} outputs were produced:`}
+              table={basicOutputs}
+            />
+          )}
 
-      {basicOutputs.length > 0 && (
-        <ExecutionSection
-          heading={`${fileOutputs.length ? "Additional " : ""}Outputs`}
-          text={`The following ${fileOutputs.length ? " additional" : ""} outputs were produced:`}
-          table={basicOutputs}
-        />
-      )}
-
-      {execution.downstream.length > 0 && (
-        <ExecutionSection heading="Downstream Analysis" text="This following analyses use this execution as an input:">
-          <ExecutionTable executions={execution.downstream} />
-        </ExecutionSection>
-      )}
+          {execution.downstream.length > 0 && (
+            <ExecutionSection heading="Downstream Analysis" text="This following analyses use this execution as an input:">
+              <ExecutionTable executions={execution.downstream} />
+            </ExecutionSection>
+          )}
+        </div>
+      </div>
 
       {!edit && execution.owners.length > 0 && (
         <div className="ml-auto w-max text-right flex text-base md:text-lg">

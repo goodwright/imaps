@@ -54,7 +54,7 @@ const ExecutionInfo = props => {
         <div className="text-xs bg-gray-100 font-bold text-primary-300 h-6 leading-3 flex items-center justify-center text-center border-b">COMMAND</div>
         <div className="flex items-start mt-2 px-4">
           <Link to={`/commands/${execution.command.id}`} className="block font-medium flex-grow">{execution.command.name}</Link>
-          <CommandCategory category={execution.command.category} />
+          <CommandCategory category={execution.command.category} small={true} />
         </div>
         <div className="px-4 text-sm mb-2 text-primary-300 md:text-base">{execution.command.outputType}</div>
         <ReactMarkdown className="px-4 font-light text-xs md:text-sm">
