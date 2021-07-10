@@ -88,7 +88,7 @@ const PekaPage = () => {
           className="w-96 ml-3"
         />
       </div>
-      <p className="text-xs sm:text-sm md:text-base max-w-4xl border-b pb-4">
+      <p className="text-xs sm:text-sm md:text-base max-w-4xl border-b pb-4 mb-6">
         Positionally-enriched k-mer analysis (PEKA) is a software package for identifying
         enriched protein-RNA binding motifs from CLIP datasets. PEKA compares k-mer enrichment
         in proximity of high-confidence crosslink sites (tXn - thresholded crosslinks),
