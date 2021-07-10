@@ -9,12 +9,12 @@ import { UPDATE_EXECUTION } from "../mutations";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import ExecutionTable from "../components/ExecutionTable";
-import File from "../components/File";
 import { createErrorObject, detect404 } from "../forms";
 import ExecutionDeletion from "../components/ExecutionDeletion";
 import ExecutionAccess from "../components/ExecutionAccess";
 import ExecutionInfo from "../components/ExecutionInfo";
 import ExecutionProcess from "../components/ExecutionProcess";
+import ExecutionSection from "../components/ExecutionSection";
 
 
 const ExecutionPage = props => {
@@ -72,9 +72,6 @@ const ExecutionPage = props => {
   const basicOutputs = output.filter(o => o.type && o.value !== undefined && o.type.includes("basic:") && !o.type.includes("file:"));
   const fileOutputs = output.filter(o => o.type && o.value !== undefined && o.type.includes("basic:file:"));
 
-  const blockClass = "mb-10";
-  const h2Class = "font-medium text-lg";
-  const textClass = "font-light text-base mb-2";
   const linkClass = "flex text-sm font-medium";
 
   return (
@@ -83,157 +80,74 @@ const ExecutionPage = props => {
       <ExecutionProcess execution={execution} className="mb-12" />
 
       {execution.demultiplexExecution && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Demultiplexing</h2>
-          <div className={textClass}>This reads file was created as part of demultiplexing:</div>
+        <ExecutionSection heading="Demultiplexing" text="This reads file was created as part of demultiplexing:">
           <Link className={`${linkClass} -mt-2`} to={`/executions/${execution.demultiplexExecution.id}/`}>
             {execution.demultiplexExecution.name}
           </Link>
-        </div>
+        </ExecutionSection>
       )}
 
       {execution.parent && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Workflows</h2>
-          <div className={textClass}>This analysis was a component in a workflow:</div>
+        <ExecutionSection heading="Workflows" text="This analysis was a component in a workflow:">
           <Link className={`${linkClass} -mt-2`} to={`/executions/${execution.parent.id}/`}>
             {execution.parent.name}
           </Link>
-        </div>
+        </ExecutionSection>
       )}
 
       {fileInputs.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Uploads</h2>
-          <div className={textClass}>This following files were uploaded:</div>
-          <table>
-            <tbody>
-              {fileInputs.map(input => {
-                const values = Array.isArray(input.value) ? input.value : [input.value]
-                return (
-                  <tr key={input.name}>
-                    <td className="font-mono text-xs items-center mr-1 text-right">{input.name}:</td>
-                    <td>
-                      {values.map(file => <File name={file.file} size={file.size} execution={execution} />)}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ExecutionSection
+          heading="Uploads" text="The following files were uploaded:"
+          table={fileInputs} isFile={true} execution={execution}
+        />
       )}
 
       {dataInputs.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Upstream Analysis</h2>
-          <div className={textClass}>This following previous analyses were used as input:</div>
-          <table>
-            <tbody>
-              {dataInputs.map(input => {
-                const values = Array.isArray(input.value) ? input.value : [input.value];
-                return (
-                  <tr key={input.name}>
-                    <td className="font-mono text-xs items-center mr-1 text-right">{input.name}:</td>
-                    <td>
-                      {values.map(value => <Link key={value} className={linkClass} to={`/executions/${upstream[value].id}/`}>{upstream[value].name}</Link>)}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ExecutionSection
+          heading="Upstream Analysis" text="The following previous analyses were used as input:"
+          table={dataInputs} isLink={true} lookup={upstream}
+        />
       )}
 
       {basicInputs.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>{fileInputs.length || dataInputs.length ? "Basic " : ""}Inputs</h2>
-          <div className={textClass}>The following {fileInputs.length || dataInputs.length ? " additional" : ""} inputs were provided:</div>
-          <table>
-            <tbody>
-              {basicInputs.map(input => {
-                const values = Array.isArray(input.value) ? input.value : [input.value]
-                return (
-                  <tr key={input.name}>
-                    <td className="font-mono text-xs items-center mr-1 text-right py-0.5">{input.name}:</td>
-                    <td className="font-mono text-xs font-bold">
-                      {values.map(v => v.toString()).join(", ")}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ExecutionSection
+          heading={`${fileInputs.length || dataInputs.length ? "Basic " : ""}Inputs`}
+          text={`The following ${fileInputs.length || dataInputs.length ? " additional" : ""} inputs were provided:`}
+          table={basicInputs}
+        />
       )}
 
       {execution.demultiplexed.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Demultiplexing</h2>
-          <div className={textClass}>This demultiplexing produced the following reads files:</div>
+        <ExecutionSection heading="Demultiplexing" text="This demultiplexing produced the following reads files:">
           <ExecutionTable executions={execution.demultiplexed} />
-        </div>
+        </ExecutionSection>
       )}
 
       {execution.children.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Steps</h2>
-          <div className={textClass}>This following processes were carried out as part of this workflow:</div>
+        <ExecutionSection heading="Steps" text="The following processes were carried out as part of this workflow:">
           <ExecutionTable executions={execution.children} />
-        </div>
+        </ExecutionSection>
       )}
 
       {fileOutputs.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Files</h2>
-          <div className={textClass}>This following files were produced:</div>
-          <table>
-            <tbody>
-              {fileOutputs.map(output => {
-                const values = Array.isArray(output.value) ? output.value : [output.value]
-                return (
-                  <tr key={output.name}>
-                    <td className="font-mono text-xs items-center mr-1 text-right">{output.name}:</td>
-                    <td>
-                      {values.map(file => <File key={file.file} name={file.file} size={file.size} execution={execution} />)}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ExecutionSection
+          heading="Files" text="This following files were produced:"
+          table={fileOutputs} isFile={true} execution={execution}
+        />
       )}
 
       {basicOutputs.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>{fileOutputs.length ? "Additional " : ""}Outputs</h2>
-          <div className={textClass}>The following {fileOutputs.length ? " additional" : ""} outputs were produced:</div>
-          <table>
-            <tbody>
-              {basicOutputs.map(output => {
-                const values = Array.isArray(output.value) ? output.value : [output.value]
-                return (
-                  <tr key={output.name}>
-                    <td className="font-mono text-xs items-center mr-1 text-right py-0.5">{output.name}:</td>
-                    <td className="font-mono text-xs font-bold">
-                      {values.map(v => v.toString()).join(", ")}
-                    </td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
+        <ExecutionSection
+          heading={`${fileOutputs.length ? "Additional " : ""}Outputs`}
+          text={`The following ${fileOutputs.length ? " additional" : ""} outputs were produced:`}
+          table={basicOutputs}
+        />
       )}
 
       {execution.downstream.length > 0 && (
-        <div className={blockClass}>
-          <h2 className={h2Class}>Downstream Analysis</h2>
-          <div className={textClass}>This following analyses use this execution as an input:</div>
+        <ExecutionSection heading="Downstream Analysis" text="This following analyses use this execution as an input:">
           <ExecutionTable executions={execution.downstream} />
-        </div>
+        </ExecutionSection>
       )}
 
       {!edit && execution.owners.length > 0 && (
