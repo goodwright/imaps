@@ -19,7 +19,7 @@ const ExecutionProcess = props => {
 
   if (!execution.started) {
     return (
-      <div className="flex items-center text-primary-200">
+      <div className={`flex items-center text-primary-200 ${props.className || ""}`}>
         <ClipLoader color={colors.gray[400]} />
         <div className="ml-2 text-base">This job is currently in the queue, and has been for {moment(execution.created * 1000).fromNow(true)}.</div>
       </div>
@@ -28,7 +28,7 @@ const ExecutionProcess = props => {
 
   if (!execution.finished) {
     return (
-      <div>
+      <div className={props.className || ""}>
         <div className="flex items-center text-primary-400 mb-2">
           <ClipLoader color={imapsColors.primary[500]} />
           <div className="ml-2 text-base">This job is currently running, and has been for {moment(execution.started * 1000).fromNow(true)}.</div>
@@ -44,7 +44,7 @@ const ExecutionProcess = props => {
   }
 
   return (
-    <div>
+    <div className={props.className || ""}>
       <div className="flex items-center w-100 justify-between">
         <div className={timeClass}>
           {moment(execution.started * 1000).format("HH:mm, D MMM YYYY")}

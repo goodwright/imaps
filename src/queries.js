@@ -116,9 +116,11 @@ export const EXECUTION = gql`query execution($id: ID!) {
     input output
     command { id name description category outputType }
     demultiplexExecution { id name }
-    demultiplexed { id name }
-    upstream { id name command { name } } downstream { id name command { name } }
-    parent { id name command { name } } children { id name command { id name } }
+    demultiplexed { id name created command { id name outputType } }
+    upstream { id name command { name } }
+    downstream { id name created command { id name outputType } }
+    parent { id name command { name } }
+    children { id name created command { id name outputType } }
     sample { id name } collection { id name }
     owners { id name }
   }
