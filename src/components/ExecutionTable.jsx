@@ -34,7 +34,7 @@ const ExecutionTable = props => {
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Filter"
-          className="border-b text-sm w-40 mr-3 h-8"
+          className="border-b text-sm w-40 mr-3 h-8 bg-transparent"
         />
         <Paginator
           currentPage={actualPage}

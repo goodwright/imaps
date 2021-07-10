@@ -111,7 +111,7 @@ export const SAMPLE = gql`query sample($id: ID!) {
 
 export const EXECUTION = gql`query execution($id: ID!) {
   execution(id: $id) {
-    id name
+    id name canEdit canShare isOwner
     created lastModified started finished status warning error
     input output
     command { id name description category outputType }
@@ -123,6 +123,7 @@ export const EXECUTION = gql`query execution($id: ID!) {
     children { id name created command { id name outputType } }
     sample { id name } collection { id name }
     owners { id name }
+    users { id name username executionPermission(id: $id) }
   }
   users { id name username }
 }`;

@@ -76,10 +76,10 @@ const ExecutionPage = props => {
 
   return (
     <Base className="relative">
-      <ExecutionInfo execution={execution} className="mb-12" />
-      <ExecutionProcess execution={execution} className="mb-12" />
+      <ExecutionInfo execution={execution} className="mb-12" editing={edit} />
+      {!edit && <ExecutionProcess execution={execution} className="mb-12" />}
 
-      <div className="flex flex-wrap items-start pt-10 border-t">
+      {!edit && <div className="flex flex-wrap items-start pt-10 border-t">
         <div className="w-max mr-28">
           {execution.demultiplexExecution && (
             <ExecutionSection heading="Demultiplexing" text="This reads file was created as part of demultiplexing:">
@@ -153,7 +153,7 @@ const ExecutionPage = props => {
             </ExecutionSection>
           )}
         </div>
-      </div>
+      </div>}
 
       {!edit && execution.owners.length > 0 && (
         <div className="ml-auto w-max text-right flex text-base md:text-lg">
