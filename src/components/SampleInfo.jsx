@@ -9,10 +9,12 @@ import tick from "../images/tick.svg";
 import cross from "../images/cross.svg";
 import { createErrorObject } from "../forms";
 import Button from "./Button";
+import Toggle from "./Toggle";
 
 const SampleInfo = props => {
 
   const { sample, editing, possibleCollections } = props;
+  const [specifiedPrivacy, setSpecifiedPrivacy] = useState(null);
   const nameEl = useRef(null);
   const annotatorEl = useRef(null);
   const organismEl = useRef(null);
@@ -25,6 +27,8 @@ const SampleInfo = props => {
   if (sample.collection && !collections.map(c => c.id).includes(sample.collection.id)) {
     collections.push(sample.collection)
   }
+
+  const isPrivate = specifiedPrivacy === null ? sample.private : specifiedPrivacy;
 
   const [updateSample, updateSampleMutation] = useMutation(UPDATE_SAMPLE, {
     refetchQueries: [
@@ -54,6 +58,7 @@ const SampleInfo = props => {
         piName: piEl.current.innerText,
         organism: organismEl.current.innerText,
         source: sourceEl.current.innerText,
+        private: isPrivate,
       }
     })
   }
@@ -94,6 +99,15 @@ const SampleInfo = props => {
           </div>
         )}
         <div className={`sm:flex items-center font-light text-primary-100 text-xs sm:text-sm mt-1 mb-4`}>
+          {editing && (
+            <Toggle
+              checked={isPrivate}
+              onChange={e => setSpecifiedPrivacy(e.target.checked)}
+              trueLabel="Private"
+              falseLabel="Public"
+              className="absolute"
+            />
+          )}
           <div className={`mb-1 sm:mb-0  ${editing && "opacity-0"}`}>
             Created {moment(sample.created * 1000).format("D MMMM, YYYY")}
           </div>

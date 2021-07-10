@@ -143,8 +143,11 @@ export const DELETE_COLLECTION = gql`mutation deleteCollection($id: ID!) {
 }`;
 
 export const UPDATE_SAMPLE = gql`mutation updateSample(
-  $id: ID! $name: String! $collection: ID! $annotatorName: String! $piName: String! $organism: String! $source: String!
-) { updateSample(id: $id name: $name collection: $collection annotatorName: $annotatorName piName: $piName organism: $organism source: $source) {
+  $id: ID! $name: String! $collection: ID! $annotatorName: String! $piName: String! $organism: String! $source: String! $private: Boolean!
+) { updateSample(
+  id: $id name: $name collection: $collection annotatorName: $annotatorName
+  piName: $piName organism: $organism source: $source private: $private
+) {
   sample { id }
 } }`;
 
@@ -159,8 +162,8 @@ export const DELETE_SAMPLE = gql`mutation deleteSample($id: ID!) {
 }`;
 
 export const UPDATE_EXECUTION = gql`mutation updateExecution(
-  $id: ID! $name: String!
-) { updateExecution(id: $id name: $name ) {
+  $id: ID! $name: String! $private: Boolean!
+) { updateExecution(id: $id name: $name private: $private) {
   execution { id }
 } }`;
 

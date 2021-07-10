@@ -98,7 +98,7 @@ export const USER_COLLECTIONS = gql`{
 export const SAMPLE = gql`query sample($id: ID!) {
   sample(id: $id) {
     id name organism source piName annotatorName qcPass qcMessage
-    created lastModified canEdit canShare isOwner
+    created lastModified canEdit canShare isOwner private
     collection { id name }
     executions { id name created started finished input owners { id name } command {
       id name description outputType
@@ -111,7 +111,7 @@ export const SAMPLE = gql`query sample($id: ID!) {
 
 export const EXECUTION = gql`query execution($id: ID!) {
   execution(id: $id) {
-    id name canEdit canShare isOwner
+    id name canEdit canShare isOwner private
     created lastModified started finished status warning error
     input output
     command { id name description category outputType }

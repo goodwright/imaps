@@ -12,15 +12,19 @@ import Button from "./Button";
 import { UPDATE_EXECUTION } from "../mutations";
 import { EXECUTION } from "../queries";
 import { createErrorObject } from "../forms";
+import Toggle from "./Toggle";
 const colors = require("tailwindcss/colors");
 const imapsColors = require("../colors").colors;
 
 const ExecutionInfo = props => {
 
   const { execution, editing } = props;
+  const [specifiedPrivacy, setSpecifiedPrivacy] = useState(null);
   const [errors, setErrors] = useState({});
   const nameEl = useRef(null);
   const history = useHistory();
+
+  const isPrivate = specifiedPrivacy === null ? execution.private : specifiedPrivacy;
 
   const canBreak = Boolean(execution.name.split(" ").map(word => word.length).filter(l => l > 20).length);
 
@@ -42,7 +46,7 @@ const ExecutionInfo = props => {
     e.preventDefault();
     updateExecution({
       variables: {
-        id: execution.id, name: nameEl.current.innerText
+        id: execution.id, name: nameEl.current.innerText, private: isPrivate
       }
     })
   }
@@ -81,6 +85,15 @@ const ExecutionInfo = props => {
         </div>
       )}
       <div className={`sm:flex items-center font-light text-primary-100 text-xs sm:text-sm mt-1 mb-8`}>
+        {editing && (
+          <Toggle
+            checked={isPrivate}
+            onChange={e => setSpecifiedPrivacy(e.target.checked)}
+            trueLabel="Private"
+            falseLabel="Public"
+            className="absolute"
+          />
+        )}
         <div className={`mb-1 sm:mb-0  ${editing && "opacity-0"}`}>
           Created {moment(execution.created * 1000).format("D MMMM, YYYY")}
         </div>
