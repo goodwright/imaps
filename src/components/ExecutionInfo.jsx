@@ -56,7 +56,7 @@ const ExecutionInfo = props => {
     <Element className={props.className || ""} onSubmit={save}>
       <div className="flex items-start">
         <h1
-          className={`border-b border-opacity-0 ${canBreak && "break-all"} ${editing && "outline-none border-opacity-100 border-primary-200 max-w-full"} ${errors.name ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
+          className={`border-b border-opacity-0 flex-grow ${canBreak && "break-all"} ${editing && "outline-none border-opacity-100 border-primary-200 max-w-full"} ${errors.name ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
           contentEditable={editing} suppressContentEditableWarning={editing}
           ref={nameEl}
         >{execution.name}</h1>

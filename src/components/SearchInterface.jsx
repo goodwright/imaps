@@ -5,8 +5,9 @@ import { SEARCH_COLLECTIONS, SEARCH_SAMPLES, SEARCH_EXECUTIONS } from "../querie
 import Button from "./Button";
 const config = require("tailwindcss/defaultConfig");
 
-const SearchInterface = () => {
+const SearchInterface = props => {
 
+  const { searchCollections, searchSamples, searchExecutions, loading } = props;
   const [query, setQuery] = useState("");
   const [selectedSearchType, setSelectedSearchType] = useState("collection");
   const [selectedSortType, setSelectedSortType] = useState("name");
@@ -20,7 +21,7 @@ const SearchInterface = () => {
   const [executionDate, setExecutionDate] = useState(null);
   const [page, setPage] = useState(1);
   const count = useRef(null);
-  const PER_PAGE = 10;
+  const PER_PAGE = 12;
 
   const searchTypes = [
     {value: "collection", label: "Collections"},
@@ -46,41 +47,13 @@ const SearchInterface = () => {
     {value: "year", label: "Past Year"},
   ]
 
-  const [searchCollections, { loading: collectionsLoading }] = useLazyQuery(SEARCH_COLLECTIONS, {
-    variables: {
-      first: page * PER_PAGE,
-      last: count.current ? page * PER_PAGE > count.current ? (
-        count.current - (PER_PAGE * (page - 1))
-       ) : PER_PAGE : PER_PAGE
-    },
-    onCompleted: data => count.current = data.searchCollections.count
-  });
-  const [searchSamples, { loading: samplesLoading }] = useLazyQuery(SEARCH_SAMPLES, {
-    variables: {
-      first: page * PER_PAGE,
-      last: count.current ? page * PER_PAGE > count.current ? (
-        count.current - (PER_PAGE * (page - 1))
-       ) : PER_PAGE : PER_PAGE
-    },
-    onCompleted: data => count.current = data.searchSamples.count
-  });
-  const [searchExecutions, { loading: executionsLoading }] = useLazyQuery(SEARCH_EXECUTIONS, {
-    variables: {
-      first: page * PER_PAGE,
-      last: count.current ? page * PER_PAGE > count.current ? (
-        count.current - (PER_PAGE * (page - 1))
-       ) : PER_PAGE : PER_PAGE
-    },
-    onCompleted: data => count.current = data.searchExecutions.count
-  });
-
   const formSubmit = e => {
     e.preventDefault();
     setPage(1);
     if (selectedSearchType === "collection") {
       searchCollections({variables: {query, sort: selectedSortType, owner: collectionOwner, created: collectionDate}})
     } else if (selectedSearchType === "sample") {
-      searchSamples({variables: {query, sort: selectedSortType, organimd: sampleOrganism, owner: sampleOwner, created: sampleDate}})
+      searchSamples({variables: {query, sort: selectedSortType, organism: sampleOrganism, owner: sampleOwner, created: sampleDate}})
     } else if (selectedSearchType === "execution") {
       searchExecutions({variables: {query, sort: selectedSortType, command: executionCommand, owner: executionOwner, created: executionDate}})
     }
@@ -90,7 +63,7 @@ const SearchInterface = () => {
   const inputClass = `text-primary-200 block ${height} bg-gray-200 text-sm`
 
   return (
-    <form onSubmit={formSubmit} className="max-w-4xl mb-32 grid gap-8 w-full pb-24 border-b">
+    <form onSubmit={formSubmit} className="max-w-4xl mb-8 grid gap-8 w-full pb-24 border-b">
       <div className="block w-full md:flex justify-between">
         <input
           value={query}
@@ -199,7 +172,7 @@ const SearchInterface = () => {
           <Button
             type="submit"
             className={`btn-primary py-0 text-base w-full md:w-36 ${height}`}
-            loading={collectionsLoading || samplesLoading || executionsLoading}
+            loading={loading}
           >Search</Button>
         </div>
       </div>

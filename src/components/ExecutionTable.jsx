@@ -6,12 +6,18 @@ import Paginator from "./Paginator";
 
 const ExecutionTable = props => {
 
-  const { executions, noMessage, showCategory } = props;
+  const { executions, noMessage, showCategory, pageLength, network } = props;
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const rowCount = 10;
 
-  const fitsOnOnePage = Math.ceil(executions.length / rowCount) === 1;
+  if (executions.length === 0) {
+    return <p className="font-light text-base">{noMessage}</p>
+  }
+
+  const networkPageCount = network ? Math.ceil(network[1] / pageLength) : null;
+
+  const fitsOnOnePage = network ? networkPageCount === 1 : Math.ceil(executions.length / rowCount) === 1;
 
   const matching = query ? executions.filter(
     e => e.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -19,27 +25,23 @@ const ExecutionTable = props => {
     e.command.name.toLowerCase().includes(query.toLowerCase())
   ) : executions;
 
-  const pageCount = Math.ceil(matching.length / rowCount);
-  const actualPage = page > pageCount ? pageCount : page;
-  const visible = matching.slice((actualPage - 1) * rowCount, actualPage * rowCount);
-
-  if (executions.length === 0) {
-    return <p className="font-light text-base">{noMessage}</p>
-  }
+  const pageCount = network ? networkPageCount : Math.ceil(matching.length / rowCount);
+  const actualPage = network ? network[0] : page > pageCount ? pageCount : page;
+  const visible = network ? executions : matching.slice((actualPage - 1) * rowCount, actualPage * rowCount);
 
   return (
-    <div>
+    <div className={props.className || ""}>
       {!fitsOnOnePage && <div className="grid gap-3 mb-2 sm:flex mb-4">
-        <input
+        {!network && <input
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Filter"
           className="border-b text-sm w-40 mr-3 h-8 bg-transparent"
-        />
+        />}
         <Paginator
           currentPage={actualPage}
           totalPages={pageCount}
-          onChange={setPage}
+          onChange={network ? network[2] : setPage}
         />
       </div>}
       <div className="overflow-y-scroll rounded-md w-max max-w-full shadow">

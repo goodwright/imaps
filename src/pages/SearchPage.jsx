@@ -10,6 +10,9 @@ import Paginator from "../components/Paginator";
 import { SEARCH_COLLECTIONS, SEARCH_SAMPLES, SEARCH_EXECUTIONS } from "../queries";
 import { BarLoader } from "react-spinners";
 import SearchInterface from "../components/SearchInterface";
+import CollectionsGrid from "../components/CollectionsGrid";
+import SamplesTable from "../components/SamplesTable";
+import ExecutionTable from "../components/ExecutionTable";
 
 const SearchPage = () => {
 
@@ -26,8 +29,11 @@ const SearchPage = () => {
   const [executionDate, setExecutionDate] = useState(null);
   const history = useHistory();
   const [page, setPage] = useState(1);
+  const [collections, setCollections] = useState(null);
+  const [samples, setSamples] = useState(null);
+  const [executions, setExecutions] = useState(null);
   const count = useRef(null);
-  const PER_PAGE = 10;
+  const PER_PAGE = 12;
 
   useDocumentTitle("iMaps - Advanced Search");
 
@@ -52,7 +58,10 @@ const SearchPage = () => {
         count.current - (PER_PAGE * (page - 1))
        ) : PER_PAGE : PER_PAGE
     },
-    onCompleted: data => count.current = data.searchCollections.count
+    onCompleted: data => {
+      count.current = data.searchCollections.count;
+      setCollections(data.searchCollections.edges.map(edge => edge.node))
+    }
   });
   const [searchSamples, { loading: samplesLoading, data: samplesData }] = useLazyQuery(SEARCH_SAMPLES, {
     variables: {
@@ -61,7 +70,10 @@ const SearchPage = () => {
         count.current - (PER_PAGE * (page - 1))
        ) : PER_PAGE : PER_PAGE
     },
-    onCompleted: data => count.current = data.searchSamples.count
+    onCompleted: data => {
+      count.current = data.searchSamples.count;
+      setSamples(data.searchSamples.edges.map(edge => edge.node))
+    }
   });
   const [searchExecutions, { loading: executionsLoading, data: executionsData }] = useLazyQuery(SEARCH_EXECUTIONS, {
     variables: {
@@ -70,7 +82,10 @@ const SearchPage = () => {
         count.current - (PER_PAGE * (page - 1))
        ) : PER_PAGE : PER_PAGE
     },
-    onCompleted: data => count.current = data.searchExecutions.count
+    onCompleted: data => {
+      count.current = data.searchExecutions.count;
+      setExecutions(data.searchExecutions.edges.map(edge => edge.node))
+    }
   });
 
   const showCollections = selectedSearchType === "collection" && collectionsData && collectionsData.searchCollections;
@@ -81,47 +96,59 @@ const SearchPage = () => {
     <Base className="search-page">
       
       <h1>Advanced Search</h1>
-      <SearchInterface />
+
+      <SearchInterface
+        searchCollections={searchCollections}
+        searchSamples={searchSamples}
+        searchExecutions={searchExecutions}
+        loading={collectionsLoading || samplesLoading || executionsLoading}
+      />
+
+      {collections && (
+        <CollectionsGrid
+          collections={collections}
+          pageLength={PER_PAGE}
+          noMessage="No results for this query."
+          network={[page, count.current, setPage]}
+          className={collectionsLoading ? "opacity-50 pointer-events-none" : ""}
+        />
+      )}
+
+      {samples && (
+        <SamplesTable
+          samples={samples}
+          pageLength={PER_PAGE}
+          noMessage="No results for this query."
+          network={[page, count.current, setPage]}
+          className={samplesLoading ? "opacity-50 pointer-events-none" : ""}
+        />
+      )}
+
+      {executions && (
+        <ExecutionTable
+          executions={executions}
+          pageLength={PER_PAGE}
+          noMessage="No results for this query."
+          network={[page, count.current, setPage]}
+          showCategory={true}
+          className={executionsLoading ? "opacity-50 pointer-events-none" : ""}
+        />
+      )}
      
       <div className="results">
-        {(collectionsLoading || samplesLoading || executionsLoading) && (
+        {/* {(collectionsLoading || samplesLoading || executionsLoading) && (
           <div className="loader">
             <BarLoader color="#6353C6" />
           </div>
-        )}
+        )} */}
 
-        {((showCollections && collectionsData.searchCollections.edges.length === 0) || (showSamples && samplesData.searchSamples.edges.length === 0) || (showExecutions && executionsData.searchExecutions.edges.length === 0)) && (
+        {/* {((showCollections && collectionsData.searchCollections.edges.length === 0) || (showSamples && samplesData.searchSamples.edges.length === 0) || (showExecutions && executionsData.searchExecutions.edges.length === 0)) && (
           <div className="no-data">
             No results for this query.
           </div>
-        )}
+        )} */}
 
-        {showCollections && collectionsData.searchCollections.edges.length > 0 && (
-          <div className="results">
-            {collectionsData.searchCollections.count > PER_PAGE ? <Paginator
-              count={collectionsData.searchCollections.count} itemsPerPage={PER_PAGE}
-              currentPage={page} onClick={setPage}
-            /> : <div className="paginator" /> }
-            <table>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Owners</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {collectionsData.searchCollections.edges.map(edge => edge.node).map(c => (
-                  <tr key={c.id} onClick={() => history.push(`/collections/${c.id}/`)}>
-                    <td>{c.name}</td>
-                    <td>{c.owners.map(u => u.name).join(", ")}</td>
-                    <td>{moment(c.created * 1000).format("D MMM YYYY")}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+
         {showSamples && samplesData.searchSamples.edges.length > 0 && (
           <div className="results">
             {samplesData.searchSamples.count > PER_PAGE ? <Paginator

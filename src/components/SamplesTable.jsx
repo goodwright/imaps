@@ -9,38 +9,40 @@ import { Link } from "react-router-dom";
 
 const SamplesTable = props => {
 
-  const { samples, noMessage } = props;
+  const { samples, noMessage, pageLength, network } = props;
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const rowCount = 10;
-
-  const fitsOnOnePage = Math.ceil(samples.length / rowCount) === 1;
-
-  const matching = query ? samples.filter(
-    e => e.name.toLowerCase().includes(query.toLowerCase())
-  ) : samples;
-
-  const pageCount = Math.ceil(matching.length / rowCount);
-  const actualPage = page > pageCount ? pageCount : page;
-  const visible = matching.slice((actualPage - 1) * rowCount, actualPage * rowCount);
 
   if (samples.length === 0) {
     return <p className="font-light text-base">{noMessage}</p>
   }
 
+  const networkPageCount = network ? Math.ceil(network[1] / pageLength) : null;
+
+  const fitsOnOnePage = network ? networkPageCount === 1 : Math.ceil(samples.length / pageLength) === 1;
+
+  const matching = query ? samples.filter(
+    e => e.name.toLowerCase().includes(query.toLowerCase())
+  ) : samples;
+
+  const pageCount = network ? networkPageCount : Math.ceil(matching.length / rowCount);
+  const actualPage = network ? network[0] : page > pageCount ? pageCount : page;
+  const visible = network ? samples : matching.slice((actualPage - 1) * rowCount, actualPage * rowCount);
+
   return (
-    <div>
+    <div className={props.className || ""}>
       {!fitsOnOnePage && <div className="grid gap-3 mb-2 sm:flex mb-4">
-        <input
+        {!network && <input
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder="Filter"
           className="border-b text-sm w-40 mr-3 h-8"
-        />
+        />}
         <Paginator
           currentPage={actualPage}
           totalPages={pageCount}
-          onChange={setPage}
+          onChange={network ? network[2] : setPage}
         />
       </div>}
 

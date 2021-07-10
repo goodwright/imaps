@@ -153,7 +153,7 @@ export const SEARCH_COLLECTIONS = gql`query searchCollections(
   searchCollections(
     query: $query sort: $sort owner: $owner created: $created first: $first last: $last
   ) { count edges { node {
-    id name created owners { id name }
+    id name created sampleCount executionCount owners { id username }
   } }
   }
 }`;
@@ -165,7 +165,7 @@ export const SEARCH_SAMPLES = gql`query searchSamples(
     query: $query sort: $sort organism: $organism owner: $owner created: $created
     first: $first last: $last
   ) { count edges { node {
-    id name organism created collection { id owners { id name } }
+    id name organism source piName annotatorName qcPass qcMessage created
   } } }
 }`;
 
@@ -176,8 +176,8 @@ export const SEARCH_EXECUTIONS = gql`query searchExecutions(
     query: $query sort: $sort command: $command owner: $owner created: $created
     first: $first last: $last
   ) { count edges { node {
-    id name created command { id name } 
-    collection { id owners { id name } }
-    sample { id collection { id owners { id name } } }
+    id name created started finished input owners { id name } command {
+      id name category outputType
+    }
   } } }
 }`;
