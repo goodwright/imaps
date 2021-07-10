@@ -22,7 +22,7 @@ const ExecutionInfo = props => {
   const nameEl = useRef(null);
   const history = useHistory();
 
-  const canBreak = !execution.name.includes(" ");
+  const canBreak = Boolean(execution.name.split(" ").map(word => word.length).filter(l => l > 20).length);
 
   const [updateExecution, updateExecutionMutation] = useMutation(UPDATE_EXECUTION, {
     refetchQueries: [
@@ -56,14 +56,14 @@ const ExecutionInfo = props => {
     <Element className={props.className || ""} onSubmit={save}>
       <div className="flex items-start">
         <h1
-          className={`border-b border-opacity-0 flex-grow ${canBreak && "break-all"} ${editing && "outline-none border-opacity-100 border-primary-200 max-w-full"} ${errors.name ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
+          className={`border-b border-opacity-0 ${canBreak && "break-all"} ${editing && "outline-none border-opacity-100 border-primary-200 max-w-full"} ${errors.name ? "bg-red-100" : editing ? "bg-gray-100" : ""}`}
           contentEditable={editing} suppressContentEditableWarning={editing}
           ref={nameEl}
         >{execution.name}</h1>
         {!execution.finished && (
           <ClipLoader color={execution.started ? imapsColors.primary[500] : colors.gray[400]} />
         )}
-        {execution.finished && <div className={`text-white font-semibold ml-4 flex text-xs w-max px-2 shadow py-1.5 cursor-default rounded ${ok ? "bg-green-400 border-green-500" : "bg-red-400"}`}>
+        {execution.finished && <div className={`text-white font-semibold ml-4 flex text-xs w-max px-2 flex-shrink-0 justify-center shadow py-1.5 cursor-default rounded ${ok ? "bg-green-400 border-green-500" : "bg-red-400"}`}>
           {ok ? "COMPLETE" : "ERROR"} <img src={ok ? tick : cross} alt="" className="ml-1.5 w-3.5" />
         </div>}
       </div>

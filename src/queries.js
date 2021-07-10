@@ -122,7 +122,7 @@ export const EXECUTION = gql`query execution($id: ID!) {
     parent { id name command { name } }
     children { id name created command { id name outputType } }
     sample { id name } collection { id name }
-    owners { id name }
+    owners { id username name }
     users { id name username executionPermission(id: $id) }
   }
   users { id name username }

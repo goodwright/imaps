@@ -11,7 +11,7 @@ const ExecutionProcess = props => {
 
   const { execution } = props;
 
-  const timeClass = "bg-gray-100 w-max border px-2 py-2 rounded text-sm text-primary-300";
+  const timeClass = "bg-gray-100 w-max border px-2 py-1 sm:py-2 rounded text-2xs sm:text-sm text-primary-300";
   const boxClass = "inline-flex items-center px-4 py-5 text-base rounded border-b-2 w-100 mb-3 mr-5 mb-5";
   const imgClass = "w-10 mr-4";
   const boxHeadingClass = "text-red-900 font-medium text-lg";
@@ -45,17 +45,17 @@ const ExecutionProcess = props => {
 
   return (
     <div className={props.className || ""}>
-      <div className="flex items-center w-100 justify-between">
+      <div className="mx-auto w-max grid gap-2 sm:flex sm:gap-0 items-center sm:w-100 sm:mx-0 justify-between">
         <div className={timeClass}>
           {moment(execution.started * 1000).format("HH:mm, D MMM YYYY")}
         </div>
         <div className="flex-grow text-xs relative font-medium text-primary-400 z-50">
-          <div className="absolute w-full text-center -top-4">
+          <div className="sm:absolute w-full text-center -top-4">
             {moment.duration(moment(execution.finished * 1000) - moment(execution.started * 1000), "milliseconds").humanize(false)}
           </div>
-          <div className="h-2 w-full bg-gray-100 border-t border-b -ml-px" />
+          <div className="hidden sm:block h-2 w-full bg-gray-100 border-t border-b -ml-px" />
         </div>
-        <div className={`${timeClass} -ml-0.5`}>
+        <div className={`${timeClass} sm:-ml-0.5`}>
           {moment(execution.finished * 1000).format("HH:mm, D MMM YYYY")}
         </div>
       </div>

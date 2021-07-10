@@ -12,7 +12,7 @@ const ExecutionSection = props => {
       <h2 className="font-medium text-lg">{heading}</h2>
       <div className="font-light text-base mb-2">{text}</div>
       {table && (
-        <table>
+        <table className="whitespace-nowrap">
           <tbody>
             {table.map(row => {
               const values = Array.isArray(row.value) ? row.value : [row.value]

@@ -1,15 +1,13 @@
-import React, { useRef, useState } from "react";
-import { useHistory } from "react-router";
+import React from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import useDocumentTitle from "@rehooks/document-title";
 import { EXECUTION } from "../queries";
-import { UPDATE_EXECUTION } from "../mutations";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";
 import ExecutionTable from "../components/ExecutionTable";
-import { createErrorObject, detect404 } from "../forms";
+import { detect404 } from "../forms";
 import ExecutionDeletion from "../components/ExecutionDeletion";
 import ExecutionAccess from "../components/ExecutionAccess";
 import ExecutionInfo from "../components/ExecutionInfo";
@@ -20,9 +18,6 @@ import ExecutionSection from "../components/ExecutionSection";
 const ExecutionPage = props => {
   const executionId = useRouteMatch("/executions/:id").params.id;
   const { edit } = props;
-  const nameEl = useRef(null);
-  const [errors, setErrors] = useState({});
-  const history = useHistory();
 
   const { loading, data, error } = useQuery(EXECUTION, {
     variables: {id: executionId}
@@ -30,32 +25,9 @@ const ExecutionPage = props => {
 
   useDocumentTitle(data ? `iMaps - ${data.execution.name}` : "iMaps");
 
-  const [updateExecution, updateExecutionMutation] = useMutation(UPDATE_EXECUTION, {
-    refetchQueries: [
-      {query: EXECUTION, variables: {id: executionId}},
-    ],
-    awaitRefetchQueries: true,
-    onCompleted: () => {
-      setErrors({});
-      history.push(`/executions/${executionId}/`);
-    },
-    onError: ({graphQLErrors}) => {
-      setErrors(createErrorObject(errors, graphQLErrors))
-    }
-  });
-
   if (detect404(error)) return <PageNotFound />
 
   if (loading) return <Base className="execution-page" loading={true} />
-
-  const save = e => {
-    e.preventDefault();
-    updateExecution({
-      variables: {
-        id: execution.id, name: nameEl.current.innerText
-      }
-    })
-  }
 
   const execution = data.execution;
 
@@ -79,7 +51,7 @@ const ExecutionPage = props => {
       <ExecutionInfo execution={execution} className="mb-12" editing={edit} />
       {!edit && <ExecutionProcess execution={execution} className="mb-8" />}
 
-      {!edit && <div className="flex flex-wrap items-start pt-10 border-t">
+      {!edit && <div className="flex flex-wrap items-start pt-10 border-t max-w-full overflow-x-scroll">
         <div className="w-max mr-28">
           {execution.demultiplexExecution && (
             <ExecutionSection heading="Demultiplexing" text="This reads file was created as part of demultiplexing:">
@@ -164,7 +136,7 @@ const ExecutionPage = props => {
         </div>
       )}
 
-      {edit && execution.canShare && <div className="bottom-buttons">
+      {edit && execution.canShare && <div className="btn-box ml-auto mt-36">
         <ExecutionAccess execution={execution} allUsers={data.users} />
         {edit && execution.isOwner && <ExecutionDeletion execution={execution} />}
       </div>}

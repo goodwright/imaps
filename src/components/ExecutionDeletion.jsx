@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useMutation } from "@apollo/client";
-import { ClipLoader } from "react-spinners";
 import Modal from "./Modal";
 import { DELETE_EXECUTION } from "../mutations";
 import { useHistory } from "react-router";
