@@ -24,7 +24,7 @@ const SampleDeletion = props => {
   const canBreak = !sample.name.includes(" ");
 
   return (
-    <div className="sample-deletion">
+    <div>
       <button className="btn-secondary text-base py-2" onClick={() => setShowModal(true)}>Delete Sample</button>
       <Modal
         className="max-w-xl"
@@ -32,7 +32,6 @@ const SampleDeletion = props => {
         title={`Delete ${sample.name}?`}
         breakTitle={canBreak}
         text="Deleting this sample is an irreversible step and will delete all associated information. Are you sure you wish to continue?"
-
       >
         <div className="btn-box mt-6">
           <Button type="submit" className="btn-primary px-4 py-2 text-base" onClick={() => deleteSample({variables: {id: sample.id}})} loading={deleteSampleMutation.loading}>
