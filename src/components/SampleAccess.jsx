@@ -86,7 +86,6 @@ const SampleAccess = props => {
         title="Who can access this sample?"
         text={text}
       >
-
         <div className="border-t mt-8 pt-8 grid lg:grid-cols-max">
           <div className="lg:w-60">
             <h3 className={h3Class}>Users with Access</h3>
@@ -116,7 +115,7 @@ const SampleAccess = props => {
         
           <div className="pt-6 lg:pt-0 lg:pl-8">
             <h3 className={h3Class}>Provide User Access</h3>
-            <div className="grid gap-0 sm:flex">
+            <div className="grid gap-3 sm:gap-0 sm:flex">
               <Select
                 options={possibleUsers}
                 onInputChange={value => setShowUsersDropdown(value.length >= 3)}

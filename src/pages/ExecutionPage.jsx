@@ -77,7 +77,7 @@ const ExecutionPage = props => {
   return (
     <Base className="relative">
       <ExecutionInfo execution={execution} className="mb-12" editing={edit} />
-      {!edit && <ExecutionProcess execution={execution} className="mb-12" />}
+      {!edit && <ExecutionProcess execution={execution} className="mb-8" />}
 
       {!edit && <div className="flex flex-wrap items-start pt-10 border-t">
         <div className="w-max mr-28">
