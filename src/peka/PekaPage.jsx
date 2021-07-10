@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import Select from "react-select";
+import Select from "../components/Select";
 import PekaHeatmap from "./PekaHeatmap";
 import PekaRbp from "./PekaRbp";
 import Base from "../pages/Base";
 import PekaMotif from "./PekaMotif";
+const colors = require("tailwindcss/colors");
 
 const PekaPage = () => {
 
@@ -51,10 +52,27 @@ const PekaPage = () => {
     downloadAnchorNode.remove();
   }
 
+  const customStyles = {
+    control: () => ({
+      backgroundColor: "white",
+      borderColor: colors.gray[200],
+      borderWidth: 1,
+      cursor: "text",
+      boxShadow: null,
+      "&:hover": {
+        boxShadow: null,
+      }
+      
+    }),
+    dropdownIndicator: () => ({
+      opacity: 0
+    }),
+  }
+
   return (
-    <Base className="peka-page">
-      <div className="top-row">
-        <h1>PEKA</h1>
+    <Base>
+      <div className="flex items-center justify-between max-w-4xl mb-2 sm:mb-3 md:mb-4">
+        <h1 className="mb-0">PEKA</h1>
         <Select
           key={rbp || motif}
           options={searchData}
@@ -66,11 +84,11 @@ const PekaPage = () => {
           onChange={searchSelected}
           onClick={console.log}
           placeholder={searchAvtive ? "" : "Search..."}
-          className="search-select"
-          classNamePrefix="search"
+          styles={customStyles}
+          className="w-96 ml-3"
         />
       </div>
-      <p className="peka-text">
+      <p className="text-xs sm:text-sm md:text-base max-w-4xl border-b pb-4">
         Positionally-enriched k-mer analysis (PEKA) is a software package for identifying
         enriched protein-RNA binding motifs from CLIP datasets. PEKA compares k-mer enrichment
         in proximity of high-confidence crosslink sites (tXn - thresholded crosslinks),
