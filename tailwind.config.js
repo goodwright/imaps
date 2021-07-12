@@ -28,6 +28,10 @@ module.exports = {
         "mob-base": "3rem 1fr",
         "base": "12.5rem 1fr",
       },
+      screens: {
+        "3xl": "1800px",
+        "4xl": "2100px"
+      },
       colors
     },
   },

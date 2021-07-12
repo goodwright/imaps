@@ -16,6 +16,7 @@ const PekaMotif = props => {
   const cellWidth = 2;
   const cellHeight = 14;
   const barWidth = 24;
+  const chartHeight = 350;
 
   useEffect(() => {
     setData(null);
@@ -147,12 +148,22 @@ const PekaMotif = props => {
     `;
   }
 
+  const labelClass = "flex flex-col justify-evenly transform -rotate-90 origin-bottom-left text-2xs leading-3 relative -right-8 -top-8 pl-1 -mb-8 whitespace-nowrap";
+  const colorsClass = "flex flex-col justify-between border mt-4 text-2xs leading-3";
+  
+
   return (
-    <div className="peka-motif">
-      <h2>{motif} (Group: {data.group}) <button onClick={() => download(data, data.group)}>Download Data</button></h2>
-      <p className="other-motifs">Other members: <span className="members">{data.group_members.filter(m => m !== motif).join(", ")}</span></p>
-      <div className="peka-sub-text">
-        <h3>Metaprofile of motif-group coverage</h3>
+    <div>
+      <h2 className="font-semibold relative text-3xl mb-2">
+        {motif} (Group: {data.group})
+        <button className="absolute text-xs -top-1.5 pl-1 text-primary-500"onClick={() => download(data, data.group)}>Download Data</button>
+      </h2>
+
+      <div className="text-xs font-medium text-primary-100 mb-3 max-w-4xl">
+        Other members: <span className="font-light text-2xs">{data.group_members.filter(m => m !== motif).join(", ")}</span>
+      </div>
+      <div className="text-xs sm:text-sm max-w-4xl pb-4 mb-6 grid gap-2">
+        <h3 className="font-semibold text-smk sm:text-base">Metaprofile of motif-group coverage</h3>
         <p>
           This page compares the enrichment of the {data.group} motif-group across
           all eCLIP datasets. The coverage of a given motif-group is visualised
@@ -175,10 +186,12 @@ const PekaMotif = props => {
         <Link className="back" to="/apps/peka/">Back to Main Heatmap</Link>
       </div>
 
-      <div className="graphics">
+      <div className="grid gap-20 overflow-x-scroll no-scroll">
 
-        <div className="scatter-plots">
-          <div className="plots">
+        <div className="flex" style={{maxWidth: 1800}}>
+          <div className="grid grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-3 gap-7 w-full" style={{
+            gridTemplateRows: chartHeight,
+          }}>
             {data.plots.map((plot, i) => {
               const options = {
                 chart: {zoomType: "xy", padding: 0, spacingBottom: 0},
@@ -206,113 +219,113 @@ const PekaMotif = props => {
               return <HighchartsReact highcharts={Highcharts} options={options} key={i} />
             })}
           </div>
-          <div className="colors" style={{
+          <div className="w-10 mx-4 relative" style={{
             background: `linear-gradient(${data.scatterplot_colors.slice().reverse().join(",")})`,
-            
+            maxHeight: (350 * 2) + 40
           }}>
-            <div className="values" style={{
+            <div className="flex flex-col justify-between relative" style={{
               top: `${(data.scatterplot_colorbar_ticks[0] - data.scatterplot_colorbar_vmin_vmax.vmin) / (data.scatterplot_colorbar_vmin_vmax.vmax - data.scatterplot_colorbar_vmin_vmax.vmin) * 100}%`,
               height: `${(data.scatterplot_colorbar_ticks[data.scatterplot_colorbar_ticks.length - 1] - data.scatterplot_colorbar_ticks[0]) / (data.scatterplot_colorbar_vmin_vmax.vmax - data.scatterplot_colorbar_vmin_vmax.vmin) * 100}%`,
             }}>
               {data.scatterplot_colorbar_ticks.slice().reverse().map((value, i) => (
-                <div key={i} className="value">{value}</div>
+                <div key={i} className="relative left-12 text-xs">{value}</div>
               ))}
             </div>
           </div>
         </div>
 
 
-        <div className="heatmaps" ref={heatmapsRef}>
+        <div className="grid 4xl:grid-cols-2 gap-x-9 gap-y-24" style={{maxWidth: 1800}} ref={heatmapsRef}>
           {data.heatmaps.map((heatmap, n) => (
 
-            <div className="heatmap" key={n}>
+            <div className="flex heatmap" key={n}>
 
               <div className="rbps" style={{marginTop: cellHeight * 2}}>
                 {heatmap.rbp_heatmap.rows.map((rbp, i) => (
-                  <div key={i} className="rbp" style={{fontWeight: rbp.fontweight, height: cellHeight}}>{rbp.label}</div> 
+                  <div key={i} className="text-2xs text-primary-100 pr-1 flex justify-end items-center" style={{fontWeight: rbp.fontweight, height: cellHeight}}>{rbp.label}</div> 
                 ))}
               </div>
 
               <div className="matrix">
-                <div className="title" style={{height: cellHeight * 2}}>{heatmap.rbp_heatmap.title}</div>
 
-                  
-                  <canvas className="rbp-canvas" data-heatmap={n} data-canvas="rbp_heatmap" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
-
-                
-                <div className="offsets" style={{
+                <div className="flex justify-center text-sm text-primary-500 font-medium items-center" style={{height: cellHeight * 2}}>{heatmap.rbp_heatmap.title}</div>
+                <canvas className="rbp-canvas" data-heatmap={n} data-canvas="rbp_heatmap" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
+                <div className="flex flex-col justify-between relative w-max text-2xs leading-3 py-2 transform -rotate-90 origin-top-right" style={{
                   height: heatmap.rbp_heatmap.columns.length * cellWidth,
-                  marginBottom: heatmap.rbp_heatmap.columns.length * -cellWidth + 24
+                  marginBottom: heatmap.rbp_heatmap.columns.length * -cellWidth + 24,
+                  left: -30
                 }}>
                   {heatmap.rbp_heatmap.columns.filter(x => x % 10 === 0).map(
-                    offset => <div key={offset} className="offset">{offset}</div>
+                    offset => <div key={offset} className="text-right pr-1">{offset}</div>
                   )}
                 </div>
-                <div className="colors" style={{
+      
+                <div className="h-6 mt-8 flex justify-between relative" style={{
                   background: `linear-gradient(90deg,${heatmap.rbp_heatmap.colors.join(",")})`,
                   width: heatmap.rbp_heatmap.columns.length * cellWidth,
                   paddingLeft: `${(heatmap.rbp_heatmap.colorbar_ticks[0] - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) / (heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100}%`,
                   paddingRight: `${(heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_ticks[heatmap.rbp_heatmap.colorbar_ticks.length - 1]) / (heatmap.rbp_heatmap.colorbar_vmin_vmax.vmax - heatmap.rbp_heatmap.colorbar_vmin_vmax.vmin) * 100}%`,
                 }}>
-                  <div className="color-title">k-mer group coverage</div>
+                  <div className="absolute -top-4 w-full left-0 text-center text-primary-500 text-xs">k-mer group coverage</div>
                   {heatmap.rbp_heatmap.colorbar_ticks.map(value => (
-                    <div className="value" key={value}>{value}</div>
+                    <div className="relative top-8 text-xs" key={value}>{value}</div>
                   ))}
                 </div>
+                <div className="mt-7" />
               </div>
            
-              <div className="introns"  style={{marginTop: cellHeight * 2}}>
-                <div className="labels">
+              <div className="ml-4"  style={{marginTop: cellHeight * 2}}>
+                <div className={labelClass} style={{height: 72, right:-72, top: -72, marginBottom: -72}}>
                   {heatmap["regional_%"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
                   </div> )}
                 </div>
-                <canvas className="intron-canvas" data-heatmap={n} data-canvas="regional_%" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
+                <canvas className="border intron-canvas" data-heatmap={n} data-canvas="regional_%" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
 
-                <div className="colors" style={{
+                <div className={colorsClass} style={{
                   background: `linear-gradient(${heatmap["regional_%"].cmap.slice().reverse().join(",")})`,
                   width: barWidth, height: barWidth * 2.5
                 }}>
                   {heatmap["regional_%"].colorbar_ticks.slice().reverse().map(value => (
-                    <div className="value" key={value}>{value}</div>
+                    <div className="relative left-6 text-2xs leading-3" key={value}>{value}</div>
                   ))}
                 </div>
               </div>
 
-              <div className="recall"  style={{marginTop: cellHeight * 2}}>
-                <div className="labels">
+              <div className="ml-4"  style={{marginTop: cellHeight * 2}}>
+                <div className={labelClass} style={{height: 24, right:-24, top: -24, marginBottom: -24}}>
                   {heatmap["recall"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
                   </div> )}
                 </div>
-                <canvas className="recall-canvas" data-heatmap={n} data-canvas="recall" onMouseMove={canvasHover} data-tip data-for="canvasTooltip"/>
+                <canvas className="border recall-canvas" data-heatmap={n} data-canvas="recall" onMouseMove={canvasHover} data-tip data-for="canvasTooltip"/>
 
-                <div className="colors" style={{
+                <div className={colorsClass} style={{
                   background: `linear-gradient(${heatmap["recall"].cmap.slice().reverse().join(",")})`,
                   width: barWidth, height: barWidth * 2.5
                 }}>
                   {heatmap["recall"].colorbar_ticks.slice().reverse().map(value => (
-                    <div className="value" key={value}>{value}</div>
+                    <div className="relative left-6 text-2xs leading-3" key={value}>{value}</div>
                   ))}
                 </div>
               </div>
 
-              <div className="eric"  style={{marginTop: cellHeight * 2}}>
-                <div className="labels">
+              <div className="ml-4"  style={{marginTop: cellHeight * 2}}>
+                <div className={labelClass} style={{height: 24, right:-24, top: -24, marginBottom: -24}}>
                   {heatmap["eRIC log2FC"].columns.map(label => <div key={label} className="label">
                     {label.replace(/_/g, " ").replace("percentage", "%")}
                   </div> )}
                 </div>
-                <canvas className="eric-canvas" data-heatmap={n} data-canvas="eRIC log2FC" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
+                <canvas className="border eric-canvas" data-heatmap={n} data-canvas="eRIC log2FC" onMouseMove={canvasHover} data-tip data-for="canvasTooltip" />
 
-                <div className="colors" style={{
+                <div className={colorsClass} style={{
                   background: `linear-gradient(${heatmap["eRIC log2FC"].cmap.slice().reverse().join(",")})`,
                   width: barWidth, height: barWidth * 2.5,
                   paddingTop: `${(heatmap["eRIC log2FC"].colorbar_ticks[0] - heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmin) / (heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmax - heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmin) * 100}%`,
                   paddingBottom: `${(heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmax - heatmap["eRIC log2FC"].colorbar_ticks[heatmap["eRIC log2FC"].colorbar_ticks.length - 1]) / (Math.log10(heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmax) - heatmap["eRIC log2FC"].colorbar_vmin_vmax.vmin) * 100}%`,
                 }}>
                   {heatmap["eRIC log2FC"].colorbar_ticks.slice().reverse().map(value => (
-                    <div className="value" key={value}>{value}</div>
+                    <div className="relative left-6 text-2xs leading-3" key={value}>{value}</div>
                   ))}
                 </div>
               </div>
@@ -323,8 +336,8 @@ const PekaMotif = props => {
       </div>
     
     
-      <ReactTooltip id="canvasTooltip">
-        {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
+      <ReactTooltip id="canvasTooltip" className="p-0">
+        {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i} className={i === 0 ? "text-xs" : "text-lg"}>
           {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
         </div>) : ""}
       </ReactTooltip>

@@ -113,7 +113,7 @@ const PekaRbp = props => {
               key={i}
             />
             ))}
-            <div className="absolute text-xs" style={{top: data.PEKA_score_heatmap.matrix.length * 18 + 4}}>
+            <div className="absolute text-xs whitespace-nowrap" style={{top: data.PEKA_score_heatmap.matrix.length * 18 + 4}}>
               Average PEKA Score
             </div>
         </div>
@@ -152,7 +152,7 @@ const PekaRbp = props => {
         <ReactTooltip id="tableTooltip" className="p-0">
           {tooltip.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"} key={i}>{t}</div>)}
         </ReactTooltip>
-        <ReactTooltip id="scoreTooltip">
+        <ReactTooltip id="scoreTooltip" className="p-0">
           {score.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"} key={i}>{t}</div>)}
         </ReactTooltip>
       </div>
