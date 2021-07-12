@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import { PUBLIC_COLLECTIONS } from "../queries";
 import Base from "./Base";
 import CollectionsGrid from "../components/CollectionsGrid";

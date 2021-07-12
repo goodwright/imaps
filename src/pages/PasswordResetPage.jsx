@@ -1,5 +1,5 @@
 import React from "react";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import PasswordResetForm from "../components/PasswordResetForm";
 import Div100vh from "react-div-100vh";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouteMatch } from "react-router";
 import { useQuery } from "@apollo/client";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import { PUBLIC_USER } from "../queries";
 import Base from "./Base";
 import UserSummary from "../components/UserSummary";

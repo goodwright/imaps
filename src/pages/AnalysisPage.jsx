@@ -1,5 +1,5 @@
 import React from "react";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import Base from "./Base";
 
 const AnalysisPage = () => {

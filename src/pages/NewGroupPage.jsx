@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/client";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import { CREATE_GROUP } from "../mutations";
 import { USER } from "../queries";
 import { useContext } from "react";

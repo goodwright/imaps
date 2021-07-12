@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { useMutation } from "@apollo/client";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import Toggle from "../components/Toggle";
 import { USER, PUBLIC_COLLECTIONS, USER_COLLECTIONS } from "../queries";
 import { CREATE_COLLECTION } from "../mutations";

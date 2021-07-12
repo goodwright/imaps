@@ -1,6 +1,6 @@
 import React, { useState, useEffect }  from "react";
 import PropTypes from "prop-types";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import Base from "./Base";
 import ReactMarkdown from "react-markdown";
 

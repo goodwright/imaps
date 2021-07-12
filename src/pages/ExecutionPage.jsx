@@ -2,7 +2,7 @@ import React from "react";
 import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import { EXECUTION } from "../queries";
 import Base from "./Base";
 import PageNotFound from "./PageNotFound";

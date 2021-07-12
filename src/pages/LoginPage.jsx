@@ -1,5 +1,5 @@
 import React from "react";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import LoginForm from "../components/LoginForm";
 import Div100vh from "react-div-100vh";
 

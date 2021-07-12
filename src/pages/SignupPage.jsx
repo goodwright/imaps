@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import SignupForm from "../components/SignupForm";
 import Div100vh from "react-div-100vh";
 const colors = require("../colors").colors;

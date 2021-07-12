@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Base from "./Base";
-import useDocumentTitle from "@rehooks/document-title";
+import { useDocumentTitle } from "../hooks";
 import SettingsForm from "../components/SettingsForm";
 import AccountDeletion from "../components/AccountDeletion";
 import GroupsList from "../components/GroupsList";
