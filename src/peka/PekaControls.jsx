@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ReactToggle from "react-toggle";
+import Toggle from "../components/Toggle";
 
 const PekaControls = props => {
 
@@ -10,77 +10,66 @@ const PekaControls = props => {
     showNoncodingIDR, setShowNoncodingIDR, showTotalIDR, setShowTotalIDR
   } = props;
 
-  return (
-    <div className="peka-controls">
-      <div className="zoom">
-        <div className={cellSize === zooms[0] ? "disabled zoom-out" : "zoom-out"} onClick={() => zoom(false)}>-</div>
-        <div className={cellSize === zooms[zooms.length - 1] ? "disabled zoom-in" : "zoom-in"} onClick={() => zoom(true)}>+</div>
-      </div>
-      <div className="toggles">
+  const zoomClass = "py-1 px-2 flex justify-center text-xl items-center w-1/2";
+  const toggleClass = "mr-6 mb-5 w-64 justify-end";
 
-        <div className="toggle">
-          <ReactToggle
-            id="truncated"
-            icons={false}
-            checked={!truncated}
-            onChange={e => setTruncated(!e.target.checked)}
-          />
-          <label htmlFor="truncated">Full Heatmap</label>
-        </div>
-        <div className="toggle">
-          <ReactToggle
-            id="similarity"
-            icons={false}
-            checked={showSimilarity}
-            onChange={e => setShowSimilarity(e.target.checked)}
-          />
-          <label htmlFor="similarity">Show Similarity</label>
-        </div>
-        <div className="toggle">
-          <ReactToggle
-            id="eric"
-            icons={false}
-            checked={showEric}
-            onChange={e => setShowEric(e.target.checked)}
-          />
-          <label htmlFor="eric">Show logF2 eRIC</label>
-        </div>
-        <div className="toggle">
-          <ReactToggle
-            id="recall"
-            icons={false}
-            checked={showRecall}
-            onChange={e => setShowRecall(e.target.checked)}
-          />
-          <label htmlFor="recall">Show Recall</label>
-        </div>
-        <div className="toggle">
-          <ReactToggle
-            id="introns"
-            icons={false}
-            checked={showIntrons}
-            onChange={e => setShowIntrons(e.target.checked)}
-          />
-          <label htmlFor="introns">Show tXn per region (%)</label>
-        </div>
-        <div className="toggle">
-          <ReactToggle
-            id="noncoding"
-            icons={false}
-            checked={showNoncodingIDR}
-            onChange={e => setShowNoncodingIDR(e.target.checked)}
-          />
-          <label htmlFor="noncoding">Show % noncoding peaks</label>
-        </div>
-        <div className="toggle">
-          <ReactToggle
-            id="total"
-            icons={false}
-            checked={showTotalIDR}
-            onChange={e => setShowTotalIDR(e.target.checked)}
-          />
-          <label htmlFor="total">Show total number of peaks</label>
-        </div>
+  return (
+    <div className="flex mb-6">
+      <div className="rounded overflow-hidden cursor-pointer flex border w-20 h-full shadow flex-shrink-0">
+        <div className={`${zoomClass} ${cellSize === zooms[0] ? "opacity-50 cursor-default" : "active:shadow-inner"}`} onClick={() => zoom(false)}>-</div>
+        <div className={`${zoomClass} border-l ${cellSize === zooms[zooms.length - 1] ? "opacity-50 cursor-default" : "active:shadow-inner"}`} onClick={() => zoom(true)}>+</div>
+      </div>
+      <div className="flex flex-wrap ml-6 -mr-6">
+
+        <Toggle
+          id="truncated"
+          checked={!truncated}
+          onChange={e => setTruncated(!e.target.checked)}
+          trueLabel="Full Heatmap"
+          className={toggleClass}
+        />
+        <Toggle
+          id="similarity"
+          checked={showSimilarity}
+          onChange={e => setShowSimilarity(e.target.checked)}
+          trueLabel="Show Similarity"
+          className={toggleClass}
+        />
+        <Toggle
+          id="eric"
+          checked={showEric}
+          onChange={e => setShowEric(e.target.checked)}
+          trueLabel="Show logF2 eRIC"
+          className={toggleClass}
+        />
+        <Toggle
+          id="recall"
+          checked={showRecall}
+          onChange={e => setShowRecall(e.target.checked)}
+          trueLabel="Show Recall"
+          className={toggleClass}
+        />
+        <Toggle
+          id="introns"
+          checked={showIntrons}
+          onChange={e => setShowIntrons(e.target.checked)}
+          trueLabel="Show tXn per region (%)"
+          className={toggleClass}
+        />
+        <Toggle
+          id="noncoding"
+          checked={showNoncodingIDR}
+          onChange={e => setShowNoncodingIDR(e.target.checked)}
+          trueLabel="Show % noncoding peaks"
+          className={toggleClass}
+        />
+        <Toggle
+          id="total"
+          checked={showTotalIDR}
+          onChange={e => setShowTotalIDR(e.target.checked)}
+          trueLabel="Show total number of peaks"
+          className={toggleClass}
+        />
       </div>
     </div>
   );

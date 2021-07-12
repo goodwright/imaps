@@ -78,16 +78,16 @@ const PekaDendrogram = props => {
 
 
   return (
-    <div className="peka-dendrogram" style={{
+    <div style={{
       width: cellSize * colCount, marginLeft: offset
     }}>
-      <canvas ref={canvasRef} />
+      <canvas ref={canvasRef} className="mr-4" />
       {cellSize >= 6 && (
-        <div className="proteins" style={{
-          fontSize: cellSize * 0.75, width: labelHeight - 4, top: labelHeight - 4
+        <div className="grid items-end transform -rotate-90 origin-top-left relative text-2xs leading-3" style={{
+          fontSize: cellSize * 0.75, width: labelHeight - 4, top: labelHeight - 4, left: 1
         }}>
           {data.labels.map(label => (
-            <Link key={label} className="protein" to={`/apps/peka?rbp=${label}`} style={{
+            <Link key={label} className="text-left inline whitespace-nowrap font-mono flex items-center relative text-primary-500" to={`/apps/peka?rbp=${label}`} style={{
               height: cellSize
             }}>{label}</Link>
           ))}

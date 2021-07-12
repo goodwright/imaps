@@ -192,11 +192,19 @@ const PekaHeatmap = props => {
   const secondaryHeight = 30;
   const secondaryGap = 15;
 
+  const canvasClass = "mb-12 border block";
+  const mapInfoClass = "flex mb-2 items-start";
+  const mapNameClass = "font-medium text-xs";
+  const colorsClass = "w-60 h-6 mr-3 relative border";
+  const valuesClass = "absolute flex justify-between text-2xs leading-3 font-light w-full -top-3.5";
+
   return (
     <div className="peka-heatmap">
-      <h2>Heatmap <button onClick={() => download(data, "peka")}>Download Data</button></h2>
+      <h2 className="font-semibold relative text-3xl mb-2">Heatmap
+        <button className="absolute text-xs -top-1.5 pl-1 text-primary-500"onClick={() => download(data, "peka")}>Download Data</button>
+      </h2>
       
-      <div className="peka-sub-text">
+      <div className="text-xs sm:text-sm max-w-4xl pb-4 mb-6 grid gap-2">
         <p>
           Heatmap shows the rank of 5-mers for 223 eCLIP datasets produced in either
           K562 or HepG2 cell lines, encompassing a total of 150 distinct proteins.
@@ -205,13 +213,13 @@ const PekaHeatmap = props => {
         <p>
           Supplementary data is shown in heatmaps below:
         </p>
-        <ul>
-          <li><strong>Similarity</strong> score reports how much the top motif ranks of a specific dataset match those of all other datasets.</li>
-          <li><strong>Recall</strong> measures the overlap of top motifs in each eCLIP dataset to its orthogonal in vitro dataset (RNA Bind-N-Seq or RNAcompete).</li>
-          <li><strong>log2FC eRIC</strong> shows the log2-fold change in crosslinked over non-crosslinked samples of the proteins identified by enhanced RNA Interactome Capture (eRIC) in proliferating Jurkat cells <a href="https://paperpile.com/c/KEAU9t/E2nI">(Perez-Perri et al. 2018)</a>.</li>
-          <li><strong>tXn per region (%)</strong> shows the percentage of high-confidence crosslink sites (tXn) for each RBP within introns, 3’ UTRs and other exonic regions of protein-coding genes (coding+5’UTRs).</li>
-          <li><strong>% noncoding peaks</strong> shows the proportion of IDR (irreproducible discovery rate) peaks (as available for eCLIP datasets from (<a href="https://paperpile.com/c/KEAU9t/akVJ">Van Nostrand et al. 2020</a>)) in non-coding regions of the transcriptome (noncoding_exon, noncoding_5ss, noncoding_3ss, noncoding_proxintron, noncoding_distintron).</li>
-          <li><strong>total number of peaks</strong> shows the total number of IDR peaks available for each dataset.</li>
+        <ul className="list-disc list-inside grid gap-1 pl-2">
+          <li><span className="font-bold -ml-1">Similarity</span> score reports how much the top motif ranks of a specific dataset match those of all other datasets.</li>
+          <li><span className="font-bold -ml-1">Recall</span> measures the overlap of top motifs in each eCLIP dataset to its orthogonal in vitro dataset (RNA Bind-N-Seq or RNAcompete).</li>
+          <li><span className="font-bold -ml-1">log2FC eRIC</span> shows the log2-fold change in crosslinked over non-crosslinked samples of the proteins identified by enhanced RNA Interactome Capture (eRIC) in proliferating Jurkat cells <a href="https://paperpile.com/c/KEAU9t/E2nI">(Perez-Perri et al. 2018)</a>.</li>
+          <li><span className="font-bold -ml-1">tXn per region (%)</span> shows the percentage of high-confidence crosslink sites (tXn) for each RBP within introns, 3’ UTRs and other exonic regions of protein-coding genes (coding+5’UTRs).</li>
+          <li><span className="font-bold -ml-1">% noncoding peaks</span> shows the proportion of IDR (irreproducible discovery rate) peaks (as available for eCLIP datasets from (<a href="https://paperpile.com/c/KEAU9t/akVJ">Van Nostrand et al. 2020</a>)) in non-coding regions of the transcriptome (noncoding_exon, noncoding_5ss, noncoding_3ss, noncoding_proxintron, noncoding_distintron).</li>
+          <li><span className="font-bold -ml-1">total number of peaks</span> shows the total number of IDR peaks available for each dataset.</li>
         </ul>
       </div>
 
@@ -229,73 +237,73 @@ const PekaHeatmap = props => {
             showTotalIDR={showTotalIDR} setShowTotalIDR={setShowTotalIDR}
           />
 
-          <ScrollContainer className="scrollable-graphic">
+          <ScrollContainer className="overflow-x-scroll -mr-5 w-full">
 
             <PekaDendrogram 
               data={data.dendrogram} cellSize={cellSize} 
               labelHeight={proteinsHeight} offset={motifsWidth}
             />
 
-            <ScrollContainer className="main-row" style={{
+            <ScrollContainer className="grid" style={{
               width: motifsWidth + (cellSize * data.matrix[0].length) + 100,
               height: truncated ? "auto": visibleHeight,
               overflow: truncated ? undefined : "scroll"
             }}>
-              <div className="motifs" style={{
+              <div className="flex flex-col overflow-y-hidden" style={{
                 width: motifsWidth, height: truncated ? 400 : "auto"
               }}>
                 {data.rows.map(motif => (
-                  <Link className="motif" key={motif} style={{
+                  <Link className="pr-1 font-mono flex items-center justify-end" key={motif} style={{
                     fontSize: cellSize * 0.75, opacity: cellSize >= 6 ? 1 : 0,
                     height: cellSize, lineHeight: cellSize, width: motifsWidth,
                   }} to={`/apps/peka?motif=${motif}`}>{motif}</Link>
                 ))}
               </div>
 
-              <div className={cellSize < 4 ? "small-maps heatmaps" : "heatmaps"}>
-                <div className="canvas-container" style={truncated ? {height: 400, overflow: "hidden"} : null}>
+              <div>
+                <div className="mb-12" style={truncated ? {height: 400, overflow: "hidden"} : null}>
                   <canvas ref={canvasRef} onMouseMove={mouseMove} data-tip data-for="canvasTooltip" />
                 </div>
 
-                <div className="supplementary" style={{display: showSimilarity ? "block" : "none"}}>
-                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                    <div className="horizontal-colors" style={{
+                <div style={{display: showSimilarity ? "block" : "none"}}>
+                  <div className={mapInfoClass} style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className={colorsClass} style={{
                       background: `linear-gradient(90deg, black, white)`
                     }}>
-                      <div className="values" style={{paddingRight: "20%"}}>
+                      <div className={valuesClass} style={{paddingRight: "20%"}}>
                         <div className="value">0</div>
                         <div className="value">0.2</div>
                         <div className="value">0.4</div>
                       </div>
                     </div>
-                    <div className="map-name">Similarity</div>
+                    <div className={mapNameClass}>Similarity</div>
                   </div>
-                  <canvas ref={similarityRef} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
+                  <canvas ref={similarityRef} className={canvasClass} onMouseMove={similarityMouseMove} data-tip data-for="similarityTooltip" />
                 </div>
                 
-                <div className="supplementary" style={{display: showEric ? "block" : "none"}}>
-                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                    <div className="horizontal-colors" style={{
+                <div style={{display: showEric ? "block" : "none"}}>
+                  <div className={mapInfoClass} style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className={colorsClass} style={{
                       background: `linear-gradient(90deg, white, black)`
                     }}>
-                      <div className="values" style={{justifyContent: "space-around", padding: "0 10px", paddingLeft: "0"}}>
+                      <div className={valuesClass} style={{justifyContent: "space-around", padding: "0 10px", paddingLeft: "0"}}>
                         <div className="value">2</div>
                         <div className="value">3</div>
                         <div className="value">4</div>
                         <div className="value">5</div>
                       </div>
                     </div>
-                    <div className="map-name">log2FC eRIC</div>
+                    <div className={mapNameClass}>log2FC eRIC</div>
                   </div>
-                  <canvas ref={ericRef} onMouseMove={ericMouseMove} data-tip data-for="ericTooltip" />
+                  <canvas ref={ericRef} className={canvasClass} onMouseMove={ericMouseMove} data-tip data-for="ericTooltip" />
                 </div>
                 
-                <div className="supplementary" style={{display: showRecall ? "block" : "none"}}>
-                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                    <div className="horizontal-colors" style={{
+                <div style={{display: showRecall ? "block" : "none"}}>
+                  <div className={mapInfoClass} style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className={colorsClass} style={{
                       background: `linear-gradient(90deg, white, black)`
                     }}>
-                      <div className="values">
+                      <div className={valuesClass}>
                         <div className="value">0</div>
                         <div className="value">0.2</div>
                         <div className="value">0.4</div>
@@ -304,17 +312,17 @@ const PekaHeatmap = props => {
                         <div className="value">1.0</div>
                       </div>
                     </div>
-                    <div className="map-name">Recall</div>
+                    <div className={mapNameClass}>Recall</div>
                   </div>
-                  <canvas ref={recallRef} onMouseMove={recallMouseMove} data-tip data-for="recallTooltip" />
+                  <canvas ref={recallRef} className={canvasClass} onMouseMove={recallMouseMove} data-tip data-for="recallTooltip" />
                 </div>
                 
-                <div className="supplementary" style={{display: showIntrons ? "block" : "none"}}>
-                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                    <div className="horizontal-colors" style={{
+                <div style={{display: showIntrons ? "block" : "none"}}>
+                  <div className={mapInfoClass} style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className={colorsClass} style={{
                       background: `linear-gradient(90deg, white, black)`
                     }}>
-                      <div className="values">
+                      <div className={valuesClass}>
                         <div className="value">0</div>
                         <div className="value">20</div>
                         <div className="value">40</div>
@@ -323,17 +331,17 @@ const PekaHeatmap = props => {
                         <div className="value">100</div>
                       </div>
                     </div>
-                    <div className="map-name">tXn per region (%): {cellSize < 4 && <br />}3'UTR (top), intron (middle), 5'UTR + CDS (bottom)</div>
+                    <div className={mapNameClass}>tXn per region (%): {cellSize < 4 && <br />}3'UTR (top), intron (middle), 5'UTR + CDS (bottom)</div>
                   </div>
-                  <canvas ref={intronsRef} onMouseMove={intronsMouseMove} data-tip data-for="intronsTooltip" />
+                  <canvas ref={intronsRef} className={canvasClass} onMouseMove={intronsMouseMove} data-tip data-for="intronsTooltip" />
                 </div>
                 
-                <div className="supplementary" style={{display: showNoncodingIDR ? "block" : "none"}}>
-                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                    <div className="horizontal-colors" style={{
+                <div style={{display: showNoncodingIDR ? "block" : "none"}}>
+                  <div className={mapInfoClass} style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className={colorsClass} style={{
                       background: `linear-gradient(90deg, white, black)`
                     }}>
-                      <div className="values">
+                      <div className={valuesClass}>
                         <div className="value">0</div>
                         <div className="value">20</div>
                         <div className="value">40</div>
@@ -342,26 +350,26 @@ const PekaHeatmap = props => {
                         <div className="value">100</div>
                       </div>
                     </div>
-                    <div className="map-name">% noncoding peaks</div>
+                    <div className={mapNameClass}>% noncoding peaks</div>
                   </div>
-                  <canvas ref={noncodingIdrRef} onMouseMove={noncodingIdrMouseMove} data-tip data-for="noncodingIdrTooltip" />
+                  <canvas ref={noncodingIdrRef} className={canvasClass} onMouseMove={noncodingIdrMouseMove} data-tip data-for="noncodingIdrTooltip" />
                 </div>
                 
-                <div className="supplementary" style={{display: showTotalIDR ? "block" : "none"}}>
-                  <div className="map-info" style={{display: cellSize < 3 ? "block" : ""}}>
-                    <div className="horizontal-colors" style={{
+                <div style={{display: showTotalIDR ? "block" : "none"}}>
+                  <div className={mapInfoClass} style={{display: cellSize < 3 ? "block" : ""}}>
+                    <div className={colorsClass} style={{
                       background: `linear-gradient(90deg, white, black)`
                     }}>
-                      <div className="values" style={{paddingRight: "15%"}}>
+                      <div className={valuesClass} style={{paddingRight: "15%"}}>
                         <div className="value">10<sup>1</sup></div>
                         <div className="value">10<sup>2</sup></div>
                         <div className="value">10<sup>3</sup></div>
                         <div className="value">10<sup>4</sup></div>
                       </div>
                     </div>
-                    <div className="map-name">total number of peaks</div>
+                    <div className={mapNameClass}>total number of peaks</div>
                   </div>
-                  <canvas ref={totalIdrRef} onMouseMove={totalIdrMouseMove} data-tip data-for="totalIdrTooltip" />
+                  <canvas ref={totalIdrRef} className={canvasClass} onMouseMove={totalIdrMouseMove} data-tip data-for="totalIdrTooltip" />
                 </div>
                 
                 <ReactTooltip id="canvasTooltip">
@@ -389,12 +397,13 @@ const PekaHeatmap = props => {
                 </ReactTooltip>
               </div>
 
-              <div className="colors" style={{
-                background: `linear-gradient(${data.colors.join(", ")})`
+              <div className="ml-4 w-10 relative flex flex-col justify-between pt-9" style={{
+                background: `linear-gradient(${data.colors.join(", ")})`,
+                height: 400, 
               }}>
-                <div className="rank-label">Rank</div>
+                <div className="absolute font-semibold top-0 left-12 text-xs leading -ml-1">Rank</div>
                 {[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000].map(val => (
-                  <div className="value" key={val}>{val}</div>
+                  <div className="relative left-12 text-2xs leading-3 text-primary-400 -ml-1" key={val}>{val}</div>
                 ))}    
               </div>
             </ScrollContainer>
