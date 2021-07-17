@@ -87,7 +87,7 @@ const PekaDendrogram = props => {
           fontSize: cellSize * 0.75, width: labelHeight - 4, top: labelHeight - 4, left: 1
         }}>
           {data.labels.map(label => (
-            <Link key={label} className="text-left inline whitespace-nowrap font-mono flex items-center relative text-primary-500" to={`/apps/peka?rbp=${label}`} style={{
+            <Link key={label} className="text-left inline-flex whitespace-nowrap font-mono items-center relative text-primary-500" to={`/apps/peka?rbp=${label}`} style={{
               height: cellSize
             }}>{label}</Link>
           ))}

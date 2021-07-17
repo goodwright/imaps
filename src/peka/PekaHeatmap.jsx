@@ -198,6 +198,8 @@ const PekaHeatmap = props => {
   const colorsClass = "w-60 h-6 mr-3 relative border";
   const valuesClass = "absolute flex justify-between text-2xs leading-3 font-light w-full -top-3.5";
 
+  console.log(data)
+
   return (
     <div className="peka-heatmap">
       <h2 className="font-semibold relative text-3xl mb-2">Heatmap
@@ -223,7 +225,7 @@ const PekaHeatmap = props => {
         </ul>
       </div>
 
-      {!data ? <BarLoader color="#6353C6" css="margin: 64px auto" /> : (
+      {!data ? <BarLoader color="#6353C6" css="display: block; margin: 64px auto" /> : (
         <div className="graphic">
 
           <PekaControls
@@ -372,28 +374,28 @@ const PekaHeatmap = props => {
                   <canvas ref={totalIdrRef} className={canvasClass} onMouseMove={totalIdrMouseMove} data-tip data-for="totalIdrTooltip" />
                 </div>
                 
-                <ReactTooltip id="canvasTooltip">
-                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                <ReactTooltip id="canvasTooltip" className="p-0">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"}key={i}>{t}</div>) : ""}
                 </ReactTooltip>
-                <ReactTooltip id="similarityTooltip">
-                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                <ReactTooltip id="similarityTooltip" className="p-0">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"}key={i}>{t}</div>) : ""}
                 </ReactTooltip>
-                <ReactTooltip id="ericTooltip">
-                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>
+                <ReactTooltip id="ericTooltip" className="p-0">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"}key={i}>
                     {t.includes("**") ? <div>{t.split("**")[0]}<sup>{t.split("**")[1]}</sup></div> : t}
                   </div>) : ""}
                 </ReactTooltip>
-                <ReactTooltip id="recallTooltip">
-                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                <ReactTooltip id="recallTooltip" className="p-0">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"}key={i}>{t}</div>) : ""}
                 </ReactTooltip>
-                <ReactTooltip id="intronsTooltip">
-                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                <ReactTooltip id="intronsTooltip" className="p-0">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"}key={i}>{t}</div>) : ""}
                 </ReactTooltip>
-                <ReactTooltip id="noncodingIdrTooltip">
-                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                <ReactTooltip id="noncodingIdrTooltip" className="p-0">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"}key={i}>{t}</div>) : ""}
                 </ReactTooltip>
-                <ReactTooltip id="totalIdrTooltip">
-                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div key={i}>{t}</div>) : ""}
+                <ReactTooltip id="totalIdrTooltip" className="p-0">
+                  {hoveredCell ? hoveredCell.split("\n").map((t, i) => <div className={i === 0 ? "text-xs" : "text-lg"}key={i}>{t}</div>) : ""}
                 </ReactTooltip>
               </div>
 
