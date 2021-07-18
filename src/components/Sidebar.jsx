@@ -52,7 +52,7 @@ const Sidebar = () => {
   return (
     <div className="areas-sidebar no-scroll flex flex-col items-center justify-between overflow-y-scroll sm:px-3">
       <div className="flex flex-col items-center sm:items-start w-full">
-        <UserSummary user={user || null} link={Boolean(user)} size={8} sm={12} noGap={Boolean(user)} className={`border-b py-3 w-max ${!user && "relative left-1"}`}>
+        <UserSummary user={user || null} link={Boolean(user)} size={8} sm={12} noGap={Boolean(user)} className={`border-b py-3 sm:w-full ${!user && "relative left-1"}`}>
           {user ? (
             <div className="text-primary-300 sm:mx-auto hover:text-primary-500 hidden sm:block sm:ml-2">
               <div className="">{user.name}</div>
@@ -74,7 +74,7 @@ const Sidebar = () => {
           </div>
         )}
 
-        <div className="grid gap-8 mt-6 w-full pr-2">
+        <div className="grid gap-8 mt-6 w-full sm:pr-2">
           {linkSections.map((section, index) => (
             <div className="w-full" key={index}>
               {section.name && <div className="hidden w-full font-bold text-xs mb-1 pr-2 text-right sm:block sm:justify-end">{section.name}</div>}
