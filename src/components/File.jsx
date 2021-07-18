@@ -20,7 +20,7 @@ const File = props => {
     <div className="flex items-center text-sm">
       <img className="w-4 mr-1 opacity-70" src={fileIcon} alt="" />
       <div>
-        <a href={`${process.env.REACT_APP_DATA}/${execution.id}/${name}/`}>{name}</a>
+        <a href={`${process.env.REACT_APP_DATA}/${execution.id}/${name}`}>{name}</a>
         <span className="text-2xs pl-0.5">{fileSize(size)}</span>
       </div>
     </div>
